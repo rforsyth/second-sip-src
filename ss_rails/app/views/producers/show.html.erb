@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Created by:</b>
+  <%= @producer.creator_id %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @producer.updater_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @producer.type %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%= @producer.owner_id %>
+</p>
+
+<p>
+  <b>Visiblity:</b>
+  <%= @producer.visibility %>
+</p>
+
+<p>
+  <b>Is reference:</b>
+  <%= @producer.is_reference %>
+</p>
+
+<p>
+  <b>Website url:</b>
+  <%= @producer.website_url %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @producer.name %>
+</p>
+
+<p>
+  <b>Canonical name:</b>
+  <%= @producer.canonical_name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @producer.description %>
+</p>
+
+<p>
+  <b>Cases per year:</b>
+  <%= @producer.cases_per_year %>
+</p>
+
+
+<%= link_to 'Edit', edit_producer_path(@producer) %> |
+<%= link_to 'Back', producers_path %>

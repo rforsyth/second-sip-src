@@ -1,0 +1,48 @@
+
+postgres user (OS user, not DB user): postgres / [very happy]
+
+
+____________________________________________________________
+Install Postgres
+
+
+_____________________________________________________________
+Install ruby gems
+
+- using postgres-pr for DB
+$ gem install postgres-pr
+
+
+
+____________________________________________________________
+Install Admin UI tool
+
+- installed Navicat Lite from web
+
+____________________________________________________________
+Set up sql tool
+
+- followed this guide:
+http://www.gregbenedict.com/2009/08/31/installing-postgresql-on-snow-leopard-10-6/
+
+- add path to psql to system path:
+/opt/local/lib/postgresql83/bin
+
+- used Navicat to set up role: rforsyth with password (network password)
+
+
+____________________________________________________________
+Set up an example Rails app with postgres
+
+- followed this article:
+http://www.whatcodecraves.com/articles/2008/02/05/setup_rails_with_postgresql/
+
+
+
+
+
+
+
+
+
+

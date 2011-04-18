@@ -1,0 +1,25 @@
+
+
+__________________________________________________________________
+Running the app
+
+- cd to ~/personal/projects/secondsip/ss_rails
+$ rails server
+- browse to http://0.0.0.0:3000
+$ rails console
+- brings up an IRB prompt with the rails includes set up
+
+
+
+__________________________________________________________________
+Running Postgres
+
+$ sudo su postgres -c '/opt/local/lib/postgresql83/bin/postgres -D /opt/local/var/db/postgresql83/defaultdb'
+or
+$ sudo su postgres -c '/opt/local/lib/postgresql83/bin/pg_ctl -D /opt/local/var/db/postgresql83/defaultdb -l logfile start'
+
+- to access db via Navicat, double-click connection; password is your user (rforsyth) pwd
+
+
+
+

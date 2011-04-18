@@ -1,0 +1,43 @@
+<h1>Listing producers</h1>
+
+<table>
+  <tr>
+    <th>Created by</th>
+    <th>Updated by</th>
+    <th>Type</th>
+    <th>Owner</th>
+    <th>Visiblity</th>
+    <th>Is reference</th>
+    <th>Website url</th>
+    <th>Name</th>
+    <th>Canonical name</th>
+    <th>Description</th>
+    <th>Cases per year</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @producers.each do |producer| %>
+  <tr>
+    <td><%= producer.creator_id %></td>
+    <td><%= producer.updater_id %></td>
+    <td><%= producer.type %></td>
+    <td><%= producer.owner_id %></td>
+    <td><%= producer.visibility %></td>
+    <td><%= producer.is_reference %></td>
+    <td><%= producer.website_url %></td>
+    <td><%= producer.name %></td>
+    <td><%= producer.canonical_name %></td>
+    <td><%= producer.description %></td>
+    <td><%= producer.cases_per_year %></td>
+    <td><%= link_to 'Show', producer %></td>
+    <td><%= link_to 'Edit', edit_producer_path(producer) %></td>
+    <td><%= link_to 'Destroy', producer, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Producer', new_producer_path %>

@@ -1,0 +1,72 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+<%
+  require 'data/enums'
+%>
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+
+#*****************************************************
+# Wine Notes
+#*****************************************************
+yellow_tail_shiraz_1:
+  owner: doc
+  type: WineNote
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  is_reference: false
+  product: yellow_tail_shiraz
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 1.5
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  vintage: 2013
+  <<: *DEFAULTS
+
+yellow_tail_shiraz_2:
+  owner: doc
+  type: WineNote
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  is_reference: false
+  product: yellow_tail_shiraz
+  description_mouthfeel: feels like cotton balls
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 1.5
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  vintage: 2013
+  <<: *DEFAULTS
+ 
+yellow_tail_shiraz_3:
+  owner: doc
+  type: WineNote
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  is_reference: false
+  product: yellow_tail_shiraz
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 1.5
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  vintage: 2013
+  <<: *DEFAULTS
+
+
+
+
+
+

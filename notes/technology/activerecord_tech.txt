@@ -1,0 +1,13 @@
+
+
+- Available callbacks:
+http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html
+
+
+
+- suggestion for hacking STI to work with helper functions:
+http://code.alexreisner.com/articles/single-table-inheritance-in-rails.html
+
+
+
+

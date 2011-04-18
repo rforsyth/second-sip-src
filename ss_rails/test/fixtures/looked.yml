@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  lookup_id: 1
+  lookable_id: 1
+  lookable_type: MyString
+
+two:
+  lookup_id: 1
+  lookable_id: 1
+  lookable_type: MyString

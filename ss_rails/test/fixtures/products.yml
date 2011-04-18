@@ -1,0 +1,61 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+<%
+  require 'data/enums'
+%>
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+
+#*****************************************************
+# Wines
+#*****************************************************
+yellow_tail_shiraz:
+  owner: doc
+  type: Wine
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  is_reference: false
+  producer: yellow_tail
+  name: Shiraz
+  canonical_name: shiraz
+  description: Cute critter label
+  price: 1.5
+  price_paid: 1.5
+  price_type: <%= Enums::WinePriceType::METHUSELAH %>
+  region: australia
+  <<: *DEFAULTS
+
+yellow_tail_cabernet:
+  owner: doc
+  type: Wine
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  is_reference: false
+  producer: yellow_tail
+  name: Cabernet
+  canonical_name: cabernet
+  description: Cute critter label
+  price: 1.5
+  price_paid: 1.5
+  price_type: <%= Enums::WinePriceType::METHUSELAH %>
+  region: southeastaustralia
+  <<: *DEFAULTS
+
+yellow_tail_chardonnay:
+  owner: doc
+  type: Wine
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  is_reference: false
+  producer: yellow_tail
+  name: Chardonnay
+  canonical_name: chardonnay
+  description: Cute critter label
+  price: 1.5
+  price_paid: 1.5
+  price_type: <%= Enums::WinePriceType::METHUSELAH %>
+  region: southeastaustralia
+  <<: *DEFAULTS
+
+
+

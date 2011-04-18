@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @lookup.name %>
+</p>
+
+<p>
+  <b>Canonical name:</b>
+  <%= @lookup.canonical_name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @lookup.description %>
+</p>
+
+<p>
+  <b>Lookup type:</b>
+  <%= @lookup.lookup_type %>
+</p>
+
+<p>
+  <b>Entity type:</b>
+  <%= @lookup.entity_type %>
+</p>
+
+<p>
+  <b>Parent lookup:</b>
+  <%= @lookup.parent_lookup_id %>
+</p>
+
+<p>
+  <b>Full name:</b>
+  <%= @lookup.full_name %>
+</p>
+
+<p>
+  <b>Canonical full name:</b>
+  <%= @lookup.canonical_full_name %>
+</p>
+
+<p>
+  <b>Is reference:</b>
+  <%= @lookup.is_reference %>
+</p>
+
+
+<%= link_to 'Edit', edit_lookup_path(@lookup) %> |
+<%= link_to 'Back', lookups_path %>

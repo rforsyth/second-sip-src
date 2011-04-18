@@ -1,0 +1,65 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+<%
+  require 'data/enums'
+%>
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+  parent_lookup_id: 
+  is_reference: true
+
+#*****************************************************
+# Beer Styles
+#*****************************************************
+liteamericanlager:
+  name: Lite American Lager
+  canonical_name: $LABEL
+  full_name: Lite American Lager
+  canonical_full_name: $LABEL
+  description: Very... lite
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
+standardamericanlager:
+  name: Standard American Lager
+  canonical_name: $LABEL
+  full_name: Standard American Lager
+  canonical_full_name: $LABEL
+  description: Less... light
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
+#*****************************************************
+# Wine Regions
+#*****************************************************
+australia:
+  name: Australia
+  canonical_name: $LABEL
+  full_name: Australia
+  canonical_full_name: $LABEL
+  description: Even bigger
+  lookup_type: <%= Enums::LookupType::REGION %>
+  entity_type: Wine
+  <<: *DEFAULTS
+
+southeastaustralia:
+  name: Southeast Australia
+  canonical_name: $LABEL
+  full_name: Southeast Australia
+  canonical_full_name: $LABEL
+  description: Very... big
+  lookup_type: <%= Enums::LookupType::REGION %>
+  entity_type: Wine
+  <<: *DEFAULTS
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+
+
+
+________________________________________________________
+Postgres
+
+- installed Navicat
+- used Navicat to set up role: rforsyth with password (network password)
+
+
+
+- followed this guide to install rails 3.0 and ruby 1.9.2
+  - didn't install mysql
+http://amerine.net/2010/02/24/rvm-rails3-ruby-1-9-2-setup.html
+
+- using postgres-pr for DB
+$ gem install postgres-pr
+
+- trying to install native gem failed (gem install postgres):
+  ERROR:  Error installing postgres:
+  	ERROR: Failed to build gem native extension.
+          /Users/rforsyth/.rvm/rubies/ruby-1.9.2-p180/bin/ruby extconf.rb
+  extconf.rb:4:in `<main>': uninitialized constant Object::PLATFORM (NameError)
+  Gem files will remain installed in /Users/rforsyth/.rvm/gems/ruby-1.9.2-p180@rails3/gems/postgres-0.7.9.2008.01.28 for inspection.
+  Results logged to /Users/rforsyth/.rvm/gems/ruby-1.9.2-p180@rails3/gems/postgres-0.7.9.2008.01.28/ext/gem_make.out
+
+________________________________________________________
+Postgres Admin
+
+- followed instructions on this page:
+http://shifteleven.com/articles/2008/03/21/installing-postgresql-on-leopard-using-macports
+
+
+
+
+

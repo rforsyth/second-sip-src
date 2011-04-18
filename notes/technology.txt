@@ -1,0 +1,88 @@
+
+
+
+
+__________________________________________________________________
+Open Questions
+
+** use polymorphic association for lookups or tags?
+
+
+
+__________________________________________________________________
+Polymorphic routing / path
+
+- description of polymorphic_path:
+http://railspikes.com/2008/4/23/5-useful-underused-methods
+
+- STI routing:
+http://blog.lrdesign.com/2009/03/single-table-inheritance-and-restful-routes/
+map.resources :tasks
+map.resources :action_items, :controller => 'tasks'
+map.resources :work_orders, :controller => 'tasks'
+map.resources :problem_reports, :controller => 'tasks'
+
+
+__________________________________________________________________
+Database - Setup
+
+* installing postgres
+http://www.gregbenedict.com/2009/08/31/installing-postgresql-on-snow-leopard-10-6/
+
+__________________________________________________________________
+Database - Tagging
+
+- using Postgres Array
+https://github.com/funny-falcon/activerecord-postgresql-arrays
+
+
+
+
+* acts-as-taggable-on
+- https://github.com/mbleigh/acts-as-taggable-on
+- docs: http://intridea.com/2007/12/4/announcing-acts_as_taggable_on
+  - http://intridea.com/2008/6/9/acts-as-taggable-on-grows-up?blog=company
+
+- searching by context:
+http://stackoverflow.com/questions/4595112/acts-as-taggable-on-find-all-tags-by-context
+
+- getting set up:
+http://stackoverflow.com/questions/2757151/installing-and-using-acts-as-taggable-on
+
+- docs:
+http://agilewebdevelopment.com/plugins/acts_as_taggable_on_steroids
+
+- troubleshooting:
+http://stackoverflow.com/questions/3906323/acts-as-taggable-on-on-heroku
+http://stackoverflow.com/questions/4532388/does-acts-as-taggable-on-work-on-heroku
+
+
+__________________________________________________________________
+Database - Full Text Search
+
+
+* heroku-specific postgres full-text search article
+http://tenderlovemaking.com/2009/10/17/full-text-search-on-heroku/
+
+- this guy says that acts_as_search is better then texticle
+http://blog.yangtheman.com/2010/02/28/full-text-search-on-heroku/
+
+- acts_as_indexed plugin
+https://github.com/dougal/acts_as_indexed
+http://douglasfshearer.com/blog/rails-plugin-acts_as_indexed
+
+- plugin for full-text search in rails / postgres:
+http://code.google.com/p/acts-as-tsearch/
+  - doesn't work on rails 3
+    http://stackoverflow.com/questions/5339763/rails-3-and-full-text-search-acts-as-tsearch-on-heroku
+
+- using tsvector in postgres
+http://stackoverflow.com/questions/2359701/rails-migrations-with-database-specific-data-types
+
+
+
+
+
+
+
+

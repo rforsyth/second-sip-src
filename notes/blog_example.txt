@@ -1,0 +1,31 @@
+
+_____________________________________________________________
+Resources
+
+- following this tutorial:
+http://guides.rubyonrails.org/getting_started.html
+- currently at: 5 Getting Up and Running Quickly with Scaffolding
+
+- setting up a new rails app with postgres:
+http://www.whatcodecraves.com/articles/2008/02/05/setup_rails_with_postgresql/
+
+
+_____________________________________________________________
+Commands
+
+$ rails new blog --database=postgresql
+- log into psql and create user for the blog app:
+$ psql template1
+# create role blog with createdb login password 'blog';
+# create database blog_development owner blog;
+# create database blog_test owner blog; 
+# create database blog_production owner blog;
+
+$ bundle install
+
+
+
+
+
+
+

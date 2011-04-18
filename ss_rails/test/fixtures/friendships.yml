@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+<%
+  require 'data/enums'
+%>
+
+DEFAULTS: &DEFAULTS
+  creator: admin
+  updater: admin
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+
+admin_grumpy:
+  inviter: admin
+  invitee: grumpy
+  invitation: Join Me!
+  status: <%= Enums::FriendshipStatus::ACCEPTED %>
+  <<: *DEFAULTS
+

@@ -1,0 +1,80 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Created by:</b>
+  <%= @product.creator_id %>
+</p>
+
+<p>
+  <b>Updated by:</b>
+  <%= @product.updater_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @product.type %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%= @product.owner_id %>
+</p>
+
+<p>
+  <b>Visiblity:</b>
+  <%= @product.visibility %>
+</p>
+
+<p>
+  <b>Is reference:</b>
+  <%= @product.is_reference %>
+</p>
+
+<p>
+  <b>Producer:</b>
+  <%= @product.producer_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @product.name %>
+</p>
+
+<p>
+  <b>Canonical name:</b>
+  <%= @product.canonical_name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @product.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @product.price %>
+</p>
+
+<p>
+  <b>Price paid:</b>
+  <%= @product.price_paid %>
+</p>
+
+<p>
+  <b>Price type:</b>
+  <%= @product.price_type %>
+</p>
+
+<p>
+  <b>Region lookup:</b>
+  <%= @product.region_lookup_id %>
+</p>
+
+<p>
+  <b>Style lookup:</b>
+  <%= @product.style_lookup_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

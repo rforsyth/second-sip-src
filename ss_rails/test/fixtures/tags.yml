@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+  
+yummy:
+  name: yummy
+  type: PersonalTag
+  <<: *DEFAULTS
+  
+not_yummy:
+  name: not_yummy
+  type: PersonalTag
+  <<: *DEFAULTS
+
+
