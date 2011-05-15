@@ -35,6 +35,26 @@ standardamericanlager:
   entity_type: Beer
   <<: *DEFAULTS
 
+americanamberale:
+  name: American Amber Ale
+  canonical_name: $LABEL
+  full_name: American Amber Ale
+  canonical_full_name: $LABEL
+  description: 
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
+specialtybeer:
+  name: Specialty Beer
+  canonical_name: $LABEL
+  full_name: Specialty Beer
+  canonical_full_name: $LABEL
+  description: 
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
 #*****************************************************
 # Wine Regions
 #*****************************************************
@@ -56,6 +76,32 @@ southeastaustralia:
   description: Very... big
   lookup_type: <%= Enums::LookupType::REGION %>
   entity_type: Wine
+  <<: *DEFAULTS
+
+#*****************************************************
+# Spirit Regions
+#*****************************************************
+sweden:
+  name: Sweden
+  canonical_name: $LABEL
+  full_name: Sweden
+  canonical_full_name: $LABEL
+  description: 'Didnt know it was from sweden'
+  lookup_type: <%= Enums::LookupType::REGION %>
+  entity_type: Spirit
+  <<: *DEFAULTS
+
+#*****************************************************
+# Spirit Types
+#*****************************************************
+vodka:
+  name: Vodka
+  canonical_name: $LABEL
+  full_name: Vodka
+  canonical_full_name: $LABEL
+  description: 'Good for getting drunk'
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Spirit
   <<: *DEFAULTS
 
 

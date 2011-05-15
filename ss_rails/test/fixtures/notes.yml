@@ -65,8 +65,119 @@ yellow_tail_shiraz_3:
   vintage: 2013
   <<: *DEFAULTS
 
+#*****************************************************
+# Beer Notes
+#*****************************************************
+budweiser_american_ale_1:
+  owner: happy
+  type: BeerNote
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  is_reference: false
+  product: budweiser_american_ale
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 5.1
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  <<: *DEFAULTS
 
+budweiser_american_ale_2:
+  owner: happy
+  type: BeerNote
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  is_reference: false
+  product: budweiser_american_ale
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 5.1
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  <<: *DEFAULTS
 
+budweiser_american_ale_3:
+  owner: happy
+  type: BeerNote
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  is_reference: false
+  product: budweiser_american_ale
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 5.1
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  <<: *DEFAULTS
+
+#*****************************************************
+# Spirit Notes
+#*****************************************************
+absolut_vodka_1:
+  owner: grumpy
+  type: SpiritNote
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  is_reference: false
+  product: absolut_vodka
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 5.1
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  <<: *DEFAULTS
+
+absolut_vodka_2:
+  owner: grumpy
+  type: SpiritNote
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  is_reference: false
+  product: absolut_vodka
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 5.1
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  <<: *DEFAULTS
+
+absolut_vodka_3:
+  owner: grumpy
+  type: SpiritNote
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  is_reference: false
+  product: absolut_vodka
+  description_overall: I am
+  description_appearance: Not sure
+  description_aroma: what to think
+  description_flavor: about this
+  description_mouthfeel: stuff
+  tasted_at: 2011-04-15 15:12:43
+  score_type: <%= Enums::ScoreType::POINTS_100 %>
+  score: 5.1
+  buy_when: <%= Enums::BuyWhen::FREE %>
+  occasion: some strange party
+  <<: *DEFAULTS
 
 
 

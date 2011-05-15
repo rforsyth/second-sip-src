@@ -57,5 +57,104 @@ yellow_tail_chardonnay:
   region: southeastaustralia
   <<: *DEFAULTS
 
+#*****************************************************
+# Beers
+#*****************************************************
+budweiser_american_ale:
+  owner: happy
+  type: Beer
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  is_reference: false
+  producer: budweiser
+  name: American Ale
+  canonical_name: americanale
+  description: 'Nope, doesnt taste good'
+  price: 6
+  price_paid: 6
+  price_type: <%= Enums::BeerPriceType::SIX_PACK %>
+  style: americanamberale
+  <<: *DEFAULTS
 
+budweiser_chelada:
+  owner: happy
+  type: Beer
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  is_reference: false
+  producer: budweiser
+  name: Chelada
+  canonical_name: chelada
+  description: 'Clams and tomato juice - yep'
+  price: 6
+  price_paid: 6
+  price_type: <%= Enums::BeerPriceType::SIX_PACK %>
+  style: specialtybeer
+  <<: *DEFAULTS
+
+budweiser_select_55:
+  owner: happy
+  type: Beer
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  is_reference: false
+  producer: budweiser
+  name: 'Select 55'
+  canonical_name: select55
+  description: 'Why not just drink water?'
+  price: 6
+  price_paid: 6
+  price_type: <%= Enums::BeerPriceType::SIX_PACK %>
+  style: liteamericanlager
+  <<: *DEFAULTS
+
+
+#*****************************************************
+# Spirits
+#*****************************************************
+absolut_vodka:
+  owner: Grumpy
+  type: Spirit
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  is_reference: false
+  producer: absolut
+  name: 'Vodka'
+  canonical_name: vodka
+  description: 'Good for mixing'
+  price: 30
+  price_paid: 30
+  price_type: <%= Enums::SpiritPriceType::FIFTH %>
+  region: sweden
+  style: vodka
+  <<: *DEFAULTS
+  
+absolut_mandrin_vodka:
+  owner: Grumpy
+  type: Spirit
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  is_reference: false
+  producer: absolut
+  name: 'Mandrin Vodka'
+  canonical_name: mandrinvodka
+  description: 'Good for mixing'
+  price: 30
+  price_paid: 30
+  price_type: <%= Enums::SpiritPriceType::FIFTH %>
+  region: sweden
+  style: vodka
+  <<: *DEFAULTS
+  
+absolut_citron_vodka:
+  owner: Grumpy
+  type: Spirit
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  is_reference: false
+  producer: absolut
+  name: 'Citron Vodka'
+  canonical_name: citronvodka
+  description: 'Cosmo?'
+  price: 30
+  price_paid: 30
+  price_type: <%= Enums::SpiritPriceType::FIFTH %>
+  region: sweden
+  style: vodka
+  <<: *DEFAULTS
+  
 

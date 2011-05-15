@@ -32,4 +32,7 @@ SsRails::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+	# Initialize ActiveRecord observers
+	config.active_record.observers = :editor_observer
 end

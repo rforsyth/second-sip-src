@@ -46,4 +46,7 @@ SsRails::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+	# Initialize ActiveRecord observers
+	config.active_record.observers = :editor_observer
 end
