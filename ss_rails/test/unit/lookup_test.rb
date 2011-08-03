@@ -14,7 +14,7 @@ class LookupTest < ActiveSupport::TestCase
   setup :activate_authlogic
 
   setup do
-    UserSession.create(users(:admin))
+    TasterSession.create(users(:admin))
   end
 
 	test "generated names are correct" do
@@ -47,6 +47,6 @@ class LookupTest < ActiveSupport::TestCase
 	end
 
 	test "create lookup" do
-		#puts current_user.inspect
+		#puts current_taster.inspect
 	end
 end

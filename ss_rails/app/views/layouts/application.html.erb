@@ -9,11 +9,11 @@
 <body>
   
     <div id="nav">
-        <% if current_user %>
-        <%= link_to "Edit Profile", edit_user_path(current_user.id)%>
+        <% if current_taster %>
+        <%= link_to "Edit Profile", edit_taster_path(current_taster.id)%>
         <%= link_to "Logout", :logout%>
         <% else %>
-        <%= link_to "Register", new_user_path%> | 
+        <%= link_to "Register", new_taster_path%> | 
         <%= link_to "Login", :login %>
         <% end %>
     </div>

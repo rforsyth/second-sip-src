@@ -21,5 +21,3 @@ $ sudo su postgres -c '/opt/local/lib/postgresql83/bin/pg_ctl -D /opt/local/var/
 - to access db via Navicat, double-click connection; password is your user (rforsyth) pwd
 
 
-
-

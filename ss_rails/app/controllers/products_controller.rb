@@ -1,3 +1,14 @@
+
+
+class BeersController < ProductsController
+end
+
+class WinesController < ProductsController
+end
+
+class SpiritsController < ProductsController
+end
+
 class ProductsController < ApplicationController
   # GET /products
   # GET /products.xml

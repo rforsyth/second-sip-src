@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Username:</b>
+  <%= @taster.username %>
+</p>
+
+<p>
+  <b>Canonical username:</b>
+  <%= @taster.canonical_username %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @taster.email %>
+</p>
+
+<p>
+  <b>Crypted password:</b>
+  <%= @taster.crypted_password %>
+</p>
+
+<p>
+  <b>Password salt:</b>
+  <%= @taster.password_salt %>
+</p>
+
+<p>
+  <b>Persistence token:</b>
+  <%= @taster.persistence_token %>
+</p>
+
+<p>
+  <b>Greeting:</b>
+  <%= @taster.greeting %>
+</p>
+
+
+<%= link_to 'Edit', edit_taster_path(@taster) %> |
+<%= link_to 'Back', tasters_path %>

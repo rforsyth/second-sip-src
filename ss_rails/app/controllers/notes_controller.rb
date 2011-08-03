@@ -1,3 +1,14 @@
+
+class BeerNotesController < NotesController
+end
+
+class WineNotesController < NotesController
+end
+
+class SpiritNotesController < NotesController
+end
+
+
 class NotesController < ApplicationController
   # GET /notes
   # GET /notes.xml

@@ -1,19 +1,16 @@
 SsRails::Application.routes.draw do
-  resources :friendships
 
-  resources :tags
+  resources :friendships, :tags, :resources, :taster_sessions
 
-  resources :notes
-
-  resources :products
-
-  resources :producers
-
-  resources :resources
-
-  resources :users, :user_sessions
-  match 'login' => 'user_sessions#new', :as => :login
-  match 'logout' => 'user_sessions#destroy', :as => :logout
+  resources :tasters do
+    resources :breweries, :wineries, :distilleries
+    resources :beers, :wines, :spirits
+    resources :beer_notes, :wine_notes, :spirit_notes
+  end
+  
+  resources :taster_sessions
+  match 'login' => 'taster_sessions#new', :as => :login
+  match 'logout' => 'taster_sessions#destroy', :as => :logout
 
   resources :lookups do
 		resources :resources

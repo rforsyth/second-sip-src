@@ -1,0 +1,25 @@
+<h1>Listing taster_sessions</h1>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Password</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @taster_sessions.each do |taster_session| %>
+  <tr>
+    <td><%= taster_session.username %></td>
+    <td><%= taster_session.password %></td>
+    <td><%= link_to 'Show', taster_session %></td>
+    <td><%= link_to 'Edit', edit_taster_session_path(taster_session) %></td>
+    <td><%= link_to 'Destroy', taster_session, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User session', new_taster_session_path %>

@@ -1,7 +1,7 @@
 class Producer < ActiveRecord::Base
-	belongs_to :creator, :class_name => "User"
-	belongs_to :updater, :class_name => "User"
-	belongs_to :owner, :class_name => "User"
+	belongs_to :creator, :class_name => "Taster"
+	belongs_to :updater, :class_name => "Taster"
+	belongs_to :owner, :class_name => "Taster"
 	has_many :products
 	
 end

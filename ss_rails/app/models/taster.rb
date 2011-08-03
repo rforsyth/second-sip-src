@@ -1,6 +1,7 @@
-class User < ActiveRecord::Base
-	belongs_to :creator, :class_name => "User"
-	belongs_to :updater, :class_name => "User"
+class Taster < ActiveRecord::Base
+  set_table_name "users"
+	belongs_to :creator, :class_name => "Taster"
+	belongs_to :updater, :class_name => "Taster"
   acts_as_authentic
 
   ROLES = %w[admin enforcer editor banned]

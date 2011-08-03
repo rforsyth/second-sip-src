@@ -5,7 +5,7 @@ require 'test_helper'
 # - can't create user with same username
 #######################################################
 
-class UserTest < ActiveSupport::TestCase
+class TasterTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true

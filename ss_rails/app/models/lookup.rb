@@ -2,8 +2,8 @@
 require 'data/string'
 
 class Lookup < ActiveRecord::Base
-	belongs_to :creator, :class_name => "User"
-	belongs_to :updater, :class_name => "User"
+	belongs_to :creator, :class_name => "Taster"
+	belongs_to :updater, :class_name => "Taster"
 	belongs_to :parent_lookup, :class_name => "Lookup"
 	has_many :child_lookups, :class_name => "Lookup", :foreign_key => 'parent_lookup_id'
 	before_validation :build_full_name

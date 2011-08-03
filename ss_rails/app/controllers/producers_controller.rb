@@ -1,3 +1,14 @@
+
+
+class BreweriesController < ProducersController
+end
+
+class WineriesController < ProducersController
+end
+
+class DistilleriesController < ProducersController
+end
+
 class ProducersController < ApplicationController
   # GET /producers
   # GET /producers.xml
@@ -81,3 +92,6 @@ class ProducersController < ApplicationController
     end
   end
 end
+
+
+

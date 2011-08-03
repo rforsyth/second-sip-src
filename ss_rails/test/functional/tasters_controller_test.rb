@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UsersControllerTest < ActionController::TestCase
+class TastersControllerTest < ActionController::TestCase
   setup do
     @user = users(:one)
   end
@@ -17,7 +17,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
-    assert_difference('User.count') do
+    assert_difference('Taster.count') do
       post :create, :user => @user.attributes
     end
 
@@ -40,7 +40,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should destroy user" do
-    assert_difference('User.count', -1) do
+    assert_difference('Taster.count', -1) do
       delete :destroy, :id => @user.to_param
     end
 
