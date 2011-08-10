@@ -31,13 +31,12 @@
     <td><%= producer.canonical_name %></td>
     <td><%= producer.description %></td>
     <td><%= producer.cases_per_year %></td>
-    <td><%= link_to 'Show', producer %></td>
-    <td><%= link_to 'Edit', edit_producer_path(producer) %></td>
-    <td><%= link_to 'Destroy', producer, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', [producer.owner, producer] %></td>
+    <td><%= link_to 'Edit', edit_polymorphic_path([producer.owner, producer]) %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Producer', new_producer_path %>
+<%= link_to 'New Producer', new_polymorphic_path([current_taster, @producer_class]) %>

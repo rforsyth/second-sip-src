@@ -6,7 +6,10 @@ class EditorObserver < ActiveRecord::Observer
   observe Friendship, Lookup, Note, Producer, Product, Resource, Tag, Taster
 
   def before_validation(object)
-    object.creator = current_taster if object.new_record?
+    if object.new_record?
+      object.creator = current_taster
+      object.owner = current_taster
+    end
     object.updater = current_taster
   end
 

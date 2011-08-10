@@ -21,3 +21,13 @@ $ sudo su postgres -c '/opt/local/lib/postgresql83/bin/pg_ctl -D /opt/local/var/
 - to access db via Navicat, double-click connection; password is your user (rforsyth) pwd
 
 
+__________________________________________________________________
+Git
+
+Source code hosted at: http://secondsip.unfuddle.com/a#/projects/1
+- login: Ryan / not enough cap
+- more info in Google Docs - SecondSip Hosting
+
+$ git push unfuddle master
+
+

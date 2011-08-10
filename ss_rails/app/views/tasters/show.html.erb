@@ -35,6 +35,11 @@
   <%= @taster.greeting %>
 </p>
 
+<hr/>
+<%= link_to 'Breweries', taster_breweries_path(@taster) %>
+<%= link_to 'Beers', taster_beers_path(@taster) %>
+<%= link_to 'Beer Notes', taster_beer_notes_path(@taster) %>
+<hr/>
 
 <%= link_to 'Edit', edit_taster_path(@taster) %> |
 <%= link_to 'Back', tasters_path %>

@@ -1,43 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Created by:</b>
-  <%= @note.creator_id %>
-</p>
-
-<p>
-  <b>Updated by:</b>
-  <%= @note.updater_id %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%= @note.type %>
-</p>
-
-<p>
-  <b>Owner:</b>
-  <%= @note.owner_id %>
-</p>
-
-<p>
-  <b>Visiblity:</b>
-  <%= @note.visibility %>
-</p>
-
-<p>
-  <b>Is reference:</b>
-  <%= @note.is_reference %>
-</p>
-
-<p>
   <b>Producer:</b>
-  <%= @note.producer_id %>
+  <%= @note.product.producer.name %>
 </p>
 
 <p>
   <b>Product:</b>
-  <%= @note.product_id %>
+  <%= @note.product.name %>
 </p>
 
 <p>
@@ -45,51 +15,5 @@
   <%= @note.description_overall %>
 </p>
 
-<p>
-  <b>Description appearance:</b>
-  <%= @note.description_appearance %>
-</p>
-
-<p>
-  <b>Description aroma:</b>
-  <%= @note.description_aroma %>
-</p>
-
-<p>
-  <b>Description flavor:</b>
-  <%= @note.description_flavor %>
-</p>
-
-<p>
-  <b>Description mouthfeel:</b>
-  <%= @note.description_mouthfeel %>
-</p>
-
-<p>
-  <b>Tasted at:</b>
-  <%= @note.tasted_at %>
-</p>
-
-<p>
-  <b>Score type:</b>
-  <%= @note.score_type %>
-</p>
-
-<p>
-  <b>Score:</b>
-  <%= @note.score %>
-</p>
-
-<p>
-  <b>Buy when:</b>
-  <%= @note.buy_when %>
-</p>
-
-<p>
-  <b>Occasion:</b>
-  <%= @note.occasion %>
-</p>
-
-
-<%= link_to 'Edit', edit_note_path(@note) %> |
-<%= link_to 'Back', notes_path %>
+<%= link_to 'Edit', edit_polymorphic_path([@note.owner, @note]) %> |
+<%= link_to 'Back', polymorphic_path([@note.owner, @note_class]) %>

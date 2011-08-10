@@ -1,7 +1,11 @@
 SsRails::Application.routes.draw do
+  
+  username_pattern = /[a-zA-Z0-9_]{3,16}/  # no anchor characters required in routes
+
+  #match 'tasters/:username' => 'tasters#show', :username => username_pattern
 
   resources :friendships, :tags, :resources, :taster_sessions
-
+  
   resources :tasters do
     resources :breweries, :wineries, :distilleries
     resources :beers, :wines, :spirits

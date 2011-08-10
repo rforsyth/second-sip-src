@@ -56,5 +56,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_producer_path(@producer) %> |
-<%= link_to 'Back', producers_path %>
+<%= link_to 'Edit', edit_polymorphic_path([@producer.owner, @producer]) %> |
+<%= link_to 'Back', polymorphic_path([@producer.owner, @producer_class]) %>

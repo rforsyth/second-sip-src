@@ -5,6 +5,13 @@ class Taster < ActiveRecord::Base
   acts_as_authentic
 
   ROLES = %w[admin enforcer editor banned]
+  
+  def to_param
+    self.username
+  end
+
+  ############################################
+  ## Authorization
 
 	def is?(role)
 	  roles.include?(role.to_s)
@@ -19,5 +26,7 @@ class Taster < ActiveRecord::Base
 	    ((roles_mask || 0) & 2**ROLES.index(r)).zero?
 	  end
 	end
+	
+	
 
 end

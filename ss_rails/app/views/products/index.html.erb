@@ -2,50 +2,22 @@
 
 <table>
   <tr>
-    <th>Created by</th>
-    <th>Updated by</th>
-    <th>Type</th>
-    <th>Owner</th>
-    <th>Visiblity</th>
-    <th>Is reference</th>
     <th>Producer</th>
     <th>Name</th>
-    <th>Canonical name</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th>Price paid</th>
-    <th>Price type</th>
-    <th>Region lookup</th>
-    <th>Style lookup</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
 
 <% @products.each do |product| %>
   <tr>
-    <td><%= product.creator_id %></td>
-    <td><%= product.updater_id %></td>
-    <td><%= product.type %></td>
-    <td><%= product.owner_id %></td>
-    <td><%= product.visibility %></td>
-    <td><%= product.is_reference %></td>
-    <td><%= product.producer_id %></td>
+    <td><%= product.producer.name %></td>
     <td><%= product.name %></td>
-    <td><%= product.canonical_name %></td>
-    <td><%= product.description %></td>
-    <td><%= product.price %></td>
-    <td><%= product.price_paid %></td>
-    <td><%= product.price_type %></td>
-    <td><%= product.region_lookup_id %></td>
-    <td><%= product.style_lookup_id %></td>
-    <td><%= link_to 'Show', product %></td>
-    <td><%= link_to 'Edit', edit_product_path(product) %></td>
-    <td><%= link_to 'Destroy', product, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', [product.owner, product] %></td>
+    <td><%= link_to 'Edit', edit_polymorphic_path([product.owner, product]) %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Product', new_product_path %>
+<%= link_to 'New Product', new_polymorphic_path([current_taster, @product_class]) %>

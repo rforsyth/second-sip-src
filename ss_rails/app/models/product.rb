@@ -7,6 +7,23 @@ class Product < ActiveRecord::Base
 	belongs_to :producer
 	has_many :notes
 	
+	validates_presence_of :producer, :name
+
+  after_initialize :set_default_values
+  before_save :set_canonical_fields
+  
+  def set_default_values
+    self.visibility ||= Enums::Visibility::PUBLIC
+  end	
+  
+  def set_canonical_fields
+    self.canonical_name = "#{self.producer.canonical_name}-#{self.name.canonicalize}"
+  end
+  
+  def to_param
+    self.canonical_name
+  end
+
 end
 
 class Beer < Product

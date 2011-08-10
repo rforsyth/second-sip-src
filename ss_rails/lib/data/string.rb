@@ -8,6 +8,10 @@ class String
   def slugify
     self.canonicalize_helper(true).gsub(/[ ]/, '-')
   end
+  
+  def is_i?
+    !!(self =~ /^[-+]?[0-9]+$/)
+  end
 
 	def canonicalize_helper(include_spaces)
     # first convert accented characters to their standard equivalent
