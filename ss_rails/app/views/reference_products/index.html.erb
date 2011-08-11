@@ -1,0 +1,45 @@
+<h1>Listing reference_products</h1>
+
+<table>
+  <tr>
+    <th>Creator</th>
+    <th>Updater</th>
+    <th>Type</th>
+    <th>Reference producer</th>
+    <th>Name</th>
+    <th>Canonical name</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Price paid</th>
+    <th>Price type</th>
+    <th>Region lookup</th>
+    <th>Style lookup</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @reference_products.each do |reference_product| %>
+  <tr>
+    <td><%= reference_product.creator_id %></td>
+    <td><%= reference_product.updater_id %></td>
+    <td><%= reference_product.type %></td>
+    <td><%= reference_product.reference_producer_id %></td>
+    <td><%= reference_product.name %></td>
+    <td><%= reference_product.canonical_name %></td>
+    <td><%= reference_product.description %></td>
+    <td><%= reference_product.price %></td>
+    <td><%= reference_product.price_paid %></td>
+    <td><%= reference_product.price_type %></td>
+    <td><%= reference_product.region_lookup_id %></td>
+    <td><%= reference_product.style_lookup_id %></td>
+    <td><%= link_to 'Show', reference_product %></td>
+    <td><%= link_to 'Edit', edit_reference_product_path(reference_product) %></td>
+    <td><%= link_to 'Destroy', reference_product, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Reference product', new_reference_product_path %>

@@ -1,5 +1,12 @@
 
 class ProducersController < ApplicationController
+  
+  # GET /producers/search
+  def search
+    @producers = @producer_class.all
+		render :template => 'producers/search'
+  end
+  
   # GET /producers
   # GET /producers.xml
   def index

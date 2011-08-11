@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  canonical_name: MyString
+  description: MyText
+  lookup_type: 1
+  entity_type: MyString
+  parent_reference_lookup_id: 1
+  full_name: MyString
+  canonical_full_name: MyString
+
+two:
+  name: MyString
+  canonical_name: MyString
+  description: MyText
+  lookup_type: 1
+  entity_type: MyString
+  parent_reference_lookup_id: 1
+  full_name: MyString
+  canonical_full_name: MyString

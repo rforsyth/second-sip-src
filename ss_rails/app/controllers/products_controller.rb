@@ -1,5 +1,12 @@
 
 class ProductsController < ApplicationController
+  
+  # GET /products/search
+  def search
+    @products = @product_class.all
+		render :template => 'products/search'
+  end
+  
   # GET /products
   def index
     @products = @product_class.all

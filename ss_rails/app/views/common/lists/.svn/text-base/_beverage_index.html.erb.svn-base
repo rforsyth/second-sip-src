@@ -1,0 +1,28 @@
+
+<%
+  username = case
+    when viewing_own_data? then 'My'
+    when !@displayed_profile.nil? then "#{@displayed_profile.username}'s"
+    else 'Latest'
+  end
+%>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "#{username} #{beverage_model.entity_title.pluralize}",
+                        :new_item_path => (viewing_own_data?) ? new_beverage_path : nil } %>
+
+<% if beverages && !beverages.empty? %>
+  <div class="main_list">
+    <%= render :partial => beverage_partial, :collection => beverages %>
+  </div>
+<% elsif viewing_own_data? %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "Click the &quot;Add&quot; link above to create a new #{beverage_model.entity_title.downcase}." %>
+<% elsif @displayed_profile %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "#{@displayed_profile.username} does not have any public #{beverage_model.entity_title.pluralize.downcase}." %>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no public #{beverage_model.entity_title.pluralize.downcase}." %>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>

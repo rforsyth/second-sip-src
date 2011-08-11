@@ -30,4 +30,13 @@ Source code hosted at: http://secondsip.unfuddle.com/a#/projects/1
 
 $ git push unfuddle master
 
+__________________________________________________________________
+Rake
+
+$ rake routes
+$ rake db:migrate
+
+
+
+
 

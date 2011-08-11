@@ -1,0 +1,15 @@
+<%
+  buy_when_help_text = <<-eos
+    <p>The &quot;Buy When&quot; field helps you remember which 
+    #{@product_class.name.downcase.pluralize} you would spend your money on in the future.</p>
+    <p>Unlike a quality score it is supposed to be purely subjective and to take price into account.</p>
+  eos
+%>
+<div class="form_row">
+  <%= note_fields.label :buy_when, 'Buy When:' %>
+  <%= note_fields.select(:buy_when, Enums::BuyWhen.collection, :class => 'select_field_wide') %>
+  <% # a href="#" id="buy_when_help_target" class="help_target">&nbsp;</a>
+     # render :partial => 'common/help_bubble', :locals => {
+     #:container_id => 'buy_when_help', :target_id => 'buy_when_help_target', :help_text => buy_when_help_text }
+  %>
+</div>

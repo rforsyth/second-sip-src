@@ -9,5 +9,14 @@ http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html
 http://code.alexreisner.com/articles/single-table-inheritance-in-rails.html
 
 
+______________________________________________________________
+Migrations
+
+- consolidating migrations:
+http://stackoverflow.com/questions/1486514/when-if-to-consolidate-activerecord-migrations
+
+
+
+
 
 

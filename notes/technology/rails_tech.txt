@@ -8,3 +8,6 @@ http://stackoverflow.com/questions/2104047/building-a-polymorphic-model-controll
 
 http://apidock.com/rails/ActionDispatch/Routing/PolymorphicRoutes
 
+- to test path helpers in console:
+$ include ActionController::UrlWriter
+

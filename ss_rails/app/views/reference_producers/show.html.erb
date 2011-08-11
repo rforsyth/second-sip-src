@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Creator:</b>
+  <%= @reference_producer.creator_id %>
+</p>
+
+<p>
+  <b>Updater:</b>
+  <%= @reference_producer.updater_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @reference_producer.type %>
+</p>
+
+<p>
+  <b>Website url:</b>
+  <%= @reference_producer.website_url %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @reference_producer.name %>
+</p>
+
+<p>
+  <b>Canonical name:</b>
+  <%= @reference_producer.canonical_name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @reference_producer.description %>
+</p>
+
+<p>
+  <b>Cases per year:</b>
+  <%= @reference_producer.cases_per_year %>
+</p>
+
+<p>
+  <b>Capacity in barrels:</b>
+  <%= @reference_producer.capacity_in_barrels %>
+</p>
+
+
+<%= link_to 'Edit', edit_reference_producer_path(@reference_producer) %> |
+<%= link_to 'Back', reference_producers_path %>

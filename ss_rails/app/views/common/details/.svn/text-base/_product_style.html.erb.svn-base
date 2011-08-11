@@ -1,0 +1,11 @@
+<%
+  return if !product.style_name.present?
+%>
+<div class="details_row">
+  <span class="label"><%= (product.kind_of?(Beer)) ? 'Style' : 'Type' %>:</span>
+  <span class="content">
+  <%= link_to(product.style_name, '#', :class => 'lookup_link',
+      :onclick => "show_lookup_references(this); return false;",
+      :entity_type => product.type, :lookup_type => Enums::LookupType::STYLE) %>
+  </span>
+</div>

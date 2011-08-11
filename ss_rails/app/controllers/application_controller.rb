@@ -13,14 +13,20 @@ class ApplicationController < ActionController::Base
       @producer_class = Brewery
       @product_class = Beer
       @note_class = BeerNote
+      @reference_producer_class = ReferenceBrewery
+      @reference_product_class = ReferenceBeer
     when :wine then
       @producer_class = Winery
       @product_class = Wine
       @note_class = WineNote
+      @reference_producer_class = ReferenceWinery
+      @reference_product_class = ReferenceWine
     when :spirits then
       @producer_class = Distillery
       @product_class = Spirit
       @note_class = SpiritNote
+      @reference_producer_class = ReferenceDistillery
+      @reference_product_class = ReferenceSpirit
     end
   end
 

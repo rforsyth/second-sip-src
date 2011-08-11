@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Creator:</b>
+  <%= @reference_product.creator_id %>
+</p>
+
+<p>
+  <b>Updater:</b>
+  <%= @reference_product.updater_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @reference_product.type %>
+</p>
+
+<p>
+  <b>Reference producer:</b>
+  <%= @reference_product.reference_producer_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @reference_product.name %>
+</p>
+
+<p>
+  <b>Canonical name:</b>
+  <%= @reference_product.canonical_name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @reference_product.description %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @reference_product.price %>
+</p>
+
+<p>
+  <b>Price paid:</b>
+  <%= @reference_product.price_paid %>
+</p>
+
+<p>
+  <b>Price type:</b>
+  <%= @reference_product.price_type %>
+</p>
+
+<p>
+  <b>Region lookup:</b>
+  <%= @reference_product.region_lookup_id %>
+</p>
+
+<p>
+  <b>Style lookup:</b>
+  <%= @reference_product.style_lookup_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_reference_product_path(@reference_product) %> |
+<%= link_to 'Back', reference_products_path %>

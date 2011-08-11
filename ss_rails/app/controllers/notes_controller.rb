@@ -1,5 +1,12 @@
 
 class NotesController < ApplicationController
+  
+  # GET /notes/search
+  def search
+    @notes = @note_class.all
+		render :template => 'notes/search'
+  end
+  
   # GET /notes
   def index
     @notes = @note_class.all

@@ -1,0 +1,16 @@
+<%
+  return if !params[:query].present?
+  escaped_query = h(params[:query])
+  
+  links = []
+  links << link_to('notes', search_notes_path) if current_tab != :notes
+  links << link_to(@product_class.entity_title.downcase.pluralize,
+                   search_products_path) if current_tab != :products
+  links << link_to(@producer_class.entity_title.downcase.pluralize,
+                   search_producers_path) if current_tab != :producers
+%>
+<div class="rightpane alternate_entity_search_links">
+  Search <%= links.join(" or ") %>
+</div>
+
+

@@ -1,0 +1,28 @@
+<%-
+  link = case subnav_tab.tab
+  when :notes then
+    link_to('Notes', notes_path(params[:username]), :class => subnav_tab.css_class)
+  when :products then
+    link_to(@product_class.name.titleize.pluralize, products_path(params[:username]), :class => subnav_tab.css_class)
+  when :producers then
+    link_to(@producer_class.name.titleize.pluralize, producers_path(params[:username]), :class => subnav_tab.css_class)
+  when :tasters then
+    link_to('Tasters', tasters_path, :class => subnav_tab.css_class)
+  when :friendships then
+    link_to('Friendships', friendships_path, :class => subnav_tab.css_class)
+  when :lookups then
+    link_to('Lookups', lookups_path, :class => subnav_tab.css_class)
+  when :references then
+    link_to('References', references_path, :class => subnav_tab.css_class)
+  when :tags then
+    link_to('Tags', tags_path, :class => subnav_tab.css_class)
+  when :product_notes then
+    link_to('Notes', "#{product_path(subnav_tab.container_object)}?tab=notes", :class => subnav_tab.css_class)
+  when :producer_notes then
+    link_to('Notes', "#{producer_path(subnav_tab.container_object)}?tab=notes", :class => subnav_tab.css_class)
+  when :producer_products then
+    link_to(@product_class.name.titleize.pluralize, "#{producer_path(subnav_tab.container_object)}?tab=products", :class => subnav_tab.css_class)
+  else raise 'Unexpected tab'
+  end
+-%>
+<td><%= link %></td>

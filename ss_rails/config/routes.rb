@@ -1,26 +1,40 @@
 SsRails::Application.routes.draw do
-  
-  username_pattern = /[a-zA-Z0-9_]{3,16}/  # no anchor characters required in routes
 
+  username_pattern = /[a-zA-Z0-9_]{3,16}/  # no anchor characters required in routes
+	producers_pattern = /breweries|wineries|distilleries/
+	products_pattern = /beers|wines|spirits/
+	notes_pattern = /beer_notes|wine_notes|spirit_notes/
   #match 'tasters/:username' => 'tasters#show', :username => username_pattern
 
-  resources :friendships, :tags, :resources, :taster_sessions
-  
-  resources :tasters do
-    resources :breweries, :wineries, :distilleries
-    resources :beers, :wines, :spirits
-    resources :beer_notes, :wine_notes, :spirit_notes
-  end
-  
+	root :to => "home#index"
+
   resources :taster_sessions
   match 'login' => 'taster_sessions#new', :as => :login
   match 'logout' => 'taster_sessions#destroy', :as => :logout
-
-  resources :lookups do
-		resources :resources
-	end
-
-	root :to => "home#index"
+  
+  resources :lookups, :reference_lookups
+  resources :friendships, :tags, :resources
+  
+  match ':entity_type' => 'global_producers#browse', :as => 'browse_producers', :entity_type => producers_pattern
+  match ':entity_type/search' => 'global_producers#search', :as => 'search_producers', :entity_type => producers_pattern
+  
+  match ':entity_type' => 'global_products#browse', :as => 'browse_products', :entity_type => products_pattern
+  match ':entity_type/search' => 'global_products#search', :as => 'search_products', :entity_type => products_pattern
+  
+  match ':entity_type' => 'global_notes#browse', :as => 'browse_notes', :entity_type => notes_pattern
+  match ':entity_type/search' => 'global_notes#search', :as => 'search_notes', :entity_type => notes_pattern
+  
+  resources :reference_breweries, :reference_wineries, :reference_distilleries,
+            :reference_beers, :reference_wines, :reference_spirits,
+            :reference_beer_notes, :reference_wine_notes, :reference_spirit_notes
+  
+  resources :tasters do
+    resources :breweries, :wineries, :distilleries,
+              :beers, :wines, :spirits,
+              :beer_notes, :wine_notes, :spirit_notes do
+                get 'search', :on => :collection
+              end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

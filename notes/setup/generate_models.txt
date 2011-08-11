@@ -72,4 +72,31 @@ rails generate migration RenameVisiblity
 
 rails generate migration RenameResourceType
 
+rails generate migration RenameUsersTableToTasters
+
+rails generate migration RemoveIsReferenceField
+
+rails generate scaffold ReferenceLookup name:string canonical_name:string description:text \
+                               lookup_type:integer entity_type:string parent_reference_lookup_id:integer \
+                               full_name:string canonical_full_name:string
+
+rails generate migration AddOwnerToLookups
+
+rails generate migration RemoveReferenceFieldsFromLookups
+
+rails generate scaffold reference_producer creator_id:integer updater_id:integer \
+                                 type:string website_url:string name:string canonical_name:string \
+                                 description:text cases_per_year:integer capacity_in_barrels:integer
+
+rails generate scaffold reference_product creator_id:integer updater_id:integer \
+                                 type:string reference_producer_id:integer name:string canonical_name:string \
+                                 description:text price:float price_paid:float price_type:integer \
+                                 region_lookup_id:integer style_lookup_id:integer
+
+
+
+
+
+
+
 

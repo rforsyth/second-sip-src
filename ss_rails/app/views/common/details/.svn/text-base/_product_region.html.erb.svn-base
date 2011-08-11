@@ -1,0 +1,12 @@
+<%
+  return if !product.region_name.present?
+%>
+<div class="details_row">
+  <span class="label"><%= (product.kind_of?(Beer)) ? 'Brewed In' : 'Region' %>:</span>
+  <span class="content">
+  <%= link_to(product.region_name, '#', :class => 'lookup_link',
+      :onclick => "show_lookup_references(this); return false;",
+      :entity_type => product.type, :lookup_type => Enums::LookupType::REGION) %>
+  </span>
+</div>
+

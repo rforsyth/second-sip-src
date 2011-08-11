@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110417162840) do
+ActiveRecord::Schema.define(:version => 20110811135325) do
 
   create_table "friendships", :force => true do |t|
     t.integer  "creator_id"
@@ -30,19 +30,16 @@ ActiveRecord::Schema.define(:version => 20110417162840) do
   end
 
   create_table "lookups", :force => true do |t|
-    t.string   "name",                :limit => 150, :null => false
-    t.string   "canonical_name",      :limit => 150, :null => false
+    t.string   "name",           :limit => 150, :null => false
+    t.string   "canonical_name", :limit => 150, :null => false
     t.text     "description"
-    t.integer  "lookup_type",                        :null => false
-    t.string   "entity_type",         :limit => 50,  :null => false
-    t.integer  "parent_lookup_id"
-    t.string   "full_name",           :limit => 500, :null => false
-    t.string   "canonical_full_name", :limit => 500, :null => false
-    t.boolean  "is_reference"
+    t.integer  "lookup_type",                   :null => false
+    t.string   "entity_type",    :limit => 50,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "creator_id",                         :null => false
-    t.integer  "updater_id",                         :null => false
+    t.integer  "creator_id",                    :null => false
+    t.integer  "updater_id",                    :null => false
+    t.integer  "owner_id"
   end
 
   create_table "notes", :force => true do |t|
@@ -51,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20110417162840) do
     t.string   "type",                   :limit => 50,  :null => false
     t.integer  "owner_id",                              :null => false
     t.integer  "visibility",                            :null => false
-    t.boolean  "is_reference"
     t.integer  "product_id",                            :null => false
     t.text     "description_overall"
     t.string   "description_appearance", :limit => 500
@@ -74,7 +70,6 @@ ActiveRecord::Schema.define(:version => 20110417162840) do
     t.string   "type",                :limit => 50,  :null => false
     t.integer  "owner_id",                           :null => false
     t.integer  "visibility",                         :null => false
-    t.boolean  "is_reference"
     t.string   "website_url"
     t.string   "name",                :limit => 150, :null => false
     t.string   "canonical_name",      :limit => 150, :null => false
@@ -91,7 +86,6 @@ ActiveRecord::Schema.define(:version => 20110417162840) do
     t.string   "type",             :limit => 50,  :null => false
     t.integer  "owner_id",                        :null => false
     t.integer  "visibility",                      :null => false
-    t.boolean  "is_reference"
     t.integer  "producer_id",                     :null => false
     t.string   "name",             :limit => 150, :null => false
     t.string   "canonical_name",   :limit => 150, :null => false
@@ -101,6 +95,21 @@ ActiveRecord::Schema.define(:version => 20110417162840) do
     t.integer  "price_type"
     t.integer  "region_lookup_id"
     t.integer  "style_lookup_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reference_lookups", :force => true do |t|
+    t.string   "name",                       :limit => 150, :null => false
+    t.string   "canonical_name",             :limit => 150, :null => false
+    t.text     "description"
+    t.integer  "lookup_type",                               :null => false
+    t.string   "entity_type",                :limit => 50,  :null => false
+    t.integer  "parent_reference_lookup_id"
+    t.string   "full_name",                  :limit => 500, :null => false
+    t.string   "canonical_full_name",        :limit => 500, :null => false
+    t.integer  "creator_id",                                :null => false
+    t.integer  "updater_id",                                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -133,7 +142,7 @@ ActiveRecord::Schema.define(:version => 20110417162840) do
     t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "tasters", :force => true do |t|
     t.string   "username"
     t.string   "canonical_username"
     t.string   "email"

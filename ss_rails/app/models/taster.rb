@@ -1,5 +1,5 @@
 class Taster < ActiveRecord::Base
-  set_table_name "users"
+  #set_table_name "users"
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
   acts_as_authentic
