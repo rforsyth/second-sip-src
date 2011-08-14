@@ -14,6 +14,7 @@ SsRails::Application.routes.draw do
   
   resources :lookups, :reference_lookups
   resources :friendships, :tags, :resources
+  resources :reference_producers, :reference_products
   
   match ':entity_type' => 'global_producers#browse', :as => 'browse_producers', :entity_type => producers_pattern
   match ':entity_type/search' => 'global_producers#search', :as => 'search_producers', :entity_type => producers_pattern
@@ -24,8 +25,9 @@ SsRails::Application.routes.draw do
   match ':entity_type' => 'global_notes#browse', :as => 'browse_notes', :entity_type => notes_pattern
   match ':entity_type/search' => 'global_notes#search', :as => 'search_notes', :entity_type => notes_pattern
   
-  resources :reference_breweries, :reference_wineries, :reference_distilleries,
-            :reference_beers, :reference_wines, :reference_spirits
+  # resources :reference_breweries, :reference_wineries, :reference_distilleries,
+  #           :reference_beers, :reference_wines, :reference_spirits
+  
   
   resources :tasters do
     resources :breweries, :wineries, :distilleries,

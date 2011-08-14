@@ -32,6 +32,15 @@ module UI::TabBuilder
 	def initialize_tags_tabs
 		initialize_admin_tabs_helper(:metadata, :tags)
 	end
+	def initialize_reference_lookups_tabs
+		initialize_admin_tabs_helper(:reference, :reference_lookups)
+	end
+	def initialize_reference_products_tabs
+		initialize_admin_tabs_helper(:reference, :reference_products)
+	end
+	def initialize_reference_producers_tabs
+		initialize_admin_tabs_helper(:reference, :reference_producers)
+	end
 	def initialize_producer_edit_tabs
 		@topnav_tabs = build_beverage_topnav_tabs(:my_notes, current_taster, current_taster)
 		@subnav_tabs = build_beverage_subnav_tabs(:producers)
@@ -57,6 +66,7 @@ module UI::TabBuilder
 		@subnav_tabs = case topnav_tab
 			when :metadata then build_metadata_subnav_tabs(subnav_tab)
 			when :users then build_users_subnav_tabs(subnav_tab)
+			when :reference then build_reference_subnav_tabs(subnav_tab)
 		end
 	end
 	
@@ -83,8 +93,9 @@ module UI::TabBuilder
 	
 	def build_admin_topnav_tabs(selected_tab)
 		tabs = [UI::NavigationTab.new(:home, calc_class(:home, selected_tab)),
-		 UI::NavigationTab.new(:users, calc_class(:users, selected_tab)),
-		 UI::NavigationTab.new(:metadata, calc_class(:metadata, selected_tab))]
+		        UI::NavigationTab.new(:users, calc_class(:users, selected_tab)),
+		        UI::NavigationTab.new(:metadata, calc_class(:metadata, selected_tab)),
+		        UI::NavigationTab.new(:reference, calc_class(:reference, selected_tab))]
 		tabs << UI::NavigationTab.new(:my_notes, calc_class(:my_notes, selected_tab)) if @beverage_type.present?
 		return tabs
 	end
@@ -104,6 +115,12 @@ module UI::TabBuilder
 	def build_users_subnav_tabs(selected_tab)
 		[UI::NavigationTab.new(:tasters, calc_class(:tasters, selected_tab)),
 		 UI::NavigationTab.new(:friendships, calc_class(:friendships, selected_tab))]
+	end
+	
+	def build_reference_subnav_tabs(selected_tab)
+		[UI::NavigationTab.new(:reference_lookups, calc_class(:reference_lookups, selected_tab)),
+		 UI::NavigationTab.new(:reference_products, calc_class(:reference_products, selected_tab)),
+		 UI::NavigationTab.new(:reference_producers, calc_class(:reference_producers, selected_tab))]
 	end
 	
 	def calc_class(current_tab, selected_tab)

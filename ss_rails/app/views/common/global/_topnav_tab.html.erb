@@ -13,7 +13,9 @@
     link_to(displayed_taster.username, taster_path(displayed_taster), :class => topnav_tab.css_class)
   when :my_notes then
     link_to("My Notes", polymorphic_path([current_taster, @note_class]), :class => topnav_tab.css_class)
-  else raise 'Unexpected tab'
+  when :reference then
+    link_to('References', reference_lookups_path, :class => topnav_tab.css_class)
+  else raise 'Unexpected tab: ' + topnav_tab.tab.to_s
   end
 -%>
 <li><%= link %></li>

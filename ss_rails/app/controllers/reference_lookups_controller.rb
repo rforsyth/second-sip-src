@@ -1,4 +1,6 @@
 class ReferenceLookupsController < ApplicationController
+	before_filter :initialize_reference_lookups_tabs
+	
   # GET /reference_lookups
   # GET /reference_lookups.xml
   def index

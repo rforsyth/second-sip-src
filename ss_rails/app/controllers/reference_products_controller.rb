@@ -1,4 +1,5 @@
 class ReferenceProductsController < ApplicationController
+	before_filter :initialize_reference_products_tabs
   
   # GET /producers/search
   def search

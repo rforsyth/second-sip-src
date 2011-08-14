@@ -25,7 +25,13 @@
   when :producer_products then
     producer = subnav_tab.container_object
     link_to(@product_class.name.titleize.pluralize, "#{polymorphic_path([producer.owner, producer])}?tab=products", :class => subnav_tab.css_class)
-  else raise 'Unexpected tab'
+  when :reference_lookups then
+    link_to('Lookups', reference_lookups_path, :class => subnav_tab.css_class)
+  when :reference_products then
+    link_to('Products', reference_products_path, :class => subnav_tab.css_class)
+  when :reference_producers then
+    link_to('Producers', reference_producers_path, :class => subnav_tab.css_class)
+  else raise 'Unexpected tab: ' + subnav_tab.tab.to_s
   end
 -%>
 <td><%= link %></td>
