@@ -1,15 +1,15 @@
 
 <div class="form_row">
-  <%= product_fields.label :region_name, title %>
-  <%= product_fields.text_field :region_name, :class => 'text_field text_wide', 
+  <%= label_tag :region_name, title %>
+  <%= text_field_tag :region_name, :class => 'text_field text_wide', 
       :entity_type => @product.type, :lookup_type => Enums::LookupType::REGION %>
 </div>
 
 <%= render :partial => 'common/scripts/click_lookup_script',
-           :locals => { :entity_path => @product_class.underscore, :lookup_name => 'region' } %>
+           :locals => { :entity_path => @product_class.name.underscore, :lookup_name => 'region' } %>
 
 <%= render :partial => 'common/scripts/autocomplete_script',
-           :locals => { :field_id => "#{@product_class.underscore}_region_name",
+           :locals => { :field_id => "region_name",
                         :entities_path => 'lookups',
                         :on_select_function => "show_lookup_references",
                         :on_click_function => "show_lookup_references",

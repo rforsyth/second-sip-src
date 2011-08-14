@@ -1,25 +1,37 @@
-<%= form_for([current_taster, @producer], :as => :producer) do |f| %>
-  <% if @producer.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@producer.errors.count, "error") %> prohibited this producer from being saved:</h2>
+<%= form_for([@producer.owner || current_taster, @producer], :as => :producer) do |f| %>
 
-      <ul>
-      <% @producer.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @producer } %>
+  
+  <div class="form_row">
+    <%= f.label :name, 'Name:' %>
+    <%= f.text_field :name, :class => 'text_field text_wide' %>
+  </div>
+  <div class="form_row">
+    <%= f.label :website_url, 'Website:' %>
+    <%= f.text_field :website_url, :class => 'text_field text_wide' %>
+  </div>
+  <div class="form_row">
+    <%= f.label :cases_per_year, 'Cases / Year:' %>
+    <%= f.text_field :cases_per_year, :class => 'text_field', :maxlength => 15 %>
+  </div>
+  <div class="form_row">
+    <%= f.label :description, 'Notes:' %>
+    <%= f.text_area :description, :class => 'text_tall'  %>
+  </div>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <div class="form_row form_separator">
+    <%= f.label :visibility, 'Share:' %>
+    <%= f.radio_button("visibility", Enums::Visibility::PRIVATE) %> Private &nbsp;&nbsp;
+    <%= f.radio_button("visibility", Enums::Visibility::FRIENDS) %> Friends &nbsp;&nbsp;
+    <%= f.radio_button("visibility", Enums::Visibility::PUBLIC) %> Public
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
+  
+  <div class="form_separator form_right_column">
     <%= f.submit %>
   </div>
+
+  <script type="text/javascript">
+    $('#<%= @producer_class.name.tableize %>_cases_per_year').keyfilter(/[0-9.]/);
+  </script>
+
 <% end %>

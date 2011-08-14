@@ -1,19 +1,119 @@
-<p id="notice"><%= notice %></p>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => format_note_title(@note),
+                        :visibility => @note.visibility } %>
 
-<p>
-  <b>Producer:</b>
-  <%= @note.product.producer.name %>
-</p>
+<div class="details_left">
+  <% if @producer.present? %>
+    <div class="details_row">
+      <span class="label"><%= @producer_class.name.titleize %>:</span>
+      <span class="content"><%= link_to @producer.name, polymorphic_path([@producer.owner, @producer]) %></span>
+    </div>
+  <% end %>
+  <% if @product.present? %>
+    <div class="details_row">
+      <span class="label"><%= @product_class.name.titleize %>:</span>
+      <span class="content"><%= link_to @product.name, polymorphic_path([@product.owner, @product]) %></span>
+    </div>
+  <% end %>
+  <% if @note.product.kind_of?(Wine) && @note.vintage.present? %>
+    <div class="details_row">
+      <span class="label">Vintage:</span>
+      <span class="content"><%= @note.vintage %></span>
+    </div>
+  <% end %>
+  <% if @note.tasted_at.present? %>
+    <div class="details_row">
+      <span class="label">Tasted On:</span>
+      <span class="content"><%= format_long_date(@note.tasted_at) %></span>
+    </div>
+  <% end %>
+  <% if @note.occasion.present? %>
+    <div class="details_row">
+      <span class="label">Occasion:</span>
+      <span class="content"><%= @note.occasion %></span>
+    </div>
+  <% end %>
+</div>
 
-<p>
-  <b>Product:</b>
-  <%= @note.product.name %>
-</p>
+<div class="details_right">
+  <%= render :partial => 'common/details/product_style', :locals => { :product => @product } %>
+  <%= render :partial => 'common/details/product_region', :locals => { :product => @product } %>
+  <% if @product && @product.price_paid.present? %>
+    <div class="details_row">
+      <span class="label">Price:</span>
+      <span class="content"><%=number_to_currency @product.price_paid.pretty_print %></span>
+    </div>
+  <% end %>
+  <% if @product && @product.alcohol_by_volume.present? %>
+    <div class="details_row">
+      <span class="label">ABV:</span>
+      <span class="content"><%=h @product.alcohol_by_volume.pretty_print %>%</span>
+    </div>
+  <% end %>
+  <% if @note.buy_when.present? %>
+    <div class="details_row">
+      <span class="label">Buy When:</span>
+      <span class="content"><%= Enums::BuyWhen.name(@note.buy_when) %></span>
+    </div>
+  <% end %>
+  <% if @note.score.present? %>
+    <div class="details_row">
+      <span class="label">Score:</span>
+      <span class="content"><%=h @note.score.pretty_print %></span>
+    </div>
+  <% end %>
+</div>
 
-<p>
-  <b>Description overall:</b>
-  <%= @note.description_overall %>
-</p>
+<% if @note.product.kind_of?(Wine) %>
+  <%= render :partial => 'common/details/lookup_collection',
+             :locals => { :label => 'Vineyard', :lookups => @product.vineyards,
+                          :entity_type => @product.type } %>
+                        
+  <%= render :partial => 'common/details/lookup_collection',
+             :locals => { :label => 'Varietal', :lookup_names => @product.varietals,
+                          :entity_type => @product.type } %>
+<% end %>
 
-<%= link_to 'Edit', edit_polymorphic_path([@note.owner, @note]) %> |
-<%= link_to 'Back', polymorphic_path([@note.owner, @note_class]) %>
+<% have_itemized_notes = (@note.description_appearance.present? || @note.description_aroma.present? ||
+                          @note.description_mouthfeel.present? || @note.description_flavor.present?) %>
+<% if have_itemized_notes || @note.description_overall.present? %>
+  <div class="details_notes">
+    <% if @note.description_aroma.present? -%>
+      <div class="details_row"><span class="label">Aroma:</span>
+        <span class="content"><%= simple_format(@note.description_aroma) %> </span></div>
+    <% end %>
+    <% if @note.description_appearance.present? -%>
+      <div class="details_row"><span class="label">Appearance:</span>
+        <span class="content"><%= simple_format(@note.description_appearance) %> </span></div>
+    <% end %>
+    <% if @note.description_flavor.present? -%>
+      <div class="details_row"><span class="label">Flavor:</span>
+        <span class="content"><%= simple_format(@note.description_flavor) %> </span></div>
+    <% end %>
+    <% if @note.description_mouthfeel.present? -%>
+      <div class="details_row"><span class="label">Mouthfeel:</span>
+        <span class="content"><%= simple_format(@note.description_mouthfeel) %> </span></div>
+    <% end %>
+    <% if @note.description_overall.present? -%>
+      <div class="details_row">
+        <span class="label"><%= have_itemized_notes ? 'Summary' : 'Notes' %>:</span>
+        <span class="content"><%= simple_format(@note.description_overall) %> </span></div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if allow_edit?(@note) %>
+  <%= render :partial => 'common/edit/edit_actions',
+             :locals => { :edit_path => edit_polymorphic_path([@note.owner, @note]),
+                          :delete_path => polymorphic_path([@note.owner, @note]) } %>
+<% end %>
+
+<% content_for :right do %>
+  <div class="rightpane_lookup">
+  </div>
+  <%= render :partial => 'common/edit/edit_user_tags',
+             :locals => { :tag_container => @note } %>
+  <%= render :partial => 'common/edit/edit_admin_tags',
+             :locals => { :tag_container => @note } %>
+<% end %>
+

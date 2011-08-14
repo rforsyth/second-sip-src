@@ -29,7 +29,7 @@
   </div>
   <% for role in Taster::ROLES %>
     <%= check_box_tag "taster[roles][]", role, @taster.roles.include?(role) %>
-    <%=h role.humanize %><br />
+    <%= role.humanize %><br />
   <% end %>
   <%= hidden_field_tag "taster[roles][]", "" %>    
     

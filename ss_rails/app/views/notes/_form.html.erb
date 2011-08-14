@@ -1,25 +1,219 @@
-<%= form_for([current_taster, @note], :as => :note) do |f| %>
-  <% if @note.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@note.errors.count, "error") %> prohibited this note from being saved:</h2>
+<%= form_for([@note.owner || current_taster, @note], :as => :note) do |f| %>
 
-      <ul>
-      <% @note.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @note } %>
+
+  <div class="form_row">
+    <%= label_tag :producer_name, "#{@producer_class.name.titleize}: " %>
+    <% if @note.new_record? %>
+      <%= text_field_tag :producer_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+    <% else %>
+      <%= link_to @product.producer.name, [@product.producer.owner, @product.producer] %>
+    <% end %>
+  </div>
+
+  <div class="form_row">
+    <div id="product_details_toggle" class="details_toggle">
+      <a href="#" class="toggle_off" tabindex="-1">[+]</a></div>
+    <%= label_tag :product_name, "#{@product_class.name.titleize}: " %>
+    <% if @note.new_record? %>
+      <%= text_field_tag :product_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+    <% else %>
+      <%= link_to @product.name, [@product.owner, @product] %>
+    <% end %>
+  </div>
+
+  <div id="product_details" style="display:none;">
+    <%= render :partial => "products/#{@product_class.name.underscore}_form" %>
+  </div>
+
+  <div id="note_detailed_description" style="display:none;">
+    <div id="note_detailed_description_off" class="details_toggle">
+      <a href="#" class="toggle_off" tabindex="-1">[-]</a></div>
+    <div class="form_row">
+      <%= f.label :description_aroma, 'Aroma:' %>
+      <%= f.text_area :description_aroma, :maxlength => 500 %>
     </div>
-  <% end %>
+    <div class="form_row">
+      <%= f.label :description_appearance, 'Appearance:' %>
+      <%= f.text_area :description_appearance, :maxlength => 500 %>
+    </div>
+    <div class="form_row">
+      <%= f.label :description_flavor, 'Flavor:' %>
+      <%= f.text_area :description_flavor, :maxlength => 500 %>
+    </div>
+    <div class="form_row">
+      <%= f.label :description_mouthfeel, 'Mouthfeel:' %>
+      <%= f.text_area :description_mouthfeel, :maxlength => 500 %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :product_id %><br />
-    <%= f.select :product_id, build_product_select %>
+  <div class="form_row">
+    <div id="note_detailed_description_on" class="details_toggle">
+      <a href="#" class="toggle_on" tabindex="-1">[+]</a></div>
+    <%= f.label :description_overall, 'Notes:', :class => 'notes_label' %>
+    <%= f.text_area :description_overall, :class => 'notes_summary', :style => 'height: 150px' %>
   </div>
-  <div class="field">
-    <%= f.label :description_overall %><br />
-    <%= f.text_area :description_overall %>
+
+  <%= render :partial => 'common/edit/occasion_field',
+             :locals => { :note_fields => f } %>
+
+  <div id="note_details" style="display:none;">
+    <% if @note.kind_of?(WineNote) %>
+    <div class="form_row">
+      <%= f.label :vintage %>
+      <%= f.text_field :vintage, :class => 'text_field' %>
+    </div>
+    <% end %>
+
+    <div class="form_row">
+      <%= f.label :tasted_at, "Tasted On: " %>
+      <%= f.text_field :tasted_at, :class => 'text_field', :value => Date.today.strftime('%m/%d/%Y') %>
+    </div>
+
+    <div class="form_row">
+      <%= f.label :buy_when, 'Buy When:' %>
+      <%= f.select(:buy_when, Enums::BuyWhen.collection, :class => 'select_field_wide') %>
+    </div>
+
+    <div class="form_row">
+      <%= f.label :score, "Score: " %>
+      <% selected = @note.kind_of?(BeerNote) ? Enums::ScoreType::POINTS_50 : Enums::ScoreType::POINTS_100 %>
+      <%= f.select(:score_type, Enums::ScoreType.collection, 
+                           :class => 'select_field', :selected => selected) %>
+      <%= f.text_field :score, :class => 'text_field', :size => '8' %>
+    </div>
   </div>
-  <div class="actions">
+
+  <div class="form_row form_separator">
+    <%= f.label :visibility, 'Share:' %>
+    <%= f.radio_button("visibility", Enums::Visibility::PRIVATE) %> Private &nbsp;&nbsp;
+    <%= f.radio_button("visibility", Enums::Visibility::FRIENDS) %> Friends &nbsp;&nbsp;
+    <%= f.radio_button("visibility", Enums::Visibility::PUBLIC) %> Public
+  </div>
+
+  <div class="form_separator form_right_column">
     <%= f.submit %>
   </div>
+
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "#{@note_class.name.underscore}_producer_name",
+                          :entities_path => @producer_class.name.tableize } %>
+           
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "#{@note_class.name.underscore}_product_name",
+                          :entities_path => @product_class.name.tableize,
+                          :field_params => {'producer_name' => "#{@note_class.name.underscore}_producer_name"} } %>
+                        
+  <script type="text/javascript">
+
+    function update_lookup_collection(lookup_name, lookup_type, values){
+    
+      hidden_list = $("#" + lookup_name + "_row ul.form_list")
+      if(hidden_list != null) {
+        hidden_list.empty();
+        if(values != null){
+          for(i=0; i < values.length; i++) {
+            add_lookup_collection_item_helper(lookup_name,
+              "<%= @product_class.name %>", lookup_type, values[i]);
+          }
+        }
+      }
+    }
+  
+    function update_note_form_producer(producer) {
+      $('#<%= @note_class.name.underscore %>_visibility_' + producer.visibility).attr('checked', true);
+    }
+
+    function update_note_form_product(product) {
+      $('#<%= @product_class.name.underscore %>_region_name').val(product.region_name);
+      $('#<%= @product_class.name.underscore %>_price_type').val(product.price_type);
+      $('#<%= @product_class.name.underscore %>_price_paid').val(product.price_paid);
+    
+      $('#<%= @note_class.name.underscore %>_visibility_' + product.visibility).attr('checked', true);
+    
+      <% if @product_class.name == 'Wine' %>
+        update_lookup_collection("vineyard", <%= Enums::LookupType::VINEYARD %>, product.vineyard_names);
+        update_lookup_collection("varietal", <%= Enums::LookupType::VARIETAL %>, product.varietal_names);
+      <% else %>
+        $('#<%= @product_class.name.underscore %>_style_name').val(product.style_name);
+      <% end %>
+    }
+
+    $('#<%= @note_class.name.underscore %>_score').keyfilter(/[0-9.]/);
+
+    producer_name_changed = false;
+    $("#<%= "#{@note_class.name.underscore}_producer_name" %>").change(function(){
+      producer_name_changed = true;
+    });
+    $("#<%= "#{@note_class.name.underscore}_producer_name" %>").blur(function(){
+      if(producer_name_changed){
+        producer_name_changed = false;
+        $.get('/<%= @producer_class.name.tableize%>/ajax_details',
+             { 'name' : $("#<%= "#{@note_class.name.underscore}_producer_name" %>").val() },
+             function(producer) {
+               update_note_form_producer(producer);
+             });
+      }
+    });
+
+    product_name_changed = false;
+    $("#<%= "#{@note_class.name.underscore}_product_name" %>").change(function(){
+      product_name_changed = true;
+    });
+    $("#<%= "#{@note_class.name.underscore}_product_name" %>").blur(function(){
+      if(product_name_changed){
+        product_name_changed = false;
+        $.get('/<%= @product_class.name.tableize%>/ajax_details',
+             { 'product_name' : $("#<%= "#{@note_class.name.underscore}_product_name" %>").val(),
+               'producer_name' : $("#<%= "#{@note_class.name.underscore}_producer_name" %>").val() },
+             function(product) {
+               update_note_form_product(product);
+             });
+      }
+    });
+  
+    $("#product_details_toggle a").click(function(){
+      return toggle_product_details();
+    });
+  
+    $("#note_details_toggle a").click(function(){
+      return toggle_note_details();
+    });
+  
+    $("#note_detailed_description_on a").click(function(){
+      return toggle_note_detailed_description(true);
+    });
+  
+    $("#note_detailed_description_off a").click(function(){
+      return toggle_note_detailed_description(false);
+    });
+  
+  	$(function() {
+  		$("#<%= "#{@note_class.name.underscore}_tasted_at" %>").datepicker();
+  		if($.cookie('show_note_detailed_description') == "true"){
+  		  toggle_note_detailed_description(true);
+  		}
+  		if($.cookie('show_product_details') == "true"){
+  		  toggle_product_details();
+  		}
+  		if($.cookie('show_note_details') == "true"){
+  		  toggle_note_details();
+  		}
+  	});
+	
+    $('textarea[maxlength]').keypress(function(event){
+      var key = event.which;
+      //all keys including return.
+      if(key >= 33 || key == 13) {
+          var maxLength = $(this).attr('maxlength');
+          var length = this.value.length;
+          if(length >= maxLength) {
+              event.preventDefault();
+          }
+      }
+    });
+
+  </script>
+
+
 <% end %>

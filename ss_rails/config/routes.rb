@@ -25,8 +25,7 @@ SsRails::Application.routes.draw do
   match ':entity_type/search' => 'global_notes#search', :as => 'search_notes', :entity_type => notes_pattern
   
   resources :reference_breweries, :reference_wineries, :reference_distilleries,
-            :reference_beers, :reference_wines, :reference_spirits,
-            :reference_beer_notes, :reference_wine_notes, :reference_spirit_notes
+            :reference_beers, :reference_wines, :reference_spirits
   
   resources :tasters do
     resources :breweries, :wineries, :distilleries,

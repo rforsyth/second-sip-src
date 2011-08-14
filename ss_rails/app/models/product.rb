@@ -1,11 +1,23 @@
+
 class Product < ActiveRecord::Base
+  
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :owner, :class_name => "Taster"
-	belongs_to :region, :class_name => "Lookup", :foreign_key => 'region_lookup_id'
-	belongs_to :style, :class_name => "Lookup", :foreign_key => 'style_lookup_id'
+	
 	belongs_to :producer
 	has_many :notes
+	
+	has_many :tagged, :as => :taggable
+	has_many :tags, :as => :taggable, :through => :tagged
+	
+	#belongs_to :region, :class_name => "Lookup", :foreign_key => 'region_lookup_id'
+	#belongs_to :style, :class_name => "Lookup", :foreign_key => 'style_lookup_id'
+	has_many :looked, :as => :lookable
+	has_one :region, :source => :lookup, :as => :lookable, :through => :looked
+	has_one :style, :source => :lookup, :as => :lookable, :through => :looked
+	has_many :vineyards, :source => :lookup, :as => :lookable, :through => :looked
+	has_many :varietals, :source => :lookup, :as => :lookable, :through => :looked
 	
 	validates_presence_of :producer, :name
 

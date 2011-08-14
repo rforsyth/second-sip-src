@@ -1,4 +1,6 @@
 class TagsController < ApplicationController
+	before_filter :initialize_tags_tabs
+	
   # GET /tags
   # GET /tags.xml
   def index

@@ -1,6 +1,11 @@
-<h1>Editing note</h1>
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Edit #{@note_class.name.titleize}" } %>
 
 <%= render 'notes/form' %>
 
-<%= link_to 'Show', [@note.owner, @note] %> |
-<%= link_to 'Back', polymorphic_path([@note.owner, @note_class]) %>
+<% content_for :right do %>
+  <div class="rightpane_lookup">
+  </div>
+<% end %>
+

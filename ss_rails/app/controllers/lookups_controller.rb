@@ -1,4 +1,6 @@
 class LookupsController < ApplicationController
+	before_filter :initialize_lookups_tabs
+	
   # GET /lookups
   # GET /lookups.xml
   def index

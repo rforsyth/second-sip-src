@@ -1,6 +1,11 @@
-<h1>Editing product</h1>
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Edit #{@product_class.name.titleize}" } %>
 
 <%= render 'products/form' %>
 
-<%= link_to 'Show', [@product.owner, @product] %> |
-<%= link_to 'Back', polymorphic_path([@product.owner, @product_class]) %>
+<% content_for :right do %>
+  <div class="rightpane_lookup">
+  </div>
+<% end %>
+

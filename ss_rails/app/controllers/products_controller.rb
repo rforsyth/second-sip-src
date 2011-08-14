@@ -1,5 +1,6 @@
 
 class ProductsController < ApplicationController
+	before_filter :initialize_products_tabs
   
   # GET /products/search
   def search
@@ -16,6 +17,8 @@ class ProductsController < ApplicationController
   # GET /products/1
   def show
     @product = find_by_owner_and_canonical_name_or_id(@product_class, displayed_taster, params[:id])
+    # todo: enforce visibility here
+    @producer = @product.producer
 		render :template => 'products/show'
   end
 

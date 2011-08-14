@@ -1,5 +1,6 @@
 
 class NotesController < ApplicationController
+	before_filter :initialize_notes_tabs
   
   # GET /notes/search
   def search
@@ -16,18 +17,23 @@ class NotesController < ApplicationController
   # GET /notes/1
   def show
     @note = @note_class.find(params[:id])
+    # todo: enforce visibility here
+    @product = @note.product
+    @producer = @product.producer
 		render :template => 'notes/show'
   end
 
   # GET /notes/new
   def new
     @note = @note_class.new
+    @product = @product_class.new  # required to support the product form fields
 		render :template => 'notes/new'
   end
 
   # GET /notes/1/edit
   def edit
     @note = @note_class.find(params[:id])
+    @product = @note.product
     render :template => 'notes/edit'
   end
 

@@ -1,60 +1,69 @@
-<p id="notice"><%= notice %></p>
+<%
+  notes_tab_selected = (params[:tab] == 'notes')
+%>
 
-<p>
-  <b>Created by:</b>
-  <%= @producer.creator_id %>
-</p>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => @producer.name,
+                        :visibility => @producer.visibility } %>
 
-<p>
-  <b>Updated by:</b>
-  <%= @producer.updater_id %>
-</p>
+<% if @producer.website_url -%>
+  <div class="details_row">
+    <span class="label">Website:</span>
+    <span class="content"><%= link_to @producer.website_url, @producer.website_url, :target => '_blank' -%></span>
+  </div>
+<% end %>
+<% if @producer.cases_per_year.present? -%>
+  <div class="details_row">
+    <span class="label">Cases / Year:</span>
+    <span class="content"><%= number_with_delimiter(@producer.cases_per_year) %></span>
+  </div>
+<% end %>
 
-<p>
-  <b>Type:</b>
-  <%= @producer.type %>
-</p>
+<% if @producer.description.present? %>
+  <div class="details_notes clearfix">
+    <div class="details_row">
+      <span class="label">Notes:</span>
+      <span class="content"><%= simple_format(@producer.description) %> </span></div>
+  </div>
+<% end %>
 
-<p>
-  <b>Owner:</b>
-  <%= @producer.owner_id %>
-</p>
+<%= render :partial => 'common/global/subnav', 
+           :locals => { :tabs => [UI::NavigationTab.new(:producer_products, !notes_tab_selected ? 'selected' : nil, @producer),
+                                  UI::NavigationTab.new(:producer_notes, notes_tab_selected ? 'selected' : nil, @producer)] }  %>
 
-<p>
-  <b>Visiblity:</b>
-  <%= @producer.visibility %>
-</p>
+<% if notes_tab_selected %>
+  <% if @notes.present? %>
+    <div class="main_list">
+      <%= render :partial => 'notes/note', :collection => @notes %>
+    </div>
+    <%= render :partial => 'common/lists/paging_bar' %>
+  <% else %>
+    <%= render :partial => 'common/global/simple_message',
+               :object => "No notes to display." %>
+  <% end %>
+<% else %>
+  <% if @products.present? %>
+    <div class="main_list">
+      <%= render :partial => 'products/product', :collection => @products %>
+    </div>
+    <%= render :partial => 'common/lists/paging_bar' %>
+  <% else %>
+    <%= render :partial => 'common/global/simple_message',
+               :object => "No #{@product_class.name.titleize.pluralize.downcase} to display." %>
+  <% end %>
+<% end %>
 
-<p>
-  <b>Is reference:</b>
-  <%= @producer.is_reference %>
-</p>
+<% if allow_edit?(@producer) %>
+  <%= render :partial => 'common/edit/edit_actions',
+             :locals => { :edit_path => edit_polymorphic_path([@producer.owner, @producer]),
+                          :delete_path => polymorphic_path([@producer.owner, @producer]) } %>
+<% end %>
 
-<p>
-  <b>Website url:</b>
-  <%= @producer.website_url %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @producer.name %>
-</p>
-
-<p>
-  <b>Canonical name:</b>
-  <%= @producer.canonical_name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @producer.description %>
-</p>
-
-<p>
-  <b>Cases per year:</b>
-  <%= @producer.cases_per_year %>
-</p>
+<% content_for :right do %>
+  <%= render :partial => 'common/edit/edit_user_tags',
+             :locals => { :tag_container => @producer } %>
+  <%= render :partial => 'common/edit/edit_admin_tags',
+             :locals => { :tag_container => @producer } %>
+<% end %>
 
 
-<%= link_to 'Edit', edit_polymorphic_path([@producer.owner, @producer]) %> |
-<%= link_to 'Back', polymorphic_path([@producer.owner, @producer_class]) %>

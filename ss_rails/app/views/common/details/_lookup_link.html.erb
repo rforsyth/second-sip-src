@@ -1,3 +1,3 @@
-<%= link_to(lookup_link, '#', :class => 'lookup_link',
+<%= link_to(lookup_link.name, '#', :class => 'lookup_link',
     :onclick => "show_lookup_references(this); return false;",
-    :entity_type => entity_type, :lookup_type => lookup_type) %>
+    :entity_type => entity_type, :lookup_type => lookup_link.lookup_type) %>

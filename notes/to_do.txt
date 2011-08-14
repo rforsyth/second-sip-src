@@ -1,9 +1,33 @@
 
 
+_____________________________________________________________
+Major Features
 
-- add fields to User class
-  - created_by
-  - updated_by
+- CRUD:
+  - Reference Producers
+  - Reference Products
+  - Lookups
+  - Reference Lookups
+  - Tasters
+  - Tags
+  - Friendships
+
+
+_____________________________________________________________
+Feature Tweaks
+
+- stop storing producer canonical name as part of product (in case producer name changes)
+  - need to break apart string and look up producer first then product
+
+- get paging bar working in products -> notes (need to handle paging in controller)
+
+- enforce visibility of producer / product in controller (don't populate @producer / @product)
+
+_____________________________________________________________
+Performance
+
+- lists of notes access the producer name and product name - sometimes join these in from the DB?
+
 
 
 

@@ -1,5 +1,5 @@
 <%
-  allow_edit = AppEngine::Users.current_user == tag_container.owner
+  allow_edit = current_taster == tag_container.owner
   return if !tag_container.tags.present? && !allow_edit
 %>
 <div class="tag_edit tags">

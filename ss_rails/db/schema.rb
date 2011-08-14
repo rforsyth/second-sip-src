@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110811135325) do
+ActiveRecord::Schema.define(:version => 20110813203153) do
 
   create_table "friendships", :force => true do |t|
     t.integer  "creator_id"
@@ -81,14 +81,14 @@ ActiveRecord::Schema.define(:version => 20110811135325) do
   end
 
   create_table "products", :force => true do |t|
-    t.integer  "creator_id",                      :null => false
-    t.integer  "updater_id",                      :null => false
-    t.string   "type",             :limit => 50,  :null => false
-    t.integer  "owner_id",                        :null => false
-    t.integer  "visibility",                      :null => false
-    t.integer  "producer_id",                     :null => false
-    t.string   "name",             :limit => 150, :null => false
-    t.string   "canonical_name",   :limit => 150, :null => false
+    t.integer  "creator_id",                       :null => false
+    t.integer  "updater_id",                       :null => false
+    t.string   "type",              :limit => 50,  :null => false
+    t.integer  "owner_id",                         :null => false
+    t.integer  "visibility",                       :null => false
+    t.integer  "producer_id",                      :null => false
+    t.string   "name",              :limit => 150, :null => false
+    t.string   "canonical_name",    :limit => 150, :null => false
     t.text     "description"
     t.float    "price"
     t.float    "price_paid"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20110811135325) do
     t.integer  "style_lookup_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "alcohol_by_volume"
   end
 
   create_table "reference_lookups", :force => true do |t|
@@ -110,6 +111,37 @@ ActiveRecord::Schema.define(:version => 20110811135325) do
     t.string   "canonical_full_name",        :limit => 500, :null => false
     t.integer  "creator_id",                                :null => false
     t.integer  "updater_id",                                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reference_producers", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.string   "type"
+    t.string   "website_url"
+    t.string   "name"
+    t.string   "canonical_name"
+    t.text     "description"
+    t.integer  "cases_per_year"
+    t.integer  "capacity_in_barrels"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reference_products", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.string   "type"
+    t.integer  "reference_producer_id"
+    t.string   "name"
+    t.string   "canonical_name"
+    t.text     "description"
+    t.float    "price"
+    t.float    "price_paid"
+    t.integer  "price_type"
+    t.integer  "region_lookup_id"
+    t.integer  "style_lookup_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,6 +1,5 @@
 <%
   return if !params[:query].present?
-  escaped_query = h(params[:query])
   
   links = []
   links << link_to('notes', search_notes_path) if current_tab != :notes

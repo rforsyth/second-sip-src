@@ -1,23 +1,15 @@
-<h1>Listing products</h1>
 
-<table>
-  <tr>
-    <th>Producer</th>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :partial => 'common/lists/beverage_index',
+           :locals => { :beverages => @products,
+                        :beverage_model => @product_class,
+                        :beverage_partial => 'products/product' } %>
 
-<% @products.each do |product| %>
-  <tr>
-    <td><%= product.producer.name %></td>
-    <td><%= product.name %></td>
-    <td><%= link_to 'Show', [product.owner, product] %></td>
-    <td><%= link_to 'Edit', edit_polymorphic_path([product.owner, product]) %></td>
-  </tr>
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => "#{polymorphic_path([displayed_taster, @product_class])}/search" } %>
+  <%= render :partial => 'common/lists/user_tag_filter' %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
 <% end %>
-</table>
 
-<br />
 
-<%= link_to 'New Product', new_polymorphic_path([current_taster, @product_class]) %>
+

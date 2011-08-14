@@ -1,0 +1,4 @@
+
+
+class ReferenceDistillery < ReferenceProducer
+end

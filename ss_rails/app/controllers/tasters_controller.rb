@@ -1,4 +1,7 @@
 class TastersController < ApplicationController
+	before_filter :initialize_tasters_tabs, :except => [:home, :new, :create, :edit, :update]
+	before_filter :initialize_taster_home_tabs, :only => [:home, :new, :create, :edit, :update]
+	
   # GET /tasters
   # GET /tasters.xml
   def index
@@ -37,7 +40,6 @@ class TastersController < ApplicationController
   # PUT /tasters/1.xml
   def update
     @taster = Taster.find_by_username(params[:id])
-
     if @taster.update_attributes(params[:taster])
       redirect_to(@taster, :notice => 'Taster was successfully updated.')
     else

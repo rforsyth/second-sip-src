@@ -93,7 +93,7 @@ rails generate scaffold reference_product creator_id:integer updater_id:integer 
                                  description:text price:float price_paid:float price_type:integer \
                                  region_lookup_id:integer style_lookup_id:integer
 
-
+rails generate migration AddAlcoholByVolumeToProducts
 
 
 

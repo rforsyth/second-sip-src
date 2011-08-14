@@ -1,6 +1,12 @@
-<h1>Editing producer</h1>
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Edit #{@producer_class.name.titleize}" } %>
 
 <%= render 'producers/form' %>
 
-<%= link_to 'Show', [@producer.owner, @producer] %> |
-<%= link_to 'Back', polymorphic_path([@producer.owner, @producer_class]) %>
+<% content_for :right do %>
+  <div class="rightpane_lookup">
+  </div>
+<% end %>
+
+

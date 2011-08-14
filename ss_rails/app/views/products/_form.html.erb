@@ -1,28 +1,83 @@
-<%= form_for([current_taster, @product], :as => :product) do |f| %>
-  <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
-      <ul>
-      <% @product.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for([@product.owner || current_taster, @product], :as => :product) do |f| %>
+
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @product } %>
   
-  <div class="field">
-    <%= f.label :producer_id %><br />
-    <%= f.select :producer_id, build_producer_select %>
+  <div class="form_row">
+    <%= label_tag :producer_name, "#{@producer_class.name.titleize}: " %>
+    <% if @product.new_record? %>
+      <%= text_field_tag :producer_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+    <% else %>
+      <span id="producer_name"><%= link_to @product.producer.name, [@product.producer.owner, @product.producer] %></span>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+
+  <div class="form_row">
+    <%= f.label :name, "#{@product_class.name.titleize} Name:" %>
+    <%= f.text_field :name, :class => 'text_field text_wide' %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
+
+  <div id="product_details">
+    <%= render :partial => "products/#{@product_class.name.underscore}_form" %>
   </div>
-  <div class="actions">
+
+  <div class="form_row">
+    <%= f.label :alcohol_by_volume, 'ABV:' %>
+    <%= f.text_field :alcohol_by_volume, :class => 'text_field', :size => '8', :maxlength => 5 %> percent
+  </div>
+
+  <div class="form_row">
+    <%= f.label :description, 'Notes:' %>
+    <%= f.text_area :description, :class => 'text_long' %>
+  </div>
+
+  <div class="form_row form_separator">
+    <%= f.label :visibility, 'Share:' %>
+    <%= f.radio_button("visibility", Enums::Visibility::PRIVATE) %> Private &nbsp;&nbsp;
+    <%= f.radio_button("visibility", Enums::Visibility::FRIENDS) %> Friends &nbsp;&nbsp;
+    <%= f.radio_button("visibility", Enums::Visibility::PUBLIC) %> Public
+  </div>
+
+  <div class="form_separator form_right_column">
     <%= f.submit %>
   </div>
+
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "#{@product_class.name.underscore}_producer_name",
+                          :entities_path => @producer_class.name.tableize } %>
+
+  <script type="text/javascript">
+    $('#<%= @product_class.name.underscore %>_alcohol_by_volume').keyfilter(/[0-9.]/);
+  
+    function update_product_form_producer(producer) {
+      $('#<%= @product_class.name.underscore %>_visibility_' + producer.visibility).attr('checked', true);
+    }
+  
+    producer_name_changed = false;
+    $("#<%= "#{@product_class.name.underscore}_producer_name" %>").change(function(){
+      producer_name_changed = true;
+    });
+    $("#<%= "#{@product_class.name.underscore}_producer_name" %>").blur(function(){
+      if(producer_name_changed){
+        producer_name_changed = false;
+        $.get('/<%= @producer_class.name.tableize%>/ajax_details',
+             { 'name' : $("#<%= "#{@product_class.name.underscore}_producer_name" %>").val() },
+             function(producer) {
+               update_product_form_producer(producer);
+             });
+      }
+    });
+  
+  </script>
+  <% if @product.class == Beer || @product.class == Spirit %>
+    <%= render :partial => 'common/scripts/click_lookup_script',
+               :locals => { :entity_path => @product_class.name.underscore, :lookup_name => 'style' } %>
+
+    <%= render :partial => 'common/scripts/autocomplete_script',
+               :locals => { :field_id => "#{@product_class.name.underscore}_style_name",
+                            :entities_path => 'lookups',
+                            :on_select_function => "show_lookup_references",
+                            :on_click_function => "show_lookup_references",
+                            :params => {'lookup_type' => Enums::LookupType::STYLE,
+                                        'entity_type' => @product_class.name} } %>
+  <% end %>
 <% end %>

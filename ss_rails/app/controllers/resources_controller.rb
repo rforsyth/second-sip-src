@@ -1,4 +1,6 @@
 class ResourcesController < ApplicationController
+	before_filter :initialize_resources_tabs
+	
   # GET /resources
   # GET /resources.xml
   def index

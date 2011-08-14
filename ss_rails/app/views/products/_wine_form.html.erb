@@ -1,0 +1,35 @@
+<%
+  wbe_help_text = <<-eos
+    <p>WBE stands for &quot;Wine Bottle Equivalent.&quot;  It provides a way to directly compare the cost
+    of wine that is sold in different volumes by calculating what it would cost if purchased in a 750 mL bottle.</p>
+  eos
+%>
+
+<% fields_for @product do |product_fields| %>
+  <%= render :partial => 'common/edit/lookup_collection_row',
+             :locals => { :lookup_name => 'varietal', :lookup_collection_names => @product.varietal_names,
+                          :entity_type => @product.type, :lookup_type => Enums::LookupType::VARIETAL } %>
+  <%= render :partial => 'common/edit/region_field',
+             :locals => { :title => 'Region:', :product_fields => product_fields } %>
+  <%= render :partial => 'common/edit/lookup_collection_row',
+             :locals => { :lookup_name => 'vineyard', :lookup_collection_names => @product.vineyard_names,
+                          :entity_type => @product.type, :lookup_type => Enums::LookupType::VINEYARD } %>
+  <%= render :partial => 'common/edit/price_field', :locals => { :product_fields => product_fields,
+    :calculate_function => 'calculate_wbe', :price_type_collection => Enums::WinePriceType.collection,
+    :selected => Enums::WinePriceType::BOTTLE } %>
+<% end %>
+
+<%= render :partial => 'common/scripts/autocomplete_script',
+           :locals => { :field_id => "varietal_name",
+                        :entities_path => 'lookups',
+                        :on_select_function => "show_lookup_references",
+                        :params => {'lookup_type' => Enums::LookupType::VARIETAL,
+                                    'entity_type' => @product_class.name} } %>
+
+<%= render :partial => 'common/scripts/autocomplete_script',
+           :locals => { :field_id => "vineyard_name",
+                        :entities_path => 'lookups',
+                        :on_select_function => "show_lookup_references",
+                        :params => {'lookup_type' => Enums::LookupType::VINEYARD,
+                                    'entity_type' => @product_class.name} } %>
+

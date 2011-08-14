@@ -1,5 +1,12 @@
-<h1>New producer</h1>
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "New #{@producer_class.name.titleize}" } %>
 
 <%= render 'producers/form' %>
 
-<%= link_to 'Back', polymorphic_path([current_taster, @producer_class]) %>
+<% content_for :right do %>
+  <div class="rightpane_lookup">
+  </div>
+<% end %>
+
+

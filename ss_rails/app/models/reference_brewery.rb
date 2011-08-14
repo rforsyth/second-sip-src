@@ -1,0 +1,4 @@
+
+
+class ReferenceBrewery < ReferenceProducer
+end

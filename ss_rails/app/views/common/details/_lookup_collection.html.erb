@@ -1,9 +1,9 @@
 <%
-  return if !lookup_names.present?
+  return if !lookups.present?
 %>
 <div class="details_row">
-  <span class="label"><%= (lookup_names.count > 1) ? "#{label}s" : label %>:</span>
-  <%= render :partial => 'common/details/lookup_link', :collection => lookup_names,
+  <span class="label"><%= (lookups.count > 1) ? "#{label}s" : label %>:</span>
+  <%= render :partial => 'common/details/lookup_link', :collection => lookups,
              :spacer_template => 'common/global/comma_spacer',
-             :locals => { :entity_type => entity_type, :lookup_type => lookup_type } %>
+             :locals => { :entity_type => entity_type } %>
 </div>

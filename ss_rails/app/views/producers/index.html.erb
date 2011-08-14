@@ -1,42 +1,12 @@
-<h1>Listing producers</h1>
 
-<table>
-  <tr>
-    <th>Created by</th>
-    <th>Updated by</th>
-    <th>Type</th>
-    <th>Owner</th>
-    <th>Visiblity</th>
-    <th>Is reference</th>
-    <th>Website url</th>
-    <th>Name</th>
-    <th>Canonical name</th>
-    <th>Description</th>
-    <th>Cases per year</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :partial => 'common/lists/beverage_index',
+           :locals => { :beverages => @producers,
+                        :beverage_model => @producer_class,
+                        :beverage_partial => 'producers/producer' } %>
 
-<% @producers.each do |producer| %>
-  <tr>
-    <td><%= producer.creator_id %></td>
-    <td><%= producer.updater_id %></td>
-    <td><%= producer.type %></td>
-    <td><%= producer.owner_id %></td>
-    <td><%= producer.visibility %></td>
-    <td><%= producer.is_reference %></td>
-    <td><%= producer.website_url %></td>
-    <td><%= producer.name %></td>
-    <td><%= producer.canonical_name %></td>
-    <td><%= producer.description %></td>
-    <td><%= producer.cases_per_year %></td>
-    <td><%= link_to 'Show', [producer.owner, producer] %></td>
-    <td><%= link_to 'Edit', edit_polymorphic_path([producer.owner, producer]) %></td>
-  </tr>
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => "#{polymorphic_path([displayed_taster, @producer_class])}/search" } %>
+  <%= render :partial => 'common/lists/user_tag_filter' %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Producer', new_polymorphic_path([current_taster, @producer_class]) %>

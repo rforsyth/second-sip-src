@@ -1,24 +1,13 @@
-<h1>Listing notes</h1>
 
-<table>
-  <tr>
-    <th>Producer</th>
-    <th>Product</th>
-    <th>Description overall</th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :partial => 'common/lists/beverage_index',
+           :locals => { :beverages => @notes,
+                        :beverage_model => @note_class,
+                        :beverage_partial => 'notes/note' } %>
 
-<% @notes.each do |note| %>
-  <tr>>
-    <td><%= note.product.name %></td>
-    <td><%= note.description_overall %></td>
-    <td><%= link_to 'Show', [note.owner, note] %></td>
-    <td><%= link_to 'Edit', edit_polymorphic_path([note.owner, note]) %></td>
-  </tr>
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => "#{polymorphic_path([displayed_taster, @note_class])}/search" } %>
+  <%= render :partial => 'common/lists/user_tag_filter' %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Note', new_polymorphic_path([current_taster, @note_class]) %>
