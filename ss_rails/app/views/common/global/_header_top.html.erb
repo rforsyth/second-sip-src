@@ -20,7 +20,7 @@
   <%= csrf_meta_tag %>
 </head>
 
-<body class="<%= params[:controller] %>">
+<body class="<%= calculate_body_class %>">
   <div id="tophat">
     <div id="tophat_inner" class="clearfix">
       <%= render :partial => 'common/global/welcome_bar' %>

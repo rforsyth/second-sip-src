@@ -6,11 +6,25 @@ Major Features
 - CRUD:
   - Reference Producers
   - Reference Products
-  - Lookups
   - Reference Lookups
+  - Resources
+  
+- Administer:
+  - Lookups
   - Tasters
   - Tags
   - Friendships
+
+- wire up friendships
+
+- wire up lookups to edit form
+
+- wire up tags to show form
+
+- Browse
+
+- Search
+  - get postgres full text search working?
 
 
 _____________________________________________________________

@@ -79,4 +79,20 @@ class ApplicationController < ActionController::Base
     @displayed_taster = Taster.find_by_username(params[:taster_id])
   end
   
+  def initialize_beverage_classes_from_entity_type_param
+    
+    puts 'INSIDE IBCFETP'
+    puts params[:entity_type]
+    
+    beverage_type = case params[:entity_type]
+      when 'breweries', 'beers', 'beer_notes' then :beer
+      when 'wineries', 'wines', 'wine_notes' then :wine
+      when 'distilleries', 'spirits', 'spirit_notes' then :spirits
+      else raise "Unexpected entity type: #{params[:entity_type]}"
+      end
+      
+    puts 'got type: ' + beverage_type.to_s
+    initialize_beverage_classes(beverage_type)
+  end
+  
 end

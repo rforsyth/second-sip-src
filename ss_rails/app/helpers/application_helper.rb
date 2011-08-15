@@ -45,5 +45,14 @@ module ApplicationHelper
 		#return false if @displayed_profile.user != AppEngine::Users.current_user
 		#true
 	end
+	
+	def calculate_body_class
+	  case params[:controller]
+    when 'global_notes', 'global_products', 'global_producers' then
+      params[:entity_type]
+    else
+      params[:controller]
+    end
+  end
   
 end

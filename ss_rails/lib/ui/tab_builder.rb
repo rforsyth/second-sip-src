@@ -5,6 +5,15 @@ module UI::TabBuilder
 	def initialize_home_tabs
 		@topnav_tabs = build_beverage_topnav_tabs(:home, displayed_taster, current_taster)
 	end
+	def initialize_global_notes_tabs
+		initialize_global_beverage_tabs_helper(:global_notes)
+	end
+	def initialize_global_products_tabs
+		initialize_global_beverage_tabs_helper(:global_products)
+	end
+	def initialize_global_producers_tabs
+		initialize_global_beverage_tabs_helper(:global_producers)
+	end
 	def initialize_notes_tabs
 		initialize_beverage_tabs_helper(calc_beverage_topnav, :notes)
 	end
@@ -61,6 +70,11 @@ module UI::TabBuilder
 		@subnav_tabs = build_beverage_subnav_tabs(subnav_tab)
 	end
 	
+	def initialize_global_beverage_tabs_helper(subnav_tab)
+		@topnav_tabs = build_beverage_topnav_tabs(:beverage, displayed_taster, current_taster, (displayed_taster == current_taster))
+		@subnav_tabs = build_global_beverage_subnav_tabs(subnav_tab)
+	end
+	
 	def initialize_admin_tabs_helper(topnav_tab, subnav_tab)
 		@topnav_tabs = build_admin_topnav_tabs(topnav_tab)
 		@subnav_tabs = case topnav_tab
@@ -71,7 +85,6 @@ module UI::TabBuilder
 	end
 	
 	def calc_beverage_topnav
-		return :beverage if displayed_taster.nil?
 		return :my_notes if displayed_taster == current_taster
 		:user
 	end
@@ -104,6 +117,12 @@ module UI::TabBuilder
 		[UI::NavigationTab.new(:notes, calc_class(:notes, selected_tab)),
 		 UI::NavigationTab.new(:products, calc_class(:products, selected_tab)),
 		 UI::NavigationTab.new(:producers, calc_class(:producers, selected_tab))]
+	end
+
+	def build_global_beverage_subnav_tabs(selected_tab)
+		[UI::NavigationTab.new(:global_notes, calc_class(:global_notes, selected_tab)),
+		 UI::NavigationTab.new(:global_products, calc_class(:global_products, selected_tab)),
+		 UI::NavigationTab.new(:global_producers, calc_class(:global_producers, selected_tab))]
 	end
 	
 	def build_metadata_subnav_tabs(selected_tab)
