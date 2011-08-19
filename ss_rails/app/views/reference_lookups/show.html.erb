@@ -1,45 +1,22 @@
-<p id="notice"><%= notice %></p>
+<%= render :partial => 'common/global/content_header', :locals => { :title => @lookup.name} %>
 
-<p>
-  <b>Name:</b>
-  <%= @reference_lookup.name %>
-</p>
-
-<p>
-  <b>Canonical name:</b>
-  <%= @reference_lookup.canonical_name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @reference_lookup.description %>
-</p>
-
-<p>
-  <b>Lookup type:</b>
-  <%= @reference_lookup.lookup_type %>
-</p>
-
-<p>
-  <b>Entity type:</b>
-  <%= @reference_lookup.entity_type %>
-</p>
-
-<p>
-  <b>Parent reference lookup:</b>
-  <%= @reference_lookup.parent_reference_lookup_id %>
-</p>
-
-<p>
-  <b>Full name:</b>
-  <%= @reference_lookup.full_name %>
-</p>
-
-<p>
-  <b>Canonical full name:</b>
-  <%= @reference_lookup.canonical_full_name %>
-</p>
+<% if @lookup.description -%>
+  <div class="details_row details_separator"><span class="details_label"> Description: </span>
+  <div class="details_field"><%= simple_format(h(@lookup.description)) %> </div></div>
+<% end %>
 
 
-<%= link_to 'Edit', edit_reference_lookup_path(@reference_lookup) %> |
-<%= link_to 'Back', reference_lookups_path %>
+<% if @child_lookups && !@child_lookups.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'reference_lookup', :collection => @child_lookups %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_reference_lookup_path(@lookup) %> |
+<%= link_to 'Add Child', new_reference_lookup_path(:parent_id => @lookup.id) %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/edit/edit_admin_tags',
+             :locals => { :tag_container => @lookup } %>
+<% end %>
+

@@ -27,7 +27,10 @@ module UI::TabBuilder
 		initialize_admin_tabs_helper(:users, :friendships)
 	end
 	def initialize_lookups_tabs
-		initialize_admin_tabs_helper(:metadata, :lookups)
+		initialize_admin_tabs_helper(:lookups, :lookups)
+	end
+	def initialize_reference_lookups_tabs
+		initialize_admin_tabs_helper(:lookups, :reference_lookups)
 	end
 	def initialize_taster_home_tabs
 		@topnav_tabs = build_beverage_topnav_tabs(:user, displayed_taster, current_taster)
@@ -35,20 +38,29 @@ module UI::TabBuilder
 	def initialize_tasters_tabs
 		initialize_admin_tabs_helper(:users, :tasters)
 	end
-	def initialize_resources_tabs
-		initialize_admin_tabs_helper(:metadata, :resources)
-	end
 	def initialize_tags_tabs
-		initialize_admin_tabs_helper(:metadata, :tags)
+		initialize_admin_tabs_helper(:tags, :tags)
 	end
-	def initialize_reference_lookups_tabs
-		initialize_admin_tabs_helper(:reference, :reference_lookups)
+	def initialize_admin_tags_tabs
+		initialize_admin_tabs_helper(:tags, :admin_tags)
 	end
-	def initialize_reference_products_tabs
-		initialize_admin_tabs_helper(:reference, :reference_products)
+	def initialize_reference_breweries_tabs
+		initialize_admin_tabs_helper(:reference_producers, :reference_breweries)
 	end
-	def initialize_reference_producers_tabs
-		initialize_admin_tabs_helper(:reference, :reference_producers)
+	def initialize_reference_wineries_tabs
+		initialize_admin_tabs_helper(:reference_producers, :reference_wineries)
+	end
+	def initialize_reference_distilleries_tabs
+		initialize_admin_tabs_helper(:reference_producers, :reference_distilleries)
+	end
+	def initialize_reference_beers_tabs
+		initialize_admin_tabs_helper(:reference_products, :reference_beers)
+	end
+	def initialize_reference_wines_tabs
+		initialize_admin_tabs_helper(:reference_products, :reference_wines)
+	end
+	def initialize_reference_spirits_tabs
+		initialize_admin_tabs_helper(:reference_products, :reference_spirits)
 	end
 	def initialize_producer_edit_tabs
 		@topnav_tabs = build_beverage_topnav_tabs(:my_notes, current_taster, current_taster)
@@ -78,9 +90,11 @@ module UI::TabBuilder
 	def initialize_admin_tabs_helper(topnav_tab, subnav_tab)
 		@topnav_tabs = build_admin_topnav_tabs(topnav_tab)
 		@subnav_tabs = case topnav_tab
-			when :metadata then build_metadata_subnav_tabs(subnav_tab)
 			when :users then build_users_subnav_tabs(subnav_tab)
-			when :reference then build_reference_subnav_tabs(subnav_tab)
+			when :lookups then build_lookups_subnav_tabs(subnav_tab)
+			when :tags then build_tags_subnav_tabs(subnav_tab)
+			when :reference_products then build_reference_products_subnav_tabs(subnav_tab)
+			when :reference_producers then build_reference_producers_subnav_tabs(subnav_tab)
 		end
 	end
 	
@@ -105,11 +119,11 @@ module UI::TabBuilder
 	end
 	
 	def build_admin_topnav_tabs(selected_tab)
-		tabs = [UI::NavigationTab.new(:home, calc_class(:home, selected_tab)),
-		        UI::NavigationTab.new(:users, calc_class(:users, selected_tab)),
-		        UI::NavigationTab.new(:metadata, calc_class(:metadata, selected_tab)),
-		        UI::NavigationTab.new(:reference, calc_class(:reference, selected_tab))]
-		tabs << UI::NavigationTab.new(:my_notes, calc_class(:my_notes, selected_tab)) if @beverage_type.present?
+		tabs = [UI::NavigationTab.new(:users, calc_class(:users, selected_tab)),
+		        UI::NavigationTab.new(:reference_producers, calc_class(:reference_producers, selected_tab)),
+		        UI::NavigationTab.new(:reference_products, calc_class(:reference_products, selected_tab)),
+		        UI::NavigationTab.new(:lookups, calc_class(:lookups, selected_tab)),
+		        UI::NavigationTab.new(:tags, calc_class(:tags, selected_tab))]
 		return tabs
 	end
 
@@ -125,10 +139,14 @@ module UI::TabBuilder
 		 UI::NavigationTab.new(:global_producers, calc_class(:global_producers, selected_tab))]
 	end
 	
-	def build_metadata_subnav_tabs(selected_tab)
+	def build_lookups_subnav_tabs(selected_tab)
 		[UI::NavigationTab.new(:lookups, calc_class(:lookups, selected_tab)),
-		 UI::NavigationTab.new(:resources, calc_class(:resources, selected_tab)),
-		 UI::NavigationTab.new(:tags, calc_class(:tags, selected_tab))]
+		 UI::NavigationTab.new(:reference_lookups, calc_class(:reference_lookups, selected_tab))]
+	end
+	
+	def build_tags_subnav_tabs(selected_tab)
+		[UI::NavigationTab.new(:tags, calc_class(:tags, selected_tab)),
+		 UI::NavigationTab.new(:admin_tags, calc_class(:admin_tags, selected_tab))]
 	end
 	
 	def build_users_subnav_tabs(selected_tab)
@@ -136,10 +154,16 @@ module UI::TabBuilder
 		 UI::NavigationTab.new(:friendships, calc_class(:friendships, selected_tab))]
 	end
 	
-	def build_reference_subnav_tabs(selected_tab)
-		[UI::NavigationTab.new(:reference_lookups, calc_class(:reference_lookups, selected_tab)),
-		 UI::NavigationTab.new(:reference_products, calc_class(:reference_products, selected_tab)),
-		 UI::NavigationTab.new(:reference_producers, calc_class(:reference_producers, selected_tab))]
+	def build_reference_producers_subnav_tabs(selected_tab)
+		[UI::NavigationTab.new(:reference_breweries, calc_class(:reference_breweries, selected_tab)),
+		 UI::NavigationTab.new(:reference_wineries, calc_class(:reference_wineries, selected_tab)),
+		 UI::NavigationTab.new(:reference_distilleries, calc_class(:reference_distilleries, selected_tab))]
+	end
+	
+	def build_reference_products_subnav_tabs(selected_tab)
+		[UI::NavigationTab.new(:reference_beers, calc_class(:reference_beers, selected_tab)),
+		 UI::NavigationTab.new(:reference_wines, calc_class(:reference_wines, selected_tab)),
+		 UI::NavigationTab.new(:reference_spirits, calc_class(:reference_spirits, selected_tab))]
 	end
 	
 	def calc_class(current_tab, selected_tab)

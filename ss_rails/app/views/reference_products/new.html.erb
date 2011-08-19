@@ -1,5 +1,5 @@
-<h1>New reference_product</h1>
 
-<%= render 'form' %>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "New #{@reference_product_class.name.titleize}" } %>
 
-<%= link_to 'Back', reference_products_path %>
+<%= render 'reference_products/form' %>

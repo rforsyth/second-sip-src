@@ -1,6 +1,7 @@
-<h1>Editing reference_product</h1>
 
-<%= render 'form' %>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Edit #{@reference_product_class.name.titleize}" } %>
 
-<%= link_to 'Show', @reference_product %> |
-<%= link_to 'Back', reference_products_path %>
+<%= render 'reference_products/form' %>
+
+

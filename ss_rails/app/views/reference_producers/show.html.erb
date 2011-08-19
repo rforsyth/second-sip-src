@@ -1,50 +1,36 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Creator:</b>
-  <%= @reference_producer.creator_id %>
-</p>
-
-<p>
-  <b>Updater:</b>
-  <%= @reference_producer.updater_id %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%= @reference_producer.type %>
-</p>
-
-<p>
-  <b>Website url:</b>
-  <%= @reference_producer.website_url %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @reference_producer.name %>
-</p>
-
-<p>
-  <b>Canonical name:</b>
-  <%= @reference_producer.canonical_name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @reference_producer.description %>
-</p>
-
-<p>
-  <b>Cases per year:</b>
-  <%= @reference_producer.cases_per_year %>
-</p>
-
-<p>
-  <b>Capacity in barrels:</b>
-  <%= @reference_producer.capacity_in_barrels %>
-</p>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => @producer.name } %>
 
 
-<%= link_to 'Edit', edit_reference_producer_path(@reference_producer) %> |
-<%= link_to 'Back', reference_producers_path %>
+<div class="details_row">
+  <span class="label">Canonical Name:</span>
+  <span class="content"><%= @producer.canonical_name -%></span>
+</div>
+
+<%= render :partial => 'common/details/website_url', :object => @producer.website_url %>
+
+<%= render :partial => 'common/details/producer_description', :object => @producer.description %>
+
+<hr/>
+
+<% if @producer.reference_products.present? %>
+  <div class="main_list">
+    <%= render :partial => 'reference_products/reference_product',
+               :collection => @producer.reference_products %>
+  </div>
+  <%= render :partial => 'common/lists/paging_bar' %>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "No products to display." %>
+<% end %>
+
+<%= render :partial => 'common/edit/edit_actions',
+           :locals => { :edit_path => edit_polymorphic_path(@producer),
+                        :delete_path => polymorphic_path(@producer) } %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/edit/edit_admin_tags',
+             :locals => { :tag_container => @producer } %>
+<% end %>
+

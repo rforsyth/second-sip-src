@@ -1,4 +1,9 @@
 
+_____________________________________________________________
+Now
+
+- pass entity type along with reference producer autocomplete - filter by producer type
+
 
 _____________________________________________________________
 Major Features
@@ -28,7 +33,13 @@ Major Features
 
 
 _____________________________________________________________
-Feature Tweaks
+
+
+
+_____________________________________________________________
+Itemized
+
+- show list of reference producers in new producer form
 
 - stop storing producer canonical name as part of product (in case producer name changes)
   - need to break apart string and look up producer first then product

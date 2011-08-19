@@ -1,65 +1,32 @@
-<%= form_for(@reference_product) do |f| %>
-  <% if @reference_product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@reference_product.errors.count, "error") %> prohibited this reference_product from being saved:</h2>
+<%= form_for(@product, :as => :reference_product) do |f| %>
 
-      <ul>
-      <% @reference_product.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @product } %>
+  
+  <div class="form_row">
+    <%= label_tag :reference_producer_name, "Producer: " %>
+    <% if @product.new_record? %>
+      <%= text_field_tag :reference_producer_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+    <% else %>
+      <%= link_to @product.reference_producer.name, @product.reference_producer %>
+    <% end %>
+  </div>
 
-  <div class="field">
-    <%= f.label :creator_id %><br />
-    <%= f.text_field :creator_id %>
+  <div class="form_row">
+    <%= f.label :name, "Name:" %>
+    <%= f.text_field :name, :class => 'text_field text_wide' %>
   </div>
-  <div class="field">
-    <%= f.label :updater_id %><br />
-    <%= f.text_field :updater_id %>
+
+  <div class="form_row">
+    <%= f.label :description, 'Notes:' %>
+    <%= f.text_area :description, :class => 'text_long' %>
   </div>
-  <div class="field">
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
-  </div>
-  <div class="field">
-    <%= f.label :reference_producer_id %><br />
-    <%= f.text_field :reference_producer_id %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :canonical_name %><br />
-    <%= f.text_field :canonical_name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br />
-    <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :price_paid %><br />
-    <%= f.text_field :price_paid %>
-  </div>
-  <div class="field">
-    <%= f.label :price_type %><br />
-    <%= f.text_field :price_type %>
-  </div>
-  <div class="field">
-    <%= f.label :region_lookup_id %><br />
-    <%= f.text_field :region_lookup_id %>
-  </div>
-  <div class="field">
-    <%= f.label :style_lookup_id %><br />
-    <%= f.text_field :style_lookup_id %>
-  </div>
-  <div class="actions">
+
+  <div class="form_separator form_right_column">
     <%= f.submit %>
   </div>
+
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "reference_producer_name",
+                          :entities_path => @reference_producer_class.name.tableize } %>
+
 <% end %>

@@ -21,11 +21,6 @@
   </div>
 
   <div class="form_row">
-    <%= f.label :alcohol_by_volume, 'ABV:' %>
-    <%= f.text_field :alcohol_by_volume, :class => 'text_field', :size => '8', :maxlength => 5 %> percent
-  </div>
-
-  <div class="form_row">
     <%= f.label :description, 'Notes:' %>
     <%= f.text_area :description, :class => 'text_long' %>
   </div>
@@ -46,8 +41,6 @@
                           :entities_path => @producer_class.name.tableize } %>
 
   <script type="text/javascript">
-    $('#<%= @product_class.name.underscore %>_alcohol_by_volume').keyfilter(/[0-9.]/);
-  
     function update_product_form_producer(producer) {
       $('#<%= @product_class.name.underscore %>_visibility_' + producer.visibility).attr('checked', true);
     }

@@ -1,4 +1,0 @@
-
-
-class ReferenceWinery < ReferenceProducer
-end

@@ -1,4 +1,0 @@
-
-
-class ReferenceBeer < ReferenceProduct
-end

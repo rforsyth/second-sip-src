@@ -1,4 +1,0 @@
-
-
-class ReferenceSpirit < ReferenceProduct
-end

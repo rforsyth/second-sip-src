@@ -95,6 +95,24 @@ rails generate scaffold reference_product creator_id:integer updater_id:integer 
 
 rails generate migration AddAlcoholByVolumeToProducts
 
+rails generate migration RemoveSomeBeverageFields
+
+rails generate model reference_looked reference_lookup_id:integer reference_lookable_id:integer reference_lookable_type:string
+
+rails generate migration RemoveProductLookupForeignKeys
+
+rails generate migration RenameReferenceLookedsTable
+
+rails generate migration SetNotNullForAllTheColumnsYouForgot
+
+rails generate migration RemoveReferenceLookedEditorFields
+
+rails generate migration SetOccasionSize
+
+rails generate scaffold admin_tag creator_id:integer updater_id:integer name:string
+
+rails generate model admin_tagged admin_tag_id:integer admin_taggable_id:integer admin_taggable_type:string
+
 
 
 

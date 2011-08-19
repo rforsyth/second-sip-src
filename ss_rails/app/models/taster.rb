@@ -3,8 +3,14 @@ class Taster < ActiveRecord::Base
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
   acts_as_authentic
+  
+  before_save :set_canonical_fields
 
   ROLES = %w[admin enforcer editor banned]
+  
+  def set_canonical_fields
+    self.canonical_username = self.username.canonicalize
+  end
   
   def to_param
     self.username

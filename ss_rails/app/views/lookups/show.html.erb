@@ -1,50 +1,14 @@
-<p id="notice"><%= notice %></p>
+<%= render :partial => 'common/global/content_header', :locals => { :title => @lookup.name} %>
 
-<p>
-  <b>Name:</b>
-  <%= @lookup.name %>
-</p>
+<% if @lookup.description -%>
+  <div class="details_row details_separator"><span class="details_label"> Description: </span>
+  <div class="details_field"><%= simple_format(h(@lookup.description)) %> </div></div>
+<% end %>
 
-<p>
-  <b>Canonical name:</b>
-  <%= @lookup.canonical_name %>
-</p>
+<%= link_to 'Edit', edit_lookup_path(@lookup) %>
 
-<p>
-  <b>Description:</b>
-  <%= @lookup.description %>
-</p>
+<% content_for :right do %>
+  <%= render :partial => 'common/edit/edit_admin_tags',
+             :locals => { :tag_container => @lookup } %>
+<% end %>
 
-<p>
-  <b>Lookup type:</b>
-  <%= @lookup.lookup_type %>
-</p>
-
-<p>
-  <b>Entity type:</b>
-  <%= @lookup.entity_type %>
-</p>
-
-<p>
-  <b>Parent lookup:</b>
-  <%= @lookup.parent_lookup_id %>
-</p>
-
-<p>
-  <b>Full name:</b>
-  <%= @lookup.full_name %>
-</p>
-
-<p>
-  <b>Canonical full name:</b>
-  <%= @lookup.canonical_full_name %>
-</p>
-
-<p>
-  <b>Is reference:</b>
-  <%= @lookup.is_reference %>
-</p>
-
-
-<%= link_to 'Edit', edit_lookup_path(@lookup) %> |
-<%= link_to 'Back', lookups_path %>

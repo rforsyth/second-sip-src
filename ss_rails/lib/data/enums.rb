@@ -51,9 +51,26 @@ module Enums
         '3 Point Scale' => POINTS_3 }
     end
   end
+  
+  class ReferenceProducerEntityType < EnumBase
+		def self.collection
+			return {
+				'ReferenceBrewery' => Brewery.name,
+				'ReferenceWinery' => Winery.name,
+				'ReferenceDistillery' => Distillery.name }
+		end
+	end
+  
+  class ReferenceProductEntityType < EnumBase
+		def self.collection
+			return {
+				'ReferenceBeer' => Brewery.name,
+				'ReferenceWine' => Winery.name,
+				'ReferenceSpirit' => Distillery.name }
+		end
+	end
 
 	class BeverageEntityType < EnumBase
-		
 		def self.collection
 			return {
 				'Brewery' => Brewery.name,
@@ -65,6 +82,18 @@ module Enums
 				'Distillery' => Distillery.name,
 				'Spirit' => Spirit.name,
 				'Spirit Note' => SpiritNote.name }
+		end
+	end
+
+	class ReferenceBeverageEntityType < EnumBase
+		def self.collection
+			return {
+				'ReferenceBrewery' => ReferenceBrewery.name,
+				'ReferenceBeer' => ReferenceBeer.name,
+				'ReferenceWinery' => ReferenceWinery.name,
+				'ReferenceWine' => ReferenceWine.name,
+				'ReferenceDistillery' => ReferenceDistillery.name,
+				'ReferenceSpirit' => ReferenceSpirit.name }
 		end
 	end
 			
@@ -85,7 +114,7 @@ module Enums
         'Region' => REGION,
         'Varietal' => VARIETAL,
         'Vineyard' => VINEYARD,
-  			'Occasion' => OCCASION}
+  			'Occasion' => OCCASION }
     end
   end	
 			

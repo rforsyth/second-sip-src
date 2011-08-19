@@ -1,49 +1,27 @@
-<%= form_for(@reference_lookup) do |f| %>
-  <% if @reference_lookup.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@reference_lookup.errors.count, "error") %> prohibited this reference_lookup from being saved:</h2>
+<%= form_for(@lookup) do |f| %>
 
-      <ul>
-      <% @reference_lookup.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @lookup } %>
+  
+  <div class="form_row">
+    <%= f.label :name, 'Name:' %>
+    <%= f.text_field :name, :class => 'text_field text_wide' %>
   </div>
-  <div class="field">
-    <%= f.label :canonical_name %><br />
-    <%= f.text_field :canonical_name %>
+  <div class="form_row">
+    <%= f.label :entity_type, 'Entity:' %>
+    <%= f.select(:entity_type, Enums::ReferenceBeverageEntityType.collection,
+                           :class => 'select_field') %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
+  <div class="form_row">
+    <%= f.label :lookup_type, 'Field:' %>
+    <%= f.select(:lookup_type, Enums::LookupType.collection, :class => 'select_field') %>
   </div>
-  <div class="field">
-    <%= f.label :lookup_type %><br />
-    <%= f.text_field :lookup_type %>
+  <div class="form_row">
+    <%= f.label :description, 'Notes:' %>
+    <%= f.text_area :description, :class => 'text_tall'  %>
   </div>
-  <div class="field">
-    <%= f.label :entity_type %><br />
-    <%= f.text_field :entity_type %>
-  </div>
-  <div class="field">
-    <%= f.label :parent_reference_lookup_id %><br />
-    <%= f.text_field :parent_reference_lookup_id %>
-  </div>
-  <div class="field">
-    <%= f.label :full_name %><br />
-    <%= f.text_field :full_name %>
-  </div>
-  <div class="field">
-    <%= f.label :canonical_full_name %><br />
-    <%= f.text_field :canonical_full_name %>
-  </div>
-  <div class="actions">
+  
+  <div class="form_separator form_right_column">
     <%= f.submit %>
   </div>
+
 <% end %>

@@ -4,7 +4,7 @@ class ReferenceProducer < ActiveRecord::Base
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
-	has_many :products
+	has_many :reference_products
 	
   before_save :set_canonical_fields
   
@@ -15,5 +15,18 @@ class ReferenceProducer < ActiveRecord::Base
   def to_param
     self.canonical_name
   end
+
 end
+
+class ReferenceBrewery < ReferenceProducer
+end
+
+class ReferenceWinery < ReferenceProducer
+end
+
+class ReferenceDistillery < ReferenceProducer
+end
+
+
+
 

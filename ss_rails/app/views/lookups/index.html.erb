@@ -1,39 +1,22 @@
-<h1>Listing lookups</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Canonical name</th>
-    <th>Description</th>
-    <th>Lookup type</th>
-    <th>Entity type</th>
-    <th>Parent lookup</th>
-    <th>Full name</th>
-    <th>Canonical full name</th>
-    <th>Is reference</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Lookups",
+                        :new_item_path => new_lookup_path } %>
 
-<% @lookups.each do |lookup| %>
-  <tr>
-    <td><%= lookup.name %></td>
-    <td><%= lookup.canonical_name %></td>
-    <td><%= lookup.description %></td>
-    <td><%= lookup.lookup_type %></td>
-    <td><%= lookup.entity_type %></td>
-    <td><%= lookup.parent_lookup_id %></td>
-    <td><%= lookup.full_name %></td>
-    <td><%= lookup.canonical_full_name %></td>
-    <td><%= lookup.is_reference %></td>
-    <td><%= link_to 'Show', lookup %></td>
-    <td><%= link_to 'Edit', edit_lookup_path(lookup) %></td>
-    <td><%= link_to 'Destroy', lookup, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% if @lookups && !@lookups.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'lookup', :collection => @lookups %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no lookups." %>
 <% end %>
-</table>
 
-<br />
+<%= render :partial => 'common/lists/paging_bar' %>
 
-<%= link_to 'New Lookup', new_lookup_path %>
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => search_lookups_path } %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
+<% end %>
+

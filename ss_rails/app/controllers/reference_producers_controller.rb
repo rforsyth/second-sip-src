@@ -1,91 +1,60 @@
 class ReferenceProducersController < ApplicationController
-	before_filter :initialize_reference_producers_tabs
   
-  # GET /producers/search
   def search
-    @reference_producers = @reference_producer_class.all
+    @producers = @reference_producer_class.all
 		render :template => 'reference_producers/search'
   end
   
-  # GET /reference_producers
-  # GET /reference_producers.xml
+  def autocomplete
+    autocomplete = Ajax::Autocomplete.new(params[:query])
+    producers = @reference_producer_class.all
+    producers.each do |producer|
+	    autocomplete.add_suggestion(producer.name, producer.name, producer.id)
+    end
+    render :json => autocomplete
+  end
+  
   def index
-    @reference_producers = ReferenceProducer.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @reference_producers }
-    end
+    @producers = @reference_producer_class.all
+		render :template => 'reference_producers/index'
   end
 
-  # GET /reference_producers/1
-  # GET /reference_producers/1.xml
   def show
-    @reference_producer = ReferenceProducer.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @reference_producer }
-    end
+    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
+		render :template => 'reference_producers/show'
   end
 
-  # GET /reference_producers/new
-  # GET /reference_producers/new.xml
   def new
-    @reference_producer = ReferenceProducer.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @reference_producer }
-    end
+    @producer = @reference_producer_class.new
+		render :template => 'reference_producers/new'
   end
 
-  # GET /reference_producers/1/edit
   def edit
-    @reference_producer = ReferenceProducer.find(params[:id])
+    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
+    render :template => 'reference_producers/edit'
   end
 
-  # POST /reference_producers
-  # POST /reference_producers.xml
   def create
-    @reference_producer = ReferenceProducer.new(params[:reference_producer])
-
-    respond_to do |format|
-      if @reference_producer.save
-        format.html { redirect_to(@reference_producer, :notice => 'Reference producer was successfully created.') }
-        format.xml  { render :xml => @reference_producer, :status => :created, :location => @reference_producer }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @reference_producer.errors, :status => :unprocessable_entity }
-      end
+    @producer = @reference_producer_class.new(params[:reference_producer])
+    if @producer.save
+      redirect_to(@producer)
+    else
+      render :action => "reference_producers/new"
     end
   end
 
-  # PUT /reference_producers/1
-  # PUT /reference_producers/1.xml
   def update
-    @reference_producer = ReferenceProducer.find(params[:id])
-
-    respond_to do |format|
-      if @reference_producer.update_attributes(params[:reference_producer])
-        format.html { redirect_to(@reference_producer, :notice => 'Reference producer was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @reference_producer.errors, :status => :unprocessable_entity }
-      end
+    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
+    if @producer.update_attributes(params[:reference_producer])
+      redirect_to(@producer) 
+    else
+      render :action => "reference_producers/edit"
     end
   end
 
-  # DELETE /reference_producers/1
-  # DELETE /reference_producers/1.xml
   def destroy
-    @reference_producer = ReferenceProducer.find(params[:id])
-    @reference_producer.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(reference_producers_url) }
-      format.xml  { head :ok }
-    end
+    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
+    @producer.destroy
+    redirect_to(reference_producers_url)
   end
 end

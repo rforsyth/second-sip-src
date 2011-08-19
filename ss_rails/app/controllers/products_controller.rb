@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to([@product.owner, @product], :notice => 'Product was successfully created.')
     else
-      render :action => "new"
+      render :action => "products/new"
     end
   end
 
@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
     if @product.update_attributes(params[:product])
       redirect_to([@product.owner, @product], :notice => 'Product was successfully updated.')
     else
-      render :action => "edit"
+      render :action => "products/edit"
     end
   end
 

@@ -1,4 +1,5 @@
 require 'ui/tab_builder'
+require 'ajax/autocomplete'
 
 class ApplicationController < ActionController::Base
 	include UI::TabBuilder
@@ -14,29 +15,10 @@ class ApplicationController < ActionController::Base
     model_class.find_by_canonical_name(id, :conditions => { :owner_id => owner.id } )
   end
   
-  ################################################################
-	###   Navigation
-	################################################################
-	
-	def initialize_beverage_topnav
-		@topnav_tabs = build_beverage_topnav_tabs(:home, @displayed_profile, @current_profile)
-	end
-	
-	def initialize_admin_topnav
-		@topnav_tabs = build_admin_topnav_tabs
-	end
-	
-	def initialize_beverage_subnav
-		@subnav_tabs = build_beverage_subnav_tabs(@selected_subnav_tab)
-	end
-	
-	def initialize_metadata_subnav
-		@subnav_tabs = build_metadata_subnav_tabs
-	end
-	
-	def initialize_users_subnav
-		@subnav_tabs = build_users_subnav_tabs
-	end
+  def find_by_canonical_name_or_id(model_class, id)
+    return model_class.find(id) if id.is_i?
+    model_class.find_by_canonical_name(id)
+  end
     
   private
   
@@ -80,18 +62,12 @@ class ApplicationController < ActionController::Base
   end
   
   def initialize_beverage_classes_from_entity_type_param
-    
-    puts 'INSIDE IBCFETP'
-    puts params[:entity_type]
-    
     beverage_type = case params[:entity_type]
       when 'breweries', 'beers', 'beer_notes' then :beer
       when 'wineries', 'wines', 'wine_notes' then :wine
       when 'distilleries', 'spirits', 'spirit_notes' then :spirits
       else raise "Unexpected entity type: #{params[:entity_type]}"
       end
-      
-    puts 'got type: ' + beverage_type.to_s
     initialize_beverage_classes(beverage_type)
   end
   

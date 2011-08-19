@@ -11,10 +11,6 @@
     <%= f.text_field :website_url, :class => 'text_field text_wide' %>
   </div>
   <div class="form_row">
-    <%= f.label :cases_per_year, 'Cases / Year:' %>
-    <%= f.text_field :cases_per_year, :class => 'text_field', :maxlength => 15 %>
-  </div>
-  <div class="form_row">
     <%= f.label :description, 'Notes:' %>
     <%= f.text_area :description, :class => 'text_tall'  %>
   </div>
@@ -29,9 +25,5 @@
   <div class="form_separator form_right_column">
     <%= f.submit %>
   </div>
-
-  <script type="text/javascript">
-    $('#<%= @producer_class.name.tableize %>_cases_per_year').keyfilter(/[0-9.]/);
-  </script>
 
 <% end %>

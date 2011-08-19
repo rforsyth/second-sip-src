@@ -1,0 +1,7 @@
+
+<% if website_url.present? -%>
+  <div class="details_row">
+    <span class="label">Website:</span>
+    <span class="content"><%= link_to website_url, website_url, :target => '_blank' -%></span>
+  </div>
+<% end %>

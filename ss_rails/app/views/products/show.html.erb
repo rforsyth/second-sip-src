@@ -26,12 +26,6 @@
       <span class="content"><%=number_to_currency @product.price_paid.pretty_print %></span>
     </div>
   <% end %>
-  <% if @product.alcohol_by_volume.present? %>
-    <div class="details_row">
-      <span class="label">ABV:</span>
-      <span class="content"><%= @product.alcohol_by_volume.pretty_print %>%</span>
-    </div>
-  <% end %>
 </div>
 
 <% if @product.kind_of?(Wine) %>

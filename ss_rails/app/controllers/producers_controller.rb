@@ -1,6 +1,5 @@
 
 class ProducersController < ApplicationController
-	before_filter :initialize_producers_tabs
   
   # GET /producers/search
   def search
@@ -38,7 +37,7 @@ class ProducersController < ApplicationController
     if @producer.save
       redirect_to([@producer.owner, @producer], :notice => 'Producer was successfully created.')
     else
-      render :action => "new"
+      render :action => "producers/new"
     end
   end
 
@@ -48,7 +47,7 @@ class ProducersController < ApplicationController
     if @producer.update_attributes(params[:producer])
       redirect_to([@producer.owner, @producer], :notice => 'Producer was successfully updated.')
     else
-      render :action => "edit"
+      render :action => "producers/edit"
     end
   end
 

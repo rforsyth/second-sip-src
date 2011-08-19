@@ -1,5 +1,7 @@
 SsRails::Application.routes.draw do
 
+  resources :admin_tags
+
   username_pattern = /[a-zA-Z0-9_]{3,16}/  # no anchor characters required in routes
 	producers_pattern = /breweries|wineries|distilleries/
 	products_pattern = /beers|wines|spirits/
@@ -12,9 +14,20 @@ SsRails::Application.routes.draw do
   match 'login' => 'taster_sessions#new', :as => :login
   match 'logout' => 'taster_sessions#destroy', :as => :logout
   
-  resources :lookups, :reference_lookups
-  resources :friendships, :tags, :resources
-  resources :reference_producers, :reference_products
+  
+  resources :lookups, :reference_lookups,
+            :friendships, :tags, :resources do
+              get 'search', :on => :collection
+            end
+  
+  resources :reference_breweries, :reference_wineries, :reference_distilleries do
+              get 'search', :on => :collection
+              get 'autocomplete', :on => :collection
+            end
+            
+  resources :reference_beers, :reference_wines, :reference_spirits do
+              get 'search', :on => :collection
+            end
   
   match ':entity_type' => 'global_producers#browse', :as => 'browse_producers', :entity_type => producers_pattern
   match ':entity_type/search' => 'global_producers#search', :as => 'search_producers', :entity_type => producers_pattern
@@ -31,8 +44,11 @@ SsRails::Application.routes.draw do
   
   resources :tasters do
     resources :breweries, :wineries, :distilleries,
-              :beers, :wines, :spirits,
-              :beer_notes, :wine_notes, :spirit_notes do
+              :beers, :wines, :spirits do
+                get 'search', :on => :collection
+                get 'autocomplete', :on => :collection
+              end
+    resources :beer_notes, :wine_notes, :spirit_notes do
                 get 'search', :on => :collection
               end
   end

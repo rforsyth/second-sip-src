@@ -34,6 +34,8 @@
     link_to('Resources', resources_path, :class => subnav_tab.css_class)
   when :tags then
     link_to('Tags', tags_path, :class => subnav_tab.css_class)
+  when :admin_tags then
+    link_to('Admin Tags', admin_tags_path, :class => subnav_tab.css_class)
   when :product_notes then
     product = subnav_tab.container_object
     link_to('Notes',
@@ -50,11 +52,19 @@
             "#{polymorphic_path([producer.owner, producer])}?tab=products",
             :class => subnav_tab.css_class)
   when :reference_lookups then
-    link_to('Lookups', reference_lookups_path, :class => subnav_tab.css_class)
-  when :reference_products then
-    link_to('Products', reference_products_path, :class => subnav_tab.css_class)
-  when :reference_producers then
-    link_to('Producers', reference_producers_path, :class => subnav_tab.css_class)
+    link_to('Reference Lookups', reference_lookups_path, :class => subnav_tab.css_class)
+  when :reference_breweries then
+    link_to('Breweries', reference_breweries_path, :class => subnav_tab.css_class)
+  when :reference_wineries then
+    link_to('Wineries', reference_wineries_path, :class => subnav_tab.css_class)
+  when :reference_distilleries then
+    link_to('Distilleries', reference_distilleries_path, :class => subnav_tab.css_class)
+  when :reference_beers then
+    link_to('Beers', reference_beers_path, :class => subnav_tab.css_class)
+  when :reference_wines then
+    link_to('Wines', reference_wines_path, :class => subnav_tab.css_class)
+  when :reference_spirits then
+    link_to('Spirits', reference_spirits_path, :class => subnav_tab.css_class)
   else raise 'Unexpected tab: ' + subnav_tab.tab.to_s
   end
 -%>

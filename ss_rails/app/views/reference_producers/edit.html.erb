@@ -1,6 +1,8 @@
-<h1>Editing reference_producer</h1>
 
-<%= render 'form' %>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Edit #{@reference_producer_class.name.titleize}" } %>
 
-<%= link_to 'Show', @reference_producer %> |
-<%= link_to 'Back', reference_producers_path %>
+<%= render 'reference_producers/form' %>
+
+
+

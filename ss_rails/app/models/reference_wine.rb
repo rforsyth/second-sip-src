@@ -1,4 +1,0 @@
-
-
-class ReferenceWine < ReferenceProduct
-end

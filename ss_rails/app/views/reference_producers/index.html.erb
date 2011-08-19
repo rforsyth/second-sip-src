@@ -1,39 +1,22 @@
-<h1>Listing reference_producers</h1>
 
-<table>
-  <tr>
-    <th>Creator</th>
-    <th>Updater</th>
-    <th>Type</th>
-    <th>Website url</th>
-    <th>Name</th>
-    <th>Canonical name</th>
-    <th>Description</th>
-    <th>Cases per year</th>
-    <th>Capacity in barrels</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "#{@reference_producer_class.name.pluralize.titleize}",
+                        :new_item_path => new_polymorphic_path(@reference_producer_class) } %>
 
-<% @reference_producers.each do |reference_producer| %>
-  <tr>
-    <td><%= reference_producer.creator_id %></td>
-    <td><%= reference_producer.updater_id %></td>
-    <td><%= reference_producer.type %></td>
-    <td><%= reference_producer.website_url %></td>
-    <td><%= reference_producer.name %></td>
-    <td><%= reference_producer.canonical_name %></td>
-    <td><%= reference_producer.description %></td>
-    <td><%= reference_producer.cases_per_year %></td>
-    <td><%= reference_producer.capacity_in_barrels %></td>
-    <td><%= link_to 'Show', reference_producer %></td>
-    <td><%= link_to 'Edit', edit_reference_producer_path(reference_producer) %></td>
-    <td><%= link_to 'Destroy', reference_producer, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% if @producers && !@producers.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'reference_producers/reference_producer', :collection => @producers %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no reference producers." %>
 <% end %>
-</table>
 
-<br />
+<%= render :partial => 'common/lists/paging_bar' %>
 
-<%= link_to 'New Reference producer', new_reference_producer_path %>
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => "#{polymorphic_path(@reference_producer_class)}/search" } %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
+<% end %>
+
