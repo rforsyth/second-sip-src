@@ -1,25 +1,16 @@
-<h1>Listing tasters</h1>
-<p id="notice"><%= notice %></p>
-<table>
-  <tr>
-    <th>Username</th>
-    <th>Email</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @tasters.each do |taster| %>
-  <tr>
-    <td><%= taster.username %></td>
-    <td><%= taster.email %></td>
-    <td><%= link_to 'Show', taster %></td>
-    <td><%= link_to 'Edit', edit_taster_path(taster) %></td>
-    <td><%= link_to 'Destroy', taster, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Tasters" } %>
+
+<% if @tasters && !@tasters.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'taster', :collection => @tasters %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no tasters." %>
 <% end %>
-</table>
 
-<br />
+<%= render :partial => 'common/lists/paging_bar' %>
 
-<%= link_to 'New taster', new_taster_path %>
+

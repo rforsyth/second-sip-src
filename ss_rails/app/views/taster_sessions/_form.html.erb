@@ -1,8 +1,6 @@
 <%= form_for(@taster_session) do |f| %>
   <% if @taster_session.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@taster_session.errors.count, "error") %> prohibited this taster_session from being saved:</h2>
-
       <ul>
       <% @taster_session.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -19,6 +17,11 @@
     <%= f.label :password %><br />
     <%= f.password_field :password %>
   </div>
+  <div class="field">
+    <%= f.label :remember_me %><br />
+    <%= f.check_box :remember_me %>
+  </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

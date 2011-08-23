@@ -1,27 +1,16 @@
-<h1>Listing admin_tags</h1>
 
-<table>
-  <tr>
-    <th>Creator</th>
-    <th>Updater</th>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Admin Tags",
+                        :new_item_path => new_admin_tag_path } %>
 
-<% @admin_tags.each do |admin_tag| %>
-  <tr>
-    <td><%= admin_tag.creator_id %></td>
-    <td><%= admin_tag.updater_id %></td>
-    <td><%= admin_tag.name %></td>
-    <td><%= link_to 'Show', admin_tag %></td>
-    <td><%= link_to 'Edit', edit_admin_tag_path(admin_tag) %></td>
-    <td><%= link_to 'Destroy', admin_tag, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% if @admin_tags && !@admin_tags.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'admin_tag', :collection => @admin_tags %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no admin tags." %>
 <% end %>
-</table>
 
-<br />
+<%= render :partial => 'common/lists/paging_bar' %>
 
-<%= link_to 'New Admin tag', new_admin_tag_path %>

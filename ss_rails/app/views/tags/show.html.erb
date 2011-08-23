@@ -1,25 +1,5 @@
-<p id="notice"><%= notice %></p>
+<%= render :partial => 'common/global/content_header', :locals => { :title => @tag.name} %>
 
-<p>
-  <b>Creator:</b>
-  <%= @tag.creator_id %>
-</p>
-
-<p>
-  <b>Updater:</b>
-  <%= @tag.updater_id %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @tag.name %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%= @tag.type %>
-</p>
+<%= link_to 'Edit', edit_tag_path(@tag) %>
 
 
-<%= link_to 'Edit', edit_tag_path(@tag) %> |
-<%= link_to 'Back', tags_path %>

@@ -1,24 +1,8 @@
 
-_____________________________________________________________
-Now
-
-- pass entity type along with reference producer autocomplete - filter by producer type
-
 
 _____________________________________________________________
 Major Features
 
-- CRUD:
-  - Reference Producers
-  - Reference Products
-  - Reference Lookups
-  - Resources
-  
-- Administer:
-  - Lookups
-  - Tasters
-  - Tags
-  - Friendships
 
 - wire up friendships
 
@@ -39,7 +23,14 @@ _____________________________________________________________
 _____________________________________________________________
 Itemized
 
-- show list of reference producers in new producer form
+- implement user "home" page that shows latest notes
+  - and separate "profile" page for editing greeting, etc...
+
+- change password form separate from update profile
+
+- recover password feature (send email)
+
+- show autocomplete of reference producers in new producer form
 
 - stop storing producer canonical name as part of product (in case producer name changes)
   - need to break apart string and look up producer first then product
@@ -47,6 +38,8 @@ Itemized
 - get paging bar working in products -> notes (need to handle paging in controller)
 
 - enforce visibility of producer / product in controller (don't populate @producer / @product)
+
+- handle case where user registered but didn't follow verification link until perishable token expired
 
 _____________________________________________________________
 Performance

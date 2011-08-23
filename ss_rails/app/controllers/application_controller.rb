@@ -19,6 +19,11 @@ class ApplicationController < ActionController::Base
     return model_class.find(id) if id.is_i?
     model_class.find_by_canonical_name(id)
   end
+  
+  def find_by_name_or_id(model_class, id)
+    return model_class.find(id) if id.is_i?
+    model_class.find_by_name(id)
+  end
     
   private
   
@@ -54,6 +59,24 @@ class ApplicationController < ActionController::Base
   def current_taster
     return @current_taster if defined?(@current_taster)
     @current_taster = current_taster_session && current_taster_session.record
+  end
+  
+  def require_taster 
+    unless current_taster 
+      store_location 
+      flash[:notice] = "You must be logged in to access this page" 
+      redirect_to login_path 
+      return false 
+    end 
+  end
+  
+  def require_no_taster
+    if current_taster 
+      store_location 
+      flash[:notice] = "You must be logged out to access this page" 
+      redirect_to root_url 
+      return false 
+    end 
   end
   
   def displayed_taster

@@ -1,0 +1,10 @@
+<div class="list_item">
+  <span class="item_name">
+    <%= link_to taster.username, taster %>
+    <%= "(#{taster.real_name})" %>
+  </span>
+  <span class="username">
+    <%= taster.email %>
+  </span>
+  <p><%= truncate(taster.greeting, :length => 150) %></p>
+</div>

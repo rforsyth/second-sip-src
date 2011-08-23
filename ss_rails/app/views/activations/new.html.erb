@@ -1,0 +1,14 @@
+<h1>Activate your account</h1>
+
+<% form_for @taster, :url => activate_path(@taster.id), :html => { :method => :post } do |f| %>
+	<%= f.error_messages %>
+
+  <%= f.label :password, "Confirm your password" %><br />
+  <%= f.password_field :password %><br />
+  
+  <%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %><br />
+
+	<%= f.submit "Activate" %>
+<% end %>
+

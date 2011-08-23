@@ -113,7 +113,17 @@ rails generate scaffold admin_tag creator_id:integer updater_id:integer name:str
 
 rails generate model admin_tagged admin_tag_id:integer admin_taggable_id:integer admin_taggable_type:string
 
+rails generate migration AddTastersPasswordResetFields
 
+rails generate controller password_resets
+
+rails generate mailer notifier
+
+rails generate migration AddVerifiedToTasters
+
+rails generate migration AllowNullCryptedPassword
+
+rails generate migration RenameTastersVerifiedToActive
 
 
 

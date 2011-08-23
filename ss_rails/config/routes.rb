@@ -6,14 +6,15 @@ SsRails::Application.routes.draw do
 	producers_pattern = /breweries|wineries|distilleries/
 	products_pattern = /beers|wines|spirits/
 	notes_pattern = /beer_notes|wine_notes|spirit_notes/
-  #match 'tasters/:username' => 'tasters#show', :username => username_pattern
 
 	root :to => "home#index"
 
-  resources :taster_sessions
+  resources :taster_sessions, :password_resets
   match 'login' => 'taster_sessions#new', :as => :login
   match 'logout' => 'taster_sessions#destroy', :as => :logout
   
+  match '/register/:activation_code' => 'activations#new', :as => :register
+  match '/activate/:id' => 'activations#create', :as => :activate
   
   resources :lookups, :reference_lookups,
             :friendships, :tags, :resources do

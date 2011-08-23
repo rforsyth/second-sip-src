@@ -1,6 +1,5 @@
-<h1>Editing tag</h1>
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Edit Tag" } %>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @tag %> |
-<%= link_to 'Back', tags_path %>

@@ -1,29 +1,16 @@
-<h1>Listing tags</h1>
 
-<table>
-  <tr>
-    <th>Creator</th>
-    <th>Updater</th>
-    <th>Name</th>
-    <th>Type</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Tags",
+                        :new_item_path => new_tag_path } %>
 
-<% @tags.each do |tag| %>
-  <tr>
-    <td><%= tag.creator_id %></td>
-    <td><%= tag.updater_id %></td>
-    <td><%= tag.name %></td>
-    <td><%= tag.type %></td>
-    <td><%= link_to 'Show', tag %></td>
-    <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
-    <td><%= link_to 'Destroy', tag, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% if @tags && !@tags.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'tag', :collection => @tags %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no tags." %>
 <% end %>
-</table>
 
-<br />
+<%= render :partial => 'common/lists/paging_bar' %>
 
-<%= link_to 'New Tag', new_tag_path %>

@@ -1,12 +1,44 @@
 class Taster < ActiveRecord::Base
-  #set_table_name "users"
+  attr_protected :username, :email, :password, :password_confirmation
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
-  acts_as_authentic
+	
+  acts_as_authentic do |c|
+    c.validates_length_of_password_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
+    c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
+  end
   
   before_save :set_canonical_fields
+  
+  validates_format_of :email, :with => Authlogic::Regex.email
 
   ROLES = %w[admin enforcer editor banned]
+  
+  # we need to make sure a password gets set when the user activates their account
+  def has_no_credentials?
+    self.crypted_password.blank?
+  end
+  
+  # called at registration - before validation email is sent
+  def signup!(params)
+    update_profile(params)
+    self.email = params[:taster][:email]
+    save_without_session_maintenance
+  end
+  
+  # called at validation
+  def activate!(params)
+    self.active = true
+    self.password = params[:taster][:password]
+    self.password_confirmation = params[:taster][:password_confirmation]
+    save
+  end
+  
+  def update_profile(params)
+    self.username = params[:taster][:username]
+    self.greeting = params[:taster][:greeting]
+    self.real_name = params[:taster][:real_name]
+  end
   
   def set_canonical_fields
     self.canonical_username = self.username.canonicalize
@@ -14,6 +46,29 @@ class Taster < ActiveRecord::Base
   
   def to_param
     self.username
+  end
+  
+  ############################################
+  ## Account Management
+  
+  # supports logging in via either username or email address
+  def self.find_by_username_or_email(login)
+    find_by_username(login) || find_by_email(login)
+  end
+  
+  def deliver_password_reset_instructions!  
+    reset_perishable_token!  
+    Notifier.password_reset_instructions(self).deliver
+  end
+  
+  def deliver_activation_instructions!
+    reset_perishable_token!
+    Notifier.activation_instructions(self).deliver
+  end
+ 
+  def deliver_activation_confirmation!
+    reset_perishable_token!
+    Notifier.activation_confirmation(self).deliver
   end
 
   ############################################

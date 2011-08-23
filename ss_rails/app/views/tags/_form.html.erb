@@ -1,33 +1,14 @@
 <%= form_for(@tag) do |f| %>
-  <% if @tag.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
 
-      <ul>
-      <% @tag.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :creator_id %><br />
-    <%= f.text_field :creator_id %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @tag } %>
+  
+  <div class="form_row">
+    <%= f.label :name, 'Name:' %>
+    <%= f.text_field :name, :class => 'text_field text_wide' %>
   </div>
-  <div class="field">
-    <%= f.label :updater_id %><br />
-    <%= f.text_field :updater_id %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
-  </div>
-  <div class="actions">
+  
+  <div class="form_separator form_right_column">
     <%= f.submit %>
   </div>
+
 <% end %>

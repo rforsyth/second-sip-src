@@ -8,6 +8,16 @@ Open Questions
 ** use polymorphic association for lookups or tags?
 
 
+__________________________________________________________________
+Authlogic
+
+- password reset
+http://stackoverflow.com/questions/1806002/sending-registration-verification-e-mails-using-authlogic
+http://www.binarylogic.com/2008/11/16/tutorial-reset-passwords-with-authlogic/
+
+- email verification:
+http://www.claytonlz.com/index.php/2009/07/authlogic-account-activation-tutorial/
+
 
 __________________________________________________________________
 Polymorphic routing / path

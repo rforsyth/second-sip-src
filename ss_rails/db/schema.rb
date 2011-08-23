@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110819042017) do
+ActiveRecord::Schema.define(:version => 20110823010936) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -184,19 +184,24 @@ ActiveRecord::Schema.define(:version => 20110819042017) do
   end
 
   create_table "tasters", :force => true do |t|
-    t.string   "username",           :limit => 100,  :null => false
-    t.string   "canonical_username", :limit => 100,  :null => false
-    t.string   "email",              :limit => 150,  :null => false
-    t.string   "crypted_password",   :limit => 500,  :null => false
-    t.string   "password_salt",      :limit => 500,  :null => false
-    t.string   "persistence_token",  :limit => 500,  :null => false
+    t.string   "username",           :limit => 100,                     :null => false
+    t.string   "canonical_username", :limit => 100,                     :null => false
+    t.string   "email",              :limit => 150,                     :null => false
+    t.string   "crypted_password",   :limit => 500
+    t.string   "password_salt",      :limit => 500
+    t.string   "persistence_token",  :limit => 500,                     :null => false
     t.string   "greeting",           :limit => 1000
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.integer  "roles_mask"
     t.string   "real_name",          :limit => 150
     t.integer  "creator_id"
     t.integer  "updater_id"
+    t.string   "perishable_token",                   :default => "",    :null => false
+    t.boolean  "active",                             :default => false
   end
+
+  add_index "tasters", ["email"], :name => "index_tasters_on_email"
+  add_index "tasters", ["perishable_token"], :name => "index_tasters_on_perishable_token"
 
 end
