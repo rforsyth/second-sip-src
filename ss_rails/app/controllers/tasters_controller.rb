@@ -1,12 +1,27 @@
 class TastersController < ApplicationController
-	before_filter :initialize_tasters_tabs, :except => [:home, :new, :create, :edit, :update, :verify]
-	before_filter :initialize_taster_home_tabs, :only => [:home, :new, :create, :edit, :update]
+	before_filter :initialize_tasters_tabs, :only => [:show]
+	before_filter :initialize_tasters_admin_tabs, :except => [:show]
 	
   def index
     @tasters = Taster.all
   end
 
   def show
+    @taster = Taster.find_by_username(params[:id])
+    @displayed_taster = @taster
+    @notes = Note.find_all_by_owner_id(@taster.id)
+    
+    if displayed_taster == current_taster
+      @friendships = Friendship.where("status = ? AND (inviter_id = ? OR invitee_id = ?)",
+                                       Enums::FriendshipStatus::ACCEPTED,
+                                       current_taster.id, current_taster.id)
+      @friendship_invitations = Friendship.where("status = ? AND invitee_id = ?",
+                                       Enums::FriendshipStatus::REQUESTED,
+                                       current_taster.id)
+    end
+  end
+  
+  def admin_profile
     @taster = Taster.find_by_username(params[:id])
   end
   

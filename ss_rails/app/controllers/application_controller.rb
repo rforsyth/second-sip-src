@@ -10,14 +10,40 @@ class ApplicationController < ActionController::Base
 
   protected
   
-  def find_by_owner_and_canonical_name_or_id(model_class, owner, id)
-    return model_class.find(id) if id.is_i?
-    model_class.find_by_canonical_name(id, :conditions => { :owner_id => owner.id } )
+  def find_producer_by_canonical_name_or_id(owner, id)
+    return @producer_class.find(id) if id.is_i?
+    @producer_class.find_by_canonical_name(id, :conditions => { :owner_id => owner.id } )
   end
   
-  def find_by_canonical_name_or_id(model_class, id)
-    return model_class.find(id) if id.is_i?
-    model_class.find_by_canonical_name(id)
+  def find_reference_producer_by_canonical_name_or_id(id)
+    return @reference_producer_class.find(id) if id.is_i?
+    @reference_producer_class.find_by_canonical_name(id, :conditions => { :owner_id => owner.id } )
+  end
+  
+  def find_product_by_canonical_name_or_id(owner, id)
+    return @product_class.find(id) if id.is_i?
+    canonical_names = id.split('-')
+    raise "invalid product canonical name: #{id}" if canonical_names.length != 2
+    find_product_by_canonical_names(owner, canonical_names[0], canonical_names[1])
+  end
+  
+  def find_product_by_canonical_names(owner, producer_name, product_name)
+    products = @product_class.joins(:producer).where(
+                     :owner_id => owner.id,
+                     :canonical_name => product_name,
+                     :producers => { :owner_id => owner.id,
+                                     :canonical_name => producer_name })
+    products.first
+  end
+  
+  def find_reference_product_by_canonical_name_or_id(id)
+    return @reference_product_class.find(id) if id.is_i?
+    canonical_names = id.split('-')
+    raise "invalid product canonical name: #{id}" if canonical_names.length != 2
+    products = @reference_product_class.joins(:reference_producer).where(
+                     :canonical_name => canonical_names[1],
+                     :reference_producers => { :canonical_name => canonical_names[0] })
+    products.first
   end
   
   def find_by_name_or_id(model_class, id)

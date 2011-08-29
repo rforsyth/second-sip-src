@@ -1,35 +1,25 @@
 
-search_taster_breweries_path([displayed_taster, @producer_class])
+  Parameters: {"taster_id"=>"Vizzini", "commit"=>"Update Beer note", "price_equivalent"=>"", 
+  
+  "region_name"=>"Denver?",
+  "style_name"=>"Flemish Red"
+  
+  "beer_note"=>{"occasion"=>"8",
+                "description_mouthfeel"=>"8", 
+                "buy_when"=>"50", 
+                "description_flavor"=>"8", 
+                "description_overall"=>"8", 
+                "description_aroma"=>"8", 
+                "description_appearance"=>"8", 
+                "tasted_at"=>"09/08/2011", 
+                "score_type"=>"50", 
+                "score"=>"8", 
+                "visibility"=>"20"}, 
+                
+  "beer"=>{"price"=>"", 
+           "price_paid"=>"8", 
+           "price_type"=>"80"},
+           
+           
+ "id"=>"3-newbelgium-lafolie", "style_name"=>"Flemish Red"}
 
-
-
-<h1>Listing producers</h1>
-
-<table>
-  <tr>
-    <th>Website url</th>
-    <th>Name</th>
-    <th>Canonical name</th>
-    <th>Description</th>
-    <th>Cases per year</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @producers.each do |producer| %>
-  <tr>
-    <td><%= producer.website_url %></td>
-    <td><%= producer.name %></td>
-    <td><%= producer.canonical_name %></td>
-    <td><%= producer.description %></td>
-    <td><%= producer.cases_per_year %></td>
-    <td><%= link_to 'Show', [producer.owner, producer] %></td>
-    <td><%= link_to 'Edit', edit_polymorphic_path([producer.owner, producer]) %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Producer', new_polymorphic_path([current_taster, @producer_class]) %>

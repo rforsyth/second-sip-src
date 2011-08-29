@@ -1,4 +1,4 @@
-<%= form_for([@product.owner || current_taster, @product], :as => :product) do |f| %>
+<%= form_for([@product.owner || current_taster, @product]) do |f| %>
 
   <%= render :partial => 'common/edit/errors', :locals => { :entity => @product } %>
   
@@ -17,7 +17,7 @@
   </div>
 
   <div id="product_details">
-    <%= render :partial => "products/#{@product_class.name.underscore}_form" %>
+    <%= render :partial => "products/#{@product_class.name.downcase}_form" %>
   </div>
 
   <div class="form_row">
@@ -37,8 +37,8 @@
   </div>
 
   <%= render :partial => 'common/scripts/autocomplete_script',
-             :locals => { :field_id => "#{@product_class.name.underscore}_producer_name",
-                          :entities_path => @producer_class.name.tableize } %>
+             :locals => { :field_id => "producer_name",
+                          :entities_path => polymorphic_path([current_taster, @producer_class]) } %>
 
   <script type="text/javascript">
     function update_product_form_producer(producer) {

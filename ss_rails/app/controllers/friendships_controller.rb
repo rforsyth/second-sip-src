@@ -1,83 +1,50 @@
 class FriendshipsController < ApplicationController
-  # GET /friendships
-  # GET /friendships.xml
+	before_filter :initialize_friendships_tabs, :only => [:index, :show]
+  
   def index
     @friendships = Friendship.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @friendships }
-    end
   end
 
-  # GET /friendships/1
-  # GET /friendships/1.xml
   def show
     @friendship = Friendship.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @friendship }
-    end
   end
 
-  # GET /friendships/new
-  # GET /friendships/new.xml
   def new
     @friendship = Friendship.new
+		@friendship.invitation = <<-eos
+I'd like to add you as a friend on Second Sip.
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @friendship }
-    end
+- #{current_taster.real_name} (#{current_taster.username})
+eos
   end
 
-  # GET /friendships/1/edit
   def edit
     @friendship = Friendship.find(params[:id])
   end
 
-  # POST /friendships
-  # POST /friendships.xml
   def create
     @friendship = Friendship.new(params[:friendship])
-
-    respond_to do |format|
-      if @friendship.save
-        format.html { redirect_to(@friendship, :notice => 'Friendship was successfully created.') }
-        format.xml  { render :xml => @friendship, :status => :created, :location => @friendship }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @friendship.errors, :status => :unprocessable_entity }
-      end
+    @friendship.inviter = current_taster
+    @friendship.invitee = Taster.find_by_username(params[:invitee_username])
+    @friendship.status = Enums::FriendshipStatus::REQUESTED
+    if @friendship.save
+      redirect_to(current_taster)
+    else
+      render :action => "new"
     end
   end
 
-  # PUT /friendships/1
-  # PUT /friendships/1.xml
   def update
     @friendship = Friendship.find(params[:id])
-
-    respond_to do |format|
-      if @friendship.update_attributes(params[:friendship])
-        format.html { redirect_to(@friendship, :notice => 'Friendship was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @friendship.errors, :status => :unprocessable_entity }
-      end
+		@friendship.status = case params[:commit]
+		when 'Accept' then Enums::FriendshipStatus::ACCEPTED
+		when 'Decline' then Enums::FriendshipStatus::DECLINED
+	  end
+    if @friendship.save
+      redirect_to(current_taster)
+    else
+      render :action => "edit"
     end
   end
 
-  # DELETE /friendships/1
-  # DELETE /friendships/1.xml
-  def destroy
-    @friendship = Friendship.find(params[:id])
-    @friendship.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(friendships_url) }
-      format.xml  { head :ok }
-    end
-  end
 end

@@ -6,12 +6,12 @@
     link_to('Tags', tags_path, :class => topnav_tab.css_class)
   when :lookups then
     link_to('Lookups', lookups_path, :class => topnav_tab.css_class)
-  when :users then
-    link_to('Users', tasters_path, :class => topnav_tab.css_class)
+  when :tasters then
+    link_to('Tasters', tasters_path, :class => topnav_tab.css_class)
   when :beverage then
-    link_to(@note_class.name.titleize.pluralize,
+    link_to('Shared Notes', #@note_class.name.titleize.pluralize,
             browse_notes_path(@note_class.name.tableize), :class => topnav_tab.css_class)
-  when :user then
+  when :taster then
     link_to(displayed_taster.username, taster_path(displayed_taster), :class => topnav_tab.css_class)
   when :my_notes then
     link_to("My Notes", polymorphic_path([current_taster, @note_class]), :class => topnav_tab.css_class)

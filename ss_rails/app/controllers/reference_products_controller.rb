@@ -11,7 +11,7 @@ class ReferenceProductsController < ApplicationController
   end
 
   def show
-    @product = find_by_canonical_name_or_id(@reference_product_class, params[:id])
+    @product = find_reference_product_by_canonical_name_or_id(params[:id])
 		render :template => 'reference_products/show'
   end
 
@@ -21,12 +21,12 @@ class ReferenceProductsController < ApplicationController
   end
 
   def edit
-    @product = find_by_canonical_name_or_id(@reference_product_class, params[:id])
+    @product = find_reference_product_by_canonical_name_or_id(params[:id])
     render :template => 'reference_products/edit'
   end
 
   def create
-    @product = @reference_product_class.new(params[:reference_product])
+    @product = @reference_product_class.new(params[@reference_product_class.name.underscore])
     @product.reference_producer = @reference_producer_class.find_by_canonical_name(
                                     params[:reference_producer_name].try(:canonicalize))
     if @product.save
@@ -37,8 +37,8 @@ class ReferenceProductsController < ApplicationController
   end
 
   def update
-    @product = find_by_canonical_name_or_id(@reference_product_class, params[:id])
-    if @product.update_attributes(params[:reference_product])
+    @product = find_reference_product_by_canonical_name_or_id(params[:id])
+    if @product.update_attributes(params[@reference_product_class.name.underscore])
       redirect_to(@product)
     else
       render :action => "reference_products/edit"
@@ -46,7 +46,7 @@ class ReferenceProductsController < ApplicationController
   end
 
   def destroy
-    @product = find_by_canonical_name_or_id(@reference_product_class, params[:id])
+    @product = find_reference_product_by_canonical_name_or_id(params[:id])
     @product.destroy
     redirect_to(reference_products_url)
   end

@@ -1,4 +1,4 @@
-<%= form_for([@note.owner || current_taster, @note], :as => :note) do |f| %>
+<%= form_for([@note.owner || current_taster, @note]) do |f| %>
 
   <%= render :partial => 'common/edit/errors', :locals => { :entity => @note } %>
 
@@ -67,18 +67,20 @@
 
     <div class="form_row">
       <%= f.label :tasted_at, "Tasted On: " %>
-      <%= f.text_field :tasted_at, :class => 'text_field', :value => Date.today.strftime('%m/%d/%Y') %>
+      <%= f.text_field :tasted_at, :class => 'text_field',
+                       :value => @note.tasted_at.strftime('%m/%d/%Y') %>
     </div>
 
     <div class="form_row">
       <%= f.label :buy_when, 'Buy When:' %>
-      <%= f.select(:buy_when, Enums::BuyWhen.collection, :class => 'select_field_wide') %>
+      <%= f.select(:buy_when, Enums::BuyWhen.sorted_collection,
+                   :include_blank => true, :class => 'select_field_wide') %>
     </div>
 
     <div class="form_row">
       <%= f.label :score, "Score: " %>
       <% selected = @note.kind_of?(BeerNote) ? Enums::ScoreType::POINTS_50 : Enums::ScoreType::POINTS_100 %>
-      <%= f.select(:score_type, Enums::ScoreType.collection, 
+      <%= f.select(:score_type, Enums::ScoreType.sorted_collection, 
                            :class => 'select_field', :selected => selected) %>
       <%= f.text_field :score, :class => 'text_field', :size => '8' %>
     </div>
@@ -96,13 +98,13 @@
   </div>
 
   <%= render :partial => 'common/scripts/autocomplete_script',
-             :locals => { :field_id => "#{@note_class.name.underscore}_producer_name",
-                          :entities_path => @producer_class.name.tableize } %>
-           
+             :locals => { :field_id => "producer_name",
+                          :entities_path => polymorphic_path([current_taster, @producer_class]) } %>
+ 
   <%= render :partial => 'common/scripts/autocomplete_script',
-             :locals => { :field_id => "#{@note_class.name.underscore}_product_name",
-                          :entities_path => @product_class.name.tableize,
-                          :field_params => {'producer_name' => "#{@note_class.name.underscore}_producer_name"} } %>
+             :locals => { :field_id => "product_name",
+                          :entities_path => polymorphic_path([current_taster, @product_class]),
+                          :field_params => {'producer_name' => "producer_name"} } %>
                         
   <script type="text/javascript">
 

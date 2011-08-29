@@ -1,30 +1,24 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Creator:</b>
-  <%= @friendship.creator_id %>
-</p>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => 'Friendship' } %>
 
-<p>
-  <b>Updater:</b>
-  <%= @friendship.updater_id %>
-</p>
+<div class="details_row">
+  <span class="label">Inviter:</span>
+  <span class="content"><%= link_to @friendship.inviter.username, @friendship.inviter -%></span>
+</div>
 
-<p>
-  <b>Inviter:</b>
-  <%= @friendship.inviter_id %>
-</p>
+<div class="details_row">
+  <span class="label">Invitee:</span>
+  <span class="content"><%= link_to @friendship.invitee.username, @friendship.invitee -%></span>
+</div>
 
-<p>
-  <b>Invitee:</b>
-  <%= @friendship.invitee_id %>
-</p>
+<div class="details_row">
+  <span class="label">Status:</span>
+  <span class="content"><%= Enums::FriendshipStatus.enum_name(@friendship.status).downcase %></span>
+</div>
 
-<p>
-  <b>Invitation:</b>
-  <%= @friendship.invitation %>
-</p>
-
-
-<%= link_to 'Edit', edit_friendship_path(@friendship) %> |
-<%= link_to 'Back', friendships_path %>
+<div class="details_notes clearfix">
+  <div class="details_row">
+    <span class="label">Invitation:</span>
+    <span class="content"><%= simple_format(@friendship.invitation) %> </span></div>
+</div>

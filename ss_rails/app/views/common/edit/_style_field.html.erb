@@ -1,7 +1,7 @@
 
 <div class="form_row">
   <%= label_tag :style_name, title %>
-  <%= text_field_tag :style_name, :class => 'text_field text_wide', 
+  <%= text_field_tag :style_name, value, :class => 'text_field text_wide', 
       :entity_type => @product.type, :lookup_type => Enums::LookupType::STYLE %>
 </div>
 
@@ -10,7 +10,7 @@
 
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "style_name",
-                        :entities_path => 'lookups',
+                        :entities_path => lookups_path,
                         :on_select_function => "show_lookup_references",
                         :on_click_function => "show_lookup_references",
                         :params => {'lookup_type' => Enums::LookupType::STYLE,

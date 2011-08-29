@@ -10,6 +10,7 @@ class Note < ActiveRecord::Base
 	has_many :tags, :as => :taggable, :through => :tagged
 	
 	validates_presence_of :product
+  validates_associated :product, :tagged
 
   after_initialize :set_default_values
   

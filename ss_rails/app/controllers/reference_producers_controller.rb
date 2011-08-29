@@ -20,7 +20,7 @@ class ReferenceProducersController < ApplicationController
   end
 
   def show
-    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
+    @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
 		render :template => 'reference_producers/show'
   end
 
@@ -30,12 +30,12 @@ class ReferenceProducersController < ApplicationController
   end
 
   def edit
-    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
+    @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
     render :template => 'reference_producers/edit'
   end
 
   def create
-    @producer = @reference_producer_class.new(params[:reference_producer])
+    @producer = @reference_producer_class.new(params[@reference_producer_class.name.underscore])
     if @producer.save
       redirect_to(@producer)
     else
@@ -44,8 +44,8 @@ class ReferenceProducersController < ApplicationController
   end
 
   def update
-    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
-    if @producer.update_attributes(params[:reference_producer])
+    @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
+    if @producer.update_attributes(params[@reference_producer_class.name.underscore])
       redirect_to(@producer) 
     else
       render :action => "reference_producers/edit"
@@ -53,7 +53,7 @@ class ReferenceProducersController < ApplicationController
   end
 
   def destroy
-    @producer = find_by_canonical_name_or_id(@reference_producer_class, params[:id])
+    @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
     @producer.destroy
     redirect_to(reference_producers_url)
   end

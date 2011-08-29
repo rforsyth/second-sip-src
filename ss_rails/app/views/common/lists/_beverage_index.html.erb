@@ -16,7 +16,7 @@
   </div>
 <% elsif viewing_own_data? %>
   <%= render :partial => 'common/global/simple_message',
-             :object => "Click the &quot;Add&quot; link above to create a new #{beverage_model.name.titleize.downcase}." %>
+             :object => "Click the 'Add' link above to create a new #{beverage_model.name.titleize.downcase}." %>
 <% elsif displayed_taster.present? %>
   <%= render :partial => 'common/global/simple_message',
              :object => "#{displayed_taster.username} does not have any public #{beverage_model.name.titleize.pluralize.downcase}." %>

@@ -1,10 +1,10 @@
 
-<% fields_for @product do |product_fields| %>
+<%= fields_for @product do |product_fields| %>
   <%= render :partial => 'common/edit/style_field',
              :locals => { :product_fields => product_fields, :title => 'Type:' } %>
   <%= render :partial => 'common/edit/region_field',
              :locals => { :title => 'Region:', :product_fields => product_fields } %>
   <%= render :partial => 'common/edit/price_field', :locals => { :product_fields => product_fields,
-    :calculate_function => 'calculate_fe', :price_type_collection => Enums::SpiritPriceType.collection,
+    :calculate_function => 'calculate_fe', :price_type_collection => Enums::SpiritPriceType.sorted_collection,
     :selected => Enums::SpiritPriceType::FIFTH } %>
 <% end %>

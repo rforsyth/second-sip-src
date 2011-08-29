@@ -4,8 +4,6 @@ _____________________________________________________________
 Major Features
 
 
-- wire up friendships
-
 - wire up lookups to edit form
 
 - wire up tags to show form
@@ -15,6 +13,8 @@ Major Features
 - Search
   - get postgres full text search working?
 
+- support blocking users
+  - add approved field and set to false
 
 _____________________________________________________________
 
@@ -28,8 +28,6 @@ Itemized
 
 - change password form separate from update profile
 
-- recover password feature (send email)
-
 - show autocomplete of reference producers in new producer form
 
 - stop storing producer canonical name as part of product (in case producer name changes)
@@ -40,6 +38,13 @@ Itemized
 - enforce visibility of producer / product in controller (don't populate @producer / @product)
 
 - handle case where user registered but didn't follow verification link until perishable token expired
+
+
+_____________________________________________________________
+Security
+
+- protect against sql injection on all queries that involve a like clause (autocomplete)
+- render error pages that don't have a stack trace
 
 _____________________________________________________________
 Performance

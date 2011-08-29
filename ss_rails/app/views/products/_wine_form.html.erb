@@ -5,7 +5,7 @@
   eos
 %>
 
-<% fields_for @product do |product_fields| %>
+<%= fields_for @product do |product_fields| %>
   <%= render :partial => 'common/edit/lookup_collection_row',
              :locals => { :lookup_name => 'varietal', :lookup_collection_names => @product.varietal_names,
                           :entity_type => @product.type, :lookup_type => Enums::LookupType::VARIETAL } %>
@@ -15,7 +15,7 @@
              :locals => { :lookup_name => 'vineyard', :lookup_collection_names => @product.vineyard_names,
                           :entity_type => @product.type, :lookup_type => Enums::LookupType::VINEYARD } %>
   <%= render :partial => 'common/edit/price_field', :locals => { :product_fields => product_fields,
-    :calculate_function => 'calculate_wbe', :price_type_collection => Enums::WinePriceType.collection,
+    :calculate_function => 'calculate_wbe', :price_type_collection => Enums::WinePriceType.sorted_collection,
     :selected => Enums::WinePriceType::BOTTLE } %>
 <% end %>
 

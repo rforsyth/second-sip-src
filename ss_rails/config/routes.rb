@@ -16,9 +16,14 @@ SsRails::Application.routes.draw do
   match '/register/:activation_code' => 'activations#new', :as => :register
   match '/activate/:id' => 'activations#create', :as => :activate
   
-  resources :lookups, :reference_lookups,
-            :friendships, :tags, :resources do
+  
+  resources :reference_lookups, :friendships, :tags, :resources do
               get 'search', :on => :collection
+            end
+  
+  resources :lookups do
+              get 'search', :on => :collection
+              get 'autocomplete', :on => :collection
             end
   
   resources :reference_breweries, :reference_wineries, :reference_distilleries do
@@ -44,6 +49,7 @@ SsRails::Application.routes.draw do
   
   
   resources :tasters do
+    get 'admin_profile', :on => :member
     resources :breweries, :wineries, :distilleries,
               :beers, :wines, :spirits do
                 get 'search', :on => :collection

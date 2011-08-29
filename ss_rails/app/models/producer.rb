@@ -24,6 +24,13 @@ class Producer < ActiveRecord::Base
   def to_param
     self.canonical_name
   end
+  
+  def self.find_or_create_by_owner_and_name(owner, name)
+    producer = self.find_by_canonical_name(name.canonicalize, :conditions => { :owner_id => owner.id })
+    return producer if producer.present?
+    self.create(:name => name, :owner => owner)
+  end
+  
 end
 
 class Brewery < Producer

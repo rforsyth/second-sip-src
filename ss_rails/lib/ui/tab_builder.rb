@@ -24,7 +24,7 @@ module UI::TabBuilder
 		initialize_beverage_tabs_helper(calc_beverage_topnav, :producers)
 	end
 	def initialize_friendships_tabs
-		initialize_admin_tabs_helper(:users, :friendships)
+		initialize_admin_tabs_helper(:tasters, :friendships)
 	end
 	def initialize_lookups_tabs
 		initialize_admin_tabs_helper(:lookups, :lookups)
@@ -32,11 +32,11 @@ module UI::TabBuilder
 	def initialize_reference_lookups_tabs
 		initialize_admin_tabs_helper(:lookups, :reference_lookups)
 	end
-	def initialize_taster_home_tabs
-		@topnav_tabs = build_beverage_topnav_tabs(:user, displayed_taster, current_taster)
+	def initialize_tasters_admin_tabs
+		initialize_admin_tabs_helper(:tasters, :tasters)
 	end
 	def initialize_tasters_tabs
-		initialize_admin_tabs_helper(:users, :tasters)
+		@topnav_tabs = build_beverage_topnav_tabs(:taster, displayed_taster, current_taster)
 	end
 	def initialize_tags_tabs
 		initialize_admin_tabs_helper(:tags, :tags)
@@ -90,7 +90,7 @@ module UI::TabBuilder
 	def initialize_admin_tabs_helper(topnav_tab, subnav_tab)
 		@topnav_tabs = build_admin_topnav_tabs(topnav_tab)
 		@subnav_tabs = case topnav_tab
-			when :users then build_users_subnav_tabs(subnav_tab)
+			when :tasters then build_tasters_subnav_tabs(subnav_tab)
 			when :lookups then build_lookups_subnav_tabs(subnav_tab)
 			when :tags then build_tags_subnav_tabs(subnav_tab)
 			when :reference_products then build_reference_products_subnav_tabs(subnav_tab)
@@ -100,10 +100,10 @@ module UI::TabBuilder
 	
 	def calc_beverage_topnav
 		return :my_notes if displayed_taster == current_taster
-		:user
+		:taster
 	end
 	
-	def build_beverage_topnav_tabs(selected_tab, displayed_taster, current_taster, hide_user_tab = false)
+	def build_beverage_topnav_tabs(selected_tab, displayed_taster, current_taster, hide_taster_tab = false)
 		tabs = []
 		tabs << UI::NavigationTab.new(:home, calc_class(:home, selected_tab))
 		if @product_class.present?
@@ -112,14 +112,14 @@ module UI::TabBuilder
 		if current_taster.present? && @beverage_type.present?
 			tabs << UI::NavigationTab.new(:my_notes, calc_class(:my_notes, selected_tab))
 		end
-		if displayed_taster.present? && !hide_user_tab
-			tabs << UI::NavigationTab.new(:user, calc_class(:user, selected_tab))
+		if displayed_taster.present? && !hide_taster_tab
+			tabs << UI::NavigationTab.new(:taster, calc_class(:taster, selected_tab))
 		end
 		tabs
 	end
 	
 	def build_admin_topnav_tabs(selected_tab)
-		tabs = [UI::NavigationTab.new(:users, calc_class(:users, selected_tab)),
+		tabs = [UI::NavigationTab.new(:tasters, calc_class(:tasters, selected_tab)),
 		        UI::NavigationTab.new(:reference_producers, calc_class(:reference_producers, selected_tab)),
 		        UI::NavigationTab.new(:reference_products, calc_class(:reference_products, selected_tab)),
 		        UI::NavigationTab.new(:lookups, calc_class(:lookups, selected_tab)),
@@ -149,7 +149,7 @@ module UI::TabBuilder
 		 UI::NavigationTab.new(:admin_tags, calc_class(:admin_tags, selected_tab))]
 	end
 	
-	def build_users_subnav_tabs(selected_tab)
+	def build_tasters_subnav_tabs(selected_tab)
 		[UI::NavigationTab.new(:tasters, calc_class(:tasters, selected_tab)),
 		 UI::NavigationTab.new(:friendships, calc_class(:friendships, selected_tab))]
 	end

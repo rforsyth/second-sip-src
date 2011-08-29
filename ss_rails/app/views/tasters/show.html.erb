@@ -1,30 +1,33 @@
 
 <%= render :partial => 'common/global/content_header',
-           :locals => { :title => @taster.username } %>
+           :locals => { :title => "Latest Notes" } %>
 
-<div class="details_row">
-  <span class="label">Real Name:</span>
-  <span class="content"><%= @taster.real_name -%></span>
-</div>
-
-<div class="details_row">
-  <span class="label">Email:</span>
-  <span class="content"><%= @taster.email -%></span>
-</div>
-
-<div class="details_notes clearfix">
-  <div class="details_row">
-    <span class="label">Greeting:</span>
-    <span class="content"><%= simple_format(@taster.greeting) %> </span>
+<% if @notes && !@notes.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'notes/note', :collection => @notes %>
   </div>
-</div>
-
-<%= render :partial => 'common/edit/edit_actions',
-           :locals => { :edit_path => edit_taster_path(@taster) } %>
-
-<% content_for :right do %>
-  <%= render :partial => 'common/edit/edit_admin_tags',
-             :locals => { :tag_container => @producer } %>
+<% elsif viewing_own_data? %>
+  <div class="intro simple_intro">
+  <p>Choose wine, beer, or spirits to begin adding notes.</p>
+  </div>
+<% elsif displayed_taster %>
+  <div class="intro simple_intro">
+  <p><%= displayed_taster.username %> does not have any public notes.</p>
+  </div>
 <% end %>
 
-
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_header',
+            :locals => { :title => viewing_own_data? ? 'Profile' : displayed_taster.username,
+                         :edit_item_path => (viewing_own_data?) ? edit_taster_path(current_taster) : nil } %>
+  <div class="prose_container"><%= simple_format displayed_taster.greeting %></div>
+  <div class="links rightpane_separator clearfix">
+    <h4>Browse Notes</h4>
+    <div class="links_container">
+    <%= link_to 'Beer', taster_beer_notes_path(displayed_taster) %> |
+    <%= link_to 'Wine', taster_wine_notes_path(displayed_taster) %> |
+    <%= link_to 'Spirits', taster_spirit_notes_path(displayed_taster) %>
+    </div>
+  </div>
+  <%= render :partial => 'friends' if viewing_own_data? %>
+<% end %>

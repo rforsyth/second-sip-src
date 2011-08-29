@@ -16,7 +16,7 @@
     <% end %>
   </div>
   <% if allow_edit %>
-    <% form_tag("/#{controller_path}/#{add_action}", :id => add_tag_id) do %>
+    <%= form_tag("/#{controller_path}/#{add_action}", :id => add_tag_id) do %>
       <%= hidden_field_tag(:id, container_id) %>
       <%= text_field_tag(:tag_name, nil, :class => 'tag_name', :maxlength => 40) %>
       <%= submit_tag("Add") %>

@@ -2,41 +2,54 @@
 class ProductsController < ApplicationController
 	before_filter :initialize_products_tabs
   
-  # GET /products/search
   def search
     @products = @product_class.all
 		render :template => 'products/search'
   end
   
-  # GET /products
+  def autocomplete
+    autocomplete = Ajax::Autocomplete.new(params[:query])
+    
+    canonical_producer_name = params[:producer_name].try(:canonicalize)
+    canonical_query = params[:query].try(:canonicalize)
+    products = @product_class.joins(:producer).where(
+                     :owner_id => current_taster.id,
+                     :producers => { :owner_id => current_taster.id,
+                                     :canonical_name => canonical_producer_name }
+                     ).where("products.canonical_name LIKE ?", "#{canonical_query}%")
+
+    products.each do |product|
+	    autocomplete.add_suggestion(product.name, product.name, product.id)
+    end
+    render :json => autocomplete
+  end
+  
   def index
-    @products = @product_class.all
+    @products = @product_class.find_all_by_owner_id(displayed_taster.id)
 		render :template => 'products/index'
   end
 
-  # GET /products/1
   def show
-    @product = find_by_owner_and_canonical_name_or_id(@product_class, displayed_taster, params[:id])
+    @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
     # todo: enforce visibility here
     @producer = @product.producer
 		render :template => 'products/show'
   end
 
-  # GET /products/new
   def new
     @product = @product_class.new
 		render :template => 'products/new'
   end
 
-  # GET /products/1/edit
   def edit
-    @product = find_by_owner_and_canonical_name_or_id(@product_class, displayed_taster, params[:id])
+    @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
     render :template => 'products/edit'
   end
 
-  # POST /products
   def create
-    @product = @product_class.new(params[:product])
+    @product = @product_class.new(params[@product_class.name.underscore])
+    @product.set_lookup_properties(params, current_taster, @producer_class)
+      
     if @product.save
       redirect_to([@product.owner, @product], :notice => 'Product was successfully created.')
     else
@@ -44,20 +57,14 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PUT /products/1
   def update
-    @product = find_by_owner_and_canonical_name_or_id(@product_class, displayed_taster, params[:id])
-    if @product.update_attributes(params[:product])
+    @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
+    @product.set_lookup_properties(params, displayed_taster, @producer_class)
+    
+    if @product.update_attributes(params[@product_class.name.underscore])
       redirect_to([@product.owner, @product], :notice => 'Product was successfully updated.')
     else
       render :action => "products/edit"
     end
-  end
-
-  # DELETE /products/1
-  def destroy
-    @product = find_by_owner_and_canonical_name_or_id(@product_class, displayed_taster, params[:id])
-    @product.destroy
-    redirect_to(products_url)
   end
 end

@@ -18,7 +18,7 @@ $(function() {
 		    response( saved_response.suggestions );
 		  } else {
   			$.ajax({
-  				url: "<%= "/#{entities_path}/autocomplete" %>",
+  				url: "<%= "#{entities_path}/autocomplete" %>",
   				data: {
   				  <% params.each_pair do |key, value| -%>
   				    <%= "#{key}: '#{value}'," %>
