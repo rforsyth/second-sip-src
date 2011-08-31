@@ -3,60 +3,79 @@
 _____________________________________________________________
 Next Up
 
-- get tags working
-  - user tags:
-    - taster/producer
-    - taster/product
-    - taster/note
-  - admin tags:
-    - taster/producer
-    - taster/product
-    - taster/note
-    - taster
-    - lookup
-    - reference_lookup
-    - reference_producer
-    - reference_product
-    
+- tags autocomplete
 
+- auto tags from lookups
 
+- auto admin tags (ex: unreviewed)
 
-- build tags from lookups
+- refactor layout away from rounded corners
+  - and test in IE
 
-- get reference lookups into the mix
+- ajax product details into note form
 
-- get search working
+- wire together reference producer + reference product
 
-- browse latest
+- reference product lookups
 
+- mix reference lookups into autocomplete
 
+- mix reference producer / product into autocomplete
 
+- install and set up texticle
 
-_____________________________________________________________
-Itemized
+- create "searchable associations" field in products / notes
 
+- search global producers / products / notes
+
+- search user producers / products / notes
+
+- search lookups / reference lookups / reference beverages / tasters
+
+- paging
+
+- sub notes / products on producer page
+
+- sub notes on product page
+
+- sub reference products on reference producer page
+
+- fill out model validations
+
+- get error feedback working on forms
+
+- enforce visibility of producer / product in controller (don't populate @producer / @product)
 
 - support blocking users
   - add approved field and set to false
 
 - change password form separate from update profile
 
-- show autocomplete of reference producers in new producer form
+- about page
 
-- stop storing producer canonical name as part of product (in case producer name changes)
-  - need to break apart string and look up producer first then product
+- terms of service
 
-- get paging bar working in products -> notes (need to handle paging in controller)
+- privacy page
 
-- enforce visibility of producer / product in controller (don't populate @producer / @product)
+- contact page
 
-- handle case where user registered but didn't follow verification link until perishable token expired
+_____________________________________________________________
+Testing
+
+- install rspec
+
+- define fixtures
+
+- model tests
+
+
 
 
 _____________________________________________________________
 Security
 
 - protect against sql injection on all queries that involve a like clause (autocomplete)
+
 - render error pages that don't have a stack trace
 
 _____________________________________________________________
@@ -64,7 +83,13 @@ Performance
 
 - lists of notes access the producer name and product name - sometimes join these in from the DB?
 
+- load tasters from cache (for showing usernames on lists)
 
+
+_____________________________________________________________
+Maintainability
+
+- refactor lookups javascript to use delegate
 
 
 
