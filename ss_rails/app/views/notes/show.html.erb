@@ -104,9 +104,10 @@
 
 <% content_for :right do %>
   <%= render :partial => 'common/edit/edit_user_tags', :object => @note.tags,
-             :locals => { :owner => @note.owner,
+             :locals => { :tag_container => @note,
                           :entity_path => polymorphic_path([@note.owner, @note]) } %>
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @note.admin_tags,
-             :locals => { :entity_path => polymorphic_path([@note.owner, @note]) } %>
+             :locals => { :tag_container => @note,
+                          :entity_path => polymorphic_path([@note.owner, @note]) } %>
 <% end %>
 

@@ -114,20 +114,18 @@ span.nobreak {
   background: url(/images/SecondSip_headerGradient.png) repeat-x scroll left top;
   z-index:55;
 }
-#main_roundedtop{
-  position:relative;
-  margin:0 auto;    
-  width:780px;
-  line-height:10px;
-}
-#main_roundedtop img{
-  z-index:50;
-}
 #main{
   position: relative;
-  margin:0 auto;    
+  margin:0 auto;
+  padding-top: 3px;
   width:780px;
   background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
 }
 
 /********************************************************
@@ -354,7 +352,14 @@ img.homepage_grapes {
   background: white;
   margin:0 auto;    
   width:780px;
-  padding-top:10px;
+  padding:10px 0 10px;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
 }
 #footer_inner{
   border-top: solid 1px #70ABD3;
@@ -365,12 +370,6 @@ img.homepage_grapes {
 #footer a {
   font-size:12px; 
   padding:0 10px;
-}
-#footer_roundedbottom{
-  margin:0 auto;    
-  width:780px;
-  height:10px;
-  background:transparent url(/images/SecondSipRoundedMain_Bottom.png) no-repeat scroll center bottom;
 }
 
 /********************************************************
@@ -480,6 +479,8 @@ body.spirit_notes div.beverage_header {
 .rightpane_header .list_actions {
 	float: right;
 	margin-top: 3px;
+	text-align: right;
+	position: relative;
 }
 .content_header .list_actions img,
 .rightpane_header .list_actions img {
@@ -556,7 +557,7 @@ input.select_field_wide {
   width: 370px;
 }
 input.text_add {
-  width: 325px;
+  width: 320px;
 }
 input.text_narrow {
   width: 100px;
@@ -565,7 +566,7 @@ textarea.text_tall {
   height: 150px;
 }
 input.calculated_text_field {
-	border: none;
+	border: 0;
 }
 input.text_field:focus,
 textarea:focus {
@@ -574,6 +575,9 @@ textarea:focus {
 div.form_row {
   padding: 7px 0 0 0;
   position: relative;
+}
+#product_details {
+  overflow: hidden;
 }
 div.form_separator {
   padding-top: 10px;
@@ -770,12 +774,7 @@ a.lookup_link {
 ********** Rightpane - Subnav
 *********************************************************/
 .rightpane_subnav {
-  /*background: #70ABD3;
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;	*/
   margin-bottom: 15px;
-  margin-top: 2px;
   border-bottom: 2px solid #70ABD3;
   clear: both;
 }
@@ -795,6 +794,7 @@ a.lookup_link {
 	padding:0 5px 3px;
 	text-decoration:none;
 	z-index:50;
+	line-height: 23px;
 }
 .rightpane_subnav td a:hover {
   color: #245F89;
@@ -978,23 +978,34 @@ div.tags_container span.title {
 }
 .tags li.tag {
 	color: #2DB66D; /* #FF6633; */
-	display: block;
-	float: left;
-	border: dotted 1px #2DB66D; /* #FF6600; */
-	margin: 3px;
+	border: solid 1px #2DB66D; /* #FF6600; */
+	margin: 3px 4px;
 	padding: 0 3px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+	/* float: left; */
+	display:-moz-inline-stack;
+    display:inline-block;
+    zoom:1;
+    *display:inline;
 }
 .tags li.tag a {
-	display: block;
-	float: right;
-	margin-left: 5px;
-	margin-top: 2px;
+	margin: 2px;
 	text-decoration: none;
 	font-size: 8px;
 	color: #245F89;
 	border: 1px solid #245F89;
 	line-height:1em;
 	padding: 0 2px;
+
+	/* display: block;
+	float: right; */
+	display:-moz-inline-stack;
+    display:inline-block;
+    zoom:1;
+    *display:inline;
 }
 .tags li.tag a:hover {
 	background: red;

@@ -102,8 +102,6 @@ module Enums
 	end
 			
   class LookupType < EnumBase
-	  TAG = 5
-		ADMIN_TAG = 6
     STYLE = 10
     REGION = 20
     VARIETAL = 30

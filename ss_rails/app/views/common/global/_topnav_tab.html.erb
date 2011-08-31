@@ -9,7 +9,7 @@
   when :tasters then
     link_to('Tasters', tasters_path, :class => topnav_tab.css_class)
   when :beverage then
-    link_to('Shared Notes', #@note_class.name.titleize.pluralize,
+    link_to('Community Notes', #@note_class.name.titleize.pluralize,
             browse_notes_path(@note_class.name.tableize), :class => topnav_tab.css_class)
   when :taster then
     link_to(displayed_taster.username, taster_path(displayed_taster), :class => topnav_tab.css_class)

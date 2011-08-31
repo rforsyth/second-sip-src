@@ -10,7 +10,7 @@
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "#{@note_class.name.underscore}_occasion",
                         :entities_path => 'lookups',
-                        :on_select_function => "show_lookup_references",
+                        #:on_select_function => "show_lookup_references",
                         :on_click_function => "show_lookup_references",
                         :params => {'lookup_type' => Enums::LookupType::OCCASION,
                                     'entity_type' => @note_class.name} } %>

@@ -1,5 +1,5 @@
 <%
-  allow_edit = current_taster == owner
+  allow_edit = current_taster == tag_container.owner
   return if !edit_user_tags.present? && !allow_edit
 %>
 <div class="tag_edit tags">
@@ -9,5 +9,11 @@
                :entity_path => entity_path,
                :ajax_container => 'tags_ajax', :add_action => 'add_tag',
                :remove_action => 'remove_tag'} %>
+               
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => 'tag_name',
+                          :entities_path => tags_path,
+                          :params => {'entity_type' => tag_container.type} } %>
+
 </div>
   

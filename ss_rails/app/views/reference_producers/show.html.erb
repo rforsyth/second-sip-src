@@ -31,6 +31,7 @@
 
 <% content_for :right do %>
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @producer.admin_tags,
-             :locals => { :entity_path => polymorphic_path(@producer) } %>
+             :locals => { :tag_container => @producer,
+                          :entity_path => polymorphic_path(@producer) } %>
 <% end %>
 

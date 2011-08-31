@@ -51,6 +51,7 @@
 
 <% content_for :right do %>
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @product.admin_tags,
-             :locals => { :entity_path => polymorphic_path(@product) } %>
+             :locals => { :tag_container => @product,
+                          :entity_path => polymorphic_path(@product) } %>
 <% end %>
 

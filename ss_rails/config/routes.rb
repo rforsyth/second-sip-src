@@ -16,13 +16,15 @@ SsRails::Application.routes.draw do
   match '/register/:activation_code' => 'activations#new', :as => :register
   match '/activate/:id' => 'activations#create', :as => :activate
   
-  resources :reference_lookups, :friendships, :tags, :resources do
-              get 'search', :on => :collection
-              post 'add_admin_tag', :on => :member
-              post 'remove_admin_tag', :on => :member
+  resources :tags, :admin_tags do
+              get 'autocomplete', :on => :collection
             end
   
-  resources :lookups do
+  resources :friendships do
+              get 'search', :on => :collection
+            end
+  
+  resources :lookups, :reference_lookups do
               get 'search', :on => :collection
               get 'autocomplete', :on => :collection
               post 'add_admin_tag', :on => :member
@@ -50,10 +52,6 @@ SsRails::Application.routes.draw do
   
   match ':entity_type' => 'global_notes#browse', :as => 'browse_notes', :entity_type => notes_pattern
   match ':entity_type/search' => 'global_notes#search', :as => 'search_notes', :entity_type => notes_pattern
-  
-  # resources :reference_breweries, :reference_wineries, :reference_distilleries,
-  #           :reference_beers, :reference_wines, :reference_spirits
-  
   
   resources :tasters do
     member do

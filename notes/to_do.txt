@@ -9,10 +9,14 @@ Next Up
 
 - auto admin tags (ex: unreviewed)
 
-- refactor layout away from rounded corners
-  - and test in IE
+- put an autocomplete on Occasion
 
 - ajax product details into note form
+
+- make hide / show feature on product / note form more smooth
+
+- do something after filling in a lookup (render wikipedia / wine searcher links?)
+  - if not, then cut out hooks
 
 - wire together reference producer + reference product
 
@@ -53,11 +57,24 @@ Next Up
 
 - about page
 
-- terms of service
+- terms of service - copy and update from CellarTracker
 
-- privacy page
+- FAQ?
+
+- privacy page (do we need this)
+  - if yes, can use sahalli one
 
 - contact page
+
+- consolidate database migrations prior to Heroku deploy
+
+- deploy to Heroku
+
+- scripts to populate reference lookups
+  - grape varietals
+  - wine regions
+  - beer styles
+  - spirit types
 
 _____________________________________________________________
 Testing
@@ -68,6 +85,12 @@ Testing
 
 - model tests
 
+
+_____________________________________________________________
+V2
+
+- assign note / product to different product / producer
+  - put x next to product / producer name
 
 
 
@@ -91,6 +114,27 @@ Maintainability
 
 - refactor lookups javascript to use delegate
 
+_____________________________________________________________
+Browser testing:
+
+http://172.26.121.160:3000/tasters/Admin/breweries/domainedelaromaneeconti
+http://W3M167:8080
+
+
+iPhone (from home): 192.168.0.199:8080
+- if laptop IP changes, go to Apps -> Network Utility -> Info -> AirPort
+
+
+_____________________________________________________________
+Bugs
+
+- price calculation is broken for spirits
+
+- in IE7:
+  - username drops below bottom line in list when no description
+  - add link floats to the left in header
+  
+- in IE8:
 
 
 

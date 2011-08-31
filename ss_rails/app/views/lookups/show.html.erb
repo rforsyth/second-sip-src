@@ -9,6 +9,7 @@
 
 <% content_for :right do %>
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @lookup.admin_tags,
-             :locals => { :entity_path => lookup_path(@lookup) } %>
+             :locals => { :tag_container => @lookup,
+                          :entity_path => lookup_path(@lookup) } %>
 <% end %>
 

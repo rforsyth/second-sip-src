@@ -1,6 +1,7 @@
 class AdminTag < ActiveRecord::Base
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
+	has_many :admin_taggeds
 	
   before_validation :tagify_name
   

@@ -23,14 +23,14 @@
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "varietal_name",
                         :entities_path => lookups_path,
-                        :on_select_function => "show_lookup_references",
+                        #:on_select_function => "show_lookup_references",
                         :params => {'lookup_type' => Enums::LookupType::VARIETAL,
                                     'entity_type' => @product_class.name} } %>
 
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "vineyard_name",
                         :entities_path => lookups_path,
-                        :on_select_function => "show_lookup_references",
+                        #:on_select_function => "show_lookup_references",
                         :params => {'lookup_type' => Enums::LookupType::VINEYARD,
                                     'entity_type' => @product_class.name} } %>
 

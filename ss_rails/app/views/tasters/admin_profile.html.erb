@@ -24,5 +24,6 @@
 
 <% content_for :right do %>
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @taster.admin_tags,
-             :locals => { :entity_path => taster_path(@taster) } %>
+             :locals => { :tag_container => @taster,
+                          :entity_path => taster_path(@taster) } %>
 <% end %>

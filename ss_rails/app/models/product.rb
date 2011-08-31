@@ -13,8 +13,6 @@ class Product < ActiveRecord::Base
 	belongs_to :producer
 	has_many :notes
 	
-	#belongs_to :region, :class_name => "Lookup", :foreign_key => 'region_lookup_id'
-	#belongs_to :style, :class_name => "Lookup", :foreign_key => 'style_lookup_id'
 	has_many :looked, :as => :lookable
 	has_one :region, :source => :lookup, :as => :lookable, :through => :looked,
 	                 :conditions => {:lookup_type => Enums::LookupType::REGION}

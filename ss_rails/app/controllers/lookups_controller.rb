@@ -10,7 +10,6 @@ class LookupsController < ApplicationController
 	
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
-    # lookups = Lookup.where.joins(:lookeds).where(:owner_id => current_taster.id)
     canonical_query = params[:query].try(:canonicalize)
     lookups = Lookup.joins(:lookeds).where(
                      "lookups.canonical_name LIKE ?", "#{canonical_query}%"
