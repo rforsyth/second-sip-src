@@ -1,13 +1,14 @@
+require 'data/taggable'
+require 'data/admin_taggable'
 
 class Note < ActiveRecord::Base
+  include Data::Taggable
+  include Data::AdminTaggable
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :owner, :class_name => "Taster"
 	belongs_to :product
-	
-	has_many :tagged, :as => :taggable
-	has_many :tags, :as => :taggable, :through => :tagged
 	
 	validates_presence_of :product
   validates_associated :product, :tagged
@@ -20,7 +21,7 @@ class Note < ActiveRecord::Base
   end	
   
   def to_param
-    "#{self.id}-#{self.product.canonical_name}"
+    "#{self.id}-#{self.product.producer.canonical_name}-#{self.product.canonical_name}"
   end
 	
 end

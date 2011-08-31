@@ -58,13 +58,13 @@
   <% end %>
 </div>
 
-<% if @note.product.kind_of?(Wine) %>
+<% if @product.kind_of?(Wine) %>
   <%= render :partial => 'common/details/lookup_collection',
              :locals => { :label => 'Vineyard', :lookups => @product.vineyards,
                           :entity_type => @product.type } %>
                         
   <%= render :partial => 'common/details/lookup_collection',
-             :locals => { :label => 'Varietal', :lookup_names => @product.varietals,
+             :locals => { :label => 'Varietal', :lookups => @product.varietals,
                           :entity_type => @product.type } %>
 <% end %>
 
@@ -103,11 +103,10 @@
 <% end %>
 
 <% content_for :right do %>
-  <div class="rightpane_lookup">
-  </div>
-  <%= render :partial => 'common/edit/edit_user_tags',
-             :locals => { :tag_container => @note } %>
-  <%= render :partial => 'common/edit/edit_admin_tags',
-             :locals => { :tag_container => @note } %>
+  <%= render :partial => 'common/edit/edit_user_tags', :object => @note.tags,
+             :locals => { :owner => @note.owner,
+                          :entity_path => polymorphic_path([@note.owner, @note]) } %>
+  <%= render :partial => 'common/edit/edit_admin_tags', :object => @note.admin_tags,
+             :locals => { :entity_path => polymorphic_path([@note.owner, @note]) } %>
 <% end %>
 

@@ -16,7 +16,7 @@
 <%= link_to 'Add Child', new_reference_lookup_path(:parent_id => @lookup.id) %>
 
 <% content_for :right do %>
-  <%= render :partial => 'common/edit/edit_admin_tags',
-             :locals => { :tag_container => @lookup } %>
+  <%= render :partial => 'common/edit/edit_admin_tags', :object => @lookup.admin_tags,
+             :locals => { :entity_path => reference_lookup_path(@lookup) } %>
 <% end %>
 

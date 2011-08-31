@@ -1,4 +1,11 @@
+require 'ui/admin_taggable_controller'
+
 class ReferenceProducersController < ApplicationController
+  include UI::AdminTaggableController
+  
+  before_filter :find_reference_producer, :only => [ :show, :edit, :update,
+                                                     :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
   
   def search
     @producers = @reference_producer_class.all
@@ -20,18 +27,12 @@ class ReferenceProducersController < ApplicationController
   end
 
   def show
-    @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
 		render :template => 'reference_producers/show'
   end
 
   def new
     @producer = @reference_producer_class.new
 		render :template => 'reference_producers/new'
-  end
-
-  def edit
-    @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
-    render :template => 'reference_producers/edit'
   end
 
   def create
@@ -43,18 +44,30 @@ class ReferenceProducersController < ApplicationController
     end
   end
 
-  def update
+  def edit
     @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
+    render :template => 'reference_producers/edit'
+  end
+
+  def update
     if @producer.update_attributes(params[@reference_producer_class.name.underscore])
       redirect_to(@producer) 
     else
       render :action => "reference_producers/edit"
     end
   end
-
-  def destroy
+	
+  ############################################
+  ## Helpers
+	
+	private
+	
+	def find_reference_producer
     @producer = find_reference_producer_by_canonical_name_or_id(params[:id])
-    @producer.destroy
-    redirect_to(reference_producers_url)
   end
+  
+  def set_tag_container
+    @tag_container = @producer
+  end
+  
 end

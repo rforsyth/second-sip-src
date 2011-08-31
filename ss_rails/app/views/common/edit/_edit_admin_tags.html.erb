@@ -1,9 +1,10 @@
 <%
-  return if !@show_admin
+  return if !current_taster.is?(:admin)
 %>
 <div class="tag_edit tags">
   <h4>Admin Tags</h4>
-  <%= render :partial => 'common/edit/edit_tags', :object => tag_container.admin_tags,
-             :locals => { :are_admin_tags => true, :controller_path => tag_container.class.name.tableize,
-                          :container_id => tag_container.id, :allow_edit => true } %>
+  <%= render :partial => 'common/edit/edit_tags', :object => edit_admin_tags,
+             :locals => { :allow_edit => true, :entity_path => entity_path,
+               :ajax_container => 'admin_tags_ajax', :add_action => 'add_admin_tag',
+               :remove_action => 'remove_admin_tag'} %>
 </div>

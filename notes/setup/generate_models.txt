@@ -127,6 +127,8 @@ rails generate migration RenameTastersVerifiedToActive
 
 rails generate migration AddOwnerToLooked
 
+rails generate migration AddOwnerToTagged
+
 
 
 

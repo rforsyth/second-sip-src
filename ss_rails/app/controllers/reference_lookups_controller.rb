@@ -1,4 +1,11 @@
+require 'ui/admin_taggable_controller'
+
 class ReferenceLookupsController < ApplicationController
+  include UI::AdminTaggableController
+  
+  before_filter :find_reference_lookup, :only => [ :show, :edit, :update,
+                                                   :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
 	before_filter :initialize_reference_lookups_tabs
 	
   def index
@@ -6,15 +13,10 @@ class ReferenceLookupsController < ApplicationController
   end
 
   def show
-    @lookup = ReferenceLookup.find(params[:id])
   end
 
   def new
     @lookup = ReferenceLookup.new
-  end
-
-  def edit
-    @lookup = ReferenceLookup.find(params[:id])
   end
 
   def create
@@ -26,18 +28,28 @@ class ReferenceLookupsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
-    @lookup = ReferenceLookup.find(params[:id])
     if @lookup.update_attributes(params[:reference_lookup])
       redirect_to(@lookup)
     else
       render :action => "edit"
     end
   end
-
-  def destroy
+	
+  ############################################
+  ## Helpers
+	
+	private
+	
+	def find_reference_lookup
     @lookup = ReferenceLookup.find(params[:id])
-    @lookup.destroy
-    redirect_to(reference_lookups_url)
   end
+  
+  def set_tag_container
+    @tag_container = @lookup
+  end
+  
 end

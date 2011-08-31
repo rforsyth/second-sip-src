@@ -1,4 +1,11 @@
+require 'ui/admin_taggable_controller'
+
 class TastersController < ApplicationController
+  include UI::AdminTaggableController
+  
+  before_filter :find_taster, :only => [ :admin_profile, :show, :edit, :update,
+                                         :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
 	before_filter :initialize_tasters_tabs, :only => [:show]
 	before_filter :initialize_tasters_admin_tabs, :except => [:show]
 	
@@ -7,7 +14,6 @@ class TastersController < ApplicationController
   end
 
   def show
-    @taster = Taster.find_by_username(params[:id])
     @displayed_taster = @taster
     @notes = Note.find_all_by_owner_id(@taster.id)
     
@@ -22,19 +28,10 @@ class TastersController < ApplicationController
   end
   
   def admin_profile
-    @taster = Taster.find_by_username(params[:id])
   end
   
   def new
     @taster = Taster.new
-  end
-  
-  def change_password
-    @taster = Taster.find_by_username(params[:id])
-  end
-
-  def edit
-    @taster = Taster.find_by_username(params[:id])
   end
 
   def create
@@ -56,8 +53,10 @@ class TastersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
-    @taster = Taster.find_by_username(params[:id])
     @taster.update_profile(params)
     if @taster.save
       redirect_to(@taster, :notice => 'Taster was successfully updated.')
@@ -65,10 +64,21 @@ class TastersController < ApplicationController
       render :action => "edit"
     end
   end
-
-  def destroy
-    @taster = Taster.find_by_username(params[:id])
-    @taster.destroy
-    redirect_to(tasters_url)
+  
+  def change_password
   end
+	
+  ############################################
+  ## Helpers
+	
+	private
+	
+	def find_taster
+    @taster = Taster.find_by_username(params[:id])
+  end
+  
+  def set_tag_container
+    @tag_container = @taster
+  end
+  
 end

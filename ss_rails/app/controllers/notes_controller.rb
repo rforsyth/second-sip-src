@@ -1,6 +1,14 @@
+require 'ui/taggable_controller'
+require 'ui/admin_taggable_controller'
 
 class NotesController < ApplicationController
+  include UI::TaggableController
+  include UI::AdminTaggableController
+  
 	before_filter :initialize_notes_tabs
+  before_filter :find_note, :only => [ :show, :edit, :update,
+                  :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
     @notes = @note_class.find_all_by_owner_id(displayed_taster.id)
@@ -13,7 +21,6 @@ class NotesController < ApplicationController
   end
 
   def show
-    @note = @note_class.find(params[:id])
     # todo: enforce visibility here
     @product = @note.product
     @producer = @product.producer
@@ -27,12 +34,6 @@ class NotesController < ApplicationController
 		render :template => 'notes/new'
   end
 
-  def edit
-    @note = @note_class.find(params[:id])
-    @product = @note.product
-    render :template => 'notes/edit'
-  end
-
   def create
     @note = @note_class.new(params[@note_class.name.underscore])
     set_product_from_params(@note)
@@ -44,18 +45,32 @@ class NotesController < ApplicationController
     end
   end
 
+  def edit
+    @product = @note.product
+    render :template => 'notes/edit'
+  end
+
   def update
-    @note = @note_class.find(params[:id])
     set_product_from_params(@note)
-    
     if @note.update_attributes(params[@note_class.name.underscore])
       redirect_to([@note.owner, @note], :notice => 'Note was successfully updated.')
     else
       render :action => "edit"
     end
   end
+	
+  ############################################
+  ## Helpers
+	
+	private
+	
+	def find_note
+    @note = @note_class.find(params[:id])
+  end
   
-  private
+  def set_tag_container
+    @tag_container = @note
+  end
   
   def set_product_from_params(note)
     if params[:product_name].present?

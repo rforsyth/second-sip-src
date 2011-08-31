@@ -30,7 +30,7 @@
                         :delete_path => polymorphic_path(@producer) } %>
 
 <% content_for :right do %>
-  <%= render :partial => 'common/edit/edit_admin_tags',
-             :locals => { :tag_container => @producer } %>
+  <%= render :partial => 'common/edit/edit_admin_tags', :object => @producer.admin_tags,
+             :locals => { :entity_path => polymorphic_path(@producer) } %>
 <% end %>
 

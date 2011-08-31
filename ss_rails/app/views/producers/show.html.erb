@@ -43,10 +43,11 @@
 <% end %>
 
 <% content_for :right do %>
-  <%= render :partial => 'common/edit/edit_user_tags',
-             :locals => { :tag_container => @producer } %>
-  <%= render :partial => 'common/edit/edit_admin_tags',
-             :locals => { :tag_container => @producer } %>
+  <%= render :partial => 'common/edit/edit_user_tags', :object => @producer.tags,
+             :locals => { :owner => @producer.owner,
+                          :entity_path => polymorphic_path([@producer.owner, @producer]) } %>
+  <%= render :partial => 'common/edit/edit_admin_tags', :object => @producer.admin_tags,
+             :locals => { :entity_path => polymorphic_path([@producer.owner, @producer]) } %>
 <% end %>
 
 

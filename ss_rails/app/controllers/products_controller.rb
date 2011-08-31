@@ -1,6 +1,14 @@
+require 'ui/taggable_controller'
+require 'ui/admin_taggable_controller'
 
 class ProductsController < ApplicationController
+  include UI::TaggableController
+  include UI::AdminTaggableController
+  
 	before_filter :initialize_products_tabs
+  before_filter :find_product, :only => [ :show, :edit, :update,
+                  :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
     @products = @product_class.all
@@ -30,7 +38,6 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
     # todo: enforce visibility here
     @producer = @product.producer
 		render :template => 'products/show'
@@ -39,11 +46,6 @@ class ProductsController < ApplicationController
   def new
     @product = @product_class.new
 		render :template => 'products/new'
-  end
-
-  def edit
-    @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
-    render :template => 'products/edit'
   end
 
   def create
@@ -57,8 +59,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  def edit
+    render :template => 'products/edit'
+  end
+
   def update
-    @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
     @product.set_lookup_properties(params, displayed_taster, @producer_class)
     
     if @product.update_attributes(params[@product_class.name.underscore])
@@ -67,4 +72,18 @@ class ProductsController < ApplicationController
       render :action => "products/edit"
     end
   end
+	
+  ############################################
+  ## Helpers
+  
+  private
+  
+  def find_product
+    @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
+  end
+  
+  def set_tag_container
+    @tag_container = @product
+  end
+  
 end

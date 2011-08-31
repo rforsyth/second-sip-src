@@ -13,5 +13,11 @@ class Tag < ActiveRecord::Base
   def to_param
     self.name
   end
+  
+  def self.find_or_create(name)
+    tag = self.find_by_name(name)
+    return tag if tag.present?
+    self.create(:name => name)
+  end
 	
 end

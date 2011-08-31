@@ -1,6 +1,10 @@
 require 'data/float'
+require 'data/taggable'
+require 'data/admin_taggable'
 
 class Product < ActiveRecord::Base
+  include Data::Taggable
+  include Data::AdminTaggable
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
@@ -8,9 +12,6 @@ class Product < ActiveRecord::Base
 	
 	belongs_to :producer
 	has_many :notes
-	
-	has_many :tagged, :as => :taggable
-	has_many :tags, :as => :taggable, :through => :tagged
 	
 	#belongs_to :region, :class_name => "Lookup", :foreign_key => 'region_lookup_id'
 	#belongs_to :style, :class_name => "Lookup", :foreign_key => 'style_lookup_id'
@@ -48,6 +49,31 @@ class Product < ActiveRecord::Base
     end
     set_style(params[:style_name], owner) if params[:style_name].present?
     set_region(params[:region_name], owner) if params[:region_name].present?
+    set_lookups(params[:varietal_names], Enums::LookupType::VARIETAL, owner) if params[:varietal_names].present?
+    set_lookups(params[:vineyard_names], Enums::LookupType::VINEYARD, owner) if params[:vineyard_names].present?
+  end
+  
+  def set_lookups(lookup_names, lookup_type, owner = nil)
+    lookup_canonical_names = lookup_names.collect { |lookup_name| lookup_name.canonicalize }
+    current_canonical_names = []
+    # first, delete any lookups that got removed
+    self.looked.each do |looked|
+      if looked.lookup.lookup_type == lookup_type
+        if lookup_canonical_names.include?(looked.lookup.name.canonicalize)
+          current_canonical_names << looked.lookup.name.canonicalize
+        else
+          looked.delete
+        end
+      end
+    end
+    # now add any new lookups
+    lookup_names.each do |lookup_name|
+      if !current_canonical_names.include?(lookup_name.canonicalize)
+        lookup = Lookup.find_or_create_by_name_and_type(lookup_name,
+                        self.class.name, lookup_type)
+        self.looked << Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+      end
+    end
   end
   
   def set_style(name, owner = nil)

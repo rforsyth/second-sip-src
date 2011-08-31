@@ -1,6 +1,14 @@
+require 'ui/taggable_controller'
+require 'ui/admin_taggable_controller'
 
 class ProducersController < ApplicationController
+  include UI::TaggableController
+  include UI::AdminTaggableController
+  
 	before_filter :initialize_producers_tabs
+  before_filter :find_producer, :only => [ :show, :edit, :update,
+                  :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
     @producers = @producer_class.all
@@ -25,18 +33,12 @@ class ProducersController < ApplicationController
   end
 
   def show
-    @producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
 		render :template => 'producers/show'
   end
 
   def new
     @producer = @producer_class.new
 		render :template => 'producers/new'
-  end
-
-  def edit
-    @producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
-    render :template => 'producers/edit'
   end
 
   def create
@@ -48,22 +50,30 @@ class ProducersController < ApplicationController
     end
   end
 
+  def edit
+    render :template => 'producers/edit'
+  end
+
   def update
-    @producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
     if @producer.update_attributes(params[@producer_class.name.underscore])
       redirect_to([@producer.owner, @producer], :notice => 'Producer was successfully updated.')
     else
       render :action => "producers/edit"
     end
   end
-
-  def destroy
+	
+  ############################################
+  ## Helpers
+	
+	private
+	
+	def find_producer
     @producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
-    @producer.destroy
-    redirect_to(producers_url)
   end
   
-  private
+  def set_tag_container
+    @tag_container = @producer
+  end
   
 end
 

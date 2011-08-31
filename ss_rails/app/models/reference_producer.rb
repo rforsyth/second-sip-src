@@ -1,6 +1,8 @@
 require 'data/enums'
+require 'data/admin_taggable'
 
 class ReferenceProducer < ActiveRecord::Base
+  include Data::AdminTaggable
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"

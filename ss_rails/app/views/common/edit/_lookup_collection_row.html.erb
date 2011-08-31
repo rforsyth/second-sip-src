@@ -2,7 +2,7 @@
 <div id="<%= lookup_name %>_row" class="form_row">
   <ul class="form_list">
     <%= render :partial => 'common/edit/lookup_collection',
-               :locals => { :lookup_name => lookup_name, :collection_names => lookup_collection_names,
+               :locals => { :lookup_name => lookup_name, :lookup_collection => lookup_collection,
                             :entity_type => entity_type, :lookup_type => lookup_type } %>
   </ul>
   <label><%= lookup_name.titleize %>(s):</label>

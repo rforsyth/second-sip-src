@@ -1,4 +1,11 @@
+require 'ui/admin_taggable_controller'
+
 class ReferenceProductsController < ApplicationController
+  include UI::AdminTaggableController
+  
+  before_filter :find_reference_product, :only => [ :show, :edit, :update,
+                                                    :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
   
   def search
     @products = @reference_product_class.all
@@ -11,18 +18,12 @@ class ReferenceProductsController < ApplicationController
   end
 
   def show
-    @product = find_reference_product_by_canonical_name_or_id(params[:id])
 		render :template => 'reference_products/show'
   end
 
   def new
     @product = @reference_product_class.new
 		render :template => 'reference_products/new'
-  end
-
-  def edit
-    @product = find_reference_product_by_canonical_name_or_id(params[:id])
-    render :template => 'reference_products/edit'
   end
 
   def create
@@ -36,18 +37,29 @@ class ReferenceProductsController < ApplicationController
     end
   end
 
+  def edit
+    render :template => 'reference_products/edit'
+  end
+
   def update
-    @product = find_reference_product_by_canonical_name_or_id(params[:id])
     if @product.update_attributes(params[@reference_product_class.name.underscore])
       redirect_to(@product)
     else
       render :action => "reference_products/edit"
     end
   end
-
-  def destroy
+	
+  ############################################
+  ## Helpers
+	
+	private
+	
+	def find_reference_product
     @product = find_reference_product_by_canonical_name_or_id(params[:id])
-    @product.destroy
-    redirect_to(reference_products_url)
   end
+  
+  def set_tag_container
+    @tag_container = @product
+  end
+  
 end

@@ -1,4 +1,11 @@
+require 'ui/admin_taggable_controller'
+
 class LookupsController < ApplicationController
+  include UI::AdminTaggableController
+  
+  before_filter :find_lookup, :only => [ :show, :edit, :update,
+                                         :add_admin_tag, :remove_admin_tag ]
+  before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
 	before_filter :initialize_lookups_tabs
 	
   def autocomplete
@@ -22,15 +29,10 @@ class LookupsController < ApplicationController
   end
 
   def show
-    @lookup = Lookup.find(params[:id])
   end
 
   def new
     @lookup = Lookup.new
-  end
-
-  def edit
-    @lookup = Lookup.find(params[:id])
   end
 
   def create
@@ -42,18 +44,28 @@ class LookupsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
-    @lookup = Lookup.find(params[:id])
     if @lookup.update_attributes(params[:lookup])
       redirect_to(@lookup)
     else
       render :action => "edit"
     end
   end
-
-  def destroy
+	
+  ############################################
+  ## Helpers
+	
+	private
+	
+	def find_lookup
     @lookup = Lookup.find(params[:id])
-    @lookup.destroy
-    redirect_to(lookups_url)
   end
+  
+  def set_tag_container
+    @tag_container = @lookup
+  end
+  
 end

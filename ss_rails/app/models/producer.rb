@@ -1,14 +1,15 @@
 require 'data/enums'
+require 'data/taggable'
+require 'data/admin_taggable'
 
 class Producer < ActiveRecord::Base
+  include Data::Taggable
+  include Data::AdminTaggable
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :owner, :class_name => "Taster"
 	has_many :products
-	
-	has_many :tagged, :as => :taggable
-	has_many :tags, :as => :taggable, :through => :tagged
 
   after_initialize :set_default_values
   before_save :set_canonical_fields
@@ -30,6 +31,7 @@ class Producer < ActiveRecord::Base
     return producer if producer.present?
     self.create(:name => name, :owner => owner)
   end
+  
   
 end
 

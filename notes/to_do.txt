@@ -1,30 +1,43 @@
 
 
 _____________________________________________________________
-Major Features
+Next Up
+
+- get tags working
+  - user tags:
+    - taster/producer
+    - taster/product
+    - taster/note
+  - admin tags:
+    - taster/producer
+    - taster/product
+    - taster/note
+    - taster
+    - lookup
+    - reference_lookup
+    - reference_producer
+    - reference_product
+    
 
 
-- wire up lookups to edit form
 
-- wire up tags to show form
+- build tags from lookups
 
-- Browse
+- get reference lookups into the mix
 
-- Search
-  - get postgres full text search working?
+- get search working
 
-- support blocking users
-  - add approved field and set to false
+- browse latest
 
-_____________________________________________________________
 
 
 
 _____________________________________________________________
 Itemized
 
-- implement user "home" page that shows latest notes
-  - and separate "profile" page for editing greeting, etc...
+
+- support blocking users
+  - add approved field and set to false
 
 - change password form separate from update profile
 

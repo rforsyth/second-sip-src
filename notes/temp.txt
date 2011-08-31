@@ -23,3 +23,12 @@
            
  "id"=>"3-newbelgium-lafolie", "style_name"=>"Flemish Red"}
 
+SELECT "products".* 
+FROM "products" 
+  INNER JOIN "producers" ON "producers"."id" = "products"."producer_id" 
+WHERE 
+  "products"."type" = 'Wine' 
+  AND "products"."owner_id" = 7 
+  AND "products"."canonical_name" = 'coldcreekmerlot' 
+  AND "producer"."owner_id" = 7 
+  AND "producer"."canonical_name" = 'chateaustemichelle'

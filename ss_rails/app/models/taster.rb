@@ -1,4 +1,8 @@
+require 'data/admin_taggable'
+
 class Taster < ActiveRecord::Base
+  include Data::AdminTaggable
+  
   attr_protected :username, :email, :password, :password_confirmation
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"

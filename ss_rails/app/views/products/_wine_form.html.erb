@@ -7,12 +7,13 @@
 
 <%= fields_for @product do |product_fields| %>
   <%= render :partial => 'common/edit/lookup_collection_row',
-             :locals => { :lookup_name => 'varietal', :lookup_collection_names => @product.varietal_names,
+             :locals => { :lookup_name => 'varietal', :lookup_collection => @product.varietals,
                           :entity_type => @product.type, :lookup_type => Enums::LookupType::VARIETAL } %>
   <%= render :partial => 'common/edit/region_field',
-             :locals => { :title => 'Region:', :product_fields => product_fields } %>
+             :locals => { :title => 'Region:', :product_fields => product_fields,
+                          :value => @product.region.try(:name) } %>
   <%= render :partial => 'common/edit/lookup_collection_row',
-             :locals => { :lookup_name => 'vineyard', :lookup_collection_names => @product.vineyard_names,
+             :locals => { :lookup_name => 'vineyard', :lookup_collection => @product.vineyards,
                           :entity_type => @product.type, :lookup_type => Enums::LookupType::VINEYARD } %>
   <%= render :partial => 'common/edit/price_field', :locals => { :product_fields => product_fields,
     :calculate_function => 'calculate_wbe', :price_type_collection => Enums::WinePriceType.sorted_collection,
@@ -21,14 +22,14 @@
 
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "varietal_name",
-                        :entities_path => 'lookups',
+                        :entities_path => lookups_path,
                         :on_select_function => "show_lookup_references",
                         :params => {'lookup_type' => Enums::LookupType::VARIETAL,
                                     'entity_type' => @product_class.name} } %>
 
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "vineyard_name",
-                        :entities_path => 'lookups',
+                        :entities_path => lookups_path,
                         :on_select_function => "show_lookup_references",
                         :params => {'lookup_type' => Enums::LookupType::VINEYARD,
                                     'entity_type' => @product_class.name} } %>

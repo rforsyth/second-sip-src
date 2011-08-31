@@ -1,8 +1,6 @@
 <%-
-  is_admin_tag = defined?(is_admin_tag) ? is_admin_tag : false
   allow_remove = defined?(allow_remove) ? allow_remove : false
 -%>
-
 <div<%= " class=\"#{list_class}\"" if defined?(list_class) %>>
   <%- if defined?(title_text) -%>
     <span class="title"><%= title_text %></span>
@@ -12,15 +10,10 @@
     <%- if tags.present? -%>
       <%- tags.each do |tag| -%>
         <li class="tag">
-          <%= tag -%>
-          <%- if allow_remove -%>
-            <%- remove_function = is_admin_tag ? 'remove_admin_tag' : 'remove_tag' -%>
-            <%= link_to "X", "#", :onclick => "return #{remove_function}('#{tag}');" -%>
-          <%- end -%>
+          <%= tag.name -%>
+          <%= link_to("X", "#", :tag_name => tag.name) if allow_remove -%>
         </li>
       <%- end -%>
-    <%- else -%>
     <%- end -%>
   </ul>
 </div>
-

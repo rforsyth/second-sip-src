@@ -66,11 +66,10 @@
 <% end %>
 
 <% content_for :right do %>
-  <div class="rightpane_lookup">
-  </div>
-  <%= render :partial => 'common/edit/edit_user_tags',
-             :locals => { :tag_container => @product } %>
-  <%= render :partial => 'common/edit/edit_admin_tags',
-             :locals => { :tag_container => @product } %>
+  <%= render :partial => 'common/edit/edit_user_tags', :object => @product.tags,
+             :locals => { :owner => @product.owner,
+                          :entity_path => polymorphic_path([@product.owner, @product]) } %>
+  <%= render :partial => 'common/edit/edit_admin_tags', :object => @product.admin_tags,
+             :locals => { :entity_path => polymorphic_path([@product.owner, @product]) } %>
 <% end %>
 

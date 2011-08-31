@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110828230359) do
+ActiveRecord::Schema.define(:version => 20110830214024) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(:version => 20110828230359) do
     t.integer "tag_id",                       :null => false
     t.integer "taggable_id",                  :null => false
     t.string  "taggable_type", :limit => 100, :null => false
+    t.integer "owner_id",                     :null => false
   end
 
   create_table "tags", :force => true do |t|

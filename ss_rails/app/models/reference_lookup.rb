@@ -1,4 +1,8 @@
+require 'data/admin_taggable'
+
 class ReferenceLookup < ActiveRecord::Base
+  include Data::AdminTaggable
+  
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :parent_lookup, :class_name => "Lookup"

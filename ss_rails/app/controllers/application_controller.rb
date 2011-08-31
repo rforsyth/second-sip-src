@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   
   def find_reference_producer_by_canonical_name_or_id(id)
     return @reference_producer_class.find(id) if id.is_i?
-    @reference_producer_class.find_by_canonical_name(id, :conditions => { :owner_id => owner.id } )
+    @reference_producer_class.find_by_canonical_name(id)
   end
   
   def find_product_by_canonical_name_or_id(owner, id)
@@ -28,22 +28,28 @@ class ApplicationController < ActionController::Base
   end
   
   def find_product_by_canonical_names(owner, producer_name, product_name)
-    products = @product_class.joins(:producer).where(
-                     :owner_id => owner.id,
-                     :canonical_name => product_name,
-                     :producers => { :owner_id => owner.id,
-                                     :canonical_name => producer_name })
-    products.first
+    @product_class.all(
+      :readonly => false,
+      :joins => :producer,
+      :conditions => {
+        :owner_id => owner.id,
+        :canonical_name => product_name,
+        :producers => { :owner_id => owner.id,
+                        :canonical_name => producer_name }}
+      ).first
   end
   
   def find_reference_product_by_canonical_name_or_id(id)
     return @reference_product_class.find(id) if id.is_i?
     canonical_names = id.split('-')
     raise "invalid product canonical name: #{id}" if canonical_names.length != 2
-    products = @reference_product_class.joins(:reference_producer).where(
-                     :canonical_name => canonical_names[1],
-                     :reference_producers => { :canonical_name => canonical_names[0] })
-    products.first
+    @reference_product_class.all(
+      :readonly => false,
+      :joins => :reference_producer,
+      :conditions => {
+        :canonical_name => canonical_names[1],
+        :reference_producers => { :canonical_name => canonical_names[0] }}
+      ).first
   end
   
   def find_by_name_or_id(model_class, id)

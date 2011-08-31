@@ -16,23 +16,30 @@ SsRails::Application.routes.draw do
   match '/register/:activation_code' => 'activations#new', :as => :register
   match '/activate/:id' => 'activations#create', :as => :activate
   
-  
   resources :reference_lookups, :friendships, :tags, :resources do
               get 'search', :on => :collection
+              post 'add_admin_tag', :on => :member
+              post 'remove_admin_tag', :on => :member
             end
   
   resources :lookups do
               get 'search', :on => :collection
               get 'autocomplete', :on => :collection
+              post 'add_admin_tag', :on => :member
+              post 'remove_admin_tag', :on => :member
             end
   
   resources :reference_breweries, :reference_wineries, :reference_distilleries do
               get 'search', :on => :collection
               get 'autocomplete', :on => :collection
+              post 'add_admin_tag', :on => :member
+              post 'remove_admin_tag', :on => :member
             end
             
   resources :reference_beers, :reference_wines, :reference_spirits do
               get 'search', :on => :collection
+              post 'add_admin_tag', :on => :member
+              post 'remove_admin_tag', :on => :member
             end
   
   match ':entity_type' => 'global_producers#browse', :as => 'browse_producers', :entity_type => producers_pattern
@@ -49,14 +56,30 @@ SsRails::Application.routes.draw do
   
   
   resources :tasters do
-    get 'admin_profile', :on => :member
+    member do
+      get 'admin_profile'
+      post 'add_admin_tag'
+      post 'remove_admin_tag'
+    end
     resources :breweries, :wineries, :distilleries,
               :beers, :wines, :spirits do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                member do
+                  post 'add_tag'
+                  post 'remove_tag'
+                  post 'add_admin_tag'
+                  post 'remove_admin_tag'
+                end
               end
     resources :beer_notes, :wine_notes, :spirit_notes do
                 get 'search', :on => :collection
+                member do
+                  post 'add_tag'
+                  post 'remove_tag'
+                  post 'add_admin_tag'
+                  post 'remove_admin_tag'
+                end
               end
   end
 

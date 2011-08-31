@@ -70,6 +70,11 @@ http://stackoverflow.com/questions/4532388/does-acts-as-taggable-on-work-on-hero
 __________________________________________________________________
 Database - Full Text Search
 
+To install Texticle:
+http://tenderlove.github.com/texticle/ 
+  - instructions for Rails 3 down page
+http://tenderlovemaking.com/category/computadora/texticle/
+
 
 * heroku-specific postgres full-text search article
 http://tenderlovemaking.com/2009/10/17/full-text-search-on-heroku/

@@ -1,7 +1,9 @@
-
 require 'data/string'
+require 'data/admin_taggable'
 
 class Lookup < ActiveRecord::Base
+  include Data::AdminTaggable
+  
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :owner, :class_name => "Taster"

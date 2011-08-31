@@ -1,5 +1,7 @@
+require 'data/admin_taggable'
 
 class ReferenceProduct < ActiveRecord::Base
+  include Data::AdminTaggable
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
@@ -19,7 +21,7 @@ class ReferenceProduct < ActiveRecord::Base
   end
   
   def to_param
-    self.canonical_name
+    "#{self.reference_producer.canonical_name}-#{self.canonical_name}"
   end
 
 end
