@@ -70,6 +70,14 @@ http://stackoverflow.com/questions/4532388/does-acts-as-taggable-on-work-on-hero
 __________________________________________________________________
 Database - Full Text Search
 
+Yay - no testicles!
+http://pivotallabs.com/users/grant/blog/articles/1566-pg-search-how-i-learned-to-stop-worrying-and-love-postgresql-full-text-search
+- pg_search can support misspellings and soundalikes, but require contrib packages
+    :using => [:tsearch, :dmetaphone, :trigrams],
+    
+** need to hand-build indexes!!
+
+
 To install Texticle:
 http://tenderlove.github.com/texticle/ 
   - instructions for Rails 3 down page

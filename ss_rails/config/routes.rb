@@ -20,9 +20,7 @@ SsRails::Application.routes.draw do
               get 'autocomplete', :on => :collection
             end
   
-  resources :friendships do
-              get 'search', :on => :collection
-            end
+  resources :friendships
   
   resources :lookups, :reference_lookups do
               get 'search', :on => :collection
@@ -54,6 +52,7 @@ SsRails::Application.routes.draw do
   match ':entity_type/search' => 'global_notes#search', :as => 'search_notes', :entity_type => notes_pattern
   
   resources :tasters do
+    get 'search', :on => :collection
     member do
       get 'admin_profile'
       post 'add_admin_tag'

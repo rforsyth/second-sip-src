@@ -8,7 +8,7 @@ class ReferenceProducersController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @producers = @reference_producer_class.all
+    @producers = @reference_producer_class.search(params[:query])
 		render :template => 'reference_producers/search'
   end
   

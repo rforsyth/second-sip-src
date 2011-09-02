@@ -25,6 +25,11 @@ class LookupsController < ApplicationController
     end
     render :json => autocomplete
   end
+  
+  def search
+    canonical_query = params[:query].try(:canonicalize)
+    @lookups = Lookup.where(["canonical_name LIKE ?", "%#{canonical_query}%"])
+  end
 	
   def index
     @lookups = Lookup.all

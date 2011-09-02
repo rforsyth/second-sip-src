@@ -1,0 +1,8 @@
+
+<%= render :partial => 'common/lists/search_results',
+          :locals => { :results => @lookups, :result_partial => 'reference_lookups/reference_lookup' } %>                        
+
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => search_reference_lookups_path } %>
+<% end %>

@@ -3,6 +3,7 @@ require 'data/taggable'
 require 'data/admin_taggable'
 
 class Product < ActiveRecord::Base
+  include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
   
@@ -28,6 +29,10 @@ class Product < ActiveRecord::Base
 
   after_initialize :set_default_values
   before_save :set_canonical_fields
+  
+  pg_search_scope :search,
+    :against => [:name, :searchable_metadata, :description]
+    #:ignoring => :accents
   
   def set_default_values
     self.visibility ||= Enums::Visibility::PUBLIC

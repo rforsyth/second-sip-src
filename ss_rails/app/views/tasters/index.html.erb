@@ -13,4 +13,8 @@
 
 <%= render :partial => 'common/lists/paging_bar' %>
 
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => search_tasters_path } %>
+<% end %>
 

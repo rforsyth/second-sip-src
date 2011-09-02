@@ -11,9 +11,10 @@ class ProductsController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @products = @product_class.all
+    @products = @product_class.search(params[:query]).where(
+                     :owner_id => displayed_taster.id)
 		render :template => 'products/search'
-  end
+	end
   
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])

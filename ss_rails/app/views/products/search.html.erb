@@ -4,5 +4,5 @@
 
 <% content_for :right do %>
   <%= render :partial => 'common/global/rightpane_search',
-             :locals => { :search_path => search_products_path } %>
+             :locals => { :search_path => "#{polymorphic_path([displayed_taster, @product_class])}/search" } %>
 <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110901215501) do
+ActiveRecord::Schema.define(:version => 20110902010651) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20110901215501) do
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.integer  "vintage"
+    t.string   "searchable_metadata",    :limit => 500
   end
 
   create_table "producers", :force => true do |t|
@@ -94,20 +95,21 @@ ActiveRecord::Schema.define(:version => 20110901215501) do
   end
 
   create_table "products", :force => true do |t|
-    t.integer  "creator_id",                    :null => false
-    t.integer  "updater_id",                    :null => false
-    t.string   "type",           :limit => 50,  :null => false
-    t.integer  "owner_id",                      :null => false
-    t.integer  "visibility",                    :null => false
-    t.integer  "producer_id",                   :null => false
-    t.string   "name",           :limit => 150, :null => false
-    t.string   "canonical_name", :limit => 150, :null => false
+    t.integer  "creator_id",                         :null => false
+    t.integer  "updater_id",                         :null => false
+    t.string   "type",                :limit => 50,  :null => false
+    t.integer  "owner_id",                           :null => false
+    t.integer  "visibility",                         :null => false
+    t.integer  "producer_id",                        :null => false
+    t.string   "name",                :limit => 150, :null => false
+    t.string   "canonical_name",      :limit => 150, :null => false
     t.text     "description"
     t.float    "price"
     t.float    "price_paid"
     t.integer  "price_type"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "searchable_metadata", :limit => 500
   end
 
   create_table "reference_looked", :force => true do |t|
@@ -155,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20110901215501) do
     t.integer  "price_type"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+    t.string   "searchable_metadata",   :limit => 500
   end
 
   create_table "resources", :force => true do |t|

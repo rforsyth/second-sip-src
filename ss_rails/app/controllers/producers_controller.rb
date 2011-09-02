@@ -11,7 +11,8 @@ class ProducersController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @producers = @producer_class.all
+    @producers = @producer_class.search(params[:query]).where(
+                     :owner_id => displayed_taster.id)
 		render :template => 'producers/search'
   end
   
@@ -20,7 +21,6 @@ class ProducersController < ApplicationController
     canonical_query = params[:query].try(:canonicalize)
     producers = @producer_class.find_all_by_owner_id(current_taster.id,
                   :conditions => ["producers.canonical_name LIKE ?", "#{canonical_query}%"] )
-    
     producers.each do |producer|
 	    autocomplete.add_suggestion(producer.name, producer.name, producer.id)
     end

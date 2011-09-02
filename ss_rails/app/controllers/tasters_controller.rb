@@ -9,6 +9,10 @@ class TastersController < ApplicationController
 	before_filter :initialize_tasters_tabs, :only => [:show]
 	before_filter :initialize_tasters_admin_tabs, :except => [:show]
 	
+  def search
+    @tasters = Taster.search(params[:query])
+  end
+  
   def index
     @tasters = Taster.all
   end

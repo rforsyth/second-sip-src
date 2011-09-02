@@ -1,6 +1,7 @@
 require 'data/admin_taggable'
 
 class Taster < ActiveRecord::Base
+  include PgSearch
   include Data::AdminTaggable
   
   attr_protected :username, :email, :password, :password_confirmation
@@ -17,6 +18,10 @@ class Taster < ActiveRecord::Base
   validates_format_of :email, :with => Authlogic::Regex.email
 
   ROLES = %w[admin enforcer editor banned]
+  
+  pg_search_scope :search,
+    :against => [:username, :real_name, :email, :greeting]
+    #:ignoring => :accents
   
   # we need to make sure a password gets set when the user activates their account
   def has_no_credentials?

@@ -3,6 +3,7 @@ require 'data/taggable'
 require 'data/admin_taggable'
 
 class Note < ActiveRecord::Base
+  include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
   
@@ -19,6 +20,14 @@ class Note < ActiveRecord::Base
   validates_associated :product, :tagged
 
   after_initialize :set_default_values
+  
+  # include in metadata: vintage, producer name, product name, owner username,
+  #                      style, region, occasion, vineyards, varietals
+  pg_search_scope :search,
+    :against => [:searchable_metadata, :description_overall, :description_appearance,
+                 :description_aroma, :description_flavor, :description_mouthfeel]
+    #:using => [:tsearch, :dmetaphone, :trigrams],
+    #:ignoring => :accents
   
   def set_default_values
     self.visibility ||= Enums::Visibility::PUBLIC

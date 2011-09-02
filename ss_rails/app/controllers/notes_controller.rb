@@ -11,7 +11,8 @@ class NotesController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @notes = @note_class.find_all_by_owner_id(displayed_taster.id)
+    @notes = @note_class.search(params[:query]).where(
+                     :owner_id => displayed_taster.id)
 		render :template => 'notes/search'
   end
   

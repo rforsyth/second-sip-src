@@ -8,7 +8,7 @@ class ReferenceProductsController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @products = @reference_product_class.all
+    @products = @reference_product_class.search(params[:query])
 		render :template => 'reference_products/search'
   end
   

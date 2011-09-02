@@ -1,19 +1,13 @@
 
-
 _____________________________________________________________
 Next Up
-
-- install and set up texticle
 
 - create "searchable metadata" field in products / notes
   - reference products, products, notes
 
 
-- search global producers / products / notes
 
-- search user producers / products / notes
-
-- search lookups / reference lookups / reference beverages / tasters
+- search lookups / reference lookups / tasters
 
 - sub notes / products on producer page
 
@@ -65,6 +59,12 @@ Next Up
 
 - contact page
 
+- stop using 3rd party sprite for search button
+
+- add indexes to columns using migrations
+
+- do some database performance profiling?
+
 - consolidate database migrations prior to Heroku deploy
 
 - deploy to Heroku
@@ -76,6 +76,10 @@ Next Up
   - spirit types
   
 - adsense ads
+
+- build postgres SQL indexes
+
+- remove any unused partials
 
 _____________________________________________________________
 Testing

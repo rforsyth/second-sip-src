@@ -9,6 +9,8 @@ $ rails server
 $ rails console
 - brings up an IRB prompt with the rails includes set up
 
+$ rvm use 1.9.2 --default
+
 
 
 __________________________________________________________________
@@ -33,8 +35,10 @@ $ git push unfuddle master
 __________________________________________________________________
 Rake
 
+
+
 $ rake routes
-$ rake db:migrate
+$ bundle exec rake db:migrate
 
 
 

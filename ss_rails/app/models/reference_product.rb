@@ -1,6 +1,7 @@
 require 'data/admin_taggable'
 
 class ReferenceProduct < ActiveRecord::Base
+  include PgSearch
   include Data::AdminTaggable
   
 	belongs_to :creator, :class_name => "Taster"
@@ -15,6 +16,10 @@ class ReferenceProduct < ActiveRecord::Base
 	
 	validates_presence_of :reference_producer, :name
   before_save :set_canonical_fields
+  
+  pg_search_scope :search,
+    :against => [:name, :searchable_metadata, :description]
+    #:ignoring => :accents
   
   def set_canonical_fields
     self.canonical_name = "#{self.reference_producer.canonical_name}-#{self.name.canonicalize}"
