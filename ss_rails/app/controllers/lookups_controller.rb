@@ -11,12 +11,15 @@ class LookupsController < ApplicationController
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
     canonical_query = params[:query].try(:canonicalize)
-    lookups = Lookup.joins(:lookeds).where(
-                     "lookups.canonical_name LIKE ?", "#{canonical_query}%"
-                     ).where(
-                     :entity_type => params[:entity_type],
-                     :lookup_type => params[:lookup_type],
-                     :looked => { :owner_id => current_taster.id })
+    lookups = Lookup.find_by_sql(
+      ["SELECT DISTINCT lookups.* FROM lookups 
+        INNER JOIN looked ON lookups.id = looked.lookup_id
+        WHERE lookups.canonical_name LIKE ?
+          AND lookups.entity_type = ?
+          AND lookups.lookup_type = ?
+          AND looked.owner_id = ?",
+        "#{canonical_query}%", params[:entity_type],
+        params[:lookup_type].to_i, current_taster.id])
     lookups.each do |lookup|
 	    autocomplete.add_suggestion(lookup.name, lookup.name, lookup.id)
     end

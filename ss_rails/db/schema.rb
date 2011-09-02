@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110830214024) do
+ActiveRecord::Schema.define(:version => 20110901215501) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -19,11 +19,12 @@ ActiveRecord::Schema.define(:version => 20110830214024) do
   end
 
   create_table "admin_tags", :force => true do |t|
-    t.integer  "creator_id",                :null => false
-    t.integer  "updater_id",                :null => false
-    t.string   "name",       :limit => 150, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "creator_id",                 :null => false
+    t.integer  "updater_id",                 :null => false
+    t.string   "name",        :limit => 150, :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "entity_type", :limit => 50,  :null => false
   end
 
   create_table "friendships", :force => true do |t|
@@ -73,7 +74,6 @@ ActiveRecord::Schema.define(:version => 20110830214024) do
     t.integer  "score_type"
     t.float    "score"
     t.integer  "buy_when"
-    t.string   "occasion",               :limit => 150
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.integer  "vintage"
@@ -178,11 +178,12 @@ ActiveRecord::Schema.define(:version => 20110830214024) do
   end
 
   create_table "tags", :force => true do |t|
-    t.integer  "creator_id",                :null => false
-    t.integer  "updater_id",                :null => false
-    t.string   "name",       :limit => 150, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "creator_id",                 :null => false
+    t.integer  "updater_id",                 :null => false
+    t.string   "name",        :limit => 150, :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "entity_type", :limit => 50,  :null => false
   end
 
   create_table "tasters", :force => true do |t|

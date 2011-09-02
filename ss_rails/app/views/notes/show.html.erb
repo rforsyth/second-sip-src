@@ -30,7 +30,7 @@
   <% if @note.occasion.present? %>
     <div class="details_row">
       <span class="label">Occasion:</span>
-      <span class="content"><%= @note.occasion %></span>
+      <span class="content"><%= @note.occasion.name %></span>
     </div>
   <% end %>
 </div>

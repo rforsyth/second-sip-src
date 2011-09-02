@@ -1,3 +1,4 @@
+require 'data/enums'
 require 'data/taggable'
 require 'data/admin_taggable'
 
@@ -9,6 +10,10 @@ class Note < ActiveRecord::Base
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :owner, :class_name => "Taster"
 	belongs_to :product
+	
+	has_many :looked, :as => :lookable
+	has_one :occasion, :source => :lookup, :as => :lookable, :through => :looked,
+	                   :conditions => {:lookup_type => Enums::LookupType::OCCASION}
 	
 	validates_presence_of :product
   validates_associated :product, :tagged
@@ -22,6 +27,14 @@ class Note < ActiveRecord::Base
   
   def to_param
     "#{self.id}-#{self.product.producer.canonical_name}-#{self.product.canonical_name}"
+  end
+  
+  def set_occasion(name, owner = nil)
+    return if self.occasion.try(:canonical_name) == name.canonicalize
+    self.looked.each { |looked| looked.delete if looked.lookup.lookup_type == Enums::LookupType::OCCASION }
+    lookup = Lookup.find_or_create_by_name_and_type(name,
+                    self.class.name, Enums::LookupType::OCCASION)
+    self.looked << Looked.new(:lookup => lookup, :owner => (owner || self.owner))
   end
 	
 end

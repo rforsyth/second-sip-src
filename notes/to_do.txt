@@ -3,20 +3,35 @@
 _____________________________________________________________
 Next Up
 
-- tags autocomplete
+- install and set up texticle
+
+- create "searchable metadata" field in products / notes
+  - reference products, products, notes
+
+
+- search global producers / products / notes
+
+- search user producers / products / notes
+
+- search lookups / reference lookups / reference beverages / tasters
+
+- sub notes / products on producer page
+
+- sub notes on product page
+
+- sub reference products on reference producer page
+
+- change password form separate from update profile
+
+- prettify lookup / registration / password change page
 
 - auto tags from lookups
 
 - auto admin tags (ex: unreviewed)
 
-- put an autocomplete on Occasion
-
 - ajax product details into note form
 
 - make hide / show feature on product / note form more smooth
-
-- do something after filling in a lookup (render wikipedia / wine searcher links?)
-  - if not, then cut out hooks
 
 - wire together reference producer + reference product
 
@@ -26,34 +41,18 @@ Next Up
 
 - mix reference producer / product into autocomplete
 
-- install and set up texticle
-
-- create "searchable associations" field in products / notes
-
-- search global producers / products / notes
-
-- search user producers / products / notes
-
-- search lookups / reference lookups / reference beverages / tasters
-
 - paging
-
-- sub notes / products on producer page
-
-- sub notes on product page
-
-- sub reference products on reference producer page
-
-- fill out model validations
 
 - get error feedback working on forms
 
+- fill out model validations
+
 - enforce visibility of producer / product in controller (don't populate @producer / @product)
+
+- support browsing via iphone
 
 - support blocking users
   - add approved field and set to false
-
-- change password form separate from update profile
 
 - about page
 
@@ -75,6 +74,8 @@ Next Up
   - wine regions
   - beer styles
   - spirit types
+  
+- adsense ads
 
 _____________________________________________________________
 Testing

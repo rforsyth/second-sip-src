@@ -1,12 +1,9 @@
 
 <div class="form_row">
-  <%= label_tag :style_name, title %>
-  <%= text_field_tag :style_name, value, :class => 'text_field text_wide', 
+  <%= label_tag :style_name, @product.kind_of?(Spirit) ? 'Type:' : 'Style:' %>
+  <%= text_field_tag :style_name, @product.style.try(:name), :class => 'text_field text_wide', 
       :entity_type => @product.type, :lookup_type => Enums::LookupType::STYLE %>
 </div>
-
-<%= render :partial => 'common/scripts/click_lookup_script',
-           :locals => { :entity_path => @product_class.name.underscore, :lookup_name => 'style' } %>
 
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "style_name",

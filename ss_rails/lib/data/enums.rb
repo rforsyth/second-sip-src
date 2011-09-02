@@ -110,8 +110,6 @@ module Enums
     
     def self.collection
       return {
-	      'Tag' => TAG,
-	      'Admin Tag' => ADMIN_TAG,
         'Style' => STYLE,
         'Region' => REGION,
         'Varietal' => VARIETAL,

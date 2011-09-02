@@ -1,6 +1,22 @@
 class AdminTagsController < ApplicationController
 	before_filter :initialize_admin_tags_tabs
 	
+  def autocomplete
+    autocomplete = Ajax::Autocomplete.new(params[:query])
+    tagified_query = params[:query].try(:tagify)
+    tags = AdminTag.find_by_sql(
+      ["SELECT DISTINCT admin_tags.* FROM admin_tags 
+        INNER JOIN admin_tagged ON admin_tags.id = admin_tagged.admin_tag_id
+        WHERE admin_tags.name LIKE ?
+          AND admin_tags.entity_type = ?
+         AND admin_tagged.owner_id = ?",
+        "#{tagified_query}%", params[:entity_type], current_taster.id])
+    tags.each do |tag|
+	    autocomplete.add_suggestion(tag.name, tag.name, tag.id)
+    end
+    render :json => autocomplete
+  end
+  
   def index
     @admin_tags = AdminTag.all
   end

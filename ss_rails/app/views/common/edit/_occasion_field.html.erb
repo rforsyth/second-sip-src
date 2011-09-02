@@ -1,16 +1,12 @@
 
 <div class="form_row">
-  <div id="note_details_toggle" class="details_toggle">
-    <a href="#" class="toggle_off" tabindex="-1">[+]</a></div>
-  <%= note_fields.label :occasion, 'Occasion:' %>
-  <%= note_fields.text_field :occasion, :class => 'text_field text_wide', 
-      :entity_type => @note_class.name, :lookup_type => Enums::LookupType::OCCASION %>
+  <%= label_tag :occasion_name, 'Occasion:' %>
+  <%= text_field_tag :occasion_name, @note.occasion.try(:name), :class => 'text_field text_wide', 
+      :entity_type => @note.type, :lookup_type => Enums::LookupType::OCCASION %>
 </div>
 
 <%= render :partial => 'common/scripts/autocomplete_script',
-           :locals => { :field_id => "#{@note_class.name.underscore}_occasion",
-                        :entities_path => 'lookups',
-                        #:on_select_function => "show_lookup_references",
-                        :on_click_function => "show_lookup_references",
+           :locals => { :field_id => "occasion_name",
+                        :entities_path => lookups_path,
                         :params => {'lookup_type' => Enums::LookupType::OCCASION,
                                     'entity_type' => @note_class.name} } %>

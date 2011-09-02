@@ -129,6 +129,12 @@ rails generate migration AddOwnerToLooked
 
 rails generate migration AddOwnerToTagged
 
+rails generate migration AddEntityTypeToTag
+
+rails generate migration RemoveOccasionNameFromNote
+
+rails generate migration AddSearchableMetadata
+
 
 
 

@@ -4,10 +4,13 @@ class TagsController < ApplicationController
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
     tagified_query = params[:query].try(:tagify)
-    tags = Tag.joins(:taggeds).where(
-                     "tags.name LIKE ?", "#{tagified_query}%"
-                     ).where(
-                     :tagged => { :taggable_type => params[:entity_type] })
+    tags = Tag.find_by_sql(
+      ["SELECT DISTINCT tags.* FROM tags 
+        INNER JOIN tagged ON tags.id = tagged.tag_id
+        WHERE tags.name LIKE ?
+          AND tags.entity_type = ?
+         AND tagged.owner_id = ?",
+        "#{tagified_query}%", params[:entity_type], current_taster.id])
     tags.each do |tag|
 	    autocomplete.add_suggestion(tag.name, tag.name, tag.id)
     end

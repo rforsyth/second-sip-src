@@ -5,7 +5,7 @@ class Tag < ActiveRecord::Base
 	
   before_validation :tagify_name
   
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :entity_type
   
   def tagify_name
     self.name = self.name.tagify
@@ -15,10 +15,10 @@ class Tag < ActiveRecord::Base
     self.name
   end
   
-  def self.find_or_create(name)
-    tag = self.find_by_name(name)
+  def self.find_or_create_by_name_and_type(name, entity_type)
+    tag = self.find_by_name(name.tagify, :conditions => {:entity_type => entity_type})
     return tag if tag.present?
-    self.create(:name => name)
+    self.create(:name => name, :entity_type => entity_type)
   end
 	
 end

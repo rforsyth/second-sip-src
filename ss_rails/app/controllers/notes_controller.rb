@@ -36,6 +36,7 @@ class NotesController < ApplicationController
 
   def create
     @note = @note_class.new(params[@note_class.name.underscore])
+    @note.set_occasion(params[:occasion_name], current_taster)
     set_product_from_params(@note)
     
     if @note.save
@@ -51,6 +52,7 @@ class NotesController < ApplicationController
   end
 
   def update
+    @note.set_occasion(params[:occasion_name], current_taster)
     set_product_from_params(@note)
     if @note.update_attributes(params[@note_class.name.underscore])
       redirect_to([@note.owner, @note], :notice => 'Note was successfully updated.')

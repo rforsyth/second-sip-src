@@ -53,9 +53,8 @@
     <%= f.label :description_overall, 'Notes:', :class => 'notes_label' %>
     <%= f.text_area :description_overall, :class => 'notes_summary', :style => 'height: 150px' %>
   </div>
-
-  <%= render :partial => 'common/edit/occasion_field',
-             :locals => { :note_fields => f } %>
+  
+  <%= render :partial => 'common/edit/occasion_field' %>
 
   <div id="note_details" style="display:none;">
     <% if @note.kind_of?(WineNote) %>
