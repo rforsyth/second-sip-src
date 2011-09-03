@@ -8,6 +8,9 @@ SsRails::Application.routes.draw do
 	notes_pattern = /beer_notes|wine_notes|spirit_notes/
 
 	root :to => "home#index"
+	match '/about' => "home#about", :as => :about
+	match '/contact' => "home#contact", :as => :contact
+	match '/terms' => "home#terms", :as => :terms
 
   resources :taster_sessions, :password_resets
   match 'login' => 'taster_sessions#new', :as => :login

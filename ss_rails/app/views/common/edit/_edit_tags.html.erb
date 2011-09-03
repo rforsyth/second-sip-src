@@ -2,7 +2,7 @@
 <div class="tags_container">
   <div class="<%= ajax_container %>">
     <% if edit_tags.present? %>
-      <%= render :partial => 'common/details/tags', :object => edit_tags,
+      <%= render :partial => 'common/details/tags', :object => edit_tags.collect{|tag| tag.name},
                  :locals => { :allow_remove => allow_edit } %>
     <% end %>
   </div>

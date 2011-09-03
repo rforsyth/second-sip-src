@@ -22,12 +22,11 @@
                :locals => { :list_class => include_list_class,
                             :title_text => 'Show Only',
                             :empty_message => 'drag here to include' }%>
-    <%
-    #<%= render :partial => 'common/details/tags', :object => excluded_tags,
-    #           :locals => { :list_class => exclude_list_class,
-    #                        :title_text => 'Exclude',
-    #                        :empty_message => 'drag here to exclude' }%>
-    %>
+    <%= # render :partial => 'common/details/tags', :object => excluded_tags,
+        #      :locals => { :list_class => exclude_list_class,
+        #                   :title_text => 'Exclude',
+        #                   :empty_message => 'drag here to exclude' }
+        %>
     <%= render :partial => 'common/details/tags', :object => available_tags,
                :locals => { :list_class => available_list_class,
                             :empty_message => 'drag here to remove from the filter' }%>

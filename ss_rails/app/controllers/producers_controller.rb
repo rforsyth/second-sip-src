@@ -28,7 +28,9 @@ class ProducersController < ApplicationController
   end
   
   def index
-    @producers = @producer_class.find_all_by_owner_id(displayed_taster.id)
+    @producers = find_beverages_by_owner_and_tags(@producer_class, displayed_taster, params[:in], params[:ain])
+    build_tag_filter(@producers)
+    build_admin_tag_filter(@producers)
 		render :template => 'producers/index'
   end
 

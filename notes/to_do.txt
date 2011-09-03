@@ -81,6 +81,11 @@ Next Up
 
 - remove any unused partials
 
+- put terms & conditions into registration form
+
+- "flag as inappropriate" feature
+  - add admin tag and send email
+
 _____________________________________________________________
 Testing
 

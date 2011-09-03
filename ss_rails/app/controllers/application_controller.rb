@@ -126,4 +126,56 @@ class ApplicationController < ActionController::Base
     initialize_beverage_classes(beverage_type)
   end
   
+  def build_tag_filter(tag_containers)
+		@included_tags = params[:in] || []
+		@excluded_tags = params[:ex] || []
+    @available_tags = []
+    return if tag_containers.nil?
+    tag_containers.each do |tag_container|
+      tag_container.tags.each do |tag|
+        @available_tags << tag.name if !@available_tags.include?(tag.name)
+      end
+    end
+    @available_tags = @available_tags - (@included_tags + @excluded_tags)
+  end
+  
+  def build_admin_tag_filter(tag_containers)
+		@included_admin_tags = params[:ain] || []
+		@excluded_admin_tags = params[:aex] || []
+    @available_admin_tags = []
+    return if tag_containers.nil?
+    tag_containers.each do |tag_container|
+      tag_container.admin_tags.each do |admin_tag|
+        @available_admin_tags << admin_tag.name if !@available_admin_tags.include?(admin_tag.name)
+      end
+    end
+    @available_admin_tags = @available_admin_tags - (@included_admin_tags + @excluded_admin_tags)
+  end
+  
+  def find_beverages_by_owner_and_tags(model, owner, user_tags, admin_tags)
+    if user_tags.present?
+      return model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
+          INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
+          INNER JOIN tags ON tagged.tag_id = tags.id
+          WHERE #{model.table_name}.owner_id = ?
+            AND #{model.table_name}.type = ?
+            AND tags.name IN (?)",
+          owner.id, model.name, user_tags])
+    elsif admin_tags.present?
+      return model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
+          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+          WHERE #{model.table_name}.owner_id = ?
+            AND #{model.table_name}.type = ?
+            AND admin_tags.name IN (?)",
+          owner.id, model.name, admin_tags])
+    else
+      return model.find_all_by_owner_id(owner.id)
+    end
+  end
+    
+    
+  
 end

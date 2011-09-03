@@ -1,7 +1,7 @@
 <%-
   allow_remove = defined?(allow_remove) ? allow_remove : false
 -%>
-<div<%= " class=\"#{list_class}\"" if defined?(list_class) %>>
+<div<%=raw " class=\"#{list_class}\"" if defined?(list_class) %>>
   <%- if defined?(title_text) -%>
     <span class="title"><%= title_text %></span>
   <%- end -%>
@@ -10,8 +10,8 @@
     <%- if tags.present? -%>
       <%- tags.each do |tag| -%>
         <li class="tag">
-          <%= tag.name -%>
-          <%= link_to("X", "#", :tag_name => tag.name) if allow_remove -%>
+          <%= tag -%>
+          <%= link_to("X", "#", :tag_name => tag) if allow_remove -%>
         </li>
       <%- end -%>
     <%- end -%>

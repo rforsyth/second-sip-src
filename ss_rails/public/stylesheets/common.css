@@ -417,6 +417,38 @@ img.homepage_grapes {
 }
 
 /********************************************************
+********** About / Contact / Terms
+*********************************************************/
+
+div.narrative h1 {
+    margin-top: 15px;
+    text-decoration: underline;
+}
+div.narrative h2 {
+    margin-top: 15px;
+}
+div.narrative p {
+    margin: 10px;
+}
+div.narrative p.top_intro {
+  line-height: 1.4em;
+  font-size: 14px;
+  margin: 0;
+}
+div.narrative ul {
+  list-style:disc; 
+  margin-top: 10px;
+  margin-left: 0;
+  padding-left: 15px;
+}
+div.narrative ul li p {
+    margin-left: 0;
+}
+div.narrative ul li span {
+    font-size: 13px;
+}
+
+/********************************************************
 ********** Lists
 *********************************************************/
 div.rightpane_header,
