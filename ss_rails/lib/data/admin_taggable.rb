@@ -4,7 +4,8 @@ module Data::AdminTaggable
   def add_admin_tag(tag_name)
     tagified_name = tag_name.tagify
     self.admin_tagged.each { |tagged| return self.admin_tags if tagged.admin_tag.name == tagified_name }
-    tag = AdminTag.find_or_create_by_name_and_type(tagified_name, self.type)
+    tag = AdminTag.find_or_create_by_name_and_type(tagified_name, self.class.name)
+    
     self.admin_tagged << AdminTagged.new(:admin_tag => tag)
     self.admin_tags
   end

@@ -144,6 +144,10 @@ span.nobreak {
   margin: 0 auto;
 }
 #logo{
+    position: relative;
+}
+#logo a {
+    text-decoration: none;
 }
 #logo img
 {
@@ -151,6 +155,21 @@ span.nobreak {
   left:-90px;
   top:-8px;
   z-index:0;
+}
+#logo h1 {
+    position: absolute;
+    top: 0px;
+    left: 60px;
+    color: white;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    font-family: tahoma,verdana,arial,sans-serif;
+    letter-spacing: 3px;
+}
+#logo h1 span.logo_bold {
+    font-weight: bold;
 }
 #tophat {
   background: #245F89;

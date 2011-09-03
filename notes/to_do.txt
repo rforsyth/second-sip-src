@@ -127,6 +127,9 @@ Maintainability
 _____________________________________________________________
 Browser testing:
 
+172.26.121.72
+172.26.121.168
+
 http://172.26.121.160:3000/tasters/Admin/breweries/domainedelaromaneeconti
 http://W3M167:8080
 

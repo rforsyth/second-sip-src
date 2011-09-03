@@ -11,6 +11,6 @@
   <%= render :partial => 'common/scripts/autocomplete_script',
              :locals => { :field_id => 'add_admin_tag',
                           :entities_path => admin_tags_path,
-                          :params => {'entity_type' => tag_container.type} } %>
+                          :params => {'entity_type' => tag_container.class.name} } %>
                           
 </div>

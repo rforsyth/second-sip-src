@@ -14,7 +14,8 @@ class TastersController < ApplicationController
   end
   
   def index
-    @tasters = Taster.all
+    @tasters = find_by_admin_tags(Taster, params[:ain])
+    build_admin_tag_filter(@tasters)
   end
 
   def show

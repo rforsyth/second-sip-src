@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
     @available_admin_tags = @available_admin_tags - (@included_admin_tags + @excluded_admin_tags)
   end
   
-  def find_beverages_by_owner_and_tags(model, owner, user_tags, admin_tags)
+  def polymorphic_find_by_owner_and_tags(model, owner, user_tags, admin_tags)
     if user_tags.present?
       return model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
@@ -162,7 +162,12 @@ class ApplicationController < ActionController::Base
             AND #{model.table_name}.type = ?
             AND tags.name IN (?)",
           owner.id, model.name, user_tags])
-    elsif admin_tags.present?
+    end
+    polymorphic_find_by_owner_and_admin_tags(model, owner, admin_tags)
+  end
+  
+  def polymorphic_find_by_owner_and_admin_tags(model, owner, admin_tags)
+    if admin_tags.present?
       return model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
           INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
@@ -171,11 +176,47 @@ class ApplicationController < ActionController::Base
             AND #{model.table_name}.type = ?
             AND admin_tags.name IN (?)",
           owner.id, model.name, admin_tags])
-    else
-      return model.find_all_by_owner_id(owner.id)
     end
+    model.find_all_by_owner_id(owner.id)
   end
-    
+  
+  def polymorphic_find_by_tags(model, user_tags, admin_tags)
+    if user_tags.present?
+      return model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
+          INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
+          INNER JOIN tags ON tagged.tag_id = tags.id
+          WHERE #{model.table_name}.type = ?
+            AND tags.name IN (?)",
+          model.name, user_tags])
+    end
+    polymorphic_find_by_admin_tags(model, admin_tags)
+  end
+  
+  def polymorphic_find_by_admin_tags(model, admin_tags)
+    if admin_tags.present?
+      return model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
+          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+          WHERE #{model.table_name}.type = ?
+            AND admin_tags.name IN (?)",
+          model.name, admin_tags])
+    end
+    model.all
+  end
+  
+  def find_by_admin_tags(model, admin_tags)
+    if admin_tags.present?
+      return model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
+          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+          WHERE admin_tags.name IN (?)",
+          admin_tags])
+    end
+    model.all
+  end
     
   
 end

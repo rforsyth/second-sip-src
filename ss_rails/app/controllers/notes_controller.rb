@@ -17,7 +17,9 @@ class NotesController < ApplicationController
   end
   
   def index
-    @notes = @note_class.find_all_by_owner_id(displayed_taster.id)
+    @notes = polymorphic_find_by_owner_and_tags(@note_class, displayed_taster, params[:in], params[:ain])
+    build_tag_filter(@notes)
+    build_admin_tag_filter(@notes)
 		render :template => 'notes/index'
   end
 

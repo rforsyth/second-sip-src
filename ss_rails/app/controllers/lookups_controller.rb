@@ -32,7 +32,8 @@ class LookupsController < ApplicationController
   end
 	
   def index
-    @lookups = Lookup.all
+    @lookups = find_by_admin_tags(Lookup, params[:ain])
+    build_admin_tag_filter(@lookups)
   end
 
   def show

@@ -32,7 +32,8 @@ class ReferenceLookupsController < ApplicationController
   end
 	
   def index
-    @lookups = ReferenceLookup.all
+    @lookups = find_by_admin_tags(ReferenceLookup, params[:ain])
+    build_admin_tag_filter(@lookups)
   end
 
   def show

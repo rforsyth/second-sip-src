@@ -3,7 +3,9 @@ class GlobalNotesController < ApplicationController
 	before_filter :initialize_global_notes_tabs
   
   def browse
-    @notes = @note_class.all
+    @notes = polymorphic_find_by_tags(@note_class, params[:in], params[:ain])
+    build_tag_filter(@notes)
+    build_admin_tag_filter(@notes)
   end
   
   def search
