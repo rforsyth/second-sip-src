@@ -28,7 +28,7 @@ class Product < ActiveRecord::Base
   validates_associated :producer, :looked, :tagged
 
   after_initialize :set_default_values
-  before_save :set_canonical_fields
+  before_save :set_canonical_fields, :set_searchable_metadata
   
   pg_search_scope :search,
     :against => [:name, :searchable_metadata, :description]
@@ -42,14 +42,10 @@ class Product < ActiveRecord::Base
     self.canonical_name = self.name.canonicalize
   end
   
-  def update_searchable_metadata
+  def set_searchable_metadata
     metadata = "#{self.owner.username.remove_accents} #{self.producer.name.remove_accents}"
-    metadata << " #{self.region.name.remove_accents}" if self.region.present?
-    metadata << " #{self.style.name.remove_accents}" if self.style.present?
-    self.varietals.each {|varietal| metadata << " #{varietal.name.remove_accents}"}
-    self.vineyards.each {|vineyard| metadata << " #{vineyard.name.remove_accents}"}
+    self.looked.each {|looked| metadata << " #{looked.lookup.name.remove_accents}"}
     self.searchable_metadata = metadata
-    self.save
   end
   
   def to_param

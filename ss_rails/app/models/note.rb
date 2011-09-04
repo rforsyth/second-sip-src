@@ -20,6 +20,7 @@ class Note < ActiveRecord::Base
   validates_associated :product, :tagged
 
   after_initialize :set_default_values
+  before_save :set_searchable_metadata
   
   # include in metadata: vintage, producer name, product name, owner username,
   #                      style, region, occasion, vineyards, varietals
@@ -38,11 +39,10 @@ class Note < ActiveRecord::Base
     "#{self.id}-#{self.product.producer.canonical_name}-#{self.product.canonical_name}"
   end
   
-  def update_searchable_metadata
+  def set_searchable_metadata
     metadata = self.product.searchable_metadata.dup
-    metadata << " #{self.occasion.name.remove_accents}" if self.occasion.present?
+    self.looked.each {|looked| metadata << " #{looked.lookup.name.remove_accents}"}
     self.searchable_metadata = metadata
-    self.save
   end
   
   def set_occasion(name, owner = nil)

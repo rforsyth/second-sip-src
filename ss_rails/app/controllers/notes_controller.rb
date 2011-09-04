@@ -43,7 +43,6 @@ class NotesController < ApplicationController
     set_product_from_params(@note)
     
     if @note.save
-      @note.update_searchable_metadata
       redirect_to([@note.owner, @note], :notice => 'Note was successfully created.')
     else
       render :action => "new"
@@ -59,7 +58,6 @@ class NotesController < ApplicationController
     @note.set_occasion(params[:occasion_name], current_taster)
     set_product_from_params(@note)
     if @note.update_attributes(params[@note_class.name.underscore])
-      @note.update_searchable_metadata
       redirect_to([@note.owner, @note], :notice => 'Note was successfully updated.')
     else
       render :action => "edit"
@@ -92,7 +90,6 @@ class NotesController < ApplicationController
     end
     note.product.set_lookup_properties(params, displayed_taster, @producer_class)
     note.product.save
-    note.product.update_searchable_metadata
   end
   
   

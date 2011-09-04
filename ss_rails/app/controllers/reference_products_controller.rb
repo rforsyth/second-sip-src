@@ -31,7 +31,6 @@ class ReferenceProductsController < ApplicationController
     @product = @reference_product_class.new(params[@reference_product_class.name.underscore])
     @product.set_lookup_properties(params, @reference_producer_class)
     if @product.save
-      @product.update_searchable_metadata
       redirect_to(@product)
     else
       render :action => "reference_products/new"
@@ -45,7 +44,6 @@ class ReferenceProductsController < ApplicationController
   def update
     @product.set_lookup_properties(params, @reference_producer_class)
     if @product.update_attributes(params[@reference_product_class.name.underscore])
-      @product.update_searchable_metadata
       redirect_to(@product)
     else
       render :action => "reference_products/edit"

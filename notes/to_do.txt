@@ -4,9 +4,6 @@ Next Up
 
 ** Beverages
 
-- create "searchable metadata" field in products / notes
-  - reference products, products, notes
-
 - sub notes / products on producer page
 
 - sub notes on product page
@@ -140,6 +137,9 @@ iPhone (from home): 192.168.0.199:8080
 
 _____________________________________________________________
 Bugs
+
+- set_searchable_metadata doesn't work in some scenarios
+  - on create, with has_one attribs?
 
 - price calculation is broken for spirits
 

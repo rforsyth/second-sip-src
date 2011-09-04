@@ -56,7 +56,6 @@ class ProductsController < ApplicationController
     @product.set_lookup_properties(params, current_taster, @producer_class)
       
     if @product.save
-      @product.update_searchable_metadata
       redirect_to([@product.owner, @product], :notice => 'Product was successfully created.')
     else
       render :action => "products/new"
@@ -71,7 +70,6 @@ class ProductsController < ApplicationController
     @product.set_lookup_properties(params, displayed_taster, @producer_class)
     
     if @product.update_attributes(params[@product_class.name.underscore])
-      @product.update_searchable_metadata
       redirect_to([@product.owner, @product], :notice => 'Product was successfully updated.')
     else
       render :action => "products/edit"

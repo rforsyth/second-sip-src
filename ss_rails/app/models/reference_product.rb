@@ -19,7 +19,7 @@ class ReferenceProduct < ActiveRecord::Base
 	                     :conditions => {:lookup_type => Enums::LookupType::VARIETAL}
 	
 	validates_presence_of :reference_producer, :name
-  before_save :set_canonical_fields
+  before_save :set_canonical_fields, :set_searchable_metadata
   
   pg_search_scope :search,
     :against => [:name, :searchable_metadata, :description]
@@ -33,14 +33,10 @@ class ReferenceProduct < ActiveRecord::Base
     "#{self.reference_producer.canonical_name}-#{self.canonical_name}"
   end
   
-  def update_searchable_metadata
+  def set_searchable_metadata
     metadata = self.reference_producer.name.remove_accents
-    metadata << " #{self.region.name.remove_accents}" if self.region.present?
-    metadata << " #{self.style.name.remove_accents}" if self.style.present?
-    self.varietals.each {|varietal| metadata << " #{varietal.name.remove_accents}"}
-    self.vineyards.each {|vineyard| metadata << " #{vineyard.name.remove_accents}"}
+    self.reference_looked.each {|looked| metadata << " #{looked.reference_lookup.name.remove_accents}"}
     self.searchable_metadata = metadata
-    self.save
   end
   
   def set_lookup_properties(params, reference_producer_class)
