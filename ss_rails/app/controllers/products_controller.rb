@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
                      :owner_id => current_taster.id,
                      :producers => { :owner_id => current_taster.id,
                                      :canonical_name => canonical_producer_name }
-                     ).where("products.canonical_name LIKE ?", "#{canonical_query}%")
+                     ).where("products.canonical_name LIKE ?", "%#{canonical_query}%")
 
     products.each do |product|
 	    autocomplete.add_suggestion(product.name, product.name, product.id)

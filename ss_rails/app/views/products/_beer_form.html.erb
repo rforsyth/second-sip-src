@@ -1,7 +1,0 @@
-<%= fields_for(@product) do |product_fields| %>
-  <%= render :partial => 'common/edit/style_field' %>
-  <%= render :partial => 'common/edit/region_field' %>
-  <%= render :partial => 'common/edit/price_field', :locals => { :product_fields => product_fields,
-    :calculate_function => 'calculate_spe', :price_type_collection => Enums::BeerPriceType.sorted_collection,
-    :selected => Enums::BeerPriceType::SIX_PACK } %>
-<% end %>

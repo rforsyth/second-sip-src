@@ -13,7 +13,8 @@ class ReferenceProductsController < ApplicationController
   end
   
   def index
-    @products = @reference_product_class.all
+    @products = polymorphic_find_by_admin_tags(@reference_product_class, params[:ain])
+    build_admin_tag_filter(@products)
 		render :template => 'reference_products/index'
   end
 
@@ -28,8 +29,10 @@ class ReferenceProductsController < ApplicationController
 
   def create
     @product = @reference_product_class.new(params[@reference_product_class.name.underscore])
-    @product.reference_producer = @reference_producer_class.find_by_canonical_name(
-                                    params[:reference_producer_name].try(:canonicalize))
+    @product.set_lookup_properties(params, @reference_producer_class)
+    
+    # @product.reference_producer = @reference_producer_class.find_by_canonical_name(
+    #                                 params[:reference_producer_name].try(:canonicalize))
     if @product.save
       redirect_to(@product)
     else
@@ -42,6 +45,7 @@ class ReferenceProductsController < ApplicationController
   end
 
   def update
+    @product.set_lookup_properties(params, @reference_producer_class)
     if @product.update_attributes(params[@reference_product_class.name.underscore])
       redirect_to(@product)
     else

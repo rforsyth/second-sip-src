@@ -16,6 +16,10 @@
     <%= f.text_field :name, :class => 'text_field text_wide' %>
   </div>
 
+  <div id="product_details">
+    <%= render :partial => "products/product_lookups" %>
+  </div>
+
   <div class="form_row">
     <%= f.label :description, 'Notes:' %>
     <%= f.text_area :description, :class => 'text_long' %>
@@ -27,6 +31,6 @@
 
   <%= render :partial => 'common/scripts/autocomplete_script',
              :locals => { :field_id => "reference_producer_name",
-                          :entities_path => @reference_producer_class.name.tableize } %>
+                          :entities_path => polymorphic_path(@reference_producer_class) } %>
 
 <% end %>

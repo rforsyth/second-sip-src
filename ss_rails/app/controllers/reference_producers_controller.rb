@@ -14,15 +14,19 @@ class ReferenceProducersController < ApplicationController
   
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
-    producers = @reference_producer_class.all
-    producers.each do |producer|
-	    autocomplete.add_suggestion(producer.name, producer.name, producer.id)
+    
+    canonical_query = params[:query].try(:canonicalize)
+    reference_producers = @reference_producer_class.where(
+                  ["reference_producers.canonical_name LIKE ?", "%#{canonical_query}%"] )
+    reference_producers.each do |reference_producer|
+	    autocomplete.add_suggestion(reference_producer.name, reference_producer.name, reference_producer.id)
     end
     render :json => autocomplete
   end
   
   def index
-    @producers = @reference_producer_class.all
+    @producers = polymorphic_find_by_admin_tags(@reference_producer_class, params[:ain])
+    build_admin_tag_filter(@producers)
 		render :template => 'reference_producers/index'
   end
 

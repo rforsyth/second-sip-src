@@ -135,6 +135,8 @@ rails generate migration RemoveOccasionNameFromNote
 
 rails generate migration AddSearchableMetadata
 
+bundle exec rails generate migration AddPricePaidToReferenceProduct
+
 
 
 

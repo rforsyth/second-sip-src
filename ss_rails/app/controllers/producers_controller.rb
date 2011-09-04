@@ -20,7 +20,7 @@ class ProducersController < ApplicationController
     autocomplete = Ajax::Autocomplete.new(params[:query])
     canonical_query = params[:query].try(:canonicalize)
     producers = @producer_class.find_all_by_owner_id(current_taster.id,
-                  :conditions => ["producers.canonical_name LIKE ?", "#{canonical_query}%"] )
+                  :conditions => ["producers.canonical_name LIKE ?", "%#{canonical_query}%"] )
     producers.each do |producer|
 	    autocomplete.add_suggestion(producer.name, producer.name, producer.id)
     end

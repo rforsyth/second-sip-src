@@ -1,13 +1,15 @@
 
-<div class="form_row">
-  <%= product_fields.label :price, 'Retail Price:' %>
-  <%= product_fields.select(:price_type, price_type_collection, :class => 'select_field', :selected => selected) %>
-  $
-  <%= product_fields.text_field :price_paid, :class => 'text_field', :size => '8', :maxlength => 8 %>
-  <%= text_field_tag(:price_equivalent, nil, :class => 'calculated_text_field',
-                     :size => '20', :readonly => 'true', :tabindex => '-1') %>
-  <%= product_fields.hidden_field :price %>
-</div>
+<%= fields_for(@product) do |product_fields| %>
+  <div class="form_row">
+    <%= product_fields.label :price, 'Retail Price:' %>
+    <%= product_fields.select(:price_type, price_type_collection, :class => 'select_field', :selected => selected) %>
+    $
+    <%= product_fields.text_field :price_paid, :class => 'text_field', :size => '8', :maxlength => 8 %>
+    <%= text_field_tag(:price_equivalent, nil, :class => 'calculated_text_field',
+                       :size => '20', :readonly => 'true', :tabindex => '-1') %>
+    <%= product_fields.hidden_field :price %>
+  </div>
+<% end %>
 
 <script type="text/javascript">
   <% product_name = @product_class.name.downcase %>

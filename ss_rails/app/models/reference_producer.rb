@@ -22,6 +22,12 @@ class ReferenceProducer < ActiveRecord::Base
   def to_param
     self.canonical_name
   end
+  
+  def self.find_or_create_by_name(name)
+    reference_producer = self.find_by_canonical_name(name.canonicalize)
+    return reference_producer if reference_producer.present?
+    self.create(:name => name)
+  end
 
 end
 

@@ -29,4 +29,12 @@ class ReferenceLookup < ActiveRecord::Base
 		self.canonical_name = self.name.canonicalize
 		self.canonical_full_name = self.full_name.canonicalize
 	end
+  
+  def self.find_or_create_by_name_and_type(name, entity_type, lookup_type)
+    lookup = self.find_by_canonical_name(name.canonicalize,
+                  :conditions => {:entity_type => entity_type, :lookup_type => lookup_type})
+    return lookup if lookup.present?
+    self.create(:name => name, :entity_type => entity_type, :lookup_type => lookup_type)
+  end
+  
 end

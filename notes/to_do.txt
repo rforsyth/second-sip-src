@@ -5,10 +5,6 @@ Next Up
 - create "searchable metadata" field in products / notes
   - reference products, products, notes
 
-
-
-- search lookups / reference lookups / tasters
-
 - sub notes / products on producer page
 
 - sub notes on product page
@@ -41,23 +37,15 @@ Next Up
 
 - fill out model validations
 
-- enforce visibility of producer / product in controller (don't populate @producer / @product)
+- enforce visibility
 
 - support browsing via iphone
 
 - support blocking users
   - add approved field and set to false
 
-- about page
-
-- terms of service - copy and update from CellarTracker
-
-- FAQ?
-
 - privacy page (do we need this)
   - if yes, can use sahalli one
-
-- contact page
 
 - stop using 3rd party sprite for search button
 
