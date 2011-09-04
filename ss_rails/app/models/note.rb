@@ -38,6 +38,13 @@ class Note < ActiveRecord::Base
     "#{self.id}-#{self.product.producer.canonical_name}-#{self.product.canonical_name}"
   end
   
+  def update_searchable_metadata
+    metadata = self.product.searchable_metadata.dup
+    metadata << " #{self.occasion.name.remove_accents}" if self.occasion.present?
+    self.searchable_metadata = metadata
+    self.save
+  end
+  
   def set_occasion(name, owner = nil)
     return if self.occasion.try(:canonical_name) == name.canonicalize
     self.looked.each { |looked| looked.delete if looked.lookup.lookup_type == Enums::LookupType::OCCASION }

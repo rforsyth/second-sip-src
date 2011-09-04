@@ -2,6 +2,8 @@
 _____________________________________________________________
 Next Up
 
+** Beverages
+
 - create "searchable metadata" field in products / notes
   - reference products, products, notes
 
@@ -11,10 +13,6 @@ Next Up
 
 - sub reference products on reference producer page
 
-- change password form separate from update profile
-
-- prettify lookup / registration / password change page
-
 - auto tags from lookups
 
 - auto admin tags (ex: unreviewed)
@@ -23,26 +21,41 @@ Next Up
 
 - make hide / show feature on product / note form more smooth
 
-- wire together reference producer + reference product
+- paging
 
-- reference product lookups
+- enforce visibility
+
+- "flag as inappropriate" feature
+  - add admin tag and send email
+
+- add vintage to wine note
+
+** Reference Data
 
 - mix reference lookups into autocomplete
 
 - mix reference producer / product into autocomplete
 
-- paging
+** Error Handling
 
 - get error feedback working on forms
 
 - fill out model validations
 
-- enforce visibility
+** User Management
 
-- support browsing via iphone
+- change password form separate from update profile
+
+- prettify lookup / registration / password change page
 
 - support blocking users
   - add approved field and set to false
+
+- put terms & conditions into registration form
+
+** Global UI
+
+- support browsing via iphone
 
 - privacy page (do we need this)
   - if yes, can use sahalli one
@@ -50,8 +63,16 @@ Next Up
 - stop using 3rd party sprite for search button
 
 - add indexes to columns using migrations
+  
+- adsense ads
+
+** Performance
+
+- build postgres SQL indexes
 
 - do some database performance profiling?
+
+** Deployment
 
 - consolidate database migrations prior to Heroku deploy
 
@@ -62,17 +83,6 @@ Next Up
   - wine regions
   - beer styles
   - spirit types
-  
-- adsense ads
-
-- build postgres SQL indexes
-
-- remove any unused partials
-
-- put terms & conditions into registration form
-
-- "flag as inappropriate" feature
-  - add admin tag and send email
 
 _____________________________________________________________
 Testing
@@ -111,6 +121,8 @@ _____________________________________________________________
 Maintainability
 
 - refactor lookups javascript to use delegate
+
+- remove any unused partials
 
 _____________________________________________________________
 Browser testing:

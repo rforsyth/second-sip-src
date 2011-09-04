@@ -42,6 +42,16 @@ class Product < ActiveRecord::Base
     self.canonical_name = self.name.canonicalize
   end
   
+  def update_searchable_metadata
+    metadata = "#{self.owner.username.remove_accents} #{self.producer.name.remove_accents}"
+    metadata << " #{self.region.name.remove_accents}" if self.region.present?
+    metadata << " #{self.style.name.remove_accents}" if self.style.present?
+    self.varietals.each {|varietal| metadata << " #{varietal.name.remove_accents}"}
+    self.vineyards.each {|vineyard| metadata << " #{vineyard.name.remove_accents}"}
+    self.searchable_metadata = metadata
+    self.save
+  end
+  
   def to_param
     "#{self.producer.canonical_name}-#{self.canonical_name}"
   end
@@ -74,7 +84,8 @@ class Product < ActiveRecord::Base
       if !current_canonical_names.include?(lookup_name.canonicalize)
         lookup = Lookup.find_or_create_by_name_and_type(lookup_name,
                         self.class.name, lookup_type)
-        self.looked << Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+        looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+        self.looked << looked
       end
     end
   end
@@ -84,7 +95,8 @@ class Product < ActiveRecord::Base
     self.looked.each { |looked| looked.delete if looked.lookup.lookup_type == Enums::LookupType::STYLE }
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::STYLE)
-    self.looked << Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    self.looked << looked
   end
   
   def set_region(name, owner = nil)
@@ -92,7 +104,8 @@ class Product < ActiveRecord::Base
     self.looked.each { |looked| looked.delete if looked.lookup.lookup_type == Enums::LookupType::REGION }
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::REGION)
-    self.looked << Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    self.looked << looked
   end
 
 end

@@ -33,6 +33,16 @@ class ReferenceProduct < ActiveRecord::Base
     "#{self.reference_producer.canonical_name}-#{self.canonical_name}"
   end
   
+  def update_searchable_metadata
+    metadata = self.reference_producer.name.remove_accents
+    metadata << " #{self.region.name.remove_accents}" if self.region.present?
+    metadata << " #{self.style.name.remove_accents}" if self.style.present?
+    self.varietals.each {|varietal| metadata << " #{varietal.name.remove_accents}"}
+    self.vineyards.each {|vineyard| metadata << " #{vineyard.name.remove_accents}"}
+    self.searchable_metadata = metadata
+    self.save
+  end
+  
   def set_lookup_properties(params, reference_producer_class)
     if params[:reference_producer_name].present?
       self.reference_producer = 
