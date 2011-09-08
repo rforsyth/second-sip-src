@@ -29,6 +29,7 @@ class Product < ActiveRecord::Base
 
   after_initialize :set_default_values
   before_save :set_canonical_fields, :set_searchable_metadata
+  before_create :add_unreviewed_tag
   
   pg_search_scope :search,
     :against => [:name, :searchable_metadata, :description]
@@ -53,6 +54,8 @@ class Product < ActiveRecord::Base
   end
   
   def set_lookup_properties(params, owner, producer_class)
+    # save the current state of the lookup tag names for the auto-tag generation feature
+    @original_lookup_tag_names = self.looked.collect {|looked| looked.lookup.name.tagify}
     if params[:producer_name].present?
       self.producer = producer_class.find_or_create_by_owner_and_name(owner, params[:producer_name])
     end
@@ -71,6 +74,7 @@ class Product < ActiveRecord::Base
         if lookup_canonical_names.include?(looked.lookup.name.canonicalize)
           current_canonical_names << looked.lookup.name.canonicalize
         else
+          self.remove_tag(looked.lookup.name.tagify)
           looked.delete
         end
       end
@@ -81,6 +85,7 @@ class Product < ActiveRecord::Base
         lookup = Lookup.find_or_create_by_name_and_type(lookup_name,
                         self.class.name, lookup_type)
         looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+        self.add_tag(lookup_name.tagify)
         self.looked << looked
       end
     end
@@ -88,22 +93,55 @@ class Product < ActiveRecord::Base
   
   def set_style(name, owner = nil)
     return if self.style.try(:canonical_name) == name.canonicalize
-    self.looked.each { |looked| looked.delete if looked.lookup.lookup_type == Enums::LookupType::STYLE }
+    self.looked.each do |looked|
+      if looked.lookup.lookup_type == Enums::LookupType::STYLE
+        self.remove_tag(looked.lookup.name.tagify)
+        looked.delete
+      end
+    end
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::STYLE)
     looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    self.add_tag(name.tagify, owner || self.owner)
     self.looked << looked
   end
   
   def set_region(name, owner = nil)
     return if self.region.try(:canonical_name) == name.canonicalize
-    self.looked.each { |looked| looked.delete if looked.lookup.lookup_type == Enums::LookupType::REGION }
+    self.looked.each do |looked|
+      if looked.lookup.lookup_type == Enums::LookupType::REGION
+        self.remove_tag(looked.lookup.name.tagify)
+        looked.delete
+      end
+    end
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::REGION)
     looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    self.add_tag(name.tagify, owner || self.owner)
     self.looked << looked
   end
+  
+	def simple_copy
+		copy = SimpleProduct.new
+		copy.id = self.id
+		copy.name = self.name
+		copy.visibility = self.visibility
+		copy.producer_name = self.producer.name if self.producer.present?
+		copy.price_paid = self.price_paid
+		copy.price_type = self.price_type
+		copy.region_name = self.region.try(:name)
+		copy.style_name = self.style.try(:name)
+		copy.varietal_names = self.varietals.collect{|varietal| varietal.name} if self.varietals.present?
+		copy.vineyard_names = self.vineyards.collect{|vineyard| vineyard.name} if self.vineyards.present?
+		return copy
+	end
+  
 
+end
+	
+class SimpleProduct
+	attr_accessor :id, :name, :producer_name, :visibility, :price_paid, :price_type,
+	 							:region_name, :style_name, :varietal_names, :vineyard_names
 end
 
 class Beer < Product

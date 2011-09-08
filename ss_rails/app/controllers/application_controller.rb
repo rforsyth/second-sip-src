@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
 	include UI::TabBuilder
   protect_from_forgery
   
+  BEVERAGE_PAGE_SIZE = 3
+  MAX_PAGE_NUM = 10
+  MAX_BEVERAGE_RESULTS = 200
+  
   helper_method :current_taster
   helper_method :displayed_taster
 
@@ -152,70 +156,148 @@ class ApplicationController < ActionController::Base
     @available_admin_tags = @available_admin_tags - (@included_admin_tags + @excluded_admin_tags)
   end
   
-  def polymorphic_find_by_owner_and_tags(model, owner, user_tags, admin_tags)
+  def find_beverage_by_owner_and_tags(model, owner, viewer, user_tags, admin_tags)
     if user_tags.present?
-      return model.find_by_sql(
+      results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
           INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
           INNER JOIN tags ON tagged.tag_id = tags.id
           WHERE #{model.table_name}.owner_id = ?
             AND #{model.table_name}.type = ?
-            AND tags.name IN (?)",
+            AND tags.name IN (?)
+            AND #{known_owner_visibility_clause(model, owner, viewer)}
+          LIMIT #{MAX_BEVERAGE_RESULTS}",
           owner.id, model.name, user_tags])
     end
-    polymorphic_find_by_owner_and_admin_tags(model, owner, admin_tags)
+    find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags)
   end
   
-  def polymorphic_find_by_owner_and_admin_tags(model, owner, admin_tags)
+  def find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags)
     if admin_tags.present?
-      return model.find_by_sql(
+      results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
           INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
           INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
           WHERE #{model.table_name}.owner_id = ?
             AND #{model.table_name}.type = ?
-            AND admin_tags.name IN (?)",
-          owner.id, model.name, admin_tags])
+            AND admin_tags.name IN (?)
+            AND #{known_owner_visibility_clause(model, owner, viewer)}
+          LIMIT ?",
+          owner.id, model.name, admin_tags, MAX_BEVERAGE_RESULTS])
+    else
+      results = model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name}
+          WHERE #{model.table_name}.owner_id = ?
+            AND #{model.table_name}.type = ?
+            AND #{known_owner_visibility_clause(model, owner, viewer)}
+          LIMIT ?",
+          owner.id, model.name, MAX_BEVERAGE_RESULTS])
     end
-    model.find_all_by_owner_id(owner.id)
+    page_beverage_results(results)
   end
   
-  def polymorphic_find_by_tags(model, user_tags, admin_tags)
+  def find_global_beverage_by_tags(model, viewer, user_tags, admin_tags)
     if user_tags.present?
-      return model.find_by_sql(
+      results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
           INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
           INNER JOIN tags ON tagged.tag_id = tags.id
           WHERE #{model.table_name}.type = ?
-            AND tags.name IN (?)",
-          model.name, user_tags])
+            AND tags.name IN (?)
+            AND #{global_visibility_clause(model, viewer)}
+          LIMIT ?",
+          model.name, user_tags, MAX_BEVERAGE_RESULTS])
+      return page_beverage_results(results)
     end
-    polymorphic_find_by_admin_tags(model, admin_tags)
+    find_global_beverage_by_admin_tags(model, viewer, admin_tags)
   end
   
-  def polymorphic_find_by_admin_tags(model, admin_tags)
+  def find_global_beverage_by_admin_tags(model, viewer, admin_tags)
     if admin_tags.present?
-      return model.find_by_sql(
+      results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
           INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
           INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
           WHERE #{model.table_name}.type = ?
-            AND admin_tags.name IN (?)",
-          model.name, admin_tags])
+            AND admin_tags.name IN (?)
+            AND #{global_visibility_clause(model, viewer)}
+          LIMIT ?",
+          model.name, admin_tags, MAX_BEVERAGE_RESULTS])
+    else
+      results = model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name}
+          WHERE #{model.table_name}.type = ?
+            AND #{global_visibility_clause(model, viewer)}
+          LIMIT ?",
+          model.name, MAX_BEVERAGE_RESULTS])
     end
-    model.all
+    page_beverage_results(results)
+  end
+  
+  def find_reference_beverage_by_admin_tags(model, viewer, admin_tags)
+    if admin_tags.present?
+      results = model.find_by_sql(
+        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
+          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+          WHERE #{model.table_name}.type = ?
+            AND admin_tags.name IN (?)
+          LIMIT ?",
+          model.name, admin_tags, MAX_BEVERAGE_RESULTS])
+    else
+      results = model.limit(MAX_BEVERAGE_RESULTS)
+    end
+    page_beverage_results(results)
   end
   
   def find_by_admin_tags(model, admin_tags)
     if admin_tags.present?
-      return model.find_by_sql(
+      results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
           INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
           INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
-          WHERE admin_tags.name IN (?)",
-          admin_tags])
+          WHERE admin_tags.name IN (?)
+          LIMIT ?",
+          admin_tags, MAX_BEVERAGE_RESULTS])
+    else
+      results = model.limit(MAX_BEVERAGE_RESULTS)
     end
-    model.all
+    page_beverage_results(results)
+  end
+  
+  def calculate_page_num
+    page_num = params[:page].try(:to_i) || 1
+    page_num = 1 if page_num < 1
+    page_num = 1 if (page_num * MAX_PAGE_NUM) > MAX_BEVERAGE_RESULTS
+    return page_num
+  end
+  
+  def page_beverage_results(results)
+    return results if results.count < BEVERAGE_PAGE_SIZE
+		@page_num = calculate_page_num
+		@page_size = BEVERAGE_PAGE_SIZE
+		@num_results = results.count
+		first_result_index = (@page_num - 1) * @page_size
+		return results[first_result_index, @page_size]
+  end
+  
+  def known_owner_visibility_clause(model, owner, viewer)
+    return 'true' if owner == viewer
+    if viewer.friends.include?(owner)
+      return "#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}"
+    end
+    "#{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
+  end
+  
+  def global_visibility_clause(model, viewer)
+    friend_ids = viewer.friends.collect{|friend| friend.id}
+    clause = "(#{model.table_name}.owner_id = #{viewer.id}
+    OR #{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
+    if friend_ids.present?
+      clause << "OR (#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}
+                 AND #{model.table_name}.owner_id IN (#{friend_ids.join(',')}))"
+    end
+    return clause + ")"
   end
     
   

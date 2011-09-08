@@ -5,10 +5,10 @@
   on_last_page = (@page_num * @page_size) >= @num_results
 %>
 <div class="paging_bar">
-  <%= link_to('&laquo;', page_path(@page_num - 1)) if @page_num > 1 %>
+  <%= link_to(raw('&laquo;'), page_path(@page_num - 1)) if @page_num > 1 %>
   <%= render(:partial => 'common/lists/page_number',
-             :collection => (1..num_pages), :spacer_template => 'common/lists/page_number_spacer',
+             :collection => (1..num_pages).to_a, :spacer_template => 'common/lists/page_number_spacer',
              :locals => { :current_page => @page_num }) %>
-  <%= link_to('&raquo;', page_path(@page_num + 1)) if !on_last_page %>
+  <%= link_to(raw('&raquo;'), page_path(@page_num + 1)) if !on_last_page %>
 </div>
   

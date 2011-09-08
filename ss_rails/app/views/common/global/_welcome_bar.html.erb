@@ -4,11 +4,11 @@
     <%= link_to(current_taster.username, taster_path(current_taster)) %>
     &nbsp;&nbsp;|
     <span class="welcome_bar_beverage_types">
-      <%= link_to('Beer', polymorphic_path([current_taster, BeerNote]),
+      <%= link_to('Beer', polymorphic_path([current_taster, Beer]),
                   :class => (@beverage_type == :beer) ? 'bold underline' : nil ) -%> &middot;
-      <%= link_to('Wine', polymorphic_path([current_taster, WineNote]),
+      <%= link_to('Wine', polymorphic_path([current_taster, Wine]),
                   :class => (@beverage_type == :wine) ? 'bold underline' : nil ) -%> &middot;
-      <%= link_to('Spirits', polymorphic_path([current_taster, SpiritNote]),
+      <%= link_to('Spirits', polymorphic_path([current_taster, Spirit]),
                   :class => (@beverage_type == :spirits) ? 'bold underline' : nil ) -%>
       <% if current_taster.is?(:admin) -%>
         &middot; <%= link_to('Admin', tasters_path) -%>

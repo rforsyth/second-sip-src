@@ -8,12 +8,13 @@ class ReferenceProductsController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @products = @reference_product_class.search(params[:query])
+    results = @reference_product_class.search(params[:query])
+    @products = page_beverage_results(results)
 		render :template => 'reference_products/search'
   end
   
   def index
-    @products = polymorphic_find_by_admin_tags(@reference_product_class, params[:ain])
+    @products = find_reference_beverage_by_admin_tags(@reference_product_class, current_taster, params[:ain])
     build_admin_tag_filter(@products)
 		render :template => 'reference_products/index'
   end

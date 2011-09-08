@@ -14,6 +14,7 @@ class Producer < ActiveRecord::Base
 
   after_initialize :set_default_values
   before_save :set_canonical_fields
+  before_create :add_unreviewed_tag
   
   pg_search_scope :search,
     :against => [:name, :description]
@@ -37,7 +38,18 @@ class Producer < ActiveRecord::Base
     self.create(:name => name, :owner => owner)
   end
   
+	def simple_copy
+		copy = SimpleProducer.new
+		copy.id = self.id
+		copy.name = self.name
+		copy.visibility = self.visibility
+		return copy
+	end
   
+end
+
+class SimpleProducer
+	attr_accessor :id, :name, :visibility
 end
 
 class Brewery < Producer

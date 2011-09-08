@@ -23,9 +23,7 @@ class TastersController < ApplicationController
     @notes = Note.find_all_by_owner_id(@taster.id)
     
     if displayed_taster == current_taster
-      @friendships = Friendship.where("status = ? AND (inviter_id = ? OR invitee_id = ?)",
-                                       Enums::FriendshipStatus::ACCEPTED,
-                                       current_taster.id, current_taster.id)
+      @friendships = Friendship.find_all_by_taster(current_taster)
       @friendship_invitations = Friendship.where("status = ? AND invitee_id = ?",
                                        Enums::FriendshipStatus::REQUESTED,
                                        current_taster.id)

@@ -13,7 +13,7 @@
 
   <div class="form_row">
     <div id="product_details_toggle" class="details_toggle">
-      <a href="#" class="toggle_off" tabindex="-1">[+]</a></div>
+      <a href="javascript:void(0);" class="toggle_off" tabindex="-1">[+]</a></div>
     <%= label_tag :product_name, "#{@product_class.name.titleize}: " %>
     <% if @note.new_record? %>
       <%= text_field_tag :product_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
@@ -28,7 +28,7 @@
 
   <div id="note_detailed_description" style="display:none;">
     <div id="note_detailed_description_off" class="details_toggle">
-      <a href="#" class="toggle_off" tabindex="-1">[-]</a></div>
+      <a href="javascript:void(0);" class="toggle_off" tabindex="-1">[-]</a></div>
     <div class="form_row">
       <%= f.label :description_aroma, 'Aroma:' %>
       <%= f.text_area :description_aroma, :maxlength => 500 %>
@@ -49,12 +49,25 @@
 
   <div class="form_row">
     <div id="note_detailed_description_on" class="details_toggle">
-      <a href="#" class="toggle_on" tabindex="-1">[+]</a></div>
+      <a href="javascript:void(0);" class="toggle_on" tabindex="-1">[+]</a></div>
     <%= f.label :description_overall, 'Notes:', :class => 'notes_label' %>
     <%= f.text_area :description_overall, :class => 'notes_summary', :style => 'height: 150px' %>
   </div>
   
-  <%= render :partial => 'common/edit/occasion_field' %>
+  <div class="form_row">
+    <div id="note_details_toggle" class="details_toggle">
+      <a href="javascript:void(0);" class="toggle_off" tabindex="-1">[+]</a></div>
+    <%= label_tag :occasion_name, 'Occasion:' %>
+    <%= text_field_tag :occasion_name, @note.occasion.try(:name),
+        :class => 'text_field text_wide', 
+        :entity_type => @note.type, :lookup_type => Enums::LookupType::OCCASION %>
+  </div>
+
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "occasion_name",
+                          :entities_path => lookups_path,
+                          :params => {'lookup_type' => Enums::LookupType::OCCASION,
+                                      'entity_type' => @note_class.name} } %>
 
   <div id="note_details" style="display:none;">
     <% if @note.kind_of?(WineNote) %>
@@ -126,7 +139,7 @@
     }
 
     function update_note_form_product(product) {
-      $('#<%= @product_class.name.underscore %>_region_name').val(product.region_name);
+      $('#region_name').val(product.region_name);
       $('#<%= @product_class.name.underscore %>_price_type').val(product.price_type);
       $('#<%= @product_class.name.underscore %>_price_paid').val(product.price_paid);
     
@@ -136,21 +149,21 @@
         update_lookup_collection("vineyard", <%= Enums::LookupType::VINEYARD %>, product.vineyard_names);
         update_lookup_collection("varietal", <%= Enums::LookupType::VARIETAL %>, product.varietal_names);
       <% else %>
-        $('#<%= @product_class.name.underscore %>_style_name').val(product.style_name);
+        $('#style_name').val(product.style_name);
       <% end %>
     }
 
     $('#<%= @note_class.name.underscore %>_score').keyfilter(/[0-9.]/);
 
     producer_name_changed = false;
-    $("#<%= "#{@note_class.name.underscore}_producer_name" %>").change(function(){
+    $("#producer_name").change(function(){
       producer_name_changed = true;
     });
-    $("#<%= "#{@note_class.name.underscore}_producer_name" %>").blur(function(){
+    $("#producer_name").blur(function(){
       if(producer_name_changed){
         producer_name_changed = false;
-        $.get('/<%= @producer_class.name.tableize%>/ajax_details',
-             { 'name' : $("#<%= "#{@note_class.name.underscore}_producer_name" %>").val() },
+        $.get('<%= polymorphic_path([current_taster, @producer_class]) %>/ajax_details',
+             { 'name' : $("#producer_name").val() },
              function(producer) {
                update_note_form_producer(producer);
              });
@@ -158,15 +171,15 @@
     });
 
     product_name_changed = false;
-    $("#<%= "#{@note_class.name.underscore}_product_name" %>").change(function(){
+    $("#product_name").change(function(){
       product_name_changed = true;
     });
-    $("#<%= "#{@note_class.name.underscore}_product_name" %>").blur(function(){
+    $("#product_name").blur(function(){
       if(product_name_changed){
         product_name_changed = false;
-        $.get('/<%= @product_class.name.tableize%>/ajax_details',
-             { 'product_name' : $("#<%= "#{@note_class.name.underscore}_product_name" %>").val(),
-               'producer_name' : $("#<%= "#{@note_class.name.underscore}_producer_name" %>").val() },
+        $.get('<%= polymorphic_path([current_taster, @product_class]) %>/ajax_details',
+             { 'product_name' : $("#product_name").val(),
+               'producer_name' : $("#producer_name").val() },
              function(product) {
                update_note_form_product(product);
              });

@@ -4,28 +4,19 @@ Next Up
 
 ** Beverages
 
-- sub notes / products on producer page
-
-- sub notes on product page
-
-- sub reference products on reference producer page
-
-- auto tags from lookups
-
-- auto admin tags (ex: unreviewed)
-
-- ajax product details into note form
-
-- make hide / show feature on product / note form more smooth
-
 - paging
 
 - enforce visibility
 
-- "flag as inappropriate" feature
-  - add admin tag and send email
+- add limit to autocomplete results
 
-- add vintage to wine note
+- in producer.show, switch to @products, and put results through paging function
+  - and also product -> notes
+  - also reference producer -> products
+  
+- enforce visibility of producer on product / note page
+  - and product on note page
+  
 
 ** Reference Data
 
@@ -52,6 +43,13 @@ Next Up
 
 ** Global UI
 
+- make homepage work
+
+- remember hide / show state of sections of note form
+
+- remember last beverage type (maintain tabs on homepage?)
+  - and always show the home tab
+
 - support browsing via iphone
 
 - privacy page (do we need this)
@@ -62,6 +60,12 @@ Next Up
 - add indexes to columns using migrations
   
 - adsense ads
+
+
+** Little UI
+
+- give the producer field focus for a new note / product
+
 
 ** Performance
 
@@ -74,6 +78,8 @@ Next Up
 - consolidate database migrations prior to Heroku deploy
 
 - deploy to Heroku
+
+- get registration / login working with Heroku SSL
 
 - scripts to populate reference lookups
   - grape varietals
@@ -93,6 +99,11 @@ Testing
 
 _____________________________________________________________
 V2
+
+- copy product / producer to reference product / producer
+
+- "flag as inappropriate" feature
+  - add admin tag and send email
 
 - assign note / product to different product / producer
   - put x next to product / producer name
@@ -138,8 +149,12 @@ iPhone (from home): 192.168.0.199:8080
 _____________________________________________________________
 Bugs
 
+- action buttons float to top on note show page
+
 - set_searchable_metadata doesn't work in some scenarios
   - on create, with has_one attribs?
+
+- autocomplete gets broken when textbox drops down for multi-lookup
 
 - price calculation is broken for spirits
 

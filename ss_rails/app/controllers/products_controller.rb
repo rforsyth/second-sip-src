@@ -11,8 +11,9 @@ class ProductsController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @products = @product_class.search(params[:query]).where(
+    results = @product_class.search(params[:query]).where(
                      :owner_id => displayed_taster.id)
+    @products = page_beverage_results(results)
 		render :template => 'products/search'
 	end
   
@@ -33,8 +34,17 @@ class ProductsController < ApplicationController
     render :json => autocomplete
   end
   
+  def ajax_details
+    product = find_product_by_canonical_names(
+                current_taster, params[:producer_name].try(:canonicalize),
+                params[:product_name].try(:canonicalize))
+    product ||= @product_class.new
+    render :json => product.simple_copy
+  end
+  
   def index
-    @products = polymorphic_find_by_owner_and_tags(@product_class, displayed_taster, params[:in], params[:ain])
+    @products = find_beverage_by_owner_and_tags(@product_class,
+                  displayed_taster, current_taster, params[:in], params[:ain])
     build_tag_filter(@products)
     build_admin_tag_filter(@products)
 		render :template => 'products/index'

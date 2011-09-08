@@ -14,6 +14,7 @@ class Taster < ActiveRecord::Base
   end
   
   before_save :set_canonical_fields
+  before_create :add_unreviewed_tag
   
   validates_format_of :email, :with => Authlogic::Regex.email
 
@@ -55,6 +56,13 @@ class Taster < ActiveRecord::Base
   
   def to_param
     self.username
+  end
+  
+  def friends
+    friendships = Friendship.find_all_by_taster(self)
+    friendships.collect do |friendship|
+      (friendship.invitee = self) ? friendship.inviter : friendship.invitee
+    end 
   end
   
   ############################################

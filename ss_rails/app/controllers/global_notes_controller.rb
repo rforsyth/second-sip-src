@@ -3,7 +3,7 @@ class GlobalNotesController < ApplicationController
 	before_filter :initialize_global_notes_tabs
   
   def browse
-    @notes = polymorphic_find_by_tags(@note_class, params[:in], params[:ain])
+    @notes = find_global_beverage_by_tags(@note_class, current_taster, params[:in], params[:ain])
     build_tag_filter(@notes)
     build_admin_tag_filter(@notes)
   end

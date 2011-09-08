@@ -12,7 +12,10 @@
 
 <%= render :partial => 'common/details/producer_description', :object => @producer.description %>
 
-<hr/>
+
+<%= render :partial => 'common/global/subnav', 
+           :locals => { :tabs => [UI::NavigationTab.new(:reference_producer_products, 'selected', @producer)] }  %>
+
 
 <% if @producer.reference_products.present? %>
   <div class="main_list">

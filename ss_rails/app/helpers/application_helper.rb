@@ -55,4 +55,10 @@ module ApplicationHelper
     end
   end
   
+	def page_path(page_num)
+		page_params = params.dup
+		page_params[:page] = page_num
+		return url_for(page_params)
+	end
+  
 end

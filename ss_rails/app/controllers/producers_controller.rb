@@ -11,8 +11,9 @@ class ProducersController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @producers = @producer_class.search(params[:query]).where(
+    results = @producer_class.search(params[:query]).where(
                      :owner_id => displayed_taster.id)
+    @producers = page_beverage_results(results)
 		render :template => 'producers/search'
   end
   
@@ -27,14 +28,33 @@ class ProducersController < ApplicationController
     render :json => autocomplete
   end
   
+  def ajax_details
+    producer = find_producer_by_canonical_name_or_id(
+                 displayed_taster, params[:name].try(:canonicalize))
+    producer ||= @producer_class.new
+    render :json => producer.simple_copy
+  end
+  
   def index
-    @producers = polymorphic_find_by_owner_and_tags(@producer_class, displayed_taster, params[:in], params[:ain])
+    @producers = find_beverage_by_owner_and_tags(@producer_class,
+                   displayed_taster, current_taster, params[:in], params[:ain])
     build_tag_filter(@producers)
     build_admin_tag_filter(@producers)
 		render :template => 'producers/index'
   end
 
   def show
+    if params[:tab] == 'notes'
+      results = @note_class.find_by_sql(
+        ["SELECT DISTINCT notes.* FROM notes 
+          INNER JOIN products ON notes.product_id = products.id
+          INNER JOIN producers ON products.producer_id = producers.id
+          WHERE producers.id = ?
+            AND #{known_owner_visibility_clause(@note_class, displayed_taster, current_taster)}
+          LIMIT ?",
+          @producer.id, MAX_BEVERAGE_RESULTS])
+      @notes = page_beverage_results(results)
+    end
 		render :template => 'producers/show'
   end
 

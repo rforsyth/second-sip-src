@@ -11,13 +11,15 @@ class NotesController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @notes = @note_class.search(params[:query]).where(
+    results = @note_class.search(params[:query]).where(
                      :owner_id => displayed_taster.id)
+    @notes = page_beverage_results(results)
 		render :template => 'notes/search'
   end
   
   def index
-    @notes = polymorphic_find_by_owner_and_tags(@note_class, displayed_taster, params[:in], params[:ain])
+    @notes = find_beverage_by_owner_and_tags(@note_class,
+               displayed_taster, current_taster, params[:in], params[:ain])
     build_tag_filter(@notes)
     build_admin_tag_filter(@notes)
 		render :template => 'notes/index'

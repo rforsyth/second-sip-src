@@ -51,6 +51,11 @@
     link_to(@product_class.name.titleize.pluralize,
             "#{polymorphic_path([producer.owner, producer])}?tab=products",
             :class => subnav_tab.css_class)
+  when :reference_producer_products then
+    producer = subnav_tab.container_object
+    link_to(@product_class.name.titleize.pluralize,
+            "#{polymorphic_path(producer)}?tab=products",
+            :class => subnav_tab.css_class)
   when :reference_lookups then
     link_to('Reference Lookups', reference_lookups_path, :class => subnav_tab.css_class)
   when :reference_breweries then

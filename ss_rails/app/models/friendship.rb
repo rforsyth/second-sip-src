@@ -4,6 +4,12 @@ class Friendship < ActiveRecord::Base
 	belongs_to :inviter, :class_name => "Taster"
 	belongs_to :invitee, :class_name => "Taster"
 	
+  def self.find_all_by_taster(taster)
+    friendships = Friendship.where("status = ? AND (inviter_id = ? OR invitee_id = ?)",
+                                   Enums::FriendshipStatus::ACCEPTED,
+                                   taster.id, taster.id)
+  end
+	
 	def status_message(current_taster)
 		if self.status == Enums::FriendshipStatus::REQUESTED
 			return "You have sent a friend invitation to #{self.invitee.username}." if current_taster == self.inviter

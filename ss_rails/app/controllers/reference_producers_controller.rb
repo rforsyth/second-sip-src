@@ -8,7 +8,8 @@ class ReferenceProducersController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
   
   def search
-    @producers = @reference_producer_class.search(params[:query])
+    results = @reference_producer_class.search(params[:query])
+    @producers = page_beverage_results(results)
 		render :template => 'reference_producers/search'
   end
   
@@ -25,7 +26,7 @@ class ReferenceProducersController < ApplicationController
   end
   
   def index
-    @producers = polymorphic_find_by_admin_tags(@reference_producer_class, params[:ain])
+    @producers = find_reference_beverage_by_admin_tags(@reference_producer_class, current_taster, params[:ain])
     build_admin_tag_filter(@producers)
 		render :template => 'reference_producers/index'
   end

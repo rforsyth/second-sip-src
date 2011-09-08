@@ -46,14 +46,14 @@
     }
   
     producer_name_changed = false;
-    $("#<%= "#{@product_class.name.underscore}_producer_name" %>").change(function(){
+    $("#producer_name").change(function(){
       producer_name_changed = true;
     });
-    $("#<%= "#{@product_class.name.underscore}_producer_name" %>").blur(function(){
+    $("#producer_name").blur(function(){
       if(producer_name_changed){
         producer_name_changed = false;
-        $.get('/<%= @producer_class.name.tableize%>/ajax_details',
-             { 'name' : $("#<%= "#{@product_class.name.underscore}_producer_name" %>").val() },
+        $.get('<%= polymorphic_path([current_taster, @product_class]) %>/ajax_details',
+             { 'name' : $("#producer_name").val() },
              function(producer) {
                update_product_form_producer(producer);
              });

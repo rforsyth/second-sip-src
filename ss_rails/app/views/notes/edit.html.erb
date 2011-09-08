@@ -1,3 +1,6 @@
+<%- content_for(:javascript_includes) do -%>
+<%= javascript_include_tag 'jquery.cookie' -%>
+<%- end -%>
 
 <%= render :partial => 'common/global/content_header',
            :locals => { :title => "Edit #{@note_class.name.titleize}" } %>

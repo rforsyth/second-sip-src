@@ -1,7 +1,12 @@
 
 module Data::AdminTaggable
   
+  def add_unreviewed_tag
+    self.add_admin_tag('unreviewed')
+  end
+  
   def add_admin_tag(tag_name)
+    return if tag_name.strip.empty?
     tagified_name = tag_name.tagify
     self.admin_tagged.each { |tagged| return self.admin_tags if tagged.admin_tag.name == tagified_name }
     tag = AdminTag.find_or_create_by_name_and_type(tagified_name, self.class.name)

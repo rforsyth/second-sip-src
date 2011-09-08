@@ -65,6 +65,7 @@ SsRails::Application.routes.draw do
               :beers, :wines, :spirits do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                get 'ajax_details', :on => :collection
                 member do
                   post 'add_tag'
                   post 'remove_tag'

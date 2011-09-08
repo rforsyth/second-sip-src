@@ -2,6 +2,7 @@
 module Data::Taggable
   
   def add_tag(tag_name, owner = nil)
+    return if tag_name.strip.empty?
     tagified_name = tag_name.tagify
     self.tagged.each { |tagged| return self.tags if tagged.tag.name == tagified_name }
     tag = Tag.find_or_create_by_name_and_type(tagified_name, self.type)

@@ -11,8 +11,10 @@
 <%= render :partial => 'common/details/producer_description', :object => @producer.description %>
 
 <%= render :partial => 'common/global/subnav', 
-           :locals => { :tabs => [UI::NavigationTab.new(:producer_products, !notes_tab_selected ? 'selected' : nil, @producer),
-                                  UI::NavigationTab.new(:producer_notes, notes_tab_selected ? 'selected' : nil, @producer)] }  %>
+           :locals => { :tabs => [UI::NavigationTab.new(:producer_products,
+                                    !notes_tab_selected ? 'selected' : nil, @producer),
+                                  UI::NavigationTab.new(:producer_notes,
+                                    notes_tab_selected ? 'selected' : nil, @producer)] }  %>
 
 <% if notes_tab_selected %>
   <% if @notes.present? %>
@@ -25,9 +27,9 @@
                :object => "No notes to display." %>
   <% end %>
 <% else %>
-  <% if @products.present? %>
+  <% if @producer.products.present? %>
     <div class="main_list">
-      <%= render :partial => 'products/product', :collection => @products %>
+      <%= render :partial => 'products/product', :collection => @producer.products %>
     </div>
     <%= render :partial => 'common/lists/paging_bar' %>
   <% else %>

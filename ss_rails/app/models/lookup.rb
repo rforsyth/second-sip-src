@@ -10,6 +10,7 @@ class Lookup < ActiveRecord::Base
 	has_many :lookeds
 	
 	before_validation :canonicalize_names
+  before_create :add_unreviewed_tag
 	
   def canonicalize_names
 		self.canonical_name = self.name.canonicalize
