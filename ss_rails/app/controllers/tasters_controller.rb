@@ -10,7 +10,7 @@ class TastersController < ApplicationController
 	before_filter :initialize_tasters_admin_tabs, :except => [:show]
 	
   def search
-    @tasters = Taster.search(params[:query])
+    @tasters = Taster.search(params[:query]).limit(MAX_BEVERAGE_RESULTS)
   end
   
   def index

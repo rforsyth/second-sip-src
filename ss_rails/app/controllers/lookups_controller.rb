@@ -17,9 +17,10 @@ class LookupsController < ApplicationController
         WHERE lookups.canonical_name LIKE ?
           AND lookups.entity_type = ?
           AND lookups.lookup_type = ?
-          AND looked.owner_id = ?",
+          AND looked.owner_id = ?
+        LIMIT ?",
         "#{canonical_query}%", params[:entity_type],
-        params[:lookup_type].to_i, current_taster.id])
+        params[:lookup_type].to_i, current_taster.id], MAX_AUTOCOMPLETE_RESULTS)
     lookups.each do |lookup|
 	    autocomplete.add_suggestion(lookup.name, lookup.name, lookup.id)
     end
@@ -28,7 +29,8 @@ class LookupsController < ApplicationController
   
   def search
     canonical_query = params[:query].try(:canonicalize)
-    @lookups = Lookup.where(["canonical_name LIKE ?", "%#{canonical_query}%"])
+    @lookups = Lookup.where(["canonical_name LIKE ?", "%#{canonical_query}%"]
+                           ).limit(MAX_BEVERAGE_RESULTS)
   end
 	
   def index

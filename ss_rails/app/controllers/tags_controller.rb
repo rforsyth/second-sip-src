@@ -9,8 +9,9 @@ class TagsController < ApplicationController
         INNER JOIN tagged ON tags.id = tagged.tag_id
         WHERE tags.name LIKE ?
           AND tags.entity_type = ?
-         AND tagged.owner_id = ?",
-        "#{tagified_query}%", params[:entity_type], current_taster.id])
+          AND tagged.owner_id = ?
+        LIMIT ?",
+        "#{tagified_query}%", params[:entity_type], current_taster.id, MAX_AUTOCOMPLETE_RESULTS])
     tags.each do |tag|
 	    autocomplete.add_suggestion(tag.name, tag.name, tag.id)
     end
@@ -18,7 +19,8 @@ class TagsController < ApplicationController
   end
 	
   def index
-    @tags = Tag.all
+    results = Tag.limit(MAX_BEVERAGE_RESULTS)
+    @tags = page_beverage_results(results)
   end
 
   def show

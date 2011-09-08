@@ -11,9 +11,8 @@ class NotesController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    results = @note_class.search(params[:query]).where(
-                     :owner_id => displayed_taster.id)
-    @notes = page_beverage_results(results)
+    @notes = search_beverage_by_owner(@note_class, params[:query],
+                                      displayed_taster, current_taster)
 		render :template => 'notes/search'
   end
   
@@ -26,9 +25,10 @@ class NotesController < ApplicationController
   end
 
   def show
-    # todo: enforce visibility here
     @product = @note.product
+    @show_product = test_visibility(@product, current_taster)
     @producer = @product.producer
+    @show_producer = test_visibility(@producer, current_taster)
 		render :template => 'notes/show'
   end
 

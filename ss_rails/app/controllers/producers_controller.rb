@@ -11,17 +11,17 @@ class ProducersController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    results = @producer_class.search(params[:query]).where(
-                     :owner_id => displayed_taster.id)
-    @producers = page_beverage_results(results)
+    @producers = search_beverage_by_owner(@producer_class, params[:query],
+                                          displayed_taster, current_taster)
 		render :template => 'producers/search'
   end
   
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
     canonical_query = params[:query].try(:canonicalize)
-    producers = @producer_class.find_all_by_owner_id(current_taster.id,
-                  :conditions => ["producers.canonical_name LIKE ?", "%#{canonical_query}%"] )
+    producers = @producer_class.where(:owner_id => current_taster.id,
+                     ).where("producers.canonical_name LIKE ?", "%#{canonical_query}%"
+                     ).limit(MAX_AUTOCOMPLETE_RESULTS)
     producers.each do |producer|
 	    autocomplete.add_suggestion(producer.name, producer.name, producer.id)
     end
@@ -51,9 +51,20 @@ class ProducersController < ApplicationController
           INNER JOIN producers ON products.producer_id = producers.id
           WHERE producers.id = ?
             AND #{known_owner_visibility_clause(@note_class, displayed_taster, current_taster)}
+          ORDER BY created_at DESC
           LIMIT ?",
           @producer.id, MAX_BEVERAGE_RESULTS])
       @notes = page_beverage_results(results)
+    else
+      results = @product_class.find_by_sql(
+        ["SELECT DISTINCT products.* FROM products
+          INNER JOIN producers ON products.producer_id = producers.id
+          WHERE producers.id = ?
+            AND #{known_owner_visibility_clause(@product_class, displayed_taster, current_taster)}
+          ORDER BY created_at DESC
+          LIMIT ?",
+          @producer.id, MAX_BEVERAGE_RESULTS])
+      @products = page_beverage_results(results)
     end
 		render :template => 'producers/show'
   end

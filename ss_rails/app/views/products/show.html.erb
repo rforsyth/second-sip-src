@@ -7,7 +7,13 @@
   <% if @product.producer.present? %>
     <div class="details_row">
       <span class="label"><%= @producer_class.name.titleize %>:</span>
-      <span class="content"><%= link_to @product.producer.name, polymorphic_path([@product.producer.owner, @product.producer]) %></span>
+      <span class="content">
+        <% if @show_producer %>
+          <%= link_to @producer.name, polymorphic_path([@producer.owner, @producer]) %>
+        <% else %>
+          <%= @producer.name %>
+        <% end %>
+      </span>
     </div>
   <% end %>
   <% if (@product.kind_of?(Beer) || @product.kind_of?(Spirit)) && @product.style.present? %>
@@ -49,9 +55,9 @@
 <%= render :partial => 'common/global/subnav', 
            :locals => { :tabs => [UI::NavigationTab.new(:product_notes, 'selected', @product)] }  %>
 
-<% if @product.notes.present? %>
+<% if @notes.present? %>
   <div class="main_list">
-    <%= render :partial => 'notes/note', :collection => @product.notes %>
+    <%= render :partial => 'notes/note', :collection => @notes %>
   </div>
   <%= render :partial => 'common/lists/paging_bar' %>
 <% else %>
@@ -61,8 +67,7 @@
 
 <% if allow_edit?(@product) %>
   <%= render :partial => 'common/edit/edit_actions',
-             :locals => { :edit_path => edit_polymorphic_path([@product.owner, @product]),
-                          :delete_path => polymorphic_path([@product.owner, @product]) } %>
+             :locals => { :edit_path => edit_polymorphic_path([@product.owner, @product]) } %>
 <% end %>
 
 <% content_for :right do %>

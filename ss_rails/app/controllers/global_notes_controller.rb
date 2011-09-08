@@ -9,7 +9,7 @@ class GlobalNotesController < ApplicationController
   end
   
   def search
-    @notes = @note_class.search(params[:query])
+    @producers = search_global_beverage(@note_class, params[:query], current_taster)
   end
   
 end

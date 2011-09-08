@@ -18,7 +18,8 @@ class ReferenceProducersController < ApplicationController
     
     canonical_query = params[:query].try(:canonicalize)
     reference_producers = @reference_producer_class.where(
-                  ["reference_producers.canonical_name LIKE ?", "%#{canonical_query}%"] )
+                  ["reference_producers.canonical_name LIKE ?", "%#{canonical_query}%"]
+                  ).limit(MAX_AUTOCOMPLETE_RESULTS)
     reference_producers.each do |reference_producer|
 	    autocomplete.add_suggestion(reference_producer.name, reference_producer.name, reference_producer.id)
     end
@@ -32,6 +33,14 @@ class ReferenceProducersController < ApplicationController
   end
 
   def show
+    results = @reference_product_class.find_by_sql(
+      ["SELECT DISTINCT reference_products.* FROM reference_products
+        INNER JOIN reference_producers ON reference_products.reference_producer_id = reference_producers.id
+        WHERE reference_producers.id = ?
+        ORDER BY created_at DESC
+        LIMIT ?",
+        @producer.id, MAX_BEVERAGE_RESULTS])
+    @products = page_beverage_results(results)
 		render :template => 'reference_producers/show'
   end
 

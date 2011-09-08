@@ -1,21 +1,6 @@
 
 _____________________________________________________________
 Next Up
-
-** Beverages
-
-- paging
-
-- enforce visibility
-
-- add limit to autocomplete results
-
-- in producer.show, switch to @products, and put results through paging function
-  - and also product -> notes
-  - also reference producer -> products
-  
-- enforce visibility of producer on product / note page
-  - and product on note page
   
 
 ** Reference Data
@@ -52,9 +37,6 @@ Next Up
 
 - support browsing via iphone
 
-- privacy page (do we need this)
-  - if yes, can use sahalli one
-
 - stop using 3rd party sprite for search button
 
 - add indexes to columns using migrations
@@ -68,6 +50,12 @@ Next Up
 
 
 ** Performance
+
+- use Rails.cache for tasters
+
+- include producers in query for products
+
+- include producers + products in query for notes
 
 - build postgres SQL indexes
 

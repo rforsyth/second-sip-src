@@ -11,9 +11,8 @@ class ProductsController < ApplicationController
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   
   def search
-    results = @product_class.search(params[:query]).where(
-                     :owner_id => displayed_taster.id)
-    @products = page_beverage_results(results)
+    @products = search_beverage_by_owner(@product_class, params[:query],
+                                         displayed_taster, current_taster)
 		render :template => 'products/search'
 	end
   
@@ -26,8 +25,8 @@ class ProductsController < ApplicationController
                      :owner_id => current_taster.id,
                      :producers => { :owner_id => current_taster.id,
                                      :canonical_name => canonical_producer_name }
-                     ).where("products.canonical_name LIKE ?", "%#{canonical_query}%")
-
+                     ).where("products.canonical_name LIKE ?", "%#{canonical_query}%"
+                     ).limit(MAX_AUTOCOMPLETE_RESULTS)
     products.each do |product|
 	    autocomplete.add_suggestion(product.name, product.name, product.id)
     end
@@ -51,8 +50,17 @@ class ProductsController < ApplicationController
   end
 
   def show
-    # todo: enforce visibility here
     @producer = @product.producer
+    @show_producer = test_visibility(@producer, current_taster)
+    results = @note_class.find_by_sql(
+      ["SELECT DISTINCT notes.* FROM notes 
+        INNER JOIN products ON notes.product_id = products.id
+        WHERE products.id = ?
+          AND #{known_owner_visibility_clause(@note_class, displayed_taster, current_taster)}
+        ORDER BY created_at DESC
+        LIMIT ?",
+        @product.id, MAX_BEVERAGE_RESULTS])
+    @notes = page_beverage_results(results)
 		render :template => 'products/show'
   end
 

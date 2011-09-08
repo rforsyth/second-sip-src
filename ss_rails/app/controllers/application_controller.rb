@@ -5,9 +5,10 @@ class ApplicationController < ActionController::Base
 	include UI::TabBuilder
   protect_from_forgery
   
-  BEVERAGE_PAGE_SIZE = 3
+  BEVERAGE_PAGE_SIZE = 20
   MAX_PAGE_NUM = 10
   MAX_BEVERAGE_RESULTS = 200
+  MAX_AUTOCOMPLETE_RESULTS = 8
   
   helper_method :current_taster
   helper_method :displayed_taster
@@ -156,6 +157,35 @@ class ApplicationController < ActionController::Base
     @available_admin_tags = @available_admin_tags - (@included_admin_tags + @excluded_admin_tags)
   end
   
+  
+  def search_beverage_by_owner(model, query, owner, viewer)
+    conditions = {:owner_id => owner.id}
+    if owner == viewer
+      # no more conditions required
+    elsif viewer.present? && viewer.friends.include?(owner)
+      conditions[:visibility] = Enums::Visibility::FRIENDS
+    else
+      conditions[:visibility] = Enums::Visibility::PUBLIC
+    end
+    results = model.search(query).where(conditions).limit(MAX_BEVERAGE_RESULTS)
+    page_beverage_results(results)
+  end
+  
+  def search_global_beverage(model, query, viewer)
+    friend_ids = collect_friend_ids(viewer)
+    if friend_ids.present?
+      results = model.search(query).where(
+                  "visibility = ? OR (visibility = ? AND owner_id IN (?))",
+                  Enums::Visibility::PUBLIC, Enums::Visibility::FRIENDS, friend_ids
+                  ).limit(MAX_BEVERAGE_RESULTS)
+    else
+      results = model.search(query).where(
+                  :visibility => Enums::Visibility::PUBLIC
+                  ).limit(MAX_BEVERAGE_RESULTS)
+    end
+    page_beverage_results(results)
+  end
+  
   def find_beverage_by_owner_and_tags(model, owner, viewer, user_tags, admin_tags)
     if user_tags.present?
       results = model.find_by_sql(
@@ -166,6 +196,7 @@ class ApplicationController < ActionController::Base
             AND #{model.table_name}.type = ?
             AND tags.name IN (?)
             AND #{known_owner_visibility_clause(model, owner, viewer)}
+          ORDER BY created_at DESC
           LIMIT #{MAX_BEVERAGE_RESULTS}",
           owner.id, model.name, user_tags])
     end
@@ -182,6 +213,7 @@ class ApplicationController < ActionController::Base
             AND #{model.table_name}.type = ?
             AND admin_tags.name IN (?)
             AND #{known_owner_visibility_clause(model, owner, viewer)}
+          ORDER BY created_at DESC
           LIMIT ?",
           owner.id, model.name, admin_tags, MAX_BEVERAGE_RESULTS])
     else
@@ -190,6 +222,7 @@ class ApplicationController < ActionController::Base
           WHERE #{model.table_name}.owner_id = ?
             AND #{model.table_name}.type = ?
             AND #{known_owner_visibility_clause(model, owner, viewer)}
+          ORDER BY created_at DESC
           LIMIT ?",
           owner.id, model.name, MAX_BEVERAGE_RESULTS])
     end
@@ -205,6 +238,7 @@ class ApplicationController < ActionController::Base
           WHERE #{model.table_name}.type = ?
             AND tags.name IN (?)
             AND #{global_visibility_clause(model, viewer)}
+          ORDER BY created_at DESC
           LIMIT ?",
           model.name, user_tags, MAX_BEVERAGE_RESULTS])
       return page_beverage_results(results)
@@ -221,6 +255,7 @@ class ApplicationController < ActionController::Base
           WHERE #{model.table_name}.type = ?
             AND admin_tags.name IN (?)
             AND #{global_visibility_clause(model, viewer)}
+          ORDER BY created_at DESC
           LIMIT ?",
           model.name, admin_tags, MAX_BEVERAGE_RESULTS])
     else
@@ -228,6 +263,7 @@ class ApplicationController < ActionController::Base
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name}
           WHERE #{model.table_name}.type = ?
             AND #{global_visibility_clause(model, viewer)}
+          ORDER BY created_at DESC
           LIMIT ?",
           model.name, MAX_BEVERAGE_RESULTS])
     end
@@ -242,6 +278,7 @@ class ApplicationController < ActionController::Base
           INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
           WHERE #{model.table_name}.type = ?
             AND admin_tags.name IN (?)
+          ORDER BY created_at DESC
           LIMIT ?",
           model.name, admin_tags, MAX_BEVERAGE_RESULTS])
     else
@@ -251,12 +288,13 @@ class ApplicationController < ActionController::Base
   end
   
   def find_by_admin_tags(model, admin_tags)
-    if admin_tags.present?
+    if admin_tags.present?      
       results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
           INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
           INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
           WHERE admin_tags.name IN (?)
+          ORDER BY created_at DESC
           LIMIT ?",
           admin_tags, MAX_BEVERAGE_RESULTS])
     else
@@ -282,15 +320,15 @@ class ApplicationController < ActionController::Base
   end
   
   def known_owner_visibility_clause(model, owner, viewer)
-    return 'true' if owner == viewer
-    if viewer.friends.include?(owner)
+    return 'true' if(owner.present? && owner == viewer)
+    if viewer.present? && viewer.friends.include?(owner)
       return "#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}"
     end
     "#{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
   end
   
   def global_visibility_clause(model, viewer)
-    friend_ids = viewer.friends.collect{|friend| friend.id}
+    friend_ids = collect_friend_ids(viewer)
     clause = "(#{model.table_name}.owner_id = #{viewer.id}
     OR #{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
     if friend_ids.present?
@@ -299,6 +337,19 @@ class ApplicationController < ActionController::Base
     end
     return clause + ")"
   end
+  
+  def collect_friend_ids(taster)
+    taster.friends.collect{|friend| friend.id} if taster.present?
+  end
+  
+  # returns nil if the beverage is not visible to the viewer
+  def test_visibility(beverage, viewer)
+    return true if(viewer == beverage.owner ||
+                   beverage.visibility == Enums::Visibility::PUBLIC)
+    return true if(beverage.visibility == Enums::Visibility::FRIENDS &&
+                   viewer.friends.include?(beverage.owner))
+    false
+  end  
     
   
 end

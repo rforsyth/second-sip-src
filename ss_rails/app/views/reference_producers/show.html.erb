@@ -16,11 +16,10 @@
 <%= render :partial => 'common/global/subnav', 
            :locals => { :tabs => [UI::NavigationTab.new(:reference_producer_products, 'selected', @producer)] }  %>
 
-
-<% if @producer.reference_products.present? %>
+<% if @products.present? %>
   <div class="main_list">
     <%= render :partial => 'reference_products/reference_product',
-               :collection => @producer.reference_products %>
+               :collection => @products %>
   </div>
   <%= render :partial => 'common/lists/paging_bar' %>
 <% else %>
@@ -29,8 +28,7 @@
 <% end %>
 
 <%= render :partial => 'common/edit/edit_actions',
-           :locals => { :edit_path => edit_polymorphic_path(@producer),
-                        :delete_path => polymorphic_path(@producer) } %>
+           :locals => { :edit_path => edit_polymorphic_path(@producer) } %>
 
 <% content_for :right do %>
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @producer.admin_tags,

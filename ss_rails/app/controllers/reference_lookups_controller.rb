@@ -15,9 +15,10 @@ class ReferenceLookupsController < ApplicationController
       ["SELECT DISTINCT reference_lookups.* FROM reference_lookups 
         WHERE reference_lookups.canonical_name LIKE ?
           AND reference_lookups.entity_type = ?
-          AND reference_lookups.lookup_type = ?",
+          AND reference_lookups.lookup_type = ?
+        LIMIT ?",
         "#{canonical_query}%", params[:entity_type],
-        params[:lookup_type].to_i])
+        params[:lookup_type].to_i], MAX_AUTOCOMPLETE_RESULTS)
     lookups.each do |lookup|
 	    autocomplete.add_suggestion(lookup.name, lookup.name, lookup.id)
     end

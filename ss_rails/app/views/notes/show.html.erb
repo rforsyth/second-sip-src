@@ -6,13 +6,25 @@
   <% if @producer.present? %>
     <div class="details_row">
       <span class="label"><%= @producer_class.name.titleize %>:</span>
-      <span class="content"><%= link_to @producer.name, polymorphic_path([@producer.owner, @producer]) %></span>
+      <span class="content">
+        <% if @show_producer %>
+          <%= link_to @producer.name, polymorphic_path([@producer.owner, @producer]) %>
+        <% else %>
+          <%= @producer.name %>
+        <% end %>
+      </span>
     </div>
   <% end %>
   <% if @product.present? %>
     <div class="details_row">
       <span class="label"><%= @product_class.name.titleize %>:</span>
-      <span class="content"><%= link_to @product.name, polymorphic_path([@product.owner, @product]) %></span>
+      <span class="content">
+        <% if @show_product %>
+          <%= link_to @product.name, polymorphic_path([@product.owner, @product]) %>
+        <% else %>
+          <%= @product.name %>
+        <% end %>
+      </span>
     </div>
   <% end %>
   <% if @note.product.kind_of?(Wine) && @note.vintage.present? %>
