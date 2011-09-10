@@ -7,19 +7,9 @@ module ApplicationHelper
 	def allow_edit?(object)
 		return object.owner == current_taster
 	end
-	
-  def build_producer_select
-    producers = @producer_class.where(:owner_id => displayed_taster.id)
-    producers.collect { |producer| [producer.name, producer.id] }
-  end
-  
-  def build_product_select
-    products = @product_class.where(:owner_id => displayed_taster.id)
-    products.collect { |product| [product.name, product.id] }
-  end
 
 	def format_note_title(note)
-		"#{note.product.producer.name} #{note.product.name} (#{format_short_date(note.tasted_at)})"
+		"#{note.producer_name} #{note.product_name} (#{format_short_date(note.tasted_at)})"
 	end
 
 	def format_short_date(date)
@@ -42,8 +32,6 @@ module ApplicationHelper
 	
 	def show_list_item_username
 		@displayed_profile.nil?
-		#return false if @displayed_profile.user != AppEngine::Users.current_user
-		#true
 	end
 	
 	def calculate_body_class

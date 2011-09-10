@@ -1,8 +1,11 @@
 require 'ui/tab_builder'
 require 'ajax/autocomplete'
+require 'data/cache_helper'
 
 class ApplicationController < ActionController::Base
 	include UI::TabBuilder
+  include Data::CacheHelper
+  
   protect_from_forgery
   
   BEVERAGE_PAGE_SIZE = 20
@@ -10,8 +13,8 @@ class ApplicationController < ActionController::Base
   MAX_BEVERAGE_RESULTS = 200
   MAX_AUTOCOMPLETE_RESULTS = 8
   
-  helper_method :current_taster
-  helper_method :displayed_taster
+  helper_method :current_taster, :displayed_taster
+  helper_method :fetch_taster
 
   protected
   
@@ -96,6 +99,8 @@ class ApplicationController < ActionController::Base
   def current_taster
     return @current_taster if defined?(@current_taster)
     @current_taster = current_taster_session && current_taster_session.record
+    store_taster(@current_taster) if @current_taster
+    return @current_taster
   end
   
   def require_taster 
@@ -119,6 +124,8 @@ class ApplicationController < ActionController::Base
   def displayed_taster
     return @displayed_taster if defined?(@displayed_taster)
     @displayed_taster = Taster.find_by_username(params[:taster_id])
+    store_taster(@displayed_taster) if @displayed_taster
+    return @displayed_taster
   end
   
   def initialize_beverage_classes_from_entity_type_param
@@ -135,11 +142,12 @@ class ApplicationController < ActionController::Base
 		@included_tags = params[:in] || []
 		@excluded_tags = params[:ex] || []
     @available_tags = []
-    return if tag_containers.nil?
-    tag_containers.each do |tag_container|
-      tag_container.tags.each do |tag|
-        @available_tags << tag.name if !@available_tags.include?(tag.name)
-      end
+    return if !tag_containers.present?
+    
+    tags = find_tags(tag_containers.collect{|container| container.id},
+                     tag_containers.first.class.table_name)    
+    tags.each do |tag|
+      @available_tags << tag.name if !@available_tags.include?(tag.name)
     end
     @available_tags = @available_tags - (@included_tags + @excluded_tags)
   end
@@ -148,11 +156,12 @@ class ApplicationController < ActionController::Base
 		@included_admin_tags = params[:ain] || []
 		@excluded_admin_tags = params[:aex] || []
     @available_admin_tags = []
-    return if tag_containers.nil?
-    tag_containers.each do |tag_container|
-      tag_container.admin_tags.each do |admin_tag|
-        @available_admin_tags << admin_tag.name if !@available_admin_tags.include?(admin_tag.name)
-      end
+    return if !tag_containers.present?
+    
+    admin_tags = find_admin_tags(tag_containers.collect{|container| container.id},
+                                 tag_containers.first.class.table_name)
+    admin_tags.each do |admin_tag|
+      @available_admin_tags << admin_tag.name if !@available_admin_tags.include?(admin_tag.name)
     end
     @available_admin_tags = @available_admin_tags - (@included_admin_tags + @excluded_admin_tags)
   end
@@ -303,6 +312,49 @@ class ApplicationController < ActionController::Base
     page_beverage_results(results)
   end
   
+  def find_tags(taggable_ids, taggable_type)
+    Tag.find_by_sql(["SELECT DISTINCT tags.* FROM tags
+                      INNER JOIN tagged ON tags.id = tagged.tag_id
+                      INNER JOIN #{taggable_type} ON tagged.taggable_id = #{taggable_type}.id
+                      WHERE #{taggable_type}.id IN (?)",
+                      taggable_ids])
+  end
+  
+  def find_admin_tags(taggable_ids, taggable_type)
+    Tag.find_by_sql(["SELECT DISTINCT admin_tags.* FROM admin_tags
+                      INNER JOIN admin_tagged ON admin_tags.id = admin_tagged.admin_tag_id
+                      INNER JOIN #{taggable_type} ON admin_tagged.admin_taggable_id = #{taggable_type}.id
+                      WHERE #{taggable_type}.id IN (?)",
+                      taggable_ids])
+  end
+  
+  def find_lookups(query, entity_type, lookup_type, owner, max_results)
+    canonical_query = query.try(:canonicalize)
+    Lookup.find_by_sql(
+      ["SELECT DISTINCT lookups.* FROM lookups 
+        INNER JOIN looked ON lookups.id = looked.lookup_id
+        WHERE lookups.canonical_name LIKE ?
+          AND lookups.entity_type = ?
+          AND lookups.lookup_type = ?
+          AND looked.owner_id = ?
+        LIMIT ?",
+        "#{canonical_query}%", entity_type,
+        lookup_type.to_i, owner.id, max_results])
+  end
+  
+  def find_reference_lookups(query, entity_type, lookup_type, max_results)
+    canonical_query = query.try(:canonicalize)
+    ReferenceLookup.find_by_sql(
+      ["SELECT DISTINCT reference_lookups.* FROM reference_lookups 
+        WHERE reference_lookups.canonical_name LIKE ?
+          AND reference_lookups.entity_type = ?
+          AND reference_lookups.lookup_type = ?
+        LIMIT ?",
+        "#{canonical_query}%", entity_type,
+        lookup_type.to_i, max_results])
+  end
+  
+  
   def calculate_page_num
     page_num = params[:page].try(:to_i) || 1
     page_num = 1 if page_num < 1
@@ -322,20 +374,22 @@ class ApplicationController < ActionController::Base
   def known_owner_visibility_clause(model, owner, viewer)
     return 'true' if(owner.present? && owner == viewer)
     if viewer.present? && viewer.friends.include?(owner)
-      return "#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}"
+      return " #{model.table_name}.visibility = #{Enums::Visibility::FRIENDS} "
     end
-    "#{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
+    " #{model.table_name}.visibility = #{Enums::Visibility::PUBLIC} "
   end
   
   def global_visibility_clause(model, viewer)
-    friend_ids = collect_friend_ids(viewer)
-    clause = "(#{model.table_name}.owner_id = #{viewer.id}
-    OR #{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
-    if friend_ids.present?
-      clause << "OR (#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}
-                 AND #{model.table_name}.owner_id IN (#{friend_ids.join(',')}))"
+    clause = " (#{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
+    if viewer.present?
+      friend_ids = collect_friend_ids(viewer)
+      clause << " OR #{model.table_name}.owner_id = #{viewer.id} "
+      if friend_ids.present?
+        clause << " OR (#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}
+                   AND #{model.table_name}.owner_id IN (#{friend_ids.join(',')})) "
+      end
     end
-    return clause + ")"
+    return clause + ") "
   end
   
   def collect_friend_ids(taster)

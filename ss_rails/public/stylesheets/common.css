@@ -908,10 +908,10 @@ div.reference_body {
 	float: left;
 }
 .action_form input.search_button {
-	background:#0076A8 url(/images/sprite_global_v3.png) no-repeat scroll -9px -1170px;
+	background:#0076A8 url(/images/search_button_sprite.png) no-repeat scroll -9px 0px;
 }
 .action_form input.search_button:hover {
-	background-position:-9px -1200px;
+	background-position:-9px -30px;
 }
 .action_form input.text_field{
 	display: block;

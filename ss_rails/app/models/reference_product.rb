@@ -27,10 +27,11 @@ class ReferenceProduct < ActiveRecord::Base
   
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize
+    self.reference_producer_canonical_name = self.reference_producer_name.canonicalize
   end
   
   def to_param
-    "#{self.reference_producer.canonical_name}-#{self.canonical_name}"
+    "#{self.reference_producer_canonical_name}-#{self.canonical_name}"
   end
   
   def set_searchable_metadata
@@ -43,6 +44,7 @@ class ReferenceProduct < ActiveRecord::Base
     if params[:reference_producer_name].present?
       self.reference_producer = 
         reference_producer_class.find_or_create_by_name(params[:reference_producer_name])
+      self.reference_producer_name = self.reference_producer.name
     end
     set_style(params[:style_name]) if params[:style_name].present?
     set_region(params[:region_name]) if params[:region_name].present?

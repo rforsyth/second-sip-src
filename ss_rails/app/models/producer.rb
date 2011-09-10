@@ -15,6 +15,7 @@ class Producer < ActiveRecord::Base
   after_initialize :set_default_values
   before_save :set_canonical_fields
   before_create :add_unreviewed_tag
+  after_save :update_products_and_notes_producer_name
   
   pg_search_scope :search,
     :against => [:name, :description]
@@ -45,6 +46,25 @@ class Producer < ActiveRecord::Base
 		copy.visibility = self.visibility
 		return copy
 	end
+	
+	def update_products_and_notes_producer_name
+	  producer_name = ActiveRecord::Base.sanitize(self.name)
+	  producer_canonical_name = ActiveRecord::Base.sanitize(self.name.canonicalize)
+	  
+	  ActiveRecord::Base.connection.execute("
+	    UPDATE products 
+	    SET producer_name = #{producer_name},
+	      producer_canonical_name = #{producer_canonical_name}
+	    WHERE products.producer_id = #{self.id}")
+	  
+	  ActiveRecord::Base.connection.execute("
+	    UPDATE notes 
+	    SET producer_name = #{producer_name},
+	      producer_canonical_name = #{producer_canonical_name}
+	    FROM products
+	    WHERE products.producer_id = #{self.id}
+	      AND notes.product_id = products.id")
+  end
   
 end
 

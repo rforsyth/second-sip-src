@@ -1,3 +1,6 @@
+<%
+  owner = fetch_taster(note.owner_id)
+%>
 <div class="list_item">
   <span class="item_name">
     <%= link_to format_note_title(note), [note.owner, note] %></span>
@@ -5,7 +8,7 @@
       :locals => { :visibility => note.visibility } if @show_sharing_icon %>
   <% if show_list_item_username %>
     <span class="username">
-      <%= link_to note.owner.username, polymorphic_path([note.owner, @note_class]) %></span>
+      <%= link_to owner.username, polymorphic_path([owner, @note_class]) %></span>
   <% end %>
   <p><%= truncate(note.description_overall, :length => 150) %></p>
 </div>

@@ -1,13 +1,6 @@
 
 _____________________________________________________________
 Next Up
-  
-
-** Reference Data
-
-- mix reference lookups into autocomplete
-
-- mix reference producer / product into autocomplete
 
 ** Error Handling
 
@@ -21,10 +14,11 @@ Next Up
 
 - prettify lookup / registration / password change page
 
+- invitations (enter email address of non-user)
+  - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
+
 - support blocking users
   - add approved field and set to false
-
-- put terms & conditions into registration form
 
 ** Global UI
 
@@ -50,12 +44,6 @@ Next Up
 
 
 ** Performance
-
-- use Rails.cache for tasters
-
-- include producers in query for products
-
-- include producers + products in query for notes
 
 - build postgres SQL indexes
 

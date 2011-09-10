@@ -10,19 +10,26 @@ class LookupsController < ApplicationController
 	
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
-    canonical_query = params[:query].try(:canonicalize)
-    lookups = Lookup.find_by_sql(
-      ["SELECT DISTINCT lookups.* FROM lookups 
-        INNER JOIN looked ON lookups.id = looked.lookup_id
-        WHERE lookups.canonical_name LIKE ?
-          AND lookups.entity_type = ?
-          AND lookups.lookup_type = ?
-          AND looked.owner_id = ?
-        LIMIT ?",
-        "#{canonical_query}%", params[:entity_type],
-        params[:lookup_type].to_i, current_taster.id], MAX_AUTOCOMPLETE_RESULTS)
+    
+    lookups = find_lookups(params[:query], params[:entity_type],
+                params[:lookup_type], current_taster, MAX_AUTOCOMPLETE_RESULTS)
+                
+    if lookups.count < MAX_AUTOCOMPLETE_RESULTS
+      reference_lookups = find_reference_lookups(params[:query],
+                "Reference#{params[:entity_type]}",
+                params[:lookup_type], MAX_AUTOCOMPLETE_RESULTS)
+    else
+      reference_lookups = []
+    end
+
     lookups.each do |lookup|
 	    autocomplete.add_suggestion(lookup.name, lookup.name, lookup.id)
+    end
+    reference_lookups.each do |lookup|
+      break if autocomplete.suggestions.count > MAX_AUTOCOMPLETE_RESULTS
+      if !autocomplete.includes_value?(lookup.name)
+	      autocomplete.add_suggestion(lookup.name, lookup.name, lookup.id)
+	    end
     end
     render :json => autocomplete
   end

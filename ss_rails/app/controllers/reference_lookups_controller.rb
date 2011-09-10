@@ -10,15 +10,10 @@ class ReferenceLookupsController < ApplicationController
 	
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
-    canonical_query = params[:query].try(:canonicalize)
-    lookups = ReferenceLookup.find_by_sql(
-      ["SELECT DISTINCT reference_lookups.* FROM reference_lookups 
-        WHERE reference_lookups.canonical_name LIKE ?
-          AND reference_lookups.entity_type = ?
-          AND reference_lookups.lookup_type = ?
-        LIMIT ?",
-        "#{canonical_query}%", params[:entity_type],
-        params[:lookup_type].to_i], MAX_AUTOCOMPLETE_RESULTS)
+    
+    lookups = find_reference_lookups(params[:query], params[:entity_type],
+                params[:lookup_type], MAX_AUTOCOMPLETE_RESULTS)
+
     lookups.each do |lookup|
 	    autocomplete.add_suggestion(lookup.name, lookup.name, lookup.id)
     end

@@ -9,6 +9,7 @@ gem 'pg'
 gem 'authlogic'
 gem 'cancan'
 gem "pg_search"
+gem "silent-postgres"
 
 # Use unicorn as the web server
 # gem 'unicorn'

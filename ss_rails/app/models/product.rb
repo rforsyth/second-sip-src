@@ -30,9 +30,10 @@ class Product < ActiveRecord::Base
   after_initialize :set_default_values
   before_save :set_canonical_fields, :set_searchable_metadata
   before_create :add_unreviewed_tag
+  after_save :update_notes_product_name
   
   pg_search_scope :search,
-    :against => [:name, :searchable_metadata, :description]
+    :against => [:name, :producer_name, :searchable_metadata, :description]
     #:ignoring => :accents
   
   def set_default_values
@@ -41,16 +42,17 @@ class Product < ActiveRecord::Base
   
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize
+    self.producer_canonical_name = self.producer_name.canonicalize
   end
   
   def set_searchable_metadata
-    metadata = "#{self.owner.username.remove_accents} #{self.producer.name.remove_accents}"
+    metadata = "#{self.owner.username.remove_accents}"
     self.looked.each {|looked| metadata << " #{looked.lookup.name.remove_accents}"}
     self.searchable_metadata = metadata
   end
   
   def to_param
-    "#{self.producer.canonical_name}-#{self.canonical_name}"
+    "#{self.producer_canonical_name}-#{self.canonical_name}"
   end
   
   def set_lookup_properties(params, owner, producer_class)
@@ -58,6 +60,7 @@ class Product < ActiveRecord::Base
     @original_lookup_tag_names = self.looked.collect {|looked| looked.lookup.name.tagify}
     if params[:producer_name].present?
       self.producer = producer_class.find_or_create_by_owner_and_name(owner, params[:producer_name])
+      self.producer_name = self.producer.name
     end
     set_style(params[:style_name], owner) if params[:style_name].present?
     set_region(params[:region_name], owner) if params[:region_name].present?
@@ -85,7 +88,7 @@ class Product < ActiveRecord::Base
         lookup = Lookup.find_or_create_by_name_and_type(lookup_name,
                         self.class.name, lookup_type)
         looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
-        self.add_tag(lookup_name.tagify)
+        self.add_tag(lookup_name.tagify, owner || self.owner)
         self.looked << looked
       end
     end
@@ -135,6 +138,16 @@ class Product < ActiveRecord::Base
 		copy.vineyard_names = self.vineyards.collect{|vineyard| vineyard.name} if self.vineyards.present?
 		return copy
 	end
+	
+	def update_notes_product_name
+	  product_name = ActiveRecord::Base.sanitize(self.name)
+	  product_canonical_name = ActiveRecord::Base.sanitize(self.name.canonicalize)
+	  
+	  ActiveRecord::Base.connection.execute("
+	    UPDATE notes 
+	    SET product_name = #{product_name}, product_canonical_name = #{product_canonical_name}
+	    WHERE notes.product_id = #{self.id}")
+  end
   
 
 end

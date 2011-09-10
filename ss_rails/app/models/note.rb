@@ -20,13 +20,14 @@ class Note < ActiveRecord::Base
   validates_associated :product, :tagged
 
   after_initialize :set_default_values, :save_original_buy_when
-  before_save :set_searchable_metadata, :add_buy_when_tag
+  before_save :set_searchable_metadata, :add_buy_when_tag, :set_canonical_fields
   before_create :add_unreviewed_tag
   
-  # include in metadata: vintage, producer name, product name, owner username,
+  # include in metadata: vintage, owner username,
   #                      style, region, occasion, vineyards, varietals
   pg_search_scope :search,
-    :against => [:searchable_metadata, :description_overall, :description_appearance,
+    :against => [:producer_name, :product_name, :searchable_metadata,
+                 :description_overall, :description_appearance,
                  :description_aroma, :description_flavor, :description_mouthfeel]
     #:using => [:tsearch, :dmetaphone, :trigrams],
     #:ignoring => :accents
@@ -36,12 +37,17 @@ class Note < ActiveRecord::Base
     self.tasted_at ||= DateTime.now
   end
   
+  def set_canonical_fields
+    self.product_canonical_name = self.product_name.canonicalize
+    self.producer_canonical_name = self.producer_name.canonicalize
+  end
+  
   def save_original_buy_when
     @original_buy_when = self.buy_when
   end
   
   def to_param
-    "#{self.id}-#{self.product.producer.canonical_name}-#{self.product.canonical_name}"
+    "#{self.id}-#{self.producer_canonical_name}-#{self.product_canonical_name}"
   end
   
   def set_searchable_metadata

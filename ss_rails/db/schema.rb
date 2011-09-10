@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110904160041) do
+ActiveRecord::Schema.define(:version => 20110909224628) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -59,25 +59,29 @@ ActiveRecord::Schema.define(:version => 20110904160041) do
   end
 
   create_table "notes", :force => true do |t|
-    t.integer  "creator_id",                            :null => false
-    t.integer  "updater_id",                            :null => false
-    t.string   "type",                   :limit => 50,  :null => false
-    t.integer  "owner_id",                              :null => false
-    t.integer  "visibility",                            :null => false
-    t.integer  "product_id",                            :null => false
+    t.integer  "creator_id",                             :null => false
+    t.integer  "updater_id",                             :null => false
+    t.string   "type",                    :limit => 50,  :null => false
+    t.integer  "owner_id",                               :null => false
+    t.integer  "visibility",                             :null => false
+    t.integer  "product_id",                             :null => false
     t.text     "description_overall"
-    t.string   "description_appearance", :limit => 500
-    t.string   "description_aroma",      :limit => 500
-    t.string   "description_flavor",     :limit => 500
-    t.string   "description_mouthfeel",  :limit => 500
-    t.datetime "tasted_at",                             :null => false
+    t.string   "description_appearance",  :limit => 500
+    t.string   "description_aroma",       :limit => 500
+    t.string   "description_flavor",      :limit => 500
+    t.string   "description_mouthfeel",   :limit => 500
+    t.datetime "tasted_at",                              :null => false
     t.integer  "score_type"
     t.float    "score"
     t.integer  "buy_when"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.integer  "vintage"
-    t.string   "searchable_metadata",    :limit => 500
+    t.string   "searchable_metadata",     :limit => 500
+    t.string   "producer_name",           :limit => 150, :null => false
+    t.string   "producer_canonical_name", :limit => 150, :null => false
+    t.string   "product_name",            :limit => 150, :null => false
+    t.string   "product_canonical_name",  :limit => 150, :null => false
   end
 
   create_table "producers", :force => true do |t|
@@ -95,21 +99,23 @@ ActiveRecord::Schema.define(:version => 20110904160041) do
   end
 
   create_table "products", :force => true do |t|
-    t.integer  "creator_id",                         :null => false
-    t.integer  "updater_id",                         :null => false
-    t.string   "type",                :limit => 50,  :null => false
-    t.integer  "owner_id",                           :null => false
-    t.integer  "visibility",                         :null => false
-    t.integer  "producer_id",                        :null => false
-    t.string   "name",                :limit => 150, :null => false
-    t.string   "canonical_name",      :limit => 150, :null => false
+    t.integer  "creator_id",                             :null => false
+    t.integer  "updater_id",                             :null => false
+    t.string   "type",                    :limit => 50,  :null => false
+    t.integer  "owner_id",                               :null => false
+    t.integer  "visibility",                             :null => false
+    t.integer  "producer_id",                            :null => false
+    t.string   "name",                    :limit => 150, :null => false
+    t.string   "canonical_name",          :limit => 150, :null => false
     t.text     "description"
     t.float    "price"
     t.float    "price_paid"
     t.integer  "price_type"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.string   "searchable_metadata", :limit => 500
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.string   "searchable_metadata",     :limit => 500
+    t.string   "producer_name",           :limit => 150, :null => false
+    t.string   "producer_canonical_name", :limit => 150, :null => false
   end
 
   create_table "reference_looked", :force => true do |t|
@@ -146,19 +152,21 @@ ActiveRecord::Schema.define(:version => 20110904160041) do
   end
 
   create_table "reference_products", :force => true do |t|
-    t.integer  "creator_id",                           :null => false
-    t.integer  "updater_id",                           :null => false
-    t.string   "type",                  :limit => 100, :null => false
-    t.integer  "reference_producer_id",                :null => false
-    t.string   "name",                  :limit => 150
-    t.string   "canonical_name",        :limit => 150
+    t.integer  "creator_id",                                       :null => false
+    t.integer  "updater_id",                                       :null => false
+    t.string   "type",                              :limit => 100, :null => false
+    t.integer  "reference_producer_id",                            :null => false
+    t.string   "name",                              :limit => 150
+    t.string   "canonical_name",                    :limit => 150
     t.text     "description"
     t.float    "price"
     t.integer  "price_type"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.string   "searchable_metadata",   :limit => 500
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+    t.string   "searchable_metadata",               :limit => 500
     t.float    "price_paid"
+    t.string   "reference_producer_name",           :limit => 150, :null => false
+    t.string   "reference_producer_canonical_name", :limit => 150, :null => false
   end
 
   create_table "resources", :force => true do |t|

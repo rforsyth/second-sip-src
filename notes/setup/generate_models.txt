@@ -137,6 +137,8 @@ rails generate migration AddSearchableMetadata
 
 bundle exec rails generate migration AddPricePaidToReferenceProduct
 
+bundle exec rails generate migration AddProducerAndProductNamesToProductsAndNotes
+
 
 
 

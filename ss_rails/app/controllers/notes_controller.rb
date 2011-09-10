@@ -92,6 +92,8 @@ class NotesController < ApplicationController
     end
     note.product.set_lookup_properties(params, displayed_taster, @producer_class)
     note.product.save
+    note.product_name = note.product.name
+    note.producer_name = note.product.producer.name
   end
   
   

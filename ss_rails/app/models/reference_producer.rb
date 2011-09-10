@@ -10,6 +10,7 @@ class ReferenceProducer < ActiveRecord::Base
 	has_many :reference_products
 	
   before_save :set_canonical_fields
+  after_save :update_products_producer_name
   
   pg_search_scope :search,
     :against => [:name, :description]
@@ -27,6 +28,17 @@ class ReferenceProducer < ActiveRecord::Base
     reference_producer = self.find_by_canonical_name(name.canonicalize)
     return reference_producer if reference_producer.present?
     self.create(:name => name)
+  end
+	
+	def update_products_producer_name
+	  producer_name = ActiveRecord::Base.sanitize(self.name)
+	  producer_canonical_name = ActiveRecord::Base.sanitize(self.name.canonicalize)
+	  
+	  ActiveRecord::Base.connection.execute("
+	    UPDATE reference_products 
+	    SET reference_producer_name = #{producer_name},
+	      reference_producer_canonical_name = #{producer_canonical_name}
+	    WHERE reference_products.reference_producer_id = #{self.id}")
   end
 
 end
