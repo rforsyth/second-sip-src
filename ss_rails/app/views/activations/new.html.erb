@@ -1,14 +1,30 @@
-<h1>Activate your account</h1>
 
-<% form_for @taster, :url => activate_path(@taster.id), :html => { :method => :post } do |f| %>
-	<%= f.error_messages %>
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Activate Your Account" } %>
 
-  <%= f.label :password, "Confirm your password" %><br />
-  <%= f.password_field :password %><br />
-  
-  <%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %><br />
-
-	<%= f.submit "Activate" %>
+<% form_for @taster, :url => activate_path(@taster.id),
+            :html => { :class => 'password_reset_form', :method => :post } do |f| %>
+  <div class="form_row">
+    <%= f.label :password, "Password:" %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="form_row">
+    <%= f.label :password_confirmation, "Password Confirmation:" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="form_separator form_right_column">
+    <%= f.submit "Activate" %>
+  </div>
 <% end %>
+<br/><br/><br/><br/><br/>
+
+<script type="text/javascript">
+  $("#taster_password").focus();
+</script>
+
+<% content_for :right do %>
+  <div class="right_directions">
+  </div>
+<% end %>
+
 

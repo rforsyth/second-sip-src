@@ -36,7 +36,8 @@ module UI::TabBuilder
 		initialize_admin_tabs_helper(:tasters, :tasters)
 	end
 	def initialize_tasters_tabs
-		@topnav_tabs = build_beverage_topnav_tabs(:taster, displayed_taster, current_taster)
+		@topnav_tabs = [UI::NavigationTab.new(:home, nil),
+		                UI::NavigationTab.new(:taster, 'selected')]
 	end
 	def initialize_tags_tabs
 		initialize_admin_tabs_helper(:tags, :tags)
@@ -74,6 +75,9 @@ module UI::TabBuilder
 		@topnav_tabs = build_beverage_topnav_tabs(:my_notes, current_taster, current_taster)
 		@subnav_tabs = build_beverage_subnav_tabs(:notes)
 	end
+	def initialize_register_or_login_tabs
+		@topnav_tabs = build_minimal_topnav_tabs
+  end
 	
 	private
 	
@@ -102,6 +106,10 @@ module UI::TabBuilder
 		return :my_notes if displayed_taster == current_taster
 		:taster
 	end
+	
+	def build_minimal_topnav_tabs
+		tabs = [UI::NavigationTab.new(:home, 'selected')]
+  end
 	
 	def build_beverage_topnav_tabs(selected_tab, displayed_taster, current_taster, hide_taster_tab = false)
 		tabs = []

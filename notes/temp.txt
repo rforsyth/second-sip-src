@@ -1,1 +1,13 @@
-SELECT "tags".* FROM "tags" INNER JOIN "tagged" ON "tagged"."tag_id" = "tags"."id" WHERE "tagged"."taggable_type" = 'SpiritNote' AND (tags.name LIKE 'tag%')
+
+
+@beer_style_names
+@beer_region_names
+
+@wine_varietal_names
+@wine_region_names
+
+@spirit_style_names
+@spirit_region_names
+
+
+

@@ -1,12 +1,13 @@
 class TasterSessionsController < ApplicationController
-  # GET /taster_sessions/new
+	before_filter :initialize_register_or_login_tabs, :only => [:new]
+  
   def new
     @taster_session = TasterSession.new
   end
 
-  # POST /taster_sessions
   def create
     @taster_session = TasterSession.new(params[:taster_session])
+    @taster_session.remember_me = true
     if @taster_session.save
       redirect_to(current_taster, :notice => 'Login Successful')
     else
@@ -14,10 +15,9 @@ class TasterSessionsController < ApplicationController
     end
   end
 
-  # DELETE /taster_sessions/1
   def destroy
     @taster_session = TasterSession.find
-    @taster_session.destroy
+    @taster_session.destroy if @taster_session
     redirect_to(:root, :notice => 'Goodbye!')
   end
 end

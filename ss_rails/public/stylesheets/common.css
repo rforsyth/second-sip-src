@@ -254,6 +254,10 @@ span.nobreak {
 .simple_intro p {
   text-align: center;
 }
+.wordy_intro p {
+  text-align: left;
+  margin-left: 30px;
+}
 .intro {
   background: #F4F7FB;
   line-height: 1.5em;
@@ -527,18 +531,21 @@ body.spirit_notes div.beverage_header {
   line-height: 26px;
 }
 .content_header .list_actions,
-.rightpane_header .list_actions {
+.rightpane_header .list_actions,
+.profile_header .list_actions {
 	float: right;
 	margin-top: 3px;
 	text-align: right;
 	position: relative;
 }
 .content_header .list_actions img,
-.rightpane_header .list_actions img {
+.rightpane_header .list_actions img,
+.profile_header .list_actions img {
 	vertical-align: middle;
 }
 .content_header .list_actions a,
-.rightpane_header .list_actions a {
+.rightpane_header .list_actions a,
+.profile_header .list_actions a {
 	margin-left: 3px;
 	margin-top: 2px;
 }
@@ -642,6 +649,23 @@ div.form_row label {
   display: -moz-inline-box;
   display: inline-block;
   vertical-align: top;
+}
+#new_taster_session,
+.password_reset_form {
+   margin-bottom: 50px;
+}
+#new_taster_session div.form_row,
+.password_reset_form div.form_row {
+    margin: 10px 0;
+}
+#new_taster_session div.form_row label,
+.password_reset_form div.form_row label  {
+    width: 140px;
+}
+#new_taster_session div.form_right_column,
+.password_reset_form div.form_right_column  {
+    margin-top: 15px;
+    padding-left: 147px;
 }
 div.form_right_column {
   padding-left: 77px;
@@ -796,7 +820,7 @@ a.lookup_link {
 }
 .rightpane_separator {
 	border-top: 1px solid #70ABD3;
-	margin-top: 15px;
+	margin-top: 10px;
 	padding-top: 10px;
 }
 .rightpane h3{

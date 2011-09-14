@@ -17,16 +17,20 @@
 <% end %>
 
 <% content_for :right do %>
-  <%= render :partial => 'common/global/rightpane_header',
-            :locals => { :title => viewing_own_data? ? 'Profile' : displayed_taster.username,
-                         :edit_item_path => (viewing_own_data?) ? edit_taster_path(current_taster) : nil } %>
-  <div class="prose_container"><%= simple_format displayed_taster.greeting %></div>
+
+  <div class="right_directions profile_header clearfix">
+    <div class="prose_container"><%= simple_format displayed_taster.greeting %></div>
+    <% if viewing_own_data? %>
+      <%= render :partial => 'common/lists/list_actions',
+                 :locals => { :edit_path => edit_taster_path(current_taster) } %>
+    <% end %>
+  </div>
   <div class="links rightpane_separator clearfix">
-    <h4>Browse Notes</h4>
+    <h4>Browse</h4>
     <div class="links_container">
-    <%= link_to 'Beer', taster_beer_notes_path(displayed_taster) %> |
-    <%= link_to 'Wine', taster_wine_notes_path(displayed_taster) %> |
-    <%= link_to 'Spirits', taster_spirit_notes_path(displayed_taster) %>
+    <%= link_to 'Beer', taster_beers_path(displayed_taster) %> |
+    <%= link_to 'Wine', taster_wines_path(displayed_taster) %> |
+    <%= link_to 'Spirits', taster_spirits_path(displayed_taster) %>
     </div>
   </div>
   <%= render :partial => 'friends' if viewing_own_data? %>

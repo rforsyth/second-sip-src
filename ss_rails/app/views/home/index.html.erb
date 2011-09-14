@@ -21,7 +21,7 @@
     <%= image_tag 'beer_note_24px.png', :title => 'Beer', :class => 'beverage' %>
     <h2>Beer</h2>
     <%= render :partial => 'common/global/search',
-               :locals => { :search_path => search_notes_path(:beer_notes) } %>
+               :locals => { :search_path => search_products_path(:beers) } %>
   </div>
   <div class="tag_links left_column">
     <h3>Styles</h3>
@@ -47,7 +47,7 @@
     <%= image_tag 'wine_note_24px.png', :title => 'Wine', :class => 'beverage' %>
     <h2>Wine</h2>
     <%= render :partial => 'common/global/search',
-               :locals => { :search_path => search_notes_path(:wine_notes) } %>
+               :locals => { :search_path => search_products_path(:wines) } %>
   </div>
   <div class="tag_links left_column">
     <h3>Varietals</h3>
@@ -73,7 +73,7 @@
     <%= image_tag 'spirit_note_24px.png', :title => 'Spirits', :class => 'beverage' %>
     <h2>Spirits</h2>
     <%= render :partial => 'common/global/search',
-               :locals => { :search_path => search_notes_path(:spirit_notes) } %>
+               :locals => { :search_path => search_products_path(:spirits) } %>
   </div>
   <div class="tag_links left_column">
     <h3>Liquors / Liqueurs</h3>

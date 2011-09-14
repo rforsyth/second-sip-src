@@ -1,7 +1,11 @@
 
-Hello.
+Hi <%= @taster.real_name %>,
 
-Click this link to verify your account: <%= register_url(:activation_code => @taster.perishable_token) %>
+Thanks for registering with Second Sip!
 
-If the above URL does not work try copying and pasting it into your browser.
-If you continue to have problem please feel free to contact us.
+When you follow the link below you will be able to choose a password and activate your account.  If clicking it here does not work then simply copy and paste it into your favorite web browser. If you have any trouble then feel free to contact us at customersupport@secondsip.com.
+
+<%= register_url(:activation_code => @taster.perishable_token) %>
+
+Cheers,
+The Second Sip Team

@@ -144,30 +144,30 @@ function calculate_fe(price_paid, price_type){
 }
 
 
-function toggle_product_details() {
+function toggle_product_details(remember) {
   var details = $("#product_details");
   if(details.is(':visible')){
     $("#product_details_toggle a").text("[+]");
     details.slideUp();
-    $.cookie('show_product_details', 'false');
+    if(remember == true){ $.cookie('show_product_details', 'false', {path:'/'}); }
   } else {
     $("#product_details_toggle a").text("[-]");
     details.slideDown();
-    $.cookie('show_product_details', 'true');
+    if(remember == true){ $.cookie('show_product_details', 'true', {path:'/'}); }
   }
   return false;
 }
 
-function toggle_note_details() {
+function toggle_note_details(remember) {
   var details = $("#note_details");
   if(details.is(':visible')){
     $("#note_details_toggle a").text("[+]");
     details.slideUp();
-    $.cookie('show_note_details', 'false');
+    if(remember == true){ $.cookie('show_note_details', 'false', {path:'/'}); }
   } else {
     $("#note_details_toggle a").text("[-]");
     details.slideDown();
-    $.cookie('show_note_details', 'true');
+    if(remember == true){ $.cookie('show_note_details', 'true', {path:'/'}); }
   }
   return false;
 }
@@ -180,14 +180,14 @@ function toggle_note_detailed_description(display) {
     $(".notes_label").text("Summary: ");
     $(".notes_summary").height("50px");
     details.slideDown();
-    $.cookie('show_note_detailed_description', 'true');
+    $.cookie('show_note_detailed_description', 'true', {path:'/'});
   } else {
     $("#note_detailed_description_on").show();
     $("#note_detailed_description_off").hide();
     $(".notes_label").text("Notes: ");
     $(".notes_summary").height("150px");
     details.slideUp();
-    $.cookie('show_note_detailed_description', 'false');
+    $.cookie('show_note_detailed_description', 'false', {path:'/'});
   }
   return false;
 }

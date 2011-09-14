@@ -1,6 +1,7 @@
 class PasswordResetsController < ApplicationController
   before_filter :load_taster_using_perishable_token, :only => [:edit, :update]
   before_filter :require_no_taster
+	before_filter :initialize_register_or_login_tabs
 
   def new   
   end  
@@ -11,10 +12,8 @@ class PasswordResetsController < ApplicationController
   def create  
     @taster = Taster.find_by_email(params[:email])  
     if @taster  
-      @taster.deliver_password_reset_instructions!  
-      flash[:notice] = "Instructions to reset your password have been emailed to you. " +  
-      "Please check your email."  
-      redirect_to root_url  
+      @taster.deliver_password_reset_instructions!
+      render :action => 'success', :layout => 'single_column'
     else  
       flash[:notice] = "No taster was found with that email address"  
       render :action => :new  
@@ -40,12 +39,8 @@ class PasswordResetsController < ApplicationController
   #       10 minutes to click the link then it won't work.    
   def load_taster_using_perishable_token  
     @taster = Taster.find_using_perishable_token(params[:id])  
-    unless @taster  
-      flash[:notice] = "We're sorry, but we could not locate your account. " +  
-                       "If you are having issues try copying and pasting the URL " +  
-                       "from your email into your browser or restarting the " +  
-                       "reset password process."  
-      redirect_to root_url  
+    unless @taster
+      render :action => 'not_found', :layout => 'single_column'
     end  
   end  
   

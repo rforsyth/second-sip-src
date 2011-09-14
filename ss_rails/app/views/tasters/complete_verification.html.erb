@@ -1,8 +1,16 @@
 
-<h3>Final Step - Email Verification</h3>
-<p>
-Thanks for signing up!  In order to ensure the security of the site, we require all users to verify their email address.  An email has been sent to your inbox with a link.  Once you click the link, your account will be activated.
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Final Step - Email Verification" } %>
+
+<div class="intro simple_intro">
+<p>Thanks for signing up!<p>
+<p>In order to ensure the security of the site,
+   we require all users to verify their email address. An email has been sent to
+   <%= @taster.email %> with a link that you can use to complete your registration.
 </p>
+</div>
+<br/><br/><br/><br/>
+
 
 
 

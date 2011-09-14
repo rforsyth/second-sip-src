@@ -16,8 +16,10 @@ SsRails::Application.routes.draw do
   match 'login' => 'taster_sessions#new', :as => :login
   match 'logout' => 'taster_sessions#destroy', :as => :logout
   
+  match '/register/re_send' => 'activations#re_send', :as => :re_send_activation_email
   match '/register/:activation_code' => 'activations#new', :as => :register
   match '/activate/:id' => 'activations#create', :as => :activate
+  match '/errors/message' => 'errors#message', :as => :error_message
   
   resources :tags, :admin_tags do
               get 'autocomplete', :on => :collection

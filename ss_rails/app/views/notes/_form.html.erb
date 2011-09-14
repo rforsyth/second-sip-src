@@ -119,9 +119,11 @@
                           :field_params => {'producer_name' => "producer_name"} } %>
                         
   <script type="text/javascript">
+    <% if @note.new_record? %>
+      $("#producer_name").focus();
+    <% end %>
 
     function update_lookup_collection(lookup_name, lookup_type, values){
-    
       hidden_list = $("#" + lookup_name + "_row ul.form_list")
       if(hidden_list != null) {
         hidden_list.empty();
@@ -187,11 +189,11 @@
     });
   
     $("#product_details_toggle a").click(function(){
-      return toggle_product_details();
+      return toggle_product_details(true);
     });
   
     $("#note_details_toggle a").click(function(){
-      return toggle_note_details();
+      return toggle_note_details(true);
     });
   
     $("#note_detailed_description_on a").click(function(){
@@ -208,10 +210,10 @@
   		  toggle_note_detailed_description(true);
   		}
   		if($.cookie('show_product_details') == "true"){
-  		  toggle_product_details();
+  		  toggle_product_details(false);
   		}
   		if($.cookie('show_note_details') == "true"){
-  		  toggle_note_details();
+  		  toggle_note_details(false);
   		}
   	});
 	

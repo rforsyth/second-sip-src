@@ -6,8 +6,9 @@ class TastersController < ApplicationController
   before_filter :find_taster, :only => [ :admin_profile, :show, :edit, :update,
                                          :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
-	before_filter :initialize_tasters_tabs, :only => [:show]
-	before_filter :initialize_tasters_admin_tabs, :except => [:show]
+	before_filter :initialize_tasters_tabs, :only => [:show, :edit]
+	before_filter :initialize_register_or_login_tabs, :only => [:new]
+  before_filter :require_no_taster, :only => [:new, :create]
 	
   def search
     @tasters = Taster.search(params[:query]).limit(MAX_BEVERAGE_RESULTS)
@@ -48,15 +49,14 @@ class TastersController < ApplicationController
 
     if @taster.signup!(params)
       @taster.deliver_activation_instructions!
-      flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions."
-      render :action => "complete_verification"
-      #redirect_to(@taster, :notice => 'Taster was successfully created.')
+      render :action => "complete_verification", :layout => 'single_column'
     else
       render :action => "new"
     end
   end
 
   def edit
+    @displayed_taster = @taster  # the topnav tab needs this to be set
   end
 
   def update

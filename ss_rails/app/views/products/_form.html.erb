@@ -41,6 +41,12 @@
                           :entities_path => polymorphic_path([current_taster, @producer_class]) } %>
 
   <script type="text/javascript">
+    <% if @product.new_record? %>
+      $("#producer_name").focus();
+    <% else %>
+      $("#style_name").focus();
+    <% end %>
+  
     function update_product_form_producer(producer) {
       $('#<%= @product_class.name.underscore %>_visibility_' + producer.visibility).attr('checked', true);
     }

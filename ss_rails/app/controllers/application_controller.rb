@@ -104,19 +104,17 @@ class ApplicationController < ActionController::Base
   end
   
   def require_taster 
-    unless current_taster 
-      store_location 
-      flash[:notice] = "You must be logged in to access this page" 
+    unless current_taster
+      flash[:notice] = "You must be signed in to access this page" 
       redirect_to login_path 
       return false 
     end 
   end
   
   def require_no_taster
-    if current_taster 
-      store_location 
-      flash[:notice] = "You must be logged out to access this page" 
-      redirect_to root_url 
+    if current_taster
+      flash[:notice] = "You cannot access this page while signed in." 
+      render :template => 'errors/message', :layout => 'single_column'
       return false 
     end 
   end
@@ -382,8 +380,8 @@ class ApplicationController < ActionController::Base
   def global_visibility_clause(model, viewer)
     clause = " (#{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
     if viewer.present?
-      friend_ids = collect_friend_ids(viewer)
       clause << " OR #{model.table_name}.owner_id = #{viewer.id} "
+      friend_ids = collect_friend_ids(viewer)
       if friend_ids.present?
         clause << " OR (#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}
                    AND #{model.table_name}.owner_id IN (#{friend_ids.join(',')})) "

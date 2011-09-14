@@ -6,6 +6,9 @@
     <%= label_tag :reference_producer_name, "Producer: " %>
     <% if @product.new_record? %>
       <%= text_field_tag :reference_producer_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+      <script type="text/javascript">
+        $("#reference_producer_name").focus();
+      </script>
     <% else %>
       <%= link_to @product.reference_producer.name, @product.reference_producer %>
     <% end %>
@@ -34,3 +37,5 @@
                           :entities_path => polymorphic_path(@reference_producer_class) } %>
 
 <% end %>
+
+

@@ -3,19 +3,29 @@
   <% if current_taster %>
     <%= link_to(current_taster.username, taster_path(current_taster)) %>
     &nbsp;&nbsp;|
-    <span class="welcome_bar_beverage_types">
+  <% end %>
+  <span class="welcome_bar_beverage_types">
+    <% if current_taster %>
       <%= link_to('Beer', polymorphic_path([current_taster, Beer]),
                   :class => (@beverage_type == :beer) ? 'bold underline' : nil ) -%> &middot;
       <%= link_to('Wine', polymorphic_path([current_taster, Wine]),
                   :class => (@beverage_type == :wine) ? 'bold underline' : nil ) -%> &middot;
       <%= link_to('Spirits', polymorphic_path([current_taster, Spirit]),
                   :class => (@beverage_type == :spirits) ? 'bold underline' : nil ) -%>
-      <% if current_taster.is?(:admin) -%>
-        &middot; <%= link_to('Admin', tasters_path) -%>
-      <% end -%>
-    </span>
-    |&nbsp;&nbsp;
-  <% end %>
+    <% else %>
+      <%= link_to('Beer', browse_products_path(:entity_type => Beer.name.tableize),
+                  :class => (@beverage_type == :beer) ? 'bold underline' : nil ) -%> &middot;
+      <%= link_to('Wine', browse_products_path(:entity_type => Wine.name.tableize),
+                  :class => (@beverage_type == :wine) ? 'bold underline' : nil ) -%> &middot;
+      <%= link_to('Spirits', browse_products_path(:entity_type => Spirit.name.tableize),
+                  :class => (@beverage_type == :spirits) ? 'bold underline' : nil ) -%>
+    
+    <% end %>
+    <% if current_taster && current_taster.is?(:admin) -%>
+      &middot; <%= link_to('Admin', tasters_path) -%>
+    <% end -%>
+  </span>
+  |&nbsp;&nbsp;
   
   <% if current_taster %>
     <%= link_to('Sign out', :logout) %>

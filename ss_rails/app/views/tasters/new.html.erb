@@ -1,6 +1,6 @@
 
 <%= render :partial => 'common/global/content_header',
-           :locals => { :title => "New Profile" } %>
+           :locals => { :title => "New Member Registration" } %>
            
 <%= form_for(@taster) do |f| %>
 
@@ -27,7 +27,22 @@
   </div>
   
   <div class="form_separator form_right_column">
-    <%= f.submit 'Create Profile' %>
+    <%= f.submit 'Register' %>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  $("#taster_username").focus();
+</script>
+
+<% content_for :right do %>
+
+  <div class="right_directions">
+    <br/>
+    <ul><li>Username: a nickname that will be displayed with all of your notes.</li>
+      <li>Real Name: your real name in the format: <span class="nobreak">First [Middle] Last</span></li>
+      <li>Greeting (optional): A short message for people visiting your Second Sip homepage.</li></ul>
   </div>
 
 <% end %>

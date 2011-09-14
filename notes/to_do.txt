@@ -2,6 +2,8 @@
 _____________________________________________________________
 Next Up
 
+** UI
+
 ** Error Handling
 
 - get error feedback working on forms
@@ -10,46 +12,21 @@ Next Up
 
 ** User Management
 
-- change password form separate from update profile
-
-- prettify lookup / registration / password change page
-
-- invitations (enter email address of non-user)
-  - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
-
-- support blocking users
-  - add approved field and set to false
-
-** Global UI
-
-- make homepage work
-
-- remember hide / show state of sections of note form
-
-- remember last beverage type (maintain tabs on homepage?)
-  - and always show the home tab
-
-- support browsing via iphone
-
-- stop using 3rd party sprite for search button
-
-- add indexes to columns using migrations
-  
-- adsense ads
-
-
-** Little UI
-
-- give the producer field focus for a new note / product
-
 
 ** Performance
+
+- add indexes to columns using migrations
+
+- move more fields to metadata search field?
 
 - build postgres SQL indexes
 
 - do some database performance profiling?
 
 ** Deployment
+
+- use ssl path for login / register
+  - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
 
 - consolidate database migrations prior to Heroku deploy
 
@@ -76,6 +53,17 @@ Testing
 _____________________________________________________________
 V2
 
+- invitations (enter email address of non-user)
+
+- support browsing via iphone
+  
+- adsense ads
+
+- support blocking users
+  - add approved field and set to false
+
+- change password form separate from update profile
+
 - copy product / producer to reference product / producer
 
 - "flag as inappropriate" feature
@@ -84,7 +72,10 @@ V2
 - assign note / product to different product / producer
   - put x next to product / producer name
 
+- change email address
+  - need to send a new verification email
 
+- autocomplete username in friend form
 
 _____________________________________________________________
 Security
@@ -95,8 +86,6 @@ Security
 
 _____________________________________________________________
 Performance
-
-- lists of notes access the producer name and product name - sometimes join these in from the DB?
 
 - load tasters from cache (for showing usernames on lists)
 
