@@ -16,6 +16,20 @@ $ rvm use 1.9.2 --default
 __________________________________________________________________
 Running Postgres
 
+start:
+$ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+stop:
+$ pg_ctl -D /usr/local/var/postgres stop -s -m fast
+
+to launch on login:
+  mkdir -p ~/Library/LaunchAgents
+  cp /usr/local/Cellar/postgresql/9.0.4/org.postgresql.postgres.plist ~/Library/LaunchAgents/
+  launchctl load -w ~/Library/LaunchAgents/org.postgresql.postgres.plist
+
+
+__________________________________________________________________
+Running Postgres (old)
+
 $ sudo su postgres -c '/opt/local/lib/postgresql83/bin/postgres -D /opt/local/var/db/postgresql83/defaultdb'
 or
 $ sudo su postgres -c '/opt/local/lib/postgresql83/bin/pg_ctl -D /opt/local/var/db/postgresql83/defaultdb -l logfile start'

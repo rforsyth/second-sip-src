@@ -5,3 +5,16 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+
+# create administrator user
+taster = Taster.new
+taster.signup!(:taster => {:username => 'Admin',
+                 :email => 'techsupport@secondsip.com', :greeting => 'Hello!',
+                 :real_name => 'Tech Support'})
+taster.activate!(:taster => {:password => 'TechRefug33',
+                   :password_confirmation => 'TechRefug33'})
+taster.roles_mask = 1
+taster.save
+
+
