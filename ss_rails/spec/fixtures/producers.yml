@@ -21,7 +21,6 @@ yellowtail:
   name: Yellow Tail
   canonical_name: yellowtail
   description: Very LARGE
-  cases_per_year: 1000000000
   <<: *DEFAULTS
 
 beringer:
@@ -33,7 +32,6 @@ beringer:
   name: Beringer
   canonical_name: beringer
   description: Very LARGE
-  cases_per_year: 1000000000
   <<: *DEFAULTS
 
 spindrift:
@@ -45,7 +43,6 @@ spindrift:
   name: Spindrift
   canonical_name: spindrift
   description: Very small
-  cases_per_year: 10
   <<: *DEFAULTS
 
 #*****************************************************
@@ -60,7 +57,6 @@ budweiser:
   name: Budweiser
   canonical_name: budweiser
   description: Frogs and Horses together
-  cases_per_year: 909090909
   <<: *DEFAULTS
   
 old_dominion:
@@ -72,7 +68,6 @@ old_dominion:
   name: Old Dominion
   canonical_name: olddominion
   description: Virginia microbrews
-  cases_per_year: 909
   <<: *DEFAULTS
   
 rogue:
@@ -84,7 +79,6 @@ rogue:
   name: Rogue
   canonical_name: rogue
   description: Oregun
-  cases_per_year: 9
   <<: *DEFAULTS
 
 #*****************************************************
@@ -99,7 +93,6 @@ absolut:
   name: Absolut
   canonical_name: absolut
   description: wery big
-  cases_per_year: 1234567890
   <<: *DEFAULTS
 
 balvenie:
@@ -111,7 +104,6 @@ balvenie:
   name: Balvenie
   canonical_name: balvenie
   description: owned by Glenfiddich?
-  cases_per_year: 987654321
   <<: *DEFAULTS
 
 clear_creek:
@@ -123,6 +115,5 @@ clear_creek:
   name: Clear Creek
   canonical_name: clearcreek
   description: Yay Oregon!
-  cases_per_year: 1234
   <<: *DEFAULTS
 

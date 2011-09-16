@@ -17,6 +17,8 @@ admin:
   email: admin@secondsip.com
   greeting: Hello!
   roles_mask: 1 # admin role
+  active: t
+  perishable_token: xauI5rtnJ1jYv65GeB77
   <<: *DEFAULTS
 
 grumpy:
@@ -28,6 +30,8 @@ grumpy:
   email: grumpy@secondsip.com
   greeting: Go Away
   roles_mask: 2 # enforcer
+  active: t
+  perishable_token: xauI5rtnJ1jYv65GeB77
   <<: *DEFAULTS
 
 happy:
@@ -39,6 +43,8 @@ happy:
   email: happy@secondsip.com
   greeting: Welcome!
   roles_mask: 0 # no roles
+  active: t
+  perishable_token: xauI5rtnJ1jYv65GeB77
   <<: *DEFAULTS
 
 doc:
@@ -50,6 +56,8 @@ doc:
   email: doc@secondsip.com
   greeting: How can I help you?
   roles_mask: 4 # editor
+  active: t
+  perishable_token: xauI5rtnJ1jYv65GeB77
   <<: *DEFAULTS
 
 queen:
@@ -61,5 +69,7 @@ queen:
   email: queen@secondsip.com
   greeting: Who is the fairest of them all?
   roles_mask: 8 # banned
+  active: t
+  perishable_token: xauI5rtnJ1jYv65GeB77
   <<: *DEFAULTS
 

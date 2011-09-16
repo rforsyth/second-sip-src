@@ -1,4 +1,3 @@
-
 <%
   require 'data/enums'
 %>
@@ -18,6 +17,10 @@ yellowtailshiraz1:
   visibility: <%= Enums::Visibility::PUBLIC %>
   is_reference: false
   product: yellowtailshiraz
+  producer_name: Yellow Tail
+  producer_canonical_name: yellowtail
+  product_name: Shiraz
+  product_canonical_name: shiraz
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -29,6 +32,7 @@ yellowtailshiraz1:
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
   vintage: 2013
+  searchable_metadata: Doc Australia Shiraz
   <<: *DEFAULTS
 
 yellowtailshiraz2:
@@ -37,6 +41,10 @@ yellowtailshiraz2:
   visibility: <%= Enums::Visibility::PUBLIC %>
   is_reference: false
   product: yellowtailshiraz
+  producer_name: Yellow Tail
+  producer_canonical_name: yellowtail
+  product_name: Shiraz
+  product_canonical_name: shiraz
   description_mouthfeel: feels like cotton balls
   tasted_at: 2011-04-15 15:12:43
   score_type: <%= Enums::ScoreType::POINTS_100 %>
@@ -44,6 +52,7 @@ yellowtailshiraz2:
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
   vintage: 2013
+  searchable_metadata: Doc Australia Shiraz
   <<: *DEFAULTS
  
 yellowtailshiraz3:
@@ -52,6 +61,10 @@ yellowtailshiraz3:
   visibility: <%= Enums::Visibility::PUBLIC %>
   is_reference: false
   product: yellowtailshiraz
+  producer_name: Yellow Tail
+  producer_canonical_name: yellowtail
+  product_name: Shiraz
+  product_canonical_name: shiraz
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -63,6 +76,7 @@ yellowtailshiraz3:
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
   vintage: 2013
+  searchable_metadata: Doc Australia Shiraz
   <<: *DEFAULTS
 
 #*****************************************************
@@ -74,6 +88,10 @@ budweiseramericanale1:
   visibility: <%= Enums::Visibility::FRIENDS %>
   is_reference: false
   product: budweiseramericanale
+  producer_name: Budweiser
+  producer_canonical_name: budweiser
+  product_name: American Ale
+  product_canonical_name: americanale
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -84,6 +102,7 @@ budweiseramericanale1:
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
+  searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
 budweiseramericanale2:
@@ -92,6 +111,10 @@ budweiseramericanale2:
   visibility: <%= Enums::Visibility::FRIENDS %>
   is_reference: false
   product: budweiseramericanale
+  producer_name: Budweiser
+  producer_canonical_name: budweiser
+  product_name: American Ale
+  product_canonical_name: americanale
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -102,6 +125,7 @@ budweiseramericanale2:
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
+  searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
 budweiseramericanale3:
@@ -110,6 +134,10 @@ budweiseramericanale3:
   visibility: <%= Enums::Visibility::FRIENDS %>
   is_reference: false
   product: budweiseramericanale
+  producer_name: Budweiser
+  producer_canonical_name: budweiser
+  product_name: American Ale
+  product_canonical_name: americanale
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -120,6 +148,7 @@ budweiseramericanale3:
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
+  searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
 #*****************************************************
@@ -131,6 +160,10 @@ absolutvodka1:
   visibility: <%= Enums::Visibility::PRIVATE %>
   is_reference: false
   product: absolutvodka
+  producer_name: Absolut
+  producer_canonical_name: absolut
+  product_name: Vodka
+  product_canonical_name: vodka
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -141,6 +174,7 @@ absolutvodka1:
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
+  searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
 
 absolutvodka2:
@@ -149,6 +183,10 @@ absolutvodka2:
   visibility: <%= Enums::Visibility::PRIVATE %>
   is_reference: false
   product: absolutvodka
+  producer_name: Absolut
+  producer_canonical_name: absolut
+  product_name: Vodka
+  product_canonical_name: vodka
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -159,6 +197,7 @@ absolutvodka2:
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
+  searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
 
 absolutvodka3:
@@ -167,6 +206,10 @@ absolutvodka3:
   visibility: <%= Enums::Visibility::PRIVATE %>
   is_reference: false
   product: absolutvodka
+  producer_name: Absolut
+  producer_canonical_name: absolut
+  product_name: Vodka
+  product_canonical_name: vodka
   description_overall: I am
   description_appearance: Not sure
   description_aroma: what to think
@@ -177,6 +220,7 @@ absolutvodka3:
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
   occasion: some strange party
+  searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
 
 

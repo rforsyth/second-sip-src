@@ -1,5 +1,3 @@
-
-
 <%
   require 'data/enums'
 %>
@@ -18,8 +16,6 @@ DEFAULTS: &DEFAULTS
 liteamericanlager:
   name: Lite American Lager
   canonical_name: $LABEL
-  full_name: Lite American Lager
-  canonical_full_name: $LABEL
   description: Very... lite
   lookup_type: <%= Enums::LookupType::STYLE %>
   entity_type: Beer
@@ -28,8 +24,6 @@ liteamericanlager:
 standardamericanlager:
   name: Standard American Lager
   canonical_name: $LABEL
-  full_name: Standard American Lager
-  canonical_full_name: $LABEL
   description: Less... light
   lookup_type: <%= Enums::LookupType::STYLE %>
   entity_type: Beer
@@ -38,8 +32,6 @@ standardamericanlager:
 americanamberale:
   name: American Amber Ale
   canonical_name: $LABEL
-  full_name: American Amber Ale
-  canonical_full_name: $LABEL
   description: 
   lookup_type: <%= Enums::LookupType::STYLE %>
   entity_type: Beer
@@ -48,8 +40,6 @@ americanamberale:
 specialtybeer:
   name: Specialty Beer
   canonical_name: $LABEL
-  full_name: Specialty Beer
-  canonical_full_name: $LABEL
   description: 
   lookup_type: <%= Enums::LookupType::STYLE %>
   entity_type: Beer
@@ -61,8 +51,6 @@ specialtybeer:
 australia:
   name: Australia
   canonical_name: $LABEL
-  full_name: Australia
-  canonical_full_name: $LABEL
   description: Even bigger
   lookup_type: <%= Enums::LookupType::REGION %>
   entity_type: Wine
@@ -71,8 +59,6 @@ australia:
 southeastaustralia:
   name: Southeast Australia
   canonical_name: $LABEL
-  full_name: Southeast Australia
-  canonical_full_name: $LABEL
   description: Very... big
   lookup_type: <%= Enums::LookupType::REGION %>
   entity_type: Wine
@@ -84,8 +70,6 @@ southeastaustralia:
 sweden:
   name: Sweden
   canonical_name: $LABEL
-  full_name: Sweden
-  canonical_full_name: $LABEL
   description: 'Didnt know it was from sweden'
   lookup_type: <%= Enums::LookupType::REGION %>
   entity_type: Spirit
@@ -97,8 +81,6 @@ sweden:
 vodka:
   name: Vodka
   canonical_name: $LABEL
-  full_name: Vodka
-  canonical_full_name: $LABEL
   description: 'Good for getting drunk'
   lookup_type: <%= Enums::LookupType::STYLE %>
   entity_type: Spirit
