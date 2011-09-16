@@ -34,7 +34,7 @@ h1,h2,h3,h4,h5,h6 {
   font-weight:normal;
 }
 q:before,q:after {
-  content:”; 
+  content:ï¿½; 
 }
 abbr,acronym {
   border:0;
@@ -147,7 +147,8 @@ span.nobreak {
     position: relative;
 }
 #logo a {
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 #logo img
 {

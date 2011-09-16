@@ -4,7 +4,7 @@
 
 class EditorObserver < ActiveRecord::Observer
   observe Friendship, Lookup, ReferenceLookup, Note, Producer, Product,
-          ReferenceProducer, ReferenceProduct, Resource, Tag, AdminTag, Taster
+          ReferenceProducer, ReferenceProduct, Resource, Tag, AdminTag
 
   def before_validation(object)
     if object.new_record?
