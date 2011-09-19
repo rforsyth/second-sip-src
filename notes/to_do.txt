@@ -2,7 +2,12 @@
 _____________________________________________________________
 Next Up
 
-** UI
+** Business Logic
+
+- add full name and full canonical name to reference lookups
+
+- remember last visibility level, and default new records to it
+
 
 ** Error Handling
 
@@ -31,8 +36,6 @@ Next Up
 - consolidate database migrations prior to Heroku deploy
 
 - deploy to Heroku
-
-- get registration / login working with Heroku SSL
 
 - scripts to populate reference lookups
   - grape varietals

@@ -1,7 +1,7 @@
 
 <% if entity.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(entity.errors.count, "error") %> prohibited this <%= entity.class.name.titleize.downcase %> from being saved:</h2>
+  <div class="error_explanation">
+    <h2>Please fix these errors before saving:</h2>
     <ul>
     <% entity.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>

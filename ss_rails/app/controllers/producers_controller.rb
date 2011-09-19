@@ -71,6 +71,7 @@ class ProducersController < ApplicationController
 
   def new
     @producer = @producer_class.new
+    @producer.visibility = Enums::Visibility::PUBLIC
 		render :template => 'producers/new'
   end
 

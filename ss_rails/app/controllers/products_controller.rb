@@ -66,6 +66,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = @product_class.new
+    @product.visibility = Enums::Visibility::PUBLIC
 		render :template => 'products/new'
   end
 

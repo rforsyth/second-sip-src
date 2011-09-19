@@ -15,7 +15,6 @@ yellowtailshiraz1:
   owner: doc
   type: WineNote
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   product: yellowtailshiraz
   producer_name: Yellow Tail
   producer_canonical_name: yellowtail
@@ -39,7 +38,6 @@ yellowtailshiraz2:
   owner: doc
   type: WineNote
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   product: yellowtailshiraz
   producer_name: Yellow Tail
   producer_canonical_name: yellowtail
@@ -59,7 +57,6 @@ yellowtailshiraz3:
   owner: doc
   type: WineNote
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   product: yellowtailshiraz
   producer_name: Yellow Tail
   producer_canonical_name: yellowtail
@@ -86,7 +83,6 @@ budweiseramericanale1:
   owner: happy
   type: BeerNote
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   product: budweiseramericanale
   producer_name: Budweiser
   producer_canonical_name: budweiser
@@ -109,7 +105,6 @@ budweiseramericanale2:
   owner: happy
   type: BeerNote
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   product: budweiseramericanale
   producer_name: Budweiser
   producer_canonical_name: budweiser
@@ -132,7 +127,6 @@ budweiseramericanale3:
   owner: happy
   type: BeerNote
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   product: budweiseramericanale
   producer_name: Budweiser
   producer_canonical_name: budweiser
@@ -158,7 +152,6 @@ absolutvodka1:
   owner: grumpy
   type: SpiritNote
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   product: absolutvodka
   producer_name: Absolut
   producer_canonical_name: absolut
@@ -181,7 +174,6 @@ absolutvodka2:
   owner: grumpy
   type: SpiritNote
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   product: absolutvodka
   producer_name: Absolut
   producer_canonical_name: absolut
@@ -204,7 +196,6 @@ absolutvodka3:
   owner: grumpy
   type: SpiritNote
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   product: absolutvodka
   producer_name: Absolut
   producer_canonical_name: absolut

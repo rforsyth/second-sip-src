@@ -19,7 +19,8 @@ class ReferenceProduct < ActiveRecord::Base
 	                     :conditions => {:lookup_type => Enums::LookupType::VARIETAL}
 	
 	validates_presence_of :reference_producer, :name
-  before_save :set_canonical_fields, :set_searchable_metadata
+  before_validation :set_canonical_fields
+  before_save :set_searchable_metadata
   
   pg_search_scope :search,
     :against => [:name, :searchable_metadata, :description]

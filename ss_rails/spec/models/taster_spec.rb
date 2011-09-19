@@ -1,5 +1,12 @@
 require 'spec_helper'
 
+
+#######################################################
+# List of potential test cases:
+# - can't create user with same username
+#######################################################
+
+
 describe Taster do
   fixtures :tasters
   

@@ -16,7 +16,6 @@ yellowtailshiraz:
   owner: doc
   type: Wine
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   producer: yellowtail
   producer_name: Yellow Tail
   producer_canonical_name: yellowtail
@@ -34,7 +33,6 @@ yellowtailcabernet:
   owner: doc
   type: Wine
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   producer: yellowtail
   producer_name: Yellow Tail
   producer_canonical_name: yellowtail
@@ -52,7 +50,6 @@ yellowtailchardonnay:
   owner: doc
   type: Wine
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   producer: yellowtail
   producer_name: Yellow Tail
   producer_canonical_name: yellowtail
@@ -73,7 +70,6 @@ budweiseramericanale:
   owner: happy
   type: Beer
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   producer: budweiser
   producer_name: Budweiser
   producer_canonical_name: budweiser
@@ -91,7 +87,6 @@ budweiser_chelada:
   owner: happy
   type: Beer
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   producer: budweiser
   producer_name: Budweiser
   producer_canonical_name: budweiser
@@ -109,7 +104,6 @@ budweiser_select_55:
   owner: happy
   type: Beer
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   producer: budweiser
   producer_name: Budweiser
   producer_canonical_name: budweiser
@@ -131,7 +125,6 @@ absolutvodka:
   owner: Grumpy
   type: Spirit
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   producer: absolut
   producer_name: Absolut
   producer_canonical_name: absolut
@@ -150,7 +143,6 @@ absolut_mandrin_vodka:
   owner: Grumpy
   type: Spirit
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   producer: absolut
   producer_name: Absolut
   producer_canonical_name: absolut
@@ -169,7 +161,6 @@ absolut_citron_vodka:
   owner: Grumpy
   type: Spirit
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   producer: absolut
   producer_name: Absolut
   producer_canonical_name: absolut

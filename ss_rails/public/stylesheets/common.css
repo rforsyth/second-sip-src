@@ -700,18 +700,24 @@ ul.form_list a.remove_item:hover {
 	color: white;
 	border-color: red;
 }
-div.errorExplanation {
+div.error_explanation {
  	padding-left: 77px;
 }
-div.errorExplanation h2 {
+div.error_explanation h2 {
 	font-size: 14px;
-	color: red;
+	color: #FF4500;
 }
-div.errorExplanation ul {
+div.error_explanation ul {
 	list-style: disc;
 }
 #note_detailed_description {
 	position: relative;
+}
+.field_with_errors {
+  display: inline;
+}
+.field_with_errors label {
+  color: #FF4500;
 }
 
 /********************************************************

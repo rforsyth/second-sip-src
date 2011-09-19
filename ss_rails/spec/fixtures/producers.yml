@@ -16,7 +16,6 @@ yellowtail:
   owner: doc
   type: Winery
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   website_url: http://www.yellowtail.com
   name: Yellow Tail
   canonical_name: yellowtail
@@ -27,7 +26,6 @@ beringer:
   owner: doc
   type: Winery
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   website_url: http://www.beringer.com
   name: Beringer
   canonical_name: beringer
@@ -38,7 +36,6 @@ spindrift:
   owner: doc
   type: Winery
   visibility: <%= Enums::Visibility::PUBLIC %>
-  is_reference: false
   website_url: http://www.spindrift.com
   name: Spindrift
   canonical_name: spindrift
@@ -52,7 +49,6 @@ budweiser:
   owner: happy
   type: Brewery
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   website_url: http://www.bud-wei-ser.com
   name: Budweiser
   canonical_name: budweiser
@@ -63,7 +59,6 @@ old_dominion:
   owner: happy
   type: Brewery
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   website_url: http://www.olddominion.com
   name: Old Dominion
   canonical_name: olddominion
@@ -74,7 +69,6 @@ rogue:
   owner: happy
   type: Brewery
   visibility: <%= Enums::Visibility::FRIENDS %>
-  is_reference: false
   website_url: http://www.rogue.com
   name: Rogue
   canonical_name: rogue
@@ -88,7 +82,6 @@ absolut:
   owner: grumpy
   type: Distillery
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   website_url: http://www.absolut.com
   name: Absolut
   canonical_name: absolut
@@ -99,7 +92,6 @@ balvenie:
   owner: grumpy
   type: Distillery
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   website_url: http://www.balvenie.com
   name: Balvenie
   canonical_name: balvenie
@@ -110,7 +102,6 @@ clear_creek:
   owner: grumpy
   type: Distillery
   visibility: <%= Enums::Visibility::PRIVATE %>
-  is_reference: false
   website_url: http://www.clearcreek.com
   name: Clear Creek
   canonical_name: clearcreek

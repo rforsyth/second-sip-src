@@ -19,8 +19,9 @@ class Note < ActiveRecord::Base
 	validates_presence_of :product
   validates_associated :product, :tagged
 
-  after_initialize :set_default_values, :save_original_buy_when
-  before_save :set_searchable_metadata, :add_buy_when_tag, :set_canonical_fields
+  after_initialize :save_original_buy_when
+  before_validation :set_canonical_fields
+  before_save :set_searchable_metadata, :add_buy_when_tag
   before_create :add_unreviewed_tag
   
   # include in metadata: vintage, owner username,
@@ -32,18 +33,13 @@ class Note < ActiveRecord::Base
     #:using => [:tsearch, :dmetaphone, :trigrams],
     #:ignoring => :accents
   
-  def set_default_values
-    self.visibility ||= Enums::Visibility::PUBLIC
-    self.tasted_at ||= DateTime.now
-  end
-  
   def set_canonical_fields
     self.product_canonical_name = self.product_name.canonicalize
     self.producer_canonical_name = self.producer_name.canonicalize
   end
   
   def save_original_buy_when
-    @original_buy_when = self.buy_when
+    @original_buy_when = self.buy_when if self.respond_to(:buy_when)
   end
   
   def to_param

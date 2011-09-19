@@ -13,7 +13,7 @@ class Taster < ActiveRecord::Base
     c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
   end
   
-  before_save :set_canonical_fields
+  before_validation :set_canonical_fields
   
   validates_format_of :email, :with => Authlogic::Regex.email
 

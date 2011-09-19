@@ -11,19 +11,18 @@ class Producer < ActiveRecord::Base
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :owner, :class_name => "Taster"
 	has_many :products
-
-  after_initialize :set_default_values
-  before_save :set_canonical_fields
+	
+  before_validation :set_canonical_fields
   before_create :add_unreviewed_tag
   after_save :update_products_and_notes_producer_name
+  
+	validates_presence_of :creator, :updater, :name
+  validates_uniqueness_of :canonical_name, :scope => :creator_id,
+                          :message => "is already being used."
   
   pg_search_scope :search,
     :against => [:name, :description]
     #:ignoring => :accents
-  
-  def set_default_values
-    self.visibility ||= Enums::Visibility::PUBLIC
-  end	
   
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize

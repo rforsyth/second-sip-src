@@ -34,6 +34,8 @@ class NotesController < ApplicationController
 
   def new
     @note = @note_class.new
+    @note.visibility = Enums::Visibility::PUBLIC
+    @note.tasted_at = DateTime.now
     @product = @product_class.new  # required to support the product form fields
     @note.tasted_at = Date.today
 		render :template => 'notes/new'

@@ -9,7 +9,7 @@ class ReferenceProducer < ActiveRecord::Base
 	belongs_to :updater, :class_name => "Taster"
 	has_many :reference_products
 	
-  before_save :set_canonical_fields
+  before_validation :set_canonical_fields
   after_save :update_products_producer_name
   
   pg_search_scope :search,

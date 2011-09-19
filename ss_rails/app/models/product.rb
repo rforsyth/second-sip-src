@@ -27,18 +27,14 @@ class Product < ActiveRecord::Base
 	validates_presence_of :producer, :name
   validates_associated :producer, :looked, :tagged
 
-  after_initialize :set_default_values
-  before_save :set_canonical_fields, :set_searchable_metadata
+  before_validation :set_canonical_fields
+  before_save :set_searchable_metadata
   before_create :add_unreviewed_tag
   after_save :update_notes_product_name
   
   pg_search_scope :search,
     :against => [:name, :producer_name, :searchable_metadata, :description]
     #:ignoring => :accents
-  
-  def set_default_values
-    self.visibility ||= Enums::Visibility::PUBLIC
-  end	
   
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize

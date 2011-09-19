@@ -8,7 +8,6 @@ DEFAULTS: &DEFAULTS
   creator: admin
   updater: admin
   parent_lookup_id: 
-  is_reference: true
 
 #*****************************************************
 # Beer Styles
