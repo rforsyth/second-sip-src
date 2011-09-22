@@ -29,7 +29,7 @@ yellowtailshiraz1:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 1.5
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   vintage: 2013
   searchable_metadata: Doc Australia Shiraz
   <<: *DEFAULTS
@@ -48,7 +48,7 @@ yellowtailshiraz2:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 1.5
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   vintage: 2013
   searchable_metadata: Doc Australia Shiraz
   <<: *DEFAULTS
@@ -71,7 +71,7 @@ yellowtailshiraz3:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 1.5
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   vintage: 2013
   searchable_metadata: Doc Australia Shiraz
   <<: *DEFAULTS
@@ -97,7 +97,7 @@ budweiseramericanale1:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
@@ -119,7 +119,7 @@ budweiseramericanale2:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
@@ -141,7 +141,7 @@ budweiseramericanale3:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
@@ -166,7 +166,7 @@ absolutvodka1:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
 
@@ -188,7 +188,7 @@ absolutvodka2:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
 
@@ -210,7 +210,7 @@ absolutvodka3:
   score_type: <%= Enums::ScoreType::POINTS_100 %>
   score: 5.1
   buy_when: <%= Enums::BuyWhen::FREE %>
-  occasion: some strange party
+  #occasion: some strange party
   searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
 

@@ -85,6 +85,17 @@ vodka:
   entity_type: Spirit
   <<: *DEFAULTS
 
+#*****************************************************
+# Occasions
+#*****************************************************
+somestrangeparty:
+  name: Some strange party
+  canonical_name: $LABEL
+  description: 'I dont know anybody here'
+  lookup_type: <%= Enums::LookupType::OCCASION %>
+  entity_type: WineNote
+  <<: *DEFAULTS
+
 
 
 

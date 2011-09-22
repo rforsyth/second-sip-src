@@ -16,7 +16,7 @@ class Note < ActiveRecord::Base
 	has_one :occasion, :source => :lookup, :as => :lookable, :through => :looked,
 	                   :conditions => {:lookup_type => Enums::LookupType::OCCASION}
 	
-	validates_presence_of :product
+	validates_presence_of :product, :visibility
   validates_associated :product, :tagged
 
   after_initialize :save_original_buy_when
@@ -34,12 +34,12 @@ class Note < ActiveRecord::Base
     #:ignoring => :accents
   
   def set_canonical_fields
-    self.product_canonical_name = self.product_name.canonicalize
-    self.producer_canonical_name = self.producer_name.canonicalize
+    self.product_canonical_name = self.product_name.canonicalize if self.product_name.present?
+    self.producer_canonical_name = self.producer_name.canonicalize if self.producer_name.present?
   end
   
   def save_original_buy_when
-    @original_buy_when = self.buy_when if self.respond_to(:buy_when)
+    @original_buy_when = self.buy_when if self.respond_to?(:buy_when)
   end
   
   def to_param

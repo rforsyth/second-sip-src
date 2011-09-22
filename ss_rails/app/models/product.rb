@@ -24,7 +24,7 @@ class Product < ActiveRecord::Base
 	has_many :varietals, :source => :lookup, :as => :lookable, :through => :looked,
 	                     :conditions => {:lookup_type => Enums::LookupType::VARIETAL}
 	
-	validates_presence_of :producer, :name
+	validates_presence_of :producer, :name, :visibility
   validates_associated :producer, :looked, :tagged
 
   before_validation :set_canonical_fields
@@ -37,8 +37,8 @@ class Product < ActiveRecord::Base
     #:ignoring => :accents
   
   def set_canonical_fields
-    self.canonical_name = self.name.canonicalize
-    self.producer_canonical_name = self.producer_name.canonicalize
+    self.canonical_name = self.name.canonicalize if self.name.present?
+    self.producer_canonical_name = self.producer_name.canonicalize if self.producer_name.present?
   end
   
   def set_searchable_metadata
@@ -55,7 +55,8 @@ class Product < ActiveRecord::Base
     # save the current state of the lookup tag names for the auto-tag generation feature
     @original_lookup_tag_names = self.looked.collect {|looked| looked.lookup.name.tagify}
     if params[:producer_name].present?
-      self.producer = producer_class.find_or_create_by_owner_and_name(owner, params[:producer_name])
+      self.producer = producer_class.find_or_create_by_owner_and_name(
+                        owner, params[:producer_name], self.visibility)
       self.producer_name = self.producer.name
     end
     set_style(params[:style_name], owner) if params[:style_name].present?

@@ -27,8 +27,8 @@ class ReferenceProduct < ActiveRecord::Base
     #:ignoring => :accents
   
   def set_canonical_fields
-    self.canonical_name = self.name.canonicalize
-    self.reference_producer_canonical_name = self.reference_producer_name.canonicalize
+    self.canonical_name = self.name.canonicalize if self.name.present?
+    self.reference_producer_canonical_name = self.reference_producer_name.canonicalize if self.reference_producer_name.present?
   end
   
   def to_param

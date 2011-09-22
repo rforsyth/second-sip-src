@@ -4,6 +4,8 @@ class Taster < ActiveRecord::Base
   include PgSearch
   include Data::AdminTaggable
   
+  USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$/
+  
   attr_protected :username, :email, :password, :password_confirmation
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
@@ -11,11 +13,18 @@ class Taster < ActiveRecord::Base
   acts_as_authentic do |c|
     c.validates_length_of_password_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
     c.validates_length_of_password_confirmation_field_options = {:on => :update, :minimum => 4, :if => :has_no_credentials?}
+    c.validates_format_of_login_field_options = {:with => USERNAME_PATTERN,
+        :message => 'should use only letters, numbers, and underscores, starting with a letter (ex: Jane_Doe)'}
+    c.validates_length_of_login_field_options = {:within => 4..20,
+        :message => 'should be between 4 and 20 characters long'}
   end
   
   before_validation :set_canonical_fields
+  before_create :add_unreviewed_tag
   
-  validates_format_of :email, :with => Authlogic::Regex.email
+	validates_presence_of :username, :email, :real_name
+  #validates_uniqueness_of :canonical_username, :scope => :creator_id,
+  #                        :message => "is already taken by another member.  Please choose a different Username."
 
   ROLES = %w[admin enforcer editor banned]
   
@@ -50,7 +59,7 @@ class Taster < ActiveRecord::Base
   end
   
   def set_canonical_fields
-    self.canonical_username = self.username.canonicalize
+    self.canonical_username = self.username.canonicalize if self.username.present?
   end
   
   def to_param

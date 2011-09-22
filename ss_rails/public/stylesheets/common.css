@@ -408,8 +408,7 @@ img.homepage_grapes {
   background-color: white;
 }
 #content_wide{
-  margin: 0 10px 15px 10px;
-  /*margin: 7px 0;*/
+  margin: 7px 0;
   padding: 0 15px 0 15px;
   background-color: white;
 }
@@ -457,7 +456,7 @@ div.narrative p {
 div.narrative p.top_intro {
   line-height: 1.4em;
   font-size: 14px;
-  margin: 0;
+  margin: 15px;
 }
 div.narrative ul {
   list-style:disc; 

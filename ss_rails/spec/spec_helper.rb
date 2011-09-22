@@ -25,3 +25,20 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 end
+
+def print_validation_errors(object)
+  if object.valid?
+    puts 'no errors'
+  else
+    puts object.errors.inspect
+  end
+end
+
+
+def build_valid_taster
+  taster = Taster.new
+  taster.email = 'jdoe@vt.edu'
+  taster.real_name = 'Jane Doe'
+  taster.username = 'Jane_Doe'
+  return taster
+end

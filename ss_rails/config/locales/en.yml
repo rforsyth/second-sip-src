@@ -8,3 +8,16 @@ en:
     attributes:
         producer:
           canonical_name: "Name"
+        product:
+          canonical_name: "Name"
+        taster:
+          canonical_username: "Username"
+        lookup:
+          canonical_name: "Name"
+        reference_producer:
+          canonical_name: "Name"
+        reference_product:
+          canonical_name: "Name"
+        reference_lookup:
+          canonical_name: "Name"
+          canonical_full_name: "Full Name"

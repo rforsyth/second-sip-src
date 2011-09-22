@@ -40,9 +40,14 @@ class TastersController < ApplicationController
 
   def create
     if(@taster = Taster.find_by_email(params[:taster][:email]))
-      @taster.deliver_activation_instructions!
-      return render :action => @taster.active? ? 'attempted_to_register_active_account' :
-                                                 'attempted_to_register_inactive_account'
+      if @taster.active?
+        return render :action => 'attempted_to_register_active_account',
+                      :layout => 'single_column'
+      else
+        @taster.deliver_activation_instructions!
+        return render :action => 'attempted_to_register_inactive_account',
+                      :layout => 'single_column'
+      end
     else
       @taster = Taster.new
     end
@@ -77,7 +82,13 @@ class TastersController < ApplicationController
 	private
 	
 	def find_taster
-    @taster = Taster.find_by_username(params[:id])
+	  id = params[:id]
+	  return if !id.present?
+	  if id.is_i?
+      @taster = Taster.find(id)
+    else
+      @taster = Taster.find_by_username(id)
+    end
   end
   
   def set_tag_container

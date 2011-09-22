@@ -1,3 +1,9 @@
 
-A profile with email address: <%= @taster.email %> already exists, but has not been activated yet.  Another activation email has been sent to that account, so you should be able to activate it by following the instructions in that email.
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Registration" } %>
 
+<div class="intro simple_intro">
+<p>A profile with email address: <%= @taster.email %> already exists, but has not been activated yet.  Another activation email has been sent to that account, so you should be able to activate it by following the instructions in that email.
+</p>
+</div>
+<br/><br/><br/><br/>

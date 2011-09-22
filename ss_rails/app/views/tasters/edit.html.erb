@@ -2,7 +2,7 @@
 <%= render :partial => 'common/global/content_header',
            :locals => { :title => "Edit Profile" } %>
 
-<%= form_for(@taster) do |f| %>
+<%= form_for(@taster, :url => "/tasters/#{@taster.id}") do |f| %>
 
   <%= render :partial => 'common/edit/errors', :locals => { :entity => @taster } %>
   

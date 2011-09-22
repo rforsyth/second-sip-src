@@ -91,9 +91,6 @@ module Data::CacheHelper
     if ids_to_read.present?
       objects = model.find(ids_to_read)
       objects.each do |object|
-        
-        puts 'storing: ' + object.inspect
-        
         store[object.id] = object
         Rails.cache.write(format_cache_key(model, object.id), object)
       end

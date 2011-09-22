@@ -16,7 +16,7 @@ class Producer < ActiveRecord::Base
   before_create :add_unreviewed_tag
   after_save :update_products_and_notes_producer_name
   
-	validates_presence_of :creator, :updater, :name
+	validates_presence_of :creator, :updater, :name, :visibility
   validates_uniqueness_of :canonical_name, :scope => :creator_id,
                           :message => "is already being used."
   
@@ -25,17 +25,17 @@ class Producer < ActiveRecord::Base
     #:ignoring => :accents
   
   def set_canonical_fields
-    self.canonical_name = self.name.canonicalize
+    self.canonical_name = self.name.canonicalize if self.name.present?
   end
   
   def to_param
     self.canonical_name
   end
   
-  def self.find_or_create_by_owner_and_name(owner, name)
+  def self.find_or_create_by_owner_and_name(owner, name, visibility)
     producer = self.find_by_canonical_name(name.canonicalize, :conditions => { :owner_id => owner.id })
     return producer if producer.present?
-    self.create(:name => name, :owner => owner)
+    self.create(:name => name, :owner => owner, :visibility => visibility)
   end
   
 	def simple_copy

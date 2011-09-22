@@ -25,7 +25,6 @@ yellowtailshiraz:
   price: 1.5
   price_paid: 1.5
   price_type: <%= Enums::WinePriceType::METHUSELAH %>
-  region: australia
   searchable_metadata: Doc Australia
   <<: *DEFAULTS
 
@@ -42,7 +41,6 @@ yellowtailcabernet:
   price: 1.5
   price_paid: 1.5
   price_type: <%= Enums::WinePriceType::METHUSELAH %>
-  region: southeastaustralia
   searchable_metadata: Doc Australia
   <<: *DEFAULTS
 
@@ -59,7 +57,6 @@ yellowtailchardonnay:
   price: 1.5
   price_paid: 1.5
   price_type: <%= Enums::WinePriceType::METHUSELAH %>
-  region: southeastaustralia
   searchable_metadata: Doc Australia
   <<: *DEFAULTS
 
@@ -79,7 +76,7 @@ budweiseramericanale:
   price: 6
   price_paid: 6
   price_type: <%= Enums::BeerPriceType::SIX_PACK %>
-  style: americanamberale
+  #style: americanamberale
   searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
@@ -96,7 +93,7 @@ budweiser_chelada:
   price: 6
   price_paid: 6
   price_type: <%= Enums::BeerPriceType::SIX_PACK %>
-  style: specialtybeer
+  #style: specialtybeer
   searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
@@ -113,7 +110,7 @@ budweiser_select_55:
   price: 6
   price_paid: 6
   price_type: <%= Enums::BeerPriceType::SIX_PACK %>
-  style: liteamericanlager
+  #style: liteamericanlager
   searchable_metadata: Happy American Ale
   <<: *DEFAULTS
 
@@ -134,8 +131,8 @@ absolutvodka:
   price: 30
   price_paid: 30
   price_type: <%= Enums::SpiritPriceType::FIFTH %>
-  region: sweden
-  style: vodka
+  #region: sweden
+  #style: vodka
   searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
   
@@ -152,8 +149,8 @@ absolut_mandrin_vodka:
   price: 30
   price_paid: 30
   price_type: <%= Enums::SpiritPriceType::FIFTH %>
-  region: sweden
-  style: vodka
+  #region: sweden
+  #style: vodka
   searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
   
@@ -170,8 +167,8 @@ absolut_citron_vodka:
   price: 30
   price_paid: 30
   price_type: <%= Enums::SpiritPriceType::FIFTH %>
-  region: sweden
-  style: vodka
+  #region: sweden
+  #style: vodka
   searchable_metadata: Grumpy Vodka
   <<: *DEFAULTS
   

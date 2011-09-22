@@ -11,8 +11,6 @@ Next Up
 
 ** Error Handling
 
-- get error feedback working on forms
-
 - fill out model validations
 
 ** User Management
@@ -46,11 +44,29 @@ Next Up
 _____________________________________________________________
 Testing
 
-- install rspec
-
-- define fixtures
-
-- model tests
+- start registration (verify email sent)
+- complete registration (verify welcome email sent)
+- log in
+- change password (verify email sent)
+- model tests:
+	- taster
+	- producer
+	- product
+	- note
+	- reference producer
+	- reference product
+	- lookup
+	- reference lookup
+	- tag
+	- admin tag
+	- auto tags from lookup
+- functional tests
+	- producer
+	- product
+	- note
+	- reference producer
+	- reference product
+	- add / remove tags
 
 
 _____________________________________________________________

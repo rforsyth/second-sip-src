@@ -1,7 +1,7 @@
 
 <% if entity.errors.any? %>
   <div class="error_explanation">
-    <h2>Please fix these errors before saving:</h2>
+    <h2>Please update these fields:</h2>
     <ul>
     <% entity.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
