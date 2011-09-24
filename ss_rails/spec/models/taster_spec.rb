@@ -69,6 +69,19 @@ describe Taster do
     taster.username = 'A12345'
     taster.valid?.should be_true, 'has numbers'
   end
+  
+  it "should validate password on update" do
+    taster = tasters(:grumpy)
+    taster.password = ''
+    taster.password_confirmation = ''
+    taster.valid?.should be_false, 'empty password'
+    taster.password = 'foo'
+    taster.password_confirmation = 'foo'
+    taster.valid?.should be_false, 'short password'
+    taster.password = 'password'
+    taster.password_confirmation = 'password'
+    taster.valid?.should be_true
+  end
 
 
 end

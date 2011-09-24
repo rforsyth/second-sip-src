@@ -39,6 +39,9 @@ module UI::TabBuilder
 		@topnav_tabs = [UI::NavigationTab.new(:home, nil),
 		                UI::NavigationTab.new(:taster, 'selected')]
 	end
+	def initialize_tasters_admin_tabs
+		initialize_admin_tabs_helper(:tasters, :tasters)
+	end
 	def initialize_tags_tabs
 		initialize_admin_tabs_helper(:tags, :tags)
 	end

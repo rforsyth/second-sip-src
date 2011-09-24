@@ -6,6 +6,7 @@ class ReferenceProducersController < ApplicationController
   before_filter :find_reference_producer, :only => [ :show, :edit, :update,
                                                      :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
+  before_filter :require_admin
   
   def search
     results = @reference_producer_class.search(params[:query])

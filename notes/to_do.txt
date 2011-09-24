@@ -2,21 +2,13 @@
 _____________________________________________________________
 Next Up
 
-** Business Logic
-
-- add full name and full canonical name to reference lookups
-
 - remember last visibility level, and default new records to it
 
+- limit to 100 friendships
 
-** Error Handling
+- autocomplete the usernames for friendship invitations
 
-- fill out model validations
-
-** User Management
-
-
-** Performance
+- don't allow users to see beverage pages when they don't have permission
 
 - add indexes to columns using migrations
 
@@ -25,8 +17,6 @@ Next Up
 - build postgres SQL indexes
 
 - do some database performance profiling?
-
-** Deployment
 
 - use ssl path for login / register
   - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
@@ -42,64 +32,7 @@ Next Up
   - spirit types
 
 _____________________________________________________________
-Testing
-
-- start registration (verify email sent)
-- complete registration (verify welcome email sent)
-- log in
-- change password (verify email sent)
-- model tests:
-	- taster
-	- producer
-	- product
-	- note
-	- reference producer
-	- reference product
-	- lookup
-	- reference lookup
-	- tag
-	- admin tag
-	- auto tags from lookup
-- functional tests
-	- producer
-	- product
-	- note
-	- reference producer
-	- reference product
-	- add / remove tags
-
-
-_____________________________________________________________
-V2
-
-- invitations (enter email address of non-user)
-
-- support browsing via iphone
-  
-- adsense ads
-
-- support blocking users
-  - add approved field and set to false
-
-- change password form separate from update profile
-
-- copy product / producer to reference product / producer
-
-- "flag as inappropriate" feature
-  - add admin tag and send email
-
-- assign note / product to different product / producer
-  - put x next to product / producer name
-
-- change email address
-  - need to send a new verification email
-
-- autocomplete username in friend form
-
-_____________________________________________________________
 Security
-
-- protect against sql injection on all queries that involve a like clause (autocomplete)
 
 - render error pages that don't have a stack trace
 
@@ -109,12 +42,6 @@ Performance
 - load tasters from cache (for showing usernames on lists)
 
 
-_____________________________________________________________
-Maintainability
-
-- refactor lookups javascript to use delegate
-
-- remove any unused partials
 
 _____________________________________________________________
 Browser testing:
@@ -148,5 +75,39 @@ Bugs
   
 - in IE8:
 
+_____________________________________________________________
+V2
+
+- invitations (enter email address of non-user)
+
+- support browsing via iphone
+  
+- adsense ads
+
+- support blocking users
+  - add approved field and set to false
+
+- change password form separate from update profile
+
+- copy product / producer to reference product / producer
+
+- "flag as inappropriate" feature
+  - add admin tag and send email
+
+- assign note / product to different product / producer
+  - put x next to product / producer name
+
+- change email address
+  - need to send a new verification email
+
+- autocomplete username in friend form
+
+- review sql injection security (search, autocomplete, etc...)
 
 
+_____________________________________________________________
+Maintainability
+
+- refactor lookups javascript to use delegate
+
+- remove any unused partials

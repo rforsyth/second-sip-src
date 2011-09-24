@@ -30,21 +30,21 @@ describe Producer do
     brewery.save.should be_true
   end
   
-  it "should allow producers with the same name but different creators" do
+  it "should allow producers with the same name but different owners" do
     grumpys_brewery = Brewery.new(:name => 'InBev', :visibility => Enums::Visibility::PUBLIC)
     grumpys_brewery.save.should be_true
-    grumpys_brewery.creator.should eql(tasters(:grumpy))
+    grumpys_brewery.owner.should eql(tasters(:grumpy))
     
     TasterSession.create(tasters(:happy))
     happys_brewery = Brewery.new(:name => 'InBev', :visibility => Enums::Visibility::PUBLIC)
     happys_brewery.save.should be_true
-    happys_brewery.creator.should eql(tasters(:happy))
+    happys_brewery.owner.should eql(tasters(:happy))
   end
 
-  it "should not allow producers with the same name and same creators" do
+  it "should not allow producers with the same name and same owners" do
     first_brewery = Brewery.new(:name => 'InBev', :visibility => Enums::Visibility::PUBLIC)
     first_brewery.save.should be_true
-    first_brewery.creator.should eql(tasters(:grumpy))
+    first_brewery.owner.should eql(tasters(:grumpy))
     
     second_brewery = Brewery.new(:name => 'iN b EV', :visibility => Enums::Visibility::PUBLIC)
     second_brewery.save.should be_false

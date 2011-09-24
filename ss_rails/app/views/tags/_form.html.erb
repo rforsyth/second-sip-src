@@ -6,6 +6,11 @@
     <%= f.label :name, 'Name:' %>
     <%= f.text_field :name, :class => 'text_field text_wide' %>
   </div>
+  <div class="form_row">
+    <%= f.label :entity_type, 'Entity:' %>
+    <%= f.select(:entity_type, Enums::BeverageEntityType.collection,
+                           :class => 'select_field') %>
+  </div>
   
   <div class="form_separator form_right_column">
     <%= f.submit %>

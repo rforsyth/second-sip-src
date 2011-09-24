@@ -1,11 +1,17 @@
 
 
-one:
-  creator_id: 1
-  updater_id: 1
-  name: MyString
-
-two:
-  creator_id: 1
-  updater_id: 1
-  name: MyString
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+  
+yummy:
+  name: yummy
+  entity_type: Wine
+  <<: *DEFAULTS
+  
+not_yummy:
+  name: not_yummy
+  entity_type: Wine
+  <<: *DEFAULTS

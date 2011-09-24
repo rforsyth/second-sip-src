@@ -3,8 +3,11 @@
            :locals => { :title => "Set Password" } %>
 
 
-<% form_for @taster, :url => password_reset_path, :method => :put,
+<%= form_for @taster, :url => password_reset_path, :method => :put,
                      :html => {:class => 'password_reset_form'} do |f| %>
+
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @taster } %>
+
   <div class="form_row">
     <%= f.label :password, "New Password:" %>
     <%= f.password_field :password %>

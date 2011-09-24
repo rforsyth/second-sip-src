@@ -8,12 +8,12 @@ DEFAULTS: &DEFAULTS
   
 yummy:
   name: yummy
-  type: PersonalTag
+  entity_type: Wine
   <<: *DEFAULTS
   
 not_yummy:
   name: not_yummy
-  type: PersonalTag
+  entity_type: Wine
   <<: *DEFAULTS
 
 

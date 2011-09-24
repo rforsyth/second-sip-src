@@ -1,5 +1,6 @@
 class AdminTagsController < ApplicationController
 	before_filter :initialize_admin_tags_tabs
+	before_filter :require_admin, :except => [:autocomplete]
 	
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])

@@ -1,23 +1,33 @@
 
+<%
+  require 'data/enums'
+%>
 
-one:
-  creator_id: 1
-  updater_id: 1
-  type: MyString
-  website_url: MyString
-  name: MyString
-  canonical_name: MyString
-  description: MyText
-  cases_per_year: 1
-  capacity_in_barrels: 1
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
 
-two:
-  creator_id: 1
-  updater_id: 1
-  type: MyString
-  website_url: MyString
-  name: MyString
-  canonical_name: MyString
-  description: MyText
-  cases_per_year: 1
-  capacity_in_barrels: 1
+#*****************************************************
+# Wineries
+#*****************************************************
+chateaustemichelle:
+  type: ReferenceWinery
+  website_url: http://www.thechateau.com
+  name: Chateau Ste Michelle
+  canonical_name: chateaustemichelle
+  description: Sixty Percent
+  <<: *DEFAULTS
+
+#*****************************************************
+# Breweries
+#*****************************************************
+chimay:
+  type: ReferenceBrewery
+  website_url: http://www.chimay.com
+  name: Chimay
+  canonical_name: chimay
+  description: Yummy
+  <<: *DEFAULTS
+

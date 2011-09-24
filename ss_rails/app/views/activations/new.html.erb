@@ -2,8 +2,8 @@
 <%= render :partial => 'common/global/content_header',
            :locals => { :title => "Activate Your Account" } %>
 
-<% form_for @taster, :url => activate_path(@taster.id),
-            :html => { :class => 'password_reset_form', :method => :post } do |f| %>
+<%= form_for @taster, :url => activate_path(@taster.id),
+             :html => { :class => 'password_reset_form', :method => :post } do |f| %>
 
   <%= render :partial => 'common/edit/errors', :locals => { :entity => @taster } %>
 
@@ -27,6 +27,8 @@
 
 <% content_for :right do %>
   <div class="right_directions">
+	<br/>
+	<p>Final step: choose a password to secure your account.</p>
   </div>
 <% end %>
 

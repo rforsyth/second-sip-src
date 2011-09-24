@@ -2,13 +2,15 @@ class Tag < ActiveRecord::Base
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
 	has_many :taggeds
+  nilify_blanks
 	
   before_validation :tagify_name
   
+	validates_presence_of :name, :entity_type, :creator, :updater
   validates_uniqueness_of :name, :scope => :entity_type
   
   def tagify_name
-    self.name = self.name.tagify
+    self.name = self.name.tagify if self.name.present?
   end
 	
   def to_param

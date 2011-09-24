@@ -16,13 +16,13 @@
   </div>
 <% elsif viewing_own_data? %>
   <%= render :partial => 'common/global/simple_message',
-             :object => "Click the 'Add' link above to create a new #{beverage_model.name.titleize.downcase}." %>
+             :object => "Click the 'Add' link above to add a new #{beverage_model.name.titleize.downcase} to your list." %>
 <% elsif displayed_taster.present? %>
   <%= render :partial => 'common/global/simple_message',
              :object => "#{displayed_taster.username} does not have any public #{beverage_model.name.titleize.pluralize.downcase}." %>
 <% else %>
   <%= render :partial => 'common/global/simple_message',
-             :object => "There are no public #{beverage_model.name.titleize.pluralize.downcase}." %>
+             :object => "There are no community #{beverage_model.name.titleize.pluralize.downcase}." %>
 <% end %>
 
 <%= render :partial => 'common/lists/paging_bar' %>

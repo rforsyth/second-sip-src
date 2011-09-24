@@ -2,8 +2,9 @@
 <%= render :partial => 'common/global/content_header',
            :locals => { :title => "Reset Password" } %>
 
+<%= render :partial => 'common/edit/flash_error' %>
 
-<% form_tag password_resets_path, :class => 'password_reset_form' do %>
+<%= form_tag password_resets_path, :class => 'password_reset_form' do %>
   <div class="form_row">
     <%= label_tag "email", 'Email Address:' %>
     <%= text_field_tag "email", params[:email], :size => 30 %>

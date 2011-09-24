@@ -6,6 +6,7 @@ class Note < ActiveRecord::Base
   include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
+  nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
@@ -16,7 +17,7 @@ class Note < ActiveRecord::Base
 	has_one :occasion, :source => :lookup, :as => :lookable, :through => :looked,
 	                   :conditions => {:lookup_type => Enums::LookupType::OCCASION}
 	
-	validates_presence_of :product, :visibility
+	validates_presence_of :product, :visibility, :tasted_at
   validates_associated :product, :tagged
 
   after_initialize :save_original_buy_when

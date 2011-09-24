@@ -6,6 +6,7 @@ class Producer < ActiveRecord::Base
   include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
+  nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
@@ -17,7 +18,7 @@ class Producer < ActiveRecord::Base
   after_save :update_products_and_notes_producer_name
   
 	validates_presence_of :creator, :updater, :name, :visibility
-  validates_uniqueness_of :canonical_name, :scope => :creator_id,
+  validates_uniqueness_of :canonical_name, :scope => :owner_id,
                           :message => "is already being used."
   
   pg_search_scope :search,

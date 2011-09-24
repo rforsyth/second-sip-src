@@ -21,3 +21,7 @@ en:
         reference_lookup:
           canonical_name: "Name"
           canonical_full_name: "Full Name"
+        friendship:
+          inviter: "Invitation"
+          invitee: "Member Username"
+          invitation: "Message"

@@ -9,6 +9,7 @@ class ProducersController < ApplicationController
   before_filter :find_producer, :only => [ :show, :edit, :update,
                   :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
+  before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
   
   def search
     @producers = search_beverage_by_owner(@producer_class, params[:query],

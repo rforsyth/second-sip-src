@@ -16,4 +16,9 @@ class Notifier < ActionMailer::Base
     mail(:to => taster.email, :subject => "Welcome to Second Sip!")
   end 
   
+  def friendship_invitation(friendship) 
+    @friendship = friendship
+    mail(:to => friendship.invitee.email, :subject => "Second Sip Friendship Invitation from #{friendship.inviter.username}")
+  end 
+  
 end

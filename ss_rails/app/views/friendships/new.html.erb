@@ -1,8 +1,8 @@
 <%= render :partial => 'common/global/content_header',
            :locals => { :title => "Friendship Invitation"} %>
 
-<% form_for(@friendship) do |f| %>
-  <%= render "common/global/error_messages", :target => @friendship %>
+<%= form_for(@friendship) do |f| %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @friendship } %>
   <fieldset>
     <div class="form_row">
       <%= label_tag :invitee_username, 'Username:' %>

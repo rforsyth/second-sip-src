@@ -40,7 +40,7 @@ describe Product do
     beer.save.should be_true
   end
   
-  it "should allow producers with the same name but different creators" do
+  it "should allow products with the same name but different creators" do
     grumpys_beer = Beer.new(:name => 'InBev', :visibility => Enums::Visibility::PUBLIC)
     grumpys_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
     grumpys_beer.save.should be_true
@@ -53,7 +53,7 @@ describe Product do
     happys_beer.creator.should eql(tasters(:happy))
   end
 
-  it "should not allow producers with the same name and same creators" do
+  it "should not allow products with the same name and same creators" do
     first_beer = Beer.new(:name => 'Stella', :visibility => Enums::Visibility::PUBLIC)
     first_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
     first_beer.save.should be_true
@@ -71,6 +71,25 @@ describe Product do
     note = notes(:yellowtailshiraz1)
     note.product_name.should eql("Syrah")
     note.product_canonical_name.should eql("syrah")
+  end
+  
+  it "creates a new parent producer when name doesnt match existing producer" do
+    brewery = Brewery.find_by_canonical_name('rochefort', :conditions => { :owner_id => current_taster.id } )
+    brewery.should be_nil
+    beer = Beer.new(:name => 'Tripel', :visibility => Enums::Visibility::PUBLIC)
+    beer.set_lookup_properties({:producer_name => 'Rochefort'}, current_taster, Brewery)
+    beer.save
+    brewery = Brewery.find_by_canonical_name('rochefort', :conditions => { :owner_id => current_taster.id } )
+    brewery.name.should eql('Rochefort')
+  end
+  
+  it "uses an existing producer when name matches" do
+    Brewery.where(:canonical_name => 'budweiser', :owner_id => tasters(:happy).id).count.should eql(1)
+    beer = Beer.new(:name => 'Pils', :visibility => Enums::Visibility::PUBLIC)
+    beer.set_lookup_properties({:producer_name => 'Budweiser'}, tasters(:happy), Brewery)
+    beer.save
+    Brewery.where(:canonical_name => 'budweiser', :owner_id => tasters(:happy).id).count.should eql(1)
+    beer.producer.name.should eql('Budweiser')
   end
 
 

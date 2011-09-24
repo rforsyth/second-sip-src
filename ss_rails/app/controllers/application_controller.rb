@@ -119,6 +119,14 @@ class ApplicationController < ActionController::Base
     end 
   end
   
+  def require_admin
+    if !(current_taster && current_taster.is?(:admin))
+      flash[:notice] = "You do not have permissions to access this page." 
+      render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
+      return false 
+    end
+  end
+  
   def displayed_taster
     return @displayed_taster if defined?(@displayed_taster)
     @displayed_taster = Taster.find_by_username(params[:taster_id])
@@ -151,6 +159,8 @@ class ApplicationController < ActionController::Base
   end
   
   def build_admin_tag_filter(tag_containers)
+    return if !(current_taster && current_taster.is?(:admin))
+    
 		@included_admin_tags = params[:ain] || []
 		@excluded_admin_tags = params[:aex] || []
     @available_admin_tags = []
@@ -401,7 +411,7 @@ class ApplicationController < ActionController::Base
     return true if(beverage.visibility == Enums::Visibility::FRIENDS &&
                    viewer.friends.include?(beverage.owner))
     false
-  end  
+  end
     
   
 end

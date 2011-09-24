@@ -7,8 +7,10 @@ class TastersController < ApplicationController
                                          :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
 	before_filter :initialize_tasters_tabs, :only => [:show, :edit]
+	before_filter :initialize_tasters_admin_tabs, :only => [:index, :admin_profile]
 	before_filter :initialize_register_or_login_tabs, :only => [:new]
   before_filter :require_no_taster, :only => [:new, :create]
+  before_filter :require_admin, :except => [:show, :new, :create, :edit, :update]
 	
   def search
     @tasters = Taster.search(params[:query]).limit(MAX_BEVERAGE_RESULTS)

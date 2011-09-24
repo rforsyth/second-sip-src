@@ -2,6 +2,7 @@
   <span class="item_name">
     <%= link_to tag.name, tag_path(tag.id) %>
   </span>
+  (<%= tag.entity_type %>)
   <span class="username">
     <%= link_to tag.creator.username, tag.creator %>
   </span>

@@ -4,6 +4,7 @@ require 'data/admin_taggable'
 class ReferenceProducer < ActiveRecord::Base
   include PgSearch
   include Data::AdminTaggable
+  nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
@@ -11,6 +12,10 @@ class ReferenceProducer < ActiveRecord::Base
 	
   before_validation :set_canonical_fields
   after_save :update_products_producer_name
+  
+	validates_presence_of :creator, :updater, :name
+  validates_uniqueness_of :canonical_name,
+                          :message => "is already being used."
   
   pg_search_scope :search,
     :against => [:name, :description]

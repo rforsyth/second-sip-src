@@ -3,6 +3,7 @@ require 'data/admin_taggable'
 class ReferenceProduct < ActiveRecord::Base
   include PgSearch
   include Data::AdminTaggable
+  nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
@@ -19,6 +20,7 @@ class ReferenceProduct < ActiveRecord::Base
 	                     :conditions => {:lookup_type => Enums::LookupType::VARIETAL}
 	
 	validates_presence_of :reference_producer, :name
+  validates_associated :reference_producer, :reference_looked
   before_validation :set_canonical_fields
   before_save :set_searchable_metadata
   

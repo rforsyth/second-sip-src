@@ -2,16 +2,9 @@
 <%= render :partial => 'common/global/content_header',
            :locals => { :title => "Login" } %>
 
-<%= form_for(@taster_session) do |f| %>
-  <% if @taster_session.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-      <% @taster_session.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for(@taster_session) do |f| %>			
+
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @taster_session } %>
 
   <div class="form_row">
     <%= f.label :username, 'Username or Email:' %>

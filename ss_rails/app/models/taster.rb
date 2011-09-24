@@ -3,6 +3,7 @@ require 'data/admin_taggable'
 class Taster < ActiveRecord::Base
   include PgSearch
   include Data::AdminTaggable
+  nilify_blanks
   
   USERNAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$/
   
@@ -17,14 +18,13 @@ class Taster < ActiveRecord::Base
         :message => 'should use only letters, numbers, and underscores, starting with a letter (ex: Jane_Doe)'}
     c.validates_length_of_login_field_options = {:within => 4..20,
         :message => 'should be between 4 and 20 characters long'}
+    c.perishable_token_valid_for = 1.hour
   end
   
   before_validation :set_canonical_fields
   before_create :add_unreviewed_tag
   
 	validates_presence_of :username, :email, :real_name
-  #validates_uniqueness_of :canonical_username, :scope => :creator_id,
-  #                        :message => "is already taken by another member.  Please choose a different Username."
 
   ROLES = %w[admin enforcer editor banned]
   

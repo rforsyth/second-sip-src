@@ -6,6 +6,7 @@ class Product < ActiveRecord::Base
   include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
+  nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"

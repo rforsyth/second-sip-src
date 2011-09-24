@@ -1,4 +1,4 @@
-<%= render :partial => 'common/global/content_header', :locals => { :title => 'Invitation'} %>
+<%= render :partial => 'common/global/content_header', :locals => { :title => 'Friend Invitation'} %>
 
 <div class="invitation prose_container">
   <p><%= link_to(@friendship.inviter.username, @friendship.inviter) %>
@@ -6,8 +6,8 @@
   <%= simple_format @friendship.invitation %>
 </div>
 
-<% form_for(@friendship) do |f| %>
-  <%= render "common/global/error_messages", :target => @friendship %>
+<%= form_for(@friendship) do |f| %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @friendship } %>
   <div class="form_separator form_right_column">
     <%= f.submit 'Accept' %>
     <%= f.submit 'Decline' %>
@@ -15,13 +15,6 @@
 <% end %>
 
 <% content_for :right do %>
-
-  <%= render :partial => 'common/global/rightpane_header',
-            :locals => { :title => current_taster.username,
-                         :edit_item_path => (viewing_own_data?) ? edit_taster_path(current_taster) : nil } %>
-
-  <div class="prose_container"><%= simple_format current_taster.greeting %></div>
-  
-  <%= render :partial => 'tasters/friends' %>
-
+  <div class="right_directions">
+  </div>
 <% end %>

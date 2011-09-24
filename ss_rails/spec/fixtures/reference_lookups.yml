@@ -1,21 +1,116 @@
 
+<%
+  require 'data/enums'
+%>
 
-one:
-  name: MyString
-  canonical_name: MyString
-  description: MyText
-  lookup_type: 1
-  entity_type: MyString
-  parent_reference_lookup_id: 1
-  full_name: MyString
-  canonical_full_name: MyString
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
 
-two:
-  name: MyString
-  canonical_name: MyString
-  description: MyText
-  lookup_type: 1
-  entity_type: MyString
-  parent_reference_lookup_id: 1
-  full_name: MyString
-  canonical_full_name: MyString
+#*****************************************************
+# Beer Styles
+#*****************************************************
+liteamericanlager:
+  name: Lite American Lager
+  canonical_name: $LABEL
+  full_name: Lite American Lager
+  canonical_full_name: $LABEL
+  description: Very... lite
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
+standardamericanlager:
+  name: Standard American Lager
+  canonical_name: $LABEL
+  full_name: Standard American Lager
+  canonical_full_name: $LABEL
+  description: Less... light
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
+americanamberale:
+  name: American Amber Ale
+  canonical_name: $LABEL
+  full_name: American Amber Ale
+  canonical_full_name: $LABEL
+  description: 
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
+specialtybeer:
+  name: Specialty Beer
+  canonical_name: $LABEL
+  full_name: Specialty Beer
+  canonical_full_name: $LABEL
+  description: 
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Beer
+  <<: *DEFAULTS
+
+#*****************************************************
+# Wine Regions
+#*****************************************************
+australia:
+  name: Australia
+  canonical_name: $LABEL
+  full_name: Australia
+  canonical_full_name: $LABEL
+  description: Even bigger
+  lookup_type: <%= Enums::LookupType::REGION %>
+  entity_type: Wine
+  <<: *DEFAULTS
+
+southeastaustralia:
+  name: Southeast Australia
+  canonical_name: $LABEL
+  full_name: Southeast Australia
+  canonical_full_name: $LABEL
+  description: Very... big
+  lookup_type: <%= Enums::LookupType::REGION %>
+  entity_type: Wine
+  <<: *DEFAULTS
+
+#*****************************************************
+# Spirit Regions
+#*****************************************************
+sweden:
+  name: Sweden
+  canonical_name: $LABEL
+  full_name: Sweden
+  canonical_full_name: $LABEL
+  description: 'Didnt know it was from sweden'
+  lookup_type: <%= Enums::LookupType::REGION %>
+  entity_type: Spirit
+  <<: *DEFAULTS
+
+#*****************************************************
+# Spirit Types
+#*****************************************************
+vodka:
+  name: Vodka
+  canonical_name: $LABEL
+  full_name: Vodka
+  canonical_full_name: $LABEL
+  description: 'Good for getting drunk'
+  lookup_type: <%= Enums::LookupType::STYLE %>
+  entity_type: Spirit
+  <<: *DEFAULTS
+
+#*****************************************************
+# Occasions
+#*****************************************************
+somestrangeparty:
+  name: Some strange party
+  canonical_name: $LABEL
+  full_name: Some strange party
+  canonical_full_name: $LABEL
+  description: 'I dont know anybody here'
+  lookup_type: <%= Enums::LookupType::OCCASION %>
+  entity_type: WineNote
+  <<: *DEFAULTS
+

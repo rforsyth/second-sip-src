@@ -100,6 +100,16 @@ module Enums
 				'ReferenceSpirit' => ReferenceSpirit.name }
 		end
 	end
+	
+	class EntityType < EnumBase
+	  def self.collection
+	    table = {}
+	    BeverageEntityType.collection.each {|key, value| table[key] = value}
+	    ReferenceBeverageEntityType.collection.each {|key, value| table[key] = value}
+	    table['Taster'] = Taster.name
+	    return table
+	  end
+  end
 			
   class LookupType < EnumBase
     STYLE = 10
@@ -115,6 +125,13 @@ module Enums
         'Varietal' => VARIETAL,
         'Vineyard' => VINEYARD,
   			'Occasion' => OCCASION }
+    end
+    
+    def self.name(enum)
+      self.collection.each_pair do |key, value|
+        return key if value == enum
+      end
+      return nil
     end
   end	
 			

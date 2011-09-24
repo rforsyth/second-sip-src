@@ -7,7 +7,7 @@ DEFAULTS: &DEFAULTS
   updated_at: <%= 3.weeks.ago.to_s(:db) %>
   creator: admin
   updater: admin
-  parent_lookup_id: 
+  owner: admin
 
 #*****************************************************
 # Beer Styles

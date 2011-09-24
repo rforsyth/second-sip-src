@@ -2,6 +2,7 @@
   <span class="item_name">
     <%= link_to lookup.name, lookup_path(lookup) %>
   </span>
+  (<%= "#{lookup.entity_type} #{Enums::LookupType.name(lookup.lookup_type)}" %>)
   <span class="username">
     <%= link_to lookup.owner.username, lookup.owner %>
   </span>

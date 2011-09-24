@@ -42,3 +42,19 @@ def build_valid_taster
   taster.username = 'Jane_Doe'
   return taster
 end
+
+def build_active_taster
+  taster = Taster.new
+  taster.signup!(:taster => {:username => 'John_Doe',
+                   :email => 'john@secondsip.com', :greeting => 'Hello!',
+                   :real_name => 'John Doe'})
+  taster.activate!(:taster => {:password => 'password',
+                     :password_confirmation => 'password'})
+  return taster
+end
+
+def log_out
+  taster_session = TasterSession.find
+  taster_session.destroy if taster_session
+end
+
