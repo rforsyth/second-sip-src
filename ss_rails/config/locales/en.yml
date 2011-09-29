@@ -6,6 +6,8 @@ en:
 en:
   activerecord:
     attributes:
+        note:
+            tasted_at: "Tasted On"
         producer:
           canonical_name: "Name"
         product:

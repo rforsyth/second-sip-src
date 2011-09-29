@@ -15,7 +15,8 @@
   <div class="form_row">
     <%= label_tag :style_name,
           (@product.kind_of?(Spirit) || @product.kind_of?(ReferenceSpirit)) ? 'Type:' : 'Style:' %>
-    <%= text_field_tag :style_name, @product.style.try(:name), :class => 'text_field text_wide', 
+    <%= text_field_tag :style_name, @product.style.try(:name) || params[:style_name],
+        :class => 'text_field text_wide', 
         :entity_type => @product.type, :lookup_type => Enums::LookupType::STYLE %>
   </div>
   <%= render :partial => 'common/scripts/autocomplete_script',
@@ -45,7 +46,8 @@
 <div class="form_row">
   <%= label_tag :region_name,
         (@product.kind_of?(Beer) || @product.kind_of?(ReferenceBeer)) ? 'Brewed In:' : 'Region:' %>
-  <%= text_field_tag :region_name, @product.region.try(:name), :class => 'text_field text_wide', 
+  <%= text_field_tag :region_name, @product.region.try(:name) || params[:region_name],
+      :class => 'text_field text_wide', 
       :entity_type => @product.type, :lookup_type => Enums::LookupType::REGION %>
 </div>
 <%= render :partial => 'common/scripts/autocomplete_script',

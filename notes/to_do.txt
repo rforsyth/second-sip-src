@@ -1,4 +1,25 @@
 
+- default price to "bottle"
+
+
+_____________________________________________________________
+Manual Testing
+
+- Eric:
+	- Italian = public
+	- French = friends
+	- Spanish = private
+- Mike
+	- Australia = public
+	- New Zealand = friends
+	- South Africa = private
+- Admin
+	- California = public
+	- Washington = friends
+	- Oregon = private
+
+
+
 _____________________________________________________________
 Next Up
 
@@ -59,8 +80,6 @@ iPhone (from home): 192.168.0.199:8080
 
 _____________________________________________________________
 Bugs
-
-- action buttons float to top on note show page
 
 - set_searchable_metadata doesn't work in some scenarios
   - on create, with has_one attribs?

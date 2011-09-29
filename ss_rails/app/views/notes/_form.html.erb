@@ -1,11 +1,13 @@
 <%= form_for([@note.owner || current_taster, @note]) do |f| %>
 
-  <%= render :partial => 'common/edit/errors', :locals => { :entity => @note } %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @note,
+        :messages_only => @show_error_messages_only } %>
 
   <div class="form_row">
     <%= label_tag :producer_name, "#{@producer_class.name.titleize}: " %>
     <% if @note.new_record? %>
-      <%= text_field_tag :producer_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+      <%= text_field_tag :producer_name, params[:producer_name],
+                         :class => 'text_field text_wide', :autocomplete => 'off' %>
     <% else %>
       <%= link_to @product.producer.name, [@product.producer.owner, @product.producer] %>
     <% end %>
@@ -16,7 +18,8 @@
       <a href="javascript:void(0);" class="toggle_off" tabindex="-1">[+]</a></div>
     <%= label_tag :product_name, "#{@product_class.name.titleize}: " %>
     <% if @note.new_record? %>
-      <%= text_field_tag :product_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+      <%= text_field_tag :product_name, params[:product_name],
+                         :class => 'text_field text_wide', :autocomplete => 'off' %>
     <% else %>
       <%= link_to @product.name, [@product.owner, @product] %>
     <% end %>
@@ -58,7 +61,7 @@
     <div id="note_details_toggle" class="details_toggle">
       <a href="javascript:void(0);" class="toggle_off" tabindex="-1">[+]</a></div>
     <%= label_tag :occasion_name, 'Occasion:' %>
-    <%= text_field_tag :occasion_name, @note.occasion.try(:name),
+    <%= text_field_tag :occasion_name, @note.occasion.try(:name) || params[:occasion_name],
         :class => 'text_field text_wide', 
         :entity_type => @note.type, :lookup_type => Enums::LookupType::OCCASION %>
   </div>

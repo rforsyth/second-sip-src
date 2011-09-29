@@ -46,8 +46,7 @@
 <% end %>
 
 <%= render :partial => 'common/edit/edit_actions',
-           :locals => { :edit_path => edit_polymorphic_path(@product),
-                        :delete_path => polymorphic_path(@product) } %>
+           :locals => { :edit_path => edit_polymorphic_path(@product) } %>
 
 <% content_for :right do %>
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @product.admin_tags,

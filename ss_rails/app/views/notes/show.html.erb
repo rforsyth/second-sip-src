@@ -110,8 +110,7 @@
 
 <% if allow_edit?(@note) %>
   <%= render :partial => 'common/edit/edit_actions',
-             :locals => { :edit_path => edit_polymorphic_path([@note.owner, @note]),
-                          :delete_path => polymorphic_path([@note.owner, @note]) } %>
+             :locals => { :edit_path => edit_polymorphic_path([@note.owner, @note]) } %>
 <% end %>
 
 <% content_for :right do %>

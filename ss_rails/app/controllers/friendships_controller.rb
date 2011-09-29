@@ -54,13 +54,7 @@ eos
   end
   
   def require_invitee
-    
-    puts 'SINDIDIDIDIDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'
-    
     @friendship = Friendship.find(params[:id])
-    
-    puts @friendship.inspect
-    
     if !@friendship.present?
       flash[:notice] = "Invitation not found." 
       render :template => 'errors/message', :layout => 'single_column', :status => 500

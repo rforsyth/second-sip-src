@@ -47,6 +47,10 @@ class Note < ActiveRecord::Base
     "#{self.id}-#{self.producer_canonical_name}-#{self.product_canonical_name}"
   end
   
+  def tasted_at=(value)
+    write_attribute(:tasted_at, Date.strptime(value, '%m/%d/%Y')) if value.present?
+  end
+  
   def set_searchable_metadata
     metadata = self.product.searchable_metadata.dup
     self.looked.each {|looked| metadata << " #{looked.lookup.name.remove_accents}"}
@@ -54,6 +58,7 @@ class Note < ActiveRecord::Base
   end
   
   def set_occasion(name, owner = nil)
+    return if !name.present?
     return if self.occasion.try(:canonical_name) == name.canonicalize
     self.looked.each do |looked|
       if looked.lookup.lookup_type == Enums::LookupType::OCCASION

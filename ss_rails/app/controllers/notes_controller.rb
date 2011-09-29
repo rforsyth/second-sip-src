@@ -35,22 +35,24 @@ class NotesController < ApplicationController
 
   def new
     @note = @note_class.new
-    @note.visibility = Enums::Visibility::PUBLIC
-    @note.tasted_at = DateTime.now
-    @product = @product_class.new  # required to support the product form fields
-    @note.tasted_at = Date.today
+    initialize_new_note_form
 		render :template => 'notes/new'
   end
 
   def create
     @note = @note_class.new(params[@note_class.name.underscore])
+    if !validate_producer_and_product_name
+      initialize_new_note_form
+      return render :action => "notes/edit"
+    end
     @note.set_occasion(params[:occasion_name], current_taster)
     set_product_from_params(@note)
     
     if @note.save
       redirect_to([@note.owner, @note], :notice => 'Note was successfully created.')
     else
-      render :action => "new"
+      initialize_new_note_form
+      render :action => "notes/new"
     end
   end
 
@@ -65,7 +67,8 @@ class NotesController < ApplicationController
     if @note.update_attributes(params[@note_class.name.underscore])
       redirect_to([@note.owner, @note], :notice => 'Note was successfully updated.')
     else
-      render :action => "edit"
+      @product = @note.product
+      render :action => "notes/edit"
     end
   end
 	
@@ -73,6 +76,28 @@ class NotesController < ApplicationController
   ## Helpers
 	
 	private
+	
+	def initialize_new_note_form
+	  @product = @note.product
+    @product ||= @product_class.new  # required to support the product form fields
+    @note.tasted_at ||= Date.today
+    @note.visibility ||= Enums::Visibility::PUBLIC
+  end
+  
+  def validate_producer_and_product_name
+    if !params[:producer_name].present?
+      @note.errors.add(:producer, "#{@producer_class.name} cannot be blank")
+    end
+    if !params[:product_name].present?
+      @note.errors.add(:product, "#{@product_class.name} cannot be blank")
+    end
+    if @note.errors.any?
+      @show_error_messages_only = true
+      return false
+    else
+      return true
+    end
+  end
 	
 	def find_note
     @note = @note_class.find(params[:id])
@@ -92,11 +117,14 @@ class NotesController < ApplicationController
     else
       note.product = @product_class.new(params[@product_class.name.underscore])
       note.product.name = params[:product_name]
+      note.product.visibility = note.visibility
     end
     note.product.set_lookup_properties(params, displayed_taster, @producer_class)
     note.product.save
-    note.product_name = note.product.name
-    note.producer_name = note.product.producer.name
+    if note.product.present?
+      note.product_name = note.product.name 
+      note.producer_name = note.product.producer.name if note.product.producer.present?
+    end
   end
   
   
