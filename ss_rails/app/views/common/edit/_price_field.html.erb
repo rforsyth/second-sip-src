@@ -12,7 +12,14 @@
 <% end %>
 
 <script type="text/javascript">
-  <% product_name = @product_class.name.downcase %>
+  <% 
+    product_name = @product_class.name.downcase
+    calculate_function = case
+      when @product.kind_of?(Beer) then 'calculate_spe'
+      when @product.kind_of?(Wine) then 'calculate_wbe'
+      when @product.kind_of?(Spirit) then 'calculate_fe'
+    end
+  %>
   
   function show_price_equivalent() {
     var price_paid = $("#<%= product_name %>_price_paid").val();

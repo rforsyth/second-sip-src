@@ -1,0 +1,12 @@
+<%
+  return if !viewing_own_data?
+%>
+<div class="add_beverage_bar rightpane_separator">
+  <h4>Add:</h4>
+  <%= link_to @note_class.name.titleize,
+              new_polymorphic_path([current_taster, @note_class]) %>
+  | <%= link_to @product_class.name.titleize,
+                new_polymorphic_path([current_taster, @product_class]) %>
+  | <%= link_to @producer_class.name.titleize,
+                new_polymorphic_path([current_taster, @producer_class]) %>
+</div>

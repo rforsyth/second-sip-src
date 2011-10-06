@@ -6,7 +6,8 @@ module Data::Taggable
     tagified_name = tag_name.tagify
     self.tagged.each { |tagged| return self.tags if tagged.tag.name == tagified_name }
     tag = Tag.find_or_create_by_name_and_type(tagified_name, self.type)
-    self.tagged << Tagged.new(:tag => tag, :owner => (owner || self.owner))
+    new_tagged = Tagged.new(:tag => tag, :owner => (owner || self.owner))
+    self.tagged << new_tagged
     self.tags
   end
   

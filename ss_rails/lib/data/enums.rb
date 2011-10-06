@@ -183,7 +183,7 @@ module Enums
 				"For the right season" => RIGHT_SETTING,
 				"For a special occasion" => SPECIAL_OCCASION,
 				"For the right price" => RIGHT_PRICE,
-				"If it was free" => FREE,
+				"If it's free" => FREE,
 				"Not even for free" => NOT_EVEN_FREE }
 		end
 		

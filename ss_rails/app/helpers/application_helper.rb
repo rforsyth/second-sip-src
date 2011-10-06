@@ -9,7 +9,10 @@ module ApplicationHelper
 	end
 
 	def format_note_title(note)
-		"#{note.producer_name} #{note.product_name} (#{format_short_date(note.tasted_at)})"
+		title = "#{note.producer_name} #{note.product_name}"
+		title << " #{note.vintage}" if note.vintage.present?
+		return title
+		#title << "(#{format_short_date(note.tasted_at)})"
 	end
 
 	def format_short_date(date)
@@ -31,7 +34,7 @@ module ApplicationHelper
 	end
 	
 	def show_list_item_username
-		@displayed_profile.nil?
+		@displayed_taster.nil?
 	end
 	
 	def calculate_body_class

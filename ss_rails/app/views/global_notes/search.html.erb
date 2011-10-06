@@ -5,4 +5,6 @@
 <% content_for :right do %>
   <%= render :partial => 'common/global/rightpane_search',
              :locals => { :search_path => search_notes_path } %>
+  <%= render :partial => 'common/lists/alternate_entity_search_links',
+             :locals => { :current_tab => :producers } %>
 <% end %>

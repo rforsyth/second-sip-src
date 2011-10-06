@@ -841,6 +841,10 @@ a.lookup_link {
   margin: 2px 0 0 0;
   padding: 0;
 }
+.add_beverage_bar h4{
+  display: inline;
+  margin-right: 10px;
+}
 .rightpane h5{
   text-align: center;
   font-size:17px;

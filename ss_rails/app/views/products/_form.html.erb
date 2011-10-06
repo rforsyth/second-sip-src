@@ -48,6 +48,8 @@
     <% end %>
   
     function update_product_form_producer(producer) {
+      console.log('inside update_product_form_producer')
+      console.log(producer.visibility)
       $('#<%= @product_class.name.underscore %>_visibility_' + producer.visibility).attr('checked', true);
     }
   
@@ -58,7 +60,7 @@
     $("#producer_name").blur(function(){
       if(producer_name_changed){
         producer_name_changed = false;
-        $.get('<%= polymorphic_path([current_taster, @product_class]) %>/ajax_details',
+        $.get('<%= polymorphic_path([current_taster, @producer_class]) %>/ajax_details',
              { 'name' : $("#producer_name").val() },
              function(producer) {
                update_product_form_producer(producer);

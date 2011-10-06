@@ -23,11 +23,34 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
+- bugs:
+  - didn't set visibility of product when chose producer
+    - but did in the note
+  - Mike is listed in his list of friends (only invitee used??)
+  - multi-lookup gets cleared out if you type too fast
+    - by js after the autocomplete returns?
+
+- allow only owner or admin to edit an entity
+
+- viewing friend's wines does not show friend-sharing level wines
+
+- make an auto tag from vintage?
+
+- validate score based on score type
+
+- remember the last score type that they chose
+
+- default score type to 50 for beer
+
+- show visibility when viewing own producers / products / notes
+  
+- validate / transform producer website url
+
+- add product or note from producer page
+
+- add note from product page
+
 - remember last visibility level, and default new records to it
-
-- limit to 100 friendships
-
-- autocomplete the usernames for friendship invitations
 
 - don't allow users to see beverage pages when they don't have permission
 
@@ -37,7 +60,7 @@ Next Up
 
 - build postgres SQL indexes
 
-- do some database performance profiling?
+- do some database performance profiling? - run through anti-accent function
 
 - use ssl path for login / register
   - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
@@ -122,6 +145,10 @@ V2
 - autocomplete username in friend form
 
 - review sql injection security (search, autocomplete, etc...)
+
+- limit to 100 friendships
+
+- autocomplete the usernames for friendship invitations
 
 
 _____________________________________________________________

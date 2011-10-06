@@ -149,9 +149,9 @@ class ApplicationController < ActionController::Base
 		@excluded_tags = params[:ex] || []
     @available_tags = []
     return if !tag_containers.present?
-    
+
     tags = find_tags(tag_containers.collect{|container| container.id},
-                     tag_containers.first.class.table_name)    
+                     tag_containers.first.class)    
     tags.each do |tag|
       @available_tags << tag.name if !@available_tags.include?(tag.name)
     end
@@ -167,7 +167,7 @@ class ApplicationController < ActionController::Base
     return if !tag_containers.present?
     
     admin_tags = find_admin_tags(tag_containers.collect{|container| container.id},
-                                 tag_containers.first.class.table_name)
+                                 tag_containers.first.class)
     admin_tags.each do |admin_tag|
       @available_admin_tags << admin_tag.name if !@available_admin_tags.include?(admin_tag.name)
     end
@@ -216,6 +216,7 @@ class ApplicationController < ActionController::Base
           ORDER BY created_at DESC
           LIMIT #{MAX_BEVERAGE_RESULTS}",
           owner.id, model.name, user_tags])
+      return page_beverage_results(results)
     end
     find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags)
   end
@@ -321,18 +322,22 @@ class ApplicationController < ActionController::Base
   end
   
   def find_tags(taggable_ids, taggable_type)
+    taggable_type_name = taggable_type.name
+    taggable_type_name = taggable_type.superclass.name if taggable_type.superclass != ActiveRecord::Base
     Tag.find_by_sql(["SELECT DISTINCT tags.* FROM tags
                       INNER JOIN tagged ON tags.id = tagged.tag_id
-                      INNER JOIN #{taggable_type} ON tagged.taggable_id = #{taggable_type}.id
-                      WHERE #{taggable_type}.id IN (?)",
+                      WHERE tagged.taggable_id IN (?)
+                      AND tagged.taggable_type = '#{taggable_type_name}'",
                       taggable_ids])
   end
   
   def find_admin_tags(taggable_ids, taggable_type)
+    taggable_type_name = taggable_type.name
+    taggable_type_name = taggable_type.superclass.name if taggable_type.superclass != ActiveRecord::Base
     Tag.find_by_sql(["SELECT DISTINCT admin_tags.* FROM admin_tags
                       INNER JOIN admin_tagged ON admin_tags.id = admin_tagged.admin_tag_id
-                      INNER JOIN #{taggable_type} ON admin_tagged.admin_taggable_id = #{taggable_type}.id
-                      WHERE #{taggable_type}.id IN (?)",
+                      WHERE admin_tagged.admin_taggable_id IN (?)
+                      AND admin_tagged.admin_taggable_type = '#{taggable_type_name}'",
                       taggable_ids])
   end
   

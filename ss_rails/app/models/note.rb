@@ -48,7 +48,11 @@ class Note < ActiveRecord::Base
   end
   
   def tasted_at=(value)
-    write_attribute(:tasted_at, Date.strptime(value, '%m/%d/%Y')) if value.present?
+    if value.kind_of?(String)
+      write_attribute(:tasted_at, Date.strptime(value, '%m/%d/%Y')) 
+    else
+      write_attribute(:tasted_at, value)
+    end
   end
   
   def set_searchable_metadata
@@ -74,9 +78,9 @@ class Note < ActiveRecord::Base
   end
   
   def add_buy_when_tag
-    return if @original_buy_when == self.buy_when
+    return if(@original_buy_when == self.buy_when && !self.new_record?)
     self.remove_tag(Enums::BuyWhen.to_tag(@original_buy_when)) if @original_buy_when.present?
-    self.add_tag(Enums::BuyWhen.to_tag(self.buy_when)) if self.buy_when.present?
+    self.add_tag(Enums::BuyWhen.to_tag(self.buy_when), self.owner) if self.buy_when.present?
   end
 	
 end

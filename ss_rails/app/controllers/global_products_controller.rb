@@ -9,7 +9,7 @@ class GlobalProductsController < ApplicationController
   end
   
   def search
-    @producers = search_global_beverage(@product_class, params[:query], current_taster)
+    @products = search_global_beverage(@product_class, params[:query], current_taster)
   end
   
 end

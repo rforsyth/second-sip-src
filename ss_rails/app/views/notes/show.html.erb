@@ -120,5 +120,6 @@
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @note.admin_tags,
              :locals => { :tag_container => @note,
                           :entity_path => polymorphic_path([@note.owner, @note]) } %>
+  <%= render :partial => 'common/lists/add_beverage_bar' %>
 <% end %>
 

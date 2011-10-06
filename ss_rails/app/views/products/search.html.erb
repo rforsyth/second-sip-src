@@ -5,4 +5,6 @@
 <% content_for :right do %>
   <%= render :partial => 'common/global/rightpane_search',
              :locals => { :search_path => "#{polymorphic_path([displayed_taster, @product_class])}/search" } %>
+  <%= render :partial => 'common/lists/alternate_entity_search_links',
+             :locals => { :current_tab => :products } %>
 <% end %>
