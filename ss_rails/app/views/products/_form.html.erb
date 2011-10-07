@@ -48,8 +48,6 @@
     <% end %>
   
     function update_product_form_producer(producer) {
-      console.log('inside update_product_form_producer')
-      console.log(producer.visibility)
       $('#<%= @product_class.name.underscore %>_visibility_' + producer.visibility).attr('checked', true);
     }
   

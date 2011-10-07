@@ -671,8 +671,9 @@ div.form_right_column {
   padding-left: 77px;
 }
 ul.form_list {
-	float: right;
+	/* float: right; */
 	width: 370px;
+	padding-left: 0;
 }
 ul.form_list li {
 	display: block;
@@ -683,6 +684,8 @@ ul.form_list li a {
 	display: block;
 	float: left;
 	margin-bottom: 2px;
+	text-decoration: none;
+	color: #333333;
 }
 ul.form_list a.remove_item {
 	margin-left: 5px;
@@ -717,6 +720,10 @@ div.error_explanation ul {
 }
 .field_with_errors label {
   color: #FF4500;
+}
+div.lookup_collection {
+  display: inline-block;
+  width: 370px;
 }
 
 /********************************************************
@@ -1107,6 +1114,7 @@ div.tags_container span.title {
 	float: left;
 	margin: 2px 0;
 	text-indent:-1000px;
+	width: 0;
 }
 .tag_filter li.tag:hover {
 	color: white;

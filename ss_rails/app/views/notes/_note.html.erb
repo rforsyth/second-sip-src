@@ -6,7 +6,7 @@
     <%= link_to format_note_title(note), [note.owner, note] %></span>
   <%= " (#{format_short_date(note.tasted_at)})" %>
   <%= render :partial => 'common/details/sharing_icon',
-      :locals => { :visibility => note.visibility } if @show_sharing_icon %>
+      :locals => { :visibility => note.visibility } if viewing_own_data? %>
   <% if show_list_item_username %>
     <span class="username">
       <%= link_to owner.username, polymorphic_path([owner, @note_class]) %></span>

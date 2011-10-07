@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  BEVERAGE_PAGE_SIZE = 20
+  BEVERAGE_PAGE_SIZE = 5 #20
   MAX_PAGE_NUM = 10
   MAX_BEVERAGE_RESULTS = 200
   MAX_AUTOCOMPLETE_RESULTS = 8
@@ -121,7 +121,25 @@ class ApplicationController < ActionController::Base
   
   def require_admin
     if !(current_taster && current_taster.is?(:admin))
-      flash[:notice] = "You do not have permissions to access this page." 
+      flash[:notice] = "You do not have permission to access this page." 
+      render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
+      return false 
+    end
+  end
+  
+  def require_viewing_own_data
+    if !(current_taster && 
+         (displayed_taster == current_taster ||
+         current_taster.is?(:admin)))
+      flash[:notice] = "You do not have permission to access this page." 
+      render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
+      return false 
+    end
+  end
+  
+  def require_visibility_helper(entity)
+    if !(test_visibility(entity, current_taster))
+      flash[:notice] = "You do not have permission to access this page." 
       render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
       return false 
     end
@@ -205,35 +223,40 @@ class ApplicationController < ActionController::Base
   
   def find_beverage_by_owner_and_tags(model, owner, viewer, user_tags, admin_tags)
     if user_tags.present?
-      results = model.find_by_sql(
-        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
-          INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
-          INNER JOIN tags ON tagged.tag_id = tags.id
-          WHERE #{model.table_name}.owner_id = ?
-            AND #{model.table_name}.type = ?
-            AND tags.name IN (?)
-            AND #{known_owner_visibility_clause(model, owner, viewer)}
-          ORDER BY created_at DESC
-          LIMIT #{MAX_BEVERAGE_RESULTS}",
-          owner.id, model.name, user_tags])
+      query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
+        INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
+        INNER JOIN tags ON tagged.tag_id = tags.id
+        WHERE #{model.table_name}.owner_id = #{owner.id}
+          AND #{model.table_name}.type = '#{model.name}'
+          AND tags.name = ?
+          AND #{known_owner_visibility_clause(model, owner, viewer)}"
+      summary = "ORDER BY created_at DESC
+        LIMIT #{MAX_BEVERAGE_RESULTS}"
+        
+      query = format_tag_intersection_query(query, summary, user_tags)
+      
+      results = model.find_by_sql([query, user_tags].flatten)
       return page_beverage_results(results)
     end
     find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags)
   end
   
+  
   def find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags)
     if admin_tags.present?
-      results = model.find_by_sql(
-        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
-          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
-          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
-          WHERE #{model.table_name}.owner_id = ?
-            AND #{model.table_name}.type = ?
-            AND admin_tags.name IN (?)
-            AND #{known_owner_visibility_clause(model, owner, viewer)}
-          ORDER BY created_at DESC
-          LIMIT ?",
-          owner.id, model.name, admin_tags, MAX_BEVERAGE_RESULTS])
+      query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
+        INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+        INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+        WHERE #{model.table_name}.owner_id = #{owner.id}
+          AND #{model.table_name}.type = '#{model.name}'
+          AND admin_tags.name = ?
+          AND #{known_owner_visibility_clause(model, owner, viewer)}"
+      summary = "ORDER BY created_at DESC
+        LIMIT #{MAX_BEVERAGE_RESULTS}"
+        
+      query = format_tag_intersection_query(query, summary, admin_tags)
+      
+      results = model.find_by_sql([query, admin_tags].flatten)
     else
       results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name}
@@ -249,16 +272,16 @@ class ApplicationController < ActionController::Base
   
   def find_global_beverage_by_tags(model, viewer, user_tags, admin_tags)
     if user_tags.present?
-      results = model.find_by_sql(
-        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
-          INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
-          INNER JOIN tags ON tagged.tag_id = tags.id
-          WHERE #{model.table_name}.type = ?
-            AND tags.name IN (?)
-            AND #{global_visibility_clause(model, viewer)}
-          ORDER BY created_at DESC
-          LIMIT ?",
-          model.name, user_tags, MAX_BEVERAGE_RESULTS])
+      query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
+        INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
+        INNER JOIN tags ON tagged.tag_id = tags.id
+        WHERE #{model.table_name}.type = '#{model.name}'
+          AND tags.name = ?
+          AND #{global_visibility_clause(model, viewer)}"
+      summary = "ORDER BY created_at DESC
+        LIMIT #{MAX_BEVERAGE_RESULTS}"
+      query = format_tag_intersection_query(query, summary, user_tags)
+      results = model.find_by_sql([query, user_tags].flatten)
       return page_beverage_results(results)
     end
     find_global_beverage_by_admin_tags(model, viewer, admin_tags)
@@ -266,16 +289,16 @@ class ApplicationController < ActionController::Base
   
   def find_global_beverage_by_admin_tags(model, viewer, admin_tags)
     if admin_tags.present?
-      results = model.find_by_sql(
-        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
-          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
-          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
-          WHERE #{model.table_name}.type = ?
-            AND admin_tags.name IN (?)
-            AND #{global_visibility_clause(model, viewer)}
-          ORDER BY created_at DESC
-          LIMIT ?",
-          model.name, admin_tags, MAX_BEVERAGE_RESULTS])
+      query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
+        INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+        INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+        WHERE #{model.table_name}.type = '#{model.name}'
+          AND admin_tags.name = ?
+          AND #{global_visibility_clause(model, viewer)}"
+      summary = "ORDER BY created_at DESC
+        LIMIT #{MAX_BEVERAGE_RESULTS}"
+      query = format_tag_intersection_query(query, summary, admin_tags)
+      results = model.find_by_sql([query, admin_tags].flatten)
     else
       results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name}
@@ -290,15 +313,16 @@ class ApplicationController < ActionController::Base
   
   def find_reference_beverage_by_admin_tags(model, viewer, admin_tags)
     if admin_tags.present?
-      results = model.find_by_sql(
-        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
-          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
-          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
-          WHERE #{model.table_name}.type = ?
-            AND admin_tags.name IN (?)
-          ORDER BY created_at DESC
-          LIMIT ?",
-          model.name, admin_tags, MAX_BEVERAGE_RESULTS])
+      query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
+        INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+        INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+        WHERE #{model.table_name}.type = '#{model.name}'
+          AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
+          AND admin_tags.name = ?"
+      summary = "ORDER BY created_at DESC
+        LIMIT #{MAX_BEVERAGE_RESULTS}"
+      query = format_tag_intersection_query(query, summary, admin_tags)
+      results = model.find_by_sql([query, admin_tags].flatten)
     else
       results = model.limit(MAX_BEVERAGE_RESULTS)
     end
@@ -306,15 +330,16 @@ class ApplicationController < ActionController::Base
   end
   
   def find_by_admin_tags(model, admin_tags)
-    if admin_tags.present?      
-      results = model.find_by_sql(
-        ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name} 
-          INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
-          INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
-          WHERE admin_tags.name IN (?)
-          ORDER BY created_at DESC
-          LIMIT ?",
-          admin_tags, MAX_BEVERAGE_RESULTS])
+    if admin_tags.present?
+      query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
+        INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
+        INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
+        WHERE admin_tags.name = ?
+          AND admin_tagged.admin_taggable_type = '#{model.name}'"
+      summary = "ORDER BY created_at DESC
+        LIMIT #{MAX_BEVERAGE_RESULTS}"
+      query = format_tag_intersection_query(query, summary, admin_tags)
+      results = model.find_by_sql([query, admin_tags].flatten)
     else
       results = model.limit(MAX_BEVERAGE_RESULTS)
     end
@@ -324,20 +349,28 @@ class ApplicationController < ActionController::Base
   def find_tags(taggable_ids, taggable_type)
     taggable_type_name = taggable_type.name
     taggable_type_name = taggable_type.superclass.name if taggable_type.superclass != ActiveRecord::Base
-    Tag.find_by_sql(["SELECT DISTINCT tags.* FROM tags
-                      INNER JOIN tagged ON tags.id = tagged.tag_id
+    Tag.find_by_sql(["SELECT COUNT(t.id), t.id, t.creator_id, t.updater_id, t.name, t.created_at, t.updated_at, t.entity_type
+                      FROM tags t
+                      INNER JOIN tagged ON t.id = tagged.tag_id
                       WHERE tagged.taggable_id IN (?)
-                      AND tagged.taggable_type = '#{taggable_type_name}'",
+                      AND tagged.taggable_type = '#{taggable_type_name}'
+                      GROUP BY t.id, t.creator_id, t.updater_id, t.name, t.created_at, t.updated_at, t.entity_type
+                      ORDER BY COUNT(t.id) DESC, t.name ASC
+                      LIMIT 30",
                       taggable_ids])
   end
   
   def find_admin_tags(taggable_ids, taggable_type)
     taggable_type_name = taggable_type.name
     taggable_type_name = taggable_type.superclass.name if taggable_type.superclass != ActiveRecord::Base
-    Tag.find_by_sql(["SELECT DISTINCT admin_tags.* FROM admin_tags
-                      INNER JOIN admin_tagged ON admin_tags.id = admin_tagged.admin_tag_id
+    Tag.find_by_sql(["SELECT COUNT(t.id), t.id, t.creator_id, t.updater_id, t.name, t.created_at, t.updated_at, t.entity_type
+                      FROM admin_tags t
+                      INNER JOIN admin_tagged ON t.id = admin_tagged.admin_tag_id
                       WHERE admin_tagged.admin_taggable_id IN (?)
-                      AND admin_tagged.admin_taggable_type = '#{taggable_type_name}'",
+                      AND admin_tagged.admin_taggable_type = '#{taggable_type_name}'
+                      GROUP BY t.id, t.creator_id, t.updater_id, t.name, t.created_at, t.updated_at, t.entity_type
+                      ORDER BY COUNT(t.id) DESC
+                      LIMIT 30",
                       taggable_ids])
   end
   
@@ -405,12 +438,24 @@ class ApplicationController < ActionController::Base
     return clause + ") "
   end
   
+  def format_tag_intersection_query(query, summary, tags)
+    intersection_query = ''
+    tags.each do |tag|
+      if intersection_query.length > 0
+        intersection_query << "\n INTERSECT \n"
+      end
+      intersection_query << query
+    end
+    intersection_query << "\n #{summary}"
+  end
+  
   def collect_friend_ids(taster)
     taster.friends.collect{|friend| friend.id} if taster.present?
   end
   
   # returns nil if the beverage is not visible to the viewer
   def test_visibility(beverage, viewer)
+    return true if viewer.is?(:admin)
     return true if(viewer == beverage.owner ||
                    beverage.visibility == Enums::Visibility::PUBLIC)
     return true if(beverage.visibility == Enums::Visibility::FRIENDS &&

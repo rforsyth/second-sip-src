@@ -10,6 +10,8 @@ class NotesController < ApplicationController
                   :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
+  before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update]
+  before_filter :require_visibility, :only => [:show]
   
   def search
     @notes = search_beverage_by_owner(@note_class, params[:query],
@@ -76,6 +78,10 @@ class NotesController < ApplicationController
   ## Helpers
 	
 	private
+	
+	def require_visibility
+	  require_visibility_helper(@note)
+	end
 	
 	def initialize_new_note_form
 	  @product = @note.product

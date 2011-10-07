@@ -20,9 +20,9 @@ class Note < ActiveRecord::Base
 	validates_presence_of :product, :visibility, :tasted_at
   validates_associated :product, :tagged
 
-  after_initialize :save_original_buy_when
+  after_initialize :save_original_auto_tag_values
   before_validation :set_canonical_fields
-  before_save :set_searchable_metadata, :add_buy_when_tag
+  before_save :set_searchable_metadata, :add_auto_tags
   before_create :add_unreviewed_tag
   
   # include in metadata: vintage, owner username,
@@ -39,8 +39,9 @@ class Note < ActiveRecord::Base
     self.producer_canonical_name = self.producer_name.canonicalize if self.producer_name.present?
   end
   
-  def save_original_buy_when
+  def save_original_auto_tag_values
     @original_buy_when = self.buy_when if self.respond_to?(:buy_when)
+    @original_vintage = self.vintage if self.respond_to?(:vintage)
   end
   
   def to_param
@@ -77,10 +78,21 @@ class Note < ActiveRecord::Base
     self.looked << looked
   end
   
-  def add_buy_when_tag
-    return if(@original_buy_when == self.buy_when && !self.new_record?)
-    self.remove_tag(Enums::BuyWhen.to_tag(@original_buy_when)) if @original_buy_when.present?
-    self.add_tag(Enums::BuyWhen.to_tag(self.buy_when), self.owner) if self.buy_when.present?
+  private
+  
+  def add_auto_tags
+    if !(@original_buy_when == self.buy_when && !self.new_record?)
+      self.remove_tag(Enums::BuyWhen.to_tag(@original_buy_when)) if @original_buy_when.present?
+      self.add_tag(Enums::BuyWhen.to_tag(self.buy_when), self.owner) if self.buy_when.present?
+    end
+    # if !(@original_vintage == self.vintage && !self.new_record?)
+    #   self.remove_tag(tagify_vintage(@original_vintage)) if @original_vintage.present?
+    #   self.add_tag(tagify_vintage(self.vintage), self.owner) if self.vintage.present?
+    # end
+  end
+  
+  def tagify_vintage(vintage)
+    "vintage-#{vintage}"
   end
 	
 end

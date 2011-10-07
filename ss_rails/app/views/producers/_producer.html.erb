@@ -1,7 +1,7 @@
 <div class="list_item">
   <span class="item_name"><%= link_to producer.name, [producer.owner, producer] %></span>
   <%= render :partial => 'common/details/sharing_icon',
-             :locals => { :visibility => producer.try(:visibility) } if @show_sharing_icon %>
+             :locals => { :visibility => producer.try(:visibility) } if viewing_own_data? %>
   <% if displayed_taster.nil? %>
     <span class="username">
       <%= link_to producer.owner.username, polymorphic_path([producer.owner, @producer_class]) %></span>

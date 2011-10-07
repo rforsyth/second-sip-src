@@ -61,7 +61,7 @@ eos
       return false
     end
     if !(current_taster && current_taster == @friendship.invitee)
-      flash[:notice] = "You do not have permissions to access this page." 
+      flash[:notice] = "You do not have permission to access this page." 
       render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
       return false
     end

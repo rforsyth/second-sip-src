@@ -10,6 +10,8 @@ class ProductsController < ApplicationController
                   :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
+  before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update, :ajax_details]
+  before_filter :require_visibility, :only => [:show]
   
   def search
     @products = search_beverage_by_owner(@product_class, params[:query],
@@ -100,6 +102,10 @@ class ProductsController < ApplicationController
   ## Helpers
   
   private
+	
+	def require_visibility
+	  require_visibility_helper(@product)
+	end
   
   def find_product
     @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])

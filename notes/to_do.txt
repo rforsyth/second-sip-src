@@ -23,28 +23,15 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
-- bugs:
-  - didn't set visibility of product when chose producer
-    - but did in the note
-  - Mike is listed in his list of friends (only invitee used??)
-  - multi-lookup gets cleared out if you type too fast
-    - by js after the autocomplete returns?
-
-- allow only owner or admin to edit an entity
-
 - viewing friend's wines does not show friend-sharing level wines
 
-- make an auto tag from vintage?
-
 - validate score based on score type
+  
+- validate / transform producer website url
 
 - remember the last score type that they chose
 
 - default score type to 50 for beer
-
-- show visibility when viewing own producers / products / notes
-  
-- validate / transform producer website url
 
 - add product or note from producer page
 
@@ -57,6 +44,9 @@ Next Up
 - add indexes to columns using migrations
 
 - move more fields to metadata search field?
+
+- set_searchable_metadata doesn't work in some scenarios
+  - on create, with has_one attribs?
 
 - build postgres SQL indexes
 
@@ -104,12 +94,10 @@ iPhone (from home): 192.168.0.199:8080
 _____________________________________________________________
 Bugs
 
-- set_searchable_metadata doesn't work in some scenarios
-  - on create, with has_one attribs?
+- multi-lookup gets cleared out if you type too fast
+  - by js after the autocomplete returns?
 
 - autocomplete gets broken when textbox drops down for multi-lookup
-
-- price calculation is broken for spirits
 
 - in IE7:
   - username drops below bottom line in list when no description

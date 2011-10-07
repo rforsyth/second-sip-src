@@ -10,6 +10,8 @@ class ProducersController < ApplicationController
                   :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
+  before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update, :ajax_details]
+  before_filter :require_visibility, :only => [:show]
   
   def search
     @producers = search_beverage_by_owner(@producer_class, params[:query],
@@ -101,6 +103,10 @@ class ProducersController < ApplicationController
   ## Helpers
 	
 	private
+	
+	def require_visibility
+	  require_visibility_helper(@producer)
+	end
 	
 	def find_producer
     @producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
