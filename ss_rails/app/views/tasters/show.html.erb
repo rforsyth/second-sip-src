@@ -6,6 +6,7 @@
   <div class="main_list">
     <%= render :partial => 'notes/note', :collection => @notes %>
   </div>
+  <%= render :partial => 'common/lists/paging_bar' %>
 <% elsif viewing_own_data? %>
   <div class="intro simple_intro">
   <p>Click &quot;Beer&quot;, &quot;Wine&quot;, or &quot;Spirits&quot;

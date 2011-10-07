@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   
-  BEVERAGE_PAGE_SIZE = 5 #20
+  BEVERAGE_PAGE_SIZE = 20
   MAX_PAGE_NUM = 10
   MAX_BEVERAGE_RESULTS = 200
   MAX_AUTOCOMPLETE_RESULTS = 8
@@ -250,6 +250,7 @@ class ApplicationController < ActionController::Base
         WHERE #{model.table_name}.owner_id = #{owner.id}
           AND #{model.table_name}.type = '#{model.name}'
           AND admin_tags.name = ?
+          AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
           AND #{known_owner_visibility_clause(model, owner, viewer)}"
       summary = "ORDER BY created_at DESC
         LIMIT #{MAX_BEVERAGE_RESULTS}"
@@ -294,6 +295,7 @@ class ApplicationController < ActionController::Base
         INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
         WHERE #{model.table_name}.type = '#{model.name}'
           AND admin_tags.name = ?
+          AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
           AND #{global_visibility_clause(model, viewer)}"
       summary = "ORDER BY created_at DESC
         LIMIT #{MAX_BEVERAGE_RESULTS}"
@@ -420,7 +422,7 @@ class ApplicationController < ActionController::Base
   def known_owner_visibility_clause(model, owner, viewer)
     return 'true' if(owner.present? && owner == viewer)
     if viewer.present? && viewer.friends.include?(owner)
-      return " #{model.table_name}.visibility = #{Enums::Visibility::FRIENDS} "
+      return " #{model.table_name}.visibility >= #{Enums::Visibility::FRIENDS} "
     end
     " #{model.table_name}.visibility = #{Enums::Visibility::PUBLIC} "
   end

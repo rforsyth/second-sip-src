@@ -20,7 +20,7 @@
   <% else %>
     <div class="header_spacer">&nbsp;</div>
   <% end %>
-  <% if defined?(visibility) && visibility.present? %>
+  <% if defined?(visibility) && visibility.present? && viewing_own_data? %>
     <%= render :partial => 'common/details/sharing_icon', :locals => { :visibility => visibility }  %>
   <% end %>
 </div>

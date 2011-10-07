@@ -23,7 +23,15 @@ class TastersController < ApplicationController
 
   def show
     @displayed_taster = @taster
-    @notes = Note.find_all_by_owner_id(@taster.id)
+    
+    results = Note.find_by_sql(
+        ["SELECT * FROM notes
+          WHERE notes.owner_id = ?
+            AND #{known_owner_visibility_clause(Note, @taster, current_taster)}
+          ORDER BY created_at DESC
+          LIMIT ?",
+          @taster.id, MAX_BEVERAGE_RESULTS])
+    @notes = page_beverage_results(results)
     
     if displayed_taster == current_taster
       @friendships = Friendship.find_all_by_taster(current_taster)

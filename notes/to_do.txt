@@ -23,8 +23,6 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
-- viewing friend's wines does not show friend-sharing level wines
-
 - validate score based on score type
   
 - validate / transform producer website url
@@ -39,18 +37,17 @@ Next Up
 
 - remember last visibility level, and default new records to it
 
-- don't allow users to see beverage pages when they don't have permission
-
 - add indexes to columns using migrations
 
 - move more fields to metadata search field?
+  - run through anti-accent function
 
 - set_searchable_metadata doesn't work in some scenarios
   - on create, with has_one attribs?
 
 - build postgres SQL indexes
 
-- do some database performance profiling? - run through anti-accent function
+- do some database performance profiling?
 
 - use ssl path for login / register
   - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
