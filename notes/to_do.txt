@@ -23,11 +23,6 @@ Next Up
 
 - price type did not default when creating wine note
 
-
-
-- move more fields to metadata search field?
-  - run through anti-accent function
-
 - set_searchable_metadata doesn't work in some scenarios
   - on create, with has_one attribs?
 
@@ -42,7 +37,9 @@ Next Up
   - grape varietals
   - wine regions
   - beer styles
+  - beer regions
   - spirit types
+  - spirit regions
 
 _____________________________________________________________
 Security

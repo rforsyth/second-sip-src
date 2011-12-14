@@ -25,7 +25,7 @@ class ReferenceProduct < ActiveRecord::Base
   before_save :set_searchable_metadata
   
   pg_search_scope :search,
-    :against => [:name, :searchable_metadata, :description]
+    :against => [:name, :reference_producer_name, :searchable_metadata, :description]
     #:ignoring => :accents
   
   def set_canonical_fields
