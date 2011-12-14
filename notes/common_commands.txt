@@ -49,6 +49,11 @@ Source code hosted at: http://secondsip.unfuddle.com/a#/projects/1
 - login: Ryan / not enough cap
 - more info in Google Docs - SecondSip Hosting
 
+Heroku:
+- login: ryanforsyth@gmail.com / escaped
+- url: http://falling-river-1814.heroku.com/
+- repository: git@heroku.com:falling-river-1814.git
+
 $ git push unfuddle master
 
 __________________________________________________________________

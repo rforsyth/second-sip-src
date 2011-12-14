@@ -1,0 +1,14 @@
+<%
+  return if !viewing_own_data?
+  note_params = {} if !defined?(note_params) || note_params.nil?
+  product_params = {} if !defined?(product_params) || product_params.nil?
+%>
+<div class="add_beverage_bar rightpane_separator">
+  <h4>Add:</h4>
+  <%= link_to @note_class.name.titleize,
+              new_polymorphic_path([current_taster, @note_class], note_params) %>
+  | <%= link_to @product_class.name.titleize,
+                new_polymorphic_path([current_taster, @product_class], product_params) %>
+  | <%= link_to @producer_class.name.titleize,
+                new_polymorphic_path([current_taster, @producer_class]) %>
+</div>

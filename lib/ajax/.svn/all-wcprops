@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/13/trunk/lib/ajax
+END
+autocomplete.rb
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/20/trunk/lib/ajax/autocomplete.rb
+END
+simple_product.rb
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/31/trunk/lib/ajax/simple_product.rb
+END
+simple_producer.rb
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/33/trunk/lib/ajax/simple_producer.rb
+END

@@ -1,0 +1,28 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Set Password" } %>
+
+
+<%= form_for @taster, :url => password_reset_path, :method => :put,
+                     :html => {:class => 'password_reset_form'} do |f| %>
+
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @taster } %>
+
+  <div class="form_row">
+    <%= f.label :password, "New Password:" %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="form_row">
+    <%= f.label :password_confirmation, "Confirm:" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="form_separator form_right_column">
+    <%= submit_tag "Set Password" %>
+  </div>
+<% end %>
+
+<% content_for :right do %>
+  <div class="right_directions">
+  </div>
+<% end %>
+

@@ -1,8 +1,0 @@
-
-<%= render :partial => 'common/lists/search_results',
-          :locals => { :results => @tasters, :result_partial => 'tasters/taster' } %>                        
-
-<% content_for :right do %>
-  <%= render :partial => 'common/global/rightpane_search',
-             :locals => { :search_path => search_tasters_path } %>
-<% end %>

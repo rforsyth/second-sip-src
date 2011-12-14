@@ -1,0 +1,22 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "#{@reference_producer_class.name.pluralize.titleize}",
+                        :new_item_path => new_polymorphic_path(@reference_producer_class) } %>
+
+<% if @producers && !@producers.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'reference_producers/reference_producer', :collection => @producers %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no reference producers." %>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => "#{polymorphic_path(@reference_producer_class)}/search" } %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
+<% end %>
+

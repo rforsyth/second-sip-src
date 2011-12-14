@@ -1,0 +1,66 @@
+<%
+  price_type_collection, default_price_type = case
+  when @product.kind_of?(Beer) || @product.kind_of?(ReferenceBeer)
+    then [Enums::BeerPriceType.sorted_collection, Enums::BeerPriceType::SIX_PACK]
+  when @product.kind_of?(Wine) || @product.kind_of?(ReferenceWine)
+    then [Enums::WinePriceType.sorted_collection, Enums::WinePriceType::BOTTLE]
+  when @product.kind_of?(Spirit) || @product.kind_of?(ReferenceSpirit)
+    then [Enums::SpiritPriceType.sorted_collection, Enums::SpiritPriceType::FIFTH]
+  end
+  autocomplete_lookups_path = @product.kind_of?(Product) ? lookups_path : reference_lookups_path
+  is_beer_or_spirit = @product.kind_of?(Spirit) || @product.kind_of?(Beer) ||
+      @product.kind_of?(ReferenceSpirit) || @product.kind_of?(ReferenceBeer)
+%>
+                         
+<% if is_beer_or_spirit %>
+  <div class="form_row">
+    <%= label_tag :style_name,
+          (@product.kind_of?(Spirit) || @product.kind_of?(ReferenceSpirit)) ? 'Type:' : 'Style:' %>
+    <%= text_field_tag :style_name, @product.style.try(:name) || params[:style_name],
+        :class => 'text_field text_wide', 
+        :entity_type => @product.type, :lookup_type => Enums::LookupType::STYLE %>
+  </div>
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "style_name",
+                          :entities_path => autocomplete_lookups_path,
+                          :params => {'lookup_type' => Enums::LookupType::STYLE,
+                                      'entity_type' => @product.class.name} } %>
+<% end %>
+
+<div class="form_row">
+  <%= label_tag :region_name,
+        (@product.kind_of?(Beer) || @product.kind_of?(ReferenceBeer)) ? 'Brewed In:' : 'Region:' %>
+  <%= text_field_tag :region_name, @product.region.try(:name) || params[:region_name],
+      :class => 'text_field text_wide', 
+      :entity_type => @product.type, :lookup_type => Enums::LookupType::REGION %>
+</div>
+<%= render :partial => 'common/scripts/autocomplete_script',
+           :locals => { :field_id => "region_name",
+                        :entities_path => autocomplete_lookups_path,
+                        :params => {'lookup_type' => Enums::LookupType::REGION,
+                                    'entity_type' => @product.class.name} } %>
+
+<% if !is_beer_or_spirit %>
+  <%= render :partial => 'common/edit/lookup_collection_row',
+             :locals => { :lookup_name => 'varietal', :lookup_collection => @product.varietals,
+                          :entity_type => @product.type, :lookup_type => Enums::LookupType::VARIETAL } %>
+  <%= render :partial => 'common/edit/lookup_collection_row',
+             :locals => { :lookup_name => 'vineyard', :lookup_collection => @product.vineyards,
+                          :entity_type => @product.type, :lookup_type => Enums::LookupType::VINEYARD } %>
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "varietal_name",
+                          :entities_path => autocomplete_lookups_path,
+                          :params => {'lookup_type' => Enums::LookupType::VARIETAL,
+                                      'entity_type' => @product.class.name} } %>
+  <%= render :partial => 'common/scripts/autocomplete_script',
+             :locals => { :field_id => "vineyard_name",
+                          :entities_path => autocomplete_lookups_path,
+                          :params => {'lookup_type' => Enums::LookupType::VINEYARD,
+                                      'entity_type' => @product.class.name} } %>
+<% end %>
+
+<%= render :partial => 'common/edit/price_field', :locals => {
+  :price_type_collection => price_type_collection,
+  :selected => default_price_type } %>
+  
+    

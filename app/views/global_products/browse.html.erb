@@ -1,0 +1,13 @@
+
+<%= render :partial => 'common/lists/beverage_index',
+           :locals => { :beverages => @products,
+                        :beverage_model => @product_class,
+                        :beverage_partial => 'products/product' } %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => search_products_path } %>
+  <%= render :partial => 'common/lists/user_tag_filter' %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
+<% end %>
+

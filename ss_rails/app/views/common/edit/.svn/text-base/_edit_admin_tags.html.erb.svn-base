@@ -1,9 +1,0 @@
-<%
-  return if !@show_admin
-%>
-<div class="tag_edit tags">
-  <h4>Admin Tags</h4>
-  <%= render :partial => 'common/edit/edit_tags', :object => tag_container.admin_tags,
-             :locals => { :are_admin_tags => true, :controller_path => tag_container.class.entities_path,
-                          :container_id => tag_container.id, :allow_edit => true } %>
-</div>

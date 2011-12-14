@@ -1,0 +1,19 @@
+<%= form_for(@admin_tag) do |f| %>
+
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @admin_tag } %>
+  
+  <div class="form_row">
+    <%= f.label :name, 'Name:' %>
+    <%= f.text_field :name, :class => 'text_field text_wide' %>
+  </div>
+  <div class="form_row">
+    <%= f.label :entity_type, 'Entity:' %>
+    <%= f.select(:entity_type, Enums::EntityType.collection,
+                           :class => 'select_field') %>
+  </div>
+  
+  <div class="form_separator form_right_column">
+    <%= f.submit %>
+  </div>
+
+<% end %>

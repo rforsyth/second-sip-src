@@ -1,0 +1,76 @@
+<%-
+  link = case subnav_tab.tab
+  when :notes then
+    link_to('Notes',
+            polymorphic_path([displayed_taster, @note_class]),
+            :class => subnav_tab.css_class)
+  when :products then
+    link_to(@product_class.name.titleize.pluralize,
+            polymorphic_path([displayed_taster, @product_class]),
+            :class => subnav_tab.css_class)
+  when :producers then
+    link_to(@producer_class.name.titleize.pluralize,
+            polymorphic_path([displayed_taster, @producer_class]),
+            :class => subnav_tab.css_class)
+  when :global_notes then
+    link_to('Notes',
+            browse_notes_path(:entity_type => @note_class.name.tableize),
+            :class => subnav_tab.css_class)
+  when :global_products then
+    link_to(@product_class.name.titleize.pluralize,
+            browse_products_path(:entity_type => @product_class.name.tableize),
+            :class => subnav_tab.css_class)
+  when :global_producers then
+    link_to(@producer_class.name.titleize.pluralize,
+            browse_producers_path(:entity_type => @producer_class.name.tableize),
+            :class => subnav_tab.css_class)
+  when :tasters then
+    link_to('Tasters', tasters_path, :class => subnav_tab.css_class)
+  when :friendships then
+    link_to('Friendships', friendships_path, :class => subnav_tab.css_class)
+  when :lookups then
+    link_to('Lookups', lookups_path, :class => subnav_tab.css_class)
+  when :resources then
+    link_to('Resources', resources_path, :class => subnav_tab.css_class)
+  when :tags then
+    link_to('Tags', tags_path, :class => subnav_tab.css_class)
+  when :admin_tags then
+    link_to('Admin Tags', admin_tags_path, :class => subnav_tab.css_class)
+  when :product_notes then
+    product = subnav_tab.container_object
+    link_to('Notes',
+            "#{polymorphic_path([product.owner, product])}?tab=notes",
+            :class => subnav_tab.css_class)
+  when :producer_notes then
+    producer = subnav_tab.container_object
+    link_to('Notes',
+            "#{polymorphic_path([producer.owner, producer])}?tab=notes",
+            :class => subnav_tab.css_class)
+  when :producer_products then
+    producer = subnav_tab.container_object
+    link_to(@product_class.name.titleize.pluralize,
+            "#{polymorphic_path([producer.owner, producer])}?tab=products",
+            :class => subnav_tab.css_class)
+  when :reference_producer_products then
+    producer = subnav_tab.container_object
+    link_to(@product_class.name.titleize.pluralize,
+            "#{polymorphic_path(producer)}?tab=products",
+            :class => subnav_tab.css_class)
+  when :reference_lookups then
+    link_to('Reference Lookups', reference_lookups_path, :class => subnav_tab.css_class)
+  when :reference_breweries then
+    link_to('Breweries', reference_breweries_path, :class => subnav_tab.css_class)
+  when :reference_wineries then
+    link_to('Wineries', reference_wineries_path, :class => subnav_tab.css_class)
+  when :reference_distilleries then
+    link_to('Distilleries', reference_distilleries_path, :class => subnav_tab.css_class)
+  when :reference_beers then
+    link_to('Beers', reference_beers_path, :class => subnav_tab.css_class)
+  when :reference_wines then
+    link_to('Wines', reference_wines_path, :class => subnav_tab.css_class)
+  when :reference_spirits then
+    link_to('Spirits', reference_spirits_path, :class => subnav_tab.css_class)
+  else raise 'Unexpected tab: ' + subnav_tab.tab.to_s
+  end
+-%>
+<td><%= link %></td>

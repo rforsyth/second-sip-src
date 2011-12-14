@@ -1,0 +1,6 @@
+<%- return if !defined?(tabs) || tabs.nil? -%>
+<div class="rightpane_subnav">
+<table><tr>
+  <%= render :partial => 'common/global/subnav_tab', :collection => tabs %>
+</tr></table>
+</div>

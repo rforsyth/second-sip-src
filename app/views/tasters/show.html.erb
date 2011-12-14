@@ -1,0 +1,39 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Latest Notes" } %>
+
+<% if @notes && !@notes.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'notes/note', :collection => @notes %>
+  </div>
+  <%= render :partial => 'common/lists/paging_bar' %>
+<% elsif viewing_own_data? %>
+  <div class="intro simple_intro">
+  <p>Click &quot;Beer&quot;, &quot;Wine&quot;, or &quot;Spirits&quot;
+	 on the right <br/> to begin adding notes.</p>
+  </div>
+<% elsif displayed_taster %>
+  <div class="intro simple_intro">
+  <p><%= displayed_taster.username %> does not have any shared notes.</p>
+  </div>
+<% end %>
+
+<% content_for :right do %>
+
+  <div class="right_directions profile_header clearfix">
+    <div class="prose_container"><%= simple_format displayed_taster.greeting %></div>
+    <% if viewing_own_data? %>
+      <%= render :partial => 'common/lists/list_actions',
+                 :locals => { :edit_path => edit_taster_path(current_taster) } %>
+    <% end %>
+  </div>
+  <div class="links rightpane_separator clearfix">
+    <h4>Browse</h4>
+    <div class="links_container">
+    <%= link_to 'Beer', taster_beers_path(displayed_taster) %> |
+    <%= link_to 'Wine', taster_wines_path(displayed_taster) %> |
+    <%= link_to 'Spirits', taster_spirits_path(displayed_taster) %>
+    </div>
+  </div>
+  <%= render :partial => 'friends' if viewing_own_data? %>
+<% end %>

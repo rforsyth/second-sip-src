@@ -1,9 +1,0 @@
-<div class="entity_actions details_separator">
-  <%= image_tag "icons/edit-16.png" %>
-  <%= link_to 'Edit', edit_path %>
-  <% if defined?(delete_path) && delete_path.present? %>
-    <%= image_tag "icons/delete-16.png" %>
-    <%= link_to 'Delete', delete_path,
-                :confirm => 'Are you sure?', :method => :delete %>
-  <% end %>
-</div>

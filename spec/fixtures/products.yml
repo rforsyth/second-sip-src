@@ -1,0 +1,175 @@
+
+<%
+  require 'data/enums'
+%>
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+
+#*****************************************************
+# Wines
+#*****************************************************
+yellowtailshiraz:
+  owner: doc
+  type: Wine
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  producer: yellowtail
+  producer_name: Yellow Tail
+  producer_canonical_name: yellowtail
+  name: Shiraz
+  canonical_name: shiraz
+  description: Cute critter label
+  price: 1.5
+  price_paid: 1.5
+  price_type: <%= Enums::WinePriceType::METHUSELAH %>
+  searchable_metadata: Doc Australia
+  <<: *DEFAULTS
+
+yellowtailcabernet:
+  owner: doc
+  type: Wine
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  producer: yellowtail
+  producer_name: Yellow Tail
+  producer_canonical_name: yellowtail
+  name: Cabernet
+  canonical_name: cabernet
+  description: Cute critter label
+  price: 1.5
+  price_paid: 1.5
+  price_type: <%= Enums::WinePriceType::METHUSELAH %>
+  searchable_metadata: Doc Australia
+  <<: *DEFAULTS
+
+yellowtailchardonnay:
+  owner: doc
+  type: Wine
+  visibility: <%= Enums::Visibility::PUBLIC %>
+  producer: yellowtail
+  producer_name: Yellow Tail
+  producer_canonical_name: yellowtail
+  name: Chardonnay
+  canonical_name: chardonnay
+  description: Cute critter label
+  price: 1.5
+  price_paid: 1.5
+  price_type: <%= Enums::WinePriceType::METHUSELAH %>
+  searchable_metadata: Doc Australia
+  <<: *DEFAULTS
+
+#*****************************************************
+# Beers
+#*****************************************************
+budweiseramericanale:
+  owner: happy
+  type: Beer
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  producer: budweiser
+  producer_name: Budweiser
+  producer_canonical_name: budweiser
+  name: American Ale
+  canonical_name: americanale
+  description: 'Nope, doesnt taste good'
+  price: 6
+  price_paid: 6
+  price_type: <%= Enums::BeerPriceType::SIX_PACK %>
+  #style: americanamberale
+  searchable_metadata: Happy American Ale
+  <<: *DEFAULTS
+
+budweiser_chelada:
+  owner: happy
+  type: Beer
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  producer: budweiser
+  producer_name: Budweiser
+  producer_canonical_name: budweiser
+  name: Chelada
+  canonical_name: chelada
+  description: 'Clams and tomato juice - yep'
+  price: 6
+  price_paid: 6
+  price_type: <%= Enums::BeerPriceType::SIX_PACK %>
+  #style: specialtybeer
+  searchable_metadata: Happy American Ale
+  <<: *DEFAULTS
+
+budweiser_select_55:
+  owner: happy
+  type: Beer
+  visibility: <%= Enums::Visibility::FRIENDS %>
+  producer: budweiser
+  producer_name: Budweiser
+  producer_canonical_name: budweiser
+  name: 'Select 55'
+  canonical_name: select55
+  description: 'Why not just drink water?'
+  price: 6
+  price_paid: 6
+  price_type: <%= Enums::BeerPriceType::SIX_PACK %>
+  #style: liteamericanlager
+  searchable_metadata: Happy American Ale
+  <<: *DEFAULTS
+
+
+#*****************************************************
+# Spirits
+#*****************************************************
+absolutvodka:
+  owner: Grumpy
+  type: Spirit
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  producer: absolut
+  producer_name: Absolut
+  producer_canonical_name: absolut
+  name: 'Vodka'
+  canonical_name: vodka
+  description: 'Good for mixing'
+  price: 30
+  price_paid: 30
+  price_type: <%= Enums::SpiritPriceType::FIFTH %>
+  #region: sweden
+  #style: vodka
+  searchable_metadata: Grumpy Vodka
+  <<: *DEFAULTS
+  
+absolut_mandrin_vodka:
+  owner: Grumpy
+  type: Spirit
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  producer: absolut
+  producer_name: Absolut
+  producer_canonical_name: absolut
+  name: 'Mandrin Vodka'
+  canonical_name: mandrinvodka
+  description: 'Good for mixing'
+  price: 30
+  price_paid: 30
+  price_type: <%= Enums::SpiritPriceType::FIFTH %>
+  #region: sweden
+  #style: vodka
+  searchable_metadata: Grumpy Vodka
+  <<: *DEFAULTS
+  
+absolut_citron_vodka:
+  owner: Grumpy
+  type: Spirit
+  visibility: <%= Enums::Visibility::PRIVATE %>
+  producer: absolut
+  producer_name: Absolut
+  producer_canonical_name: absolut
+  name: 'Citron Vodka'
+  canonical_name: citronvodka
+  description: 'Cosmo?'
+  price: 30
+  price_paid: 30
+  price_type: <%= Enums::SpiritPriceType::FIFTH %>
+  #region: sweden
+  #style: vodka
+  searchable_metadata: Grumpy Vodka
+  <<: *DEFAULTS
+  
+

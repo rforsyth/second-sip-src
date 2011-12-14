@@ -1,7 +1,0 @@
-<%
-  return if @included_tags.blank? && @excluded_tags.blank? &&  @available_tags.blank?
-%>
-<%= render :partial => 'common/lists/tag_filter',
-           :locals => { :included_tags => @included_tags,
-                        :excluded_tags => @excluded_tags,
-                        :available_tags => @available_tags } %>

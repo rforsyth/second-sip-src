@@ -1,0 +1,37 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Login" } %>
+
+<%= form_for(@taster_session) do |f| %>			
+
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @taster_session } %>
+
+  <div class="form_row">
+    <%= f.label :username, 'Username or Email:' %>
+    <%= f.text_field :username %>
+  </div>
+  <div class="form_row">
+    <%= f.label :password, 'Password:' %>
+    <%= f.password_field :password %>
+  </div>
+  
+  <div class="form_separator form_right_column">
+    <%= f.submit 'Sign In' %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $("#taster_session_username").focus();
+</script>
+
+
+<% content_for :right do %>
+  <div class="right_directions">
+    <br/>
+    <p>
+      If you've forgotten your password, reset it <%= link_to 'here', new_password_reset_path %>
+    </p>
+  </div>
+<% end %>
+
+

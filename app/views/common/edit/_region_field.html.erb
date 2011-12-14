@@ -1,0 +1,14 @@
+
+<div class="form_row">
+  <%= label_tag :region_name, @product.kind_of?(Beer) ? 'Brewed In:' : 'Region:' %>
+  <%= text_field_tag :region_name, @product.region.try(:name), :class => 'text_field text_wide', 
+      :entity_type => @product.type, :lookup_type => Enums::LookupType::REGION %>
+</div>
+
+<%= render :partial => 'common/scripts/autocomplete_script',
+           :locals => { :field_id => "region_name",
+                        :entities_path => lookups_path,
+                        #:on_select_function => "show_lookup_references",
+                        #:on_click_function => "show_lookup_references",
+                        :params => {'lookup_type' => Enums::LookupType::REGION,
+                                    'entity_type' => @product_class.name} } %>

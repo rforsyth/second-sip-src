@@ -1,0 +1,29 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => @taster.username } %>
+
+<div class="details_row">
+  <span class="label">Real Name:</span>
+  <span class="content"><%= @taster.real_name -%></span>
+</div>
+
+<div class="details_row">
+  <span class="label">Email:</span>
+  <span class="content"><%= @taster.email -%></span>
+</div>
+
+<div class="details_notes clearfix">
+  <div class="details_row">
+    <span class="label">Greeting:</span>
+    <span class="content"><%= simple_format(@taster.greeting) %> </span>
+  </div>
+</div>
+
+<%= render :partial => 'common/edit/edit_actions',
+           :locals => { :edit_path => edit_taster_path(@taster) } %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/edit/edit_admin_tags', :object => @taster.admin_tags,
+             :locals => { :tag_container => @taster,
+                          :entity_path => taster_path(@taster) } %>
+<% end %>

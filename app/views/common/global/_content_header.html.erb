@@ -1,0 +1,26 @@
+<%
+  title = defined?(title) ? title : nil
+  show_icon = title.present? && @beverage_type.present?
+%>
+<div class="content_header clearfix <%= 'beverage_header' if show_icon %>">
+  <% if defined?(new_item_path) && new_item_path.present? %>
+    <%= render :partial => 'common/lists/list_actions',
+               :locals => { :new_path => new_item_path } %>
+  <% end %>
+  <% if defined?(edit_item_path) && edit_item_path.present? %>
+    <%= render :partial => 'common/lists/list_actions',
+               :locals => { :edit_path => edit_item_path } %>
+  <% end %>
+  <% if defined?(delete_item_path) && delete_item_path.present? %>
+    <%= render :partial => 'common/lists/list_actions',
+               :locals => { :delete_path => delete_item_path } %>
+  <% end %>
+  <% if title %>
+    <h1><%= title %></h1>
+  <% else %>
+    <div class="header_spacer">&nbsp;</div>
+  <% end %>
+  <% if defined?(visibility) && visibility.present? && viewing_own_data? %>
+    <%= render :partial => 'common/details/sharing_icon', :locals => { :visibility => visibility }  %>
+  <% end %>
+</div>

@@ -1,0 +1,12 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "New #{@producer_class.name.titleize}" } %>
+
+<%= render 'producers/form' %>
+
+<% content_for :right do %>
+  <div class="rightpane_lookup">
+  </div>
+<% end %>
+
+

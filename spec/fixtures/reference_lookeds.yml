@@ -1,0 +1,11 @@
+
+
+one:
+  reference_lookup_id: 1
+  reference_lookable_id: 1
+  reference_lookable_type: MyString
+
+two:
+  reference_lookup_id: 1
+  reference_lookable_id: 1
+  reference_lookable_type: MyString

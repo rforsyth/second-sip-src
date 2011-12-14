@@ -1,0 +1,29 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+en:
+  activerecord:
+    attributes:
+        note:
+            tasted_at: "Tasted On"
+        producer:
+          canonical_name: "Name"
+        product:
+          canonical_name: "Name"
+        taster:
+          canonical_username: "Username"
+        lookup:
+          canonical_name: "Name"
+        reference_producer:
+          canonical_name: "Name"
+        reference_product:
+          canonical_name: "Name"
+        reference_lookup:
+          canonical_name: "Name"
+          canonical_full_name: "Full Name"
+        friendship:
+          inviter: "Invitation"
+          invitee: "Member Username"
+          invitation: "Message"

@@ -1,0 +1,22 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Lookups",
+                        :new_item_path => new_lookup_path } %>
+
+<% if @lookups && !@lookups.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'lookup', :collection => @lookups %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no lookups." %>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => search_lookups_path } %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
+<% end %>
+

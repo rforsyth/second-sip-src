@@ -1,0 +1,7 @@
+<div class="list_item">
+  <span class="item_name">
+    <%= link_to h(reference_lookup.name), reference_lookup_path(reference_lookup) %>
+  </span>
+  (<%= "#{reference_lookup.entity_type} #{Enums::LookupType.name(reference_lookup.lookup_type)}" %>)
+  <p><%= truncate(h(reference_lookup.description), :length => 150) %></p>
+</div>

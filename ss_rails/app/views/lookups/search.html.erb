@@ -1,8 +1,0 @@
-
-<%= render :partial => 'common/lists/search_results',
-          :locals => { :results => @lookups, :result_partial => 'lookups/lookup' } %>                        
-
-<% content_for :right do %>
-  <%= render :partial => 'common/global/rightpane_search',
-             :locals => { :search_path => search_lookups_path } %>
-<% end %>

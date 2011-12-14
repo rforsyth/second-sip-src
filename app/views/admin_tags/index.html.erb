@@ -1,0 +1,16 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Admin Tags",
+                        :new_item_path => new_admin_tag_path } %>
+
+<% if @admin_tags && !@admin_tags.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'admin_tag', :collection => @admin_tags %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no admin tags." %>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>
+

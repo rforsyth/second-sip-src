@@ -1,0 +1,7 @@
+<%
+  return if !product.style.present?
+%>
+<div class="details_row">
+  <span class="label"><%= (product.kind_of?(Beer)) ? 'Style' : 'Type' %>:</span>
+  <span class="content"><%= product.style.name %></span>
+</div>

@@ -1,0 +1,33 @@
+
+<%
+  require 'data/enums'
+%>
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+
+#*****************************************************
+# Wineries
+#*****************************************************
+chateaustemichelle:
+  type: ReferenceWinery
+  website_url: http://www.thechateau.com
+  name: Chateau Ste Michelle
+  canonical_name: chateaustemichelle
+  description: Sixty Percent
+  <<: *DEFAULTS
+
+#*****************************************************
+# Breweries
+#*****************************************************
+chimay:
+  type: ReferenceBrewery
+  website_url: http://www.chimay.com
+  name: Chimay
+  canonical_name: chimay
+  description: Yummy
+  <<: *DEFAULTS
+

@@ -1,0 +1,31 @@
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Friendship Invitation"} %>
+
+<%= form_for(@friendship) do |f| %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @friendship } %>
+  <fieldset>
+    <div class="form_row">
+      <%= label_tag :invitee_username, 'Username:' %>
+      <%= text_field_tag :invitee_username, nil, :class => 'text_field text_wide' %>
+    </div>
+    <div class="form_row">
+      <%= f.label :invitation, 'Message:' %>
+      <%= f.text_area :invitation, :class => 'text_tall' %>
+    </div>
+    <div class="form_separator form_right_column">
+      <%= f.submit 'Send' %>
+    </div>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+  $("#invitee_username").focus();
+</script>
+
+<% content_for :right do %>
+  <div class="right_directions">
+    <p>Enter the username of the member that you'd like to friend.<p>
+    <p>Once they accept your invitation you will be able to share notes without making
+      them public by using the &quot;friends&quot; sharing level.</p>
+  </div>
+<% end %>

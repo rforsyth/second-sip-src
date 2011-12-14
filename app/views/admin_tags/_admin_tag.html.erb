@@ -1,0 +1,9 @@
+<div class="list_item">
+  <span class="item_name">
+    <%= link_to admin_tag.name, admin_tag_path(admin_tag) %>
+  </span>
+  (<%= admin_tag.entity_type %>)
+  <span class="username">
+    <%= link_to admin_tag.creator.username, admin_tag.creator %>
+  </span>
+</div>

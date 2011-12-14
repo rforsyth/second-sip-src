@@ -1,0 +1,4 @@
+
+<%= image_tag "icons/lock-16.png", :title => 'sharing: Private' if visibility == Enums::Visibility::PRIVATE %>
+<%= image_tag "icons/friends-16.png", :title => 'sharing: Friends' if visibility == Enums::Visibility::FRIENDS %>
+<%= image_tag "icons/world-16.png", :title => 'sharing: Public' if visibility == Enums::Visibility::PUBLIC %>

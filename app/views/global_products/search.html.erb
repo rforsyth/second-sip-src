@@ -1,0 +1,10 @@
+
+<%= render :partial => 'common/lists/search_results',
+          :locals => { :results => @products, :result_partial => 'products/product' } %>                        
+
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => search_products_path } %>
+  <%= render :partial => 'common/lists/alternate_entity_search_links',
+             :locals => { :current_tab => :products } %>
+<% end %>

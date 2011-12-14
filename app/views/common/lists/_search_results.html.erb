@@ -1,0 +1,17 @@
+<%
+  results_title = nil
+  results_title = "Search Results for \"#{params[:query]}\"" if (results && !results.empty? && params[:query].present?)
+%>
+<%= render :partial => "common/global/content_header", :locals => { :title => results_title  } %>
+<% if results && !results.empty? %>
+  <div class="main_list">
+    <%= render :partial => result_partial, :collection => results %>
+  </div>
+<% elsif !params[:query].present? %>
+  <div class="directions"><p>To start a search, enter a search term in the field on the right.</p></div>
+<% else %>
+  <div class="directions"><p>We were unable to find any results for &quot;<%= params[:query] %>&quot;</p>
+    <p>Please try a different search term.</p></div>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>

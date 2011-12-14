@@ -1,0 +1,9 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Invitation Sent" } %>
+
+<div class="intro simple_intro">
+<p>Your invitation has been sent via email to <%= @friendship.invitee.username %></p>
+<p>Happy Sharing!</p>
+</div>
+<br/><br/><br/><br/>

@@ -1,0 +1,19 @@
+<%-
+  allow_remove = defined?(allow_remove) ? allow_remove : false
+-%>
+<div<%=raw " class=\"#{list_class}\"" if defined?(list_class) %>>
+  <%- if defined?(title_text) -%>
+    <span class="title"><%= title_text %></span>
+  <%- end -%>
+  <ul class="connected_sortable clearfix">
+    <li class="empty">Just a spacer</li>
+    <%- if tags.present? -%>
+      <%- tags.each do |tag| -%>
+        <li class="tag">
+          <%= tag -%>
+          <%= link_to("X", "#", :tag_name => tag) if allow_remove -%>
+        </li>
+      <%- end -%>
+    <%- end -%>
+  </ul>
+</div>

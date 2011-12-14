@@ -1,0 +1,17 @@
+
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+  
+yummy:
+  name: yummy
+  entity_type: Wine
+  <<: *DEFAULTS
+  
+not_yummy:
+  name: not_yummy
+  entity_type: Wine
+  <<: *DEFAULTS

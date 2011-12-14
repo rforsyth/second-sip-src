@@ -1,0 +1,85 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "#{@product.producer.name} #{@product.name}",
+                        :visibility => @product.visibility } %>
+
+<div class="details_left">
+  <% if @product.producer.present? %>
+    <div class="details_row">
+      <span class="label"><%= @producer_class.name.titleize %>:</span>
+      <span class="content">
+        <% if @show_producer %>
+          <%= link_to @producer.name, polymorphic_path([@producer.owner, @producer]) %>
+        <% else %>
+          <%= @producer.name %>
+        <% end %>
+      </span>
+    </div>
+  <% end %>
+  <% if (@product.kind_of?(Beer) || @product.kind_of?(Spirit)) && @product.style.present? %>
+    <div class="details_row">
+      <span class="label"><%= (@product.kind_of?(Beer)) ? 'Style' : 'Type' %>:</span>
+      <span class="content"><%= @product.style.name %></span>
+    </div>
+  <% end %>
+  <%= render :partial => 'common/details/product_region', :locals => { :product => @product } %>
+</div>
+
+<div class="details_right">
+  <% if @product.price_paid.present? %>
+    <div class="details_row">
+      <span class="label">Price:</span>
+      <span class="content"><%=number_to_currency @product.price_paid.pretty_print %></span>
+    </div>
+  <% end %>
+</div>
+
+<% if @product.kind_of?(Wine) %>
+  <%= render :partial => 'common/details/lookup_collection',
+             :locals => { :label => 'Vineyard', :lookups => @product.vineyards,
+                          :entity_type => @product.type } %>
+                        
+  <%= render :partial => 'common/details/lookup_collection',
+             :locals => { :label => 'Varietal', :lookups => @product.varietals,
+                          :entity_type => @product.type } %>
+<% end %>
+
+<% if @product.description.present? %>
+  <div class="details_notes clearfix">
+    <div class="details_row">
+      <span class="label">Notes:</span>
+      <span class="content"><%= simple_format(@product.description) %> </span></div>
+  </div>
+<% end %>
+
+<%= render :partial => 'common/global/subnav', 
+           :locals => { :tabs => [UI::NavigationTab.new(:product_notes, 'selected', @product)] }  %>
+
+<% if @notes.present? %>
+  <div class="main_list">
+    <%= render :partial => 'notes/note', :collection => @notes %>
+  </div>
+  <%= render :partial => 'common/lists/paging_bar' %>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "No notes to display." %>
+<% end %>
+
+<% if allow_edit?(@product) %>
+  <%= render :partial => 'common/edit/edit_actions',
+             :locals => { :edit_path => edit_polymorphic_path([@product.owner, @product]) } %>
+<% end %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/edit/edit_user_tags', :object => @product.tags,
+             :locals => { :tag_container => @product,
+                          :entity_path => polymorphic_path([@product.owner, @product]) } %>
+  <%= render :partial => 'common/edit/edit_admin_tags', :object => @product.admin_tags,
+             :locals => { :tag_container => @product,
+                          :entity_path => polymorphic_path([@product.owner, @product]) } %>
+  <%= render :partial => 'common/lists/add_beverage_bar',
+             :locals => { :product_params => {:producer_name => @product.producer_name},
+                          :note_params => {:producer_name => @product.producer_name,
+                                           :product_name => @product.name } } %>
+<% end %>
+

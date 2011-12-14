@@ -1,0 +1,9 @@
+<%
+  return if @included_admin_tags.blank? && @excluded_admin_tags.blank? &&  @available_admin_tags.blank?
+%>
+<%= render :partial => 'common/lists/tag_filter',
+           :locals => { :title => "Admin Filter",
+                        :are_admin_tags => true,
+                        :included_tags => @included_admin_tags,
+                        :excluded_tags => @excluded_admin_tags,
+                        :available_tags => @available_admin_tags } %>

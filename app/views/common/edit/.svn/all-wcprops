@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/24/trunk/app/views/common/edit
+END
+_region_field.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/31/trunk/app/views/common/edit/_region_field.html.erb
+END
+_edit_admin_tags.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/31/trunk/app/views/common/edit/_edit_admin_tags.html.erb
+END
+_lookup_collection_row.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/31/trunk/app/views/common/edit/_lookup_collection_row.html.erb
+END
+_edit_user_tags.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/31/trunk/app/views/common/edit/_edit_user_tags.html.erb
+END
+_occasion_field.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/31/trunk/app/views/common/edit/_occasion_field.html.erb
+END
+_buy_when_field.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/28/trunk/app/views/common/edit/_buy_when_field.html.erb
+END
+_edit_tags.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/30/trunk/app/views/common/edit/_edit_tags.html.erb
+END
+_style_field.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/31/trunk/app/views/common/edit/_style_field.html.erb
+END
+_lookup_collection.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/30/trunk/app/views/common/edit/_lookup_collection.html.erb
+END
+_edit_actions.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/24/trunk/app/views/common/edit/_edit_actions.html.erb
+END
+_price_field.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/33/trunk/app/views/common/edit/_price_field.html.erb
+END

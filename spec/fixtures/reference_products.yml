@@ -1,0 +1,26 @@
+<%
+  require 'data/enums'
+%>
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= 3.weeks.ago.to_s(:db) %>
+  updated_at: <%= 3.weeks.ago.to_s(:db) %>
+  creator: admin
+  updater: admin
+
+#*****************************************************
+# Wines
+#*****************************************************
+chateaustemichelleriesling:
+  type: ReferenceWine
+  reference_producer: chateaustemichelle
+  reference_producer_name: Chateau Ste Michelle
+  reference_producer_canonical_name: chateaustemichelle
+  name: Riesling
+  canonical_name: riesling
+  description: Tre drinkable
+  price: 1.5
+  price_paid: 1.5
+  price_type: <%= Enums::WinePriceType::METHUSELAH %>
+  searchable_metadata: Washington
+  <<: *DEFAULTS

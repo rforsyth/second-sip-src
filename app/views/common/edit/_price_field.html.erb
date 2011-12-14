@@ -1,0 +1,47 @@
+
+<%= fields_for(@product) do |product_fields| %>
+  <div class="form_row">
+    <%= product_fields.label :price, 'Retail Price:' %>
+    <%= product_fields.select(:price_type, price_type_collection, :class => 'select_field', :selected => selected) %>
+    $
+    <%= product_fields.text_field :price_paid, :class => 'text_field', :size => '8', :maxlength => 8 %>
+    <%= text_field_tag(:price_equivalent, nil, :class => 'calculated_text_field',
+                       :size => '20', :readonly => 'true', :tabindex => '-1') %>
+    <%= product_fields.hidden_field :price %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  <% 
+    product_name = @product_class.name.downcase
+    calculate_function = case
+      when @product.kind_of?(Beer) then 'calculate_spe'
+      when @product.kind_of?(Wine) then 'calculate_wbe'
+      when @product.kind_of?(Spirit) then 'calculate_fe'
+    end
+  %>
+  
+  function show_price_equivalent() {
+    var price_paid = $("#<%= product_name %>_price_paid").val();
+    var price_type = $("#<%= product_name %>_price_type").val();
+    var price_equivalent = <%= calculate_function %>(price_paid, price_type)
+    var price_string = "";
+    if(price_equivalent != null){
+      <% if @product.kind_of?(Beer) %>
+        price_string = "($" + price_equivalent.toString() + " per six pack)";
+      <% else %>
+        price_string = "($" + price_equivalent.toString() + " per 750ml)";
+      <% end %>
+    }
+    $('#<%= product_name %>_price').val(price_equivalent);
+    $('#price_equivalent').val(price_string);
+  }
+
+  $('#<%= product_name %>_price_type').change(function() {
+    show_price_equivalent();
+  });
+  $("#<%= product_name %>_price_paid").keyup(function(event) {
+    show_price_equivalent();
+  });
+  $('#<%= product_name %>_price_paid').keyfilter(/[0-9.]/);
+</script>

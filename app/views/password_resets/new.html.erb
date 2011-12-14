@@ -1,0 +1,28 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Reset Password" } %>
+
+<%= render :partial => 'common/edit/flash_error' %>
+
+<%= form_tag password_resets_path, :class => 'password_reset_form' do %>
+  <div class="form_row">
+    <%= label_tag "email", 'Email Address:' %>
+    <%= text_field_tag "email", params[:email], :size => 30 %>
+  </div>
+  <div class="form_separator form_right_column">
+    <%= submit_tag "Reset Password" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $("#email").focus();
+</script>
+
+<% content_for :right do %>
+  <div class="right_directions">
+    <br/>
+    <p>
+      We will email instructions for creating a new password to the address that you enter.
+    </p>
+  </div>
+<% end %>

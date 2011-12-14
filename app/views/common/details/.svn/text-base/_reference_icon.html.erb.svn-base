@@ -1,0 +1,2 @@
+
+<%= image_tag "icons/reference-16.png", :title => 'Reference' %>

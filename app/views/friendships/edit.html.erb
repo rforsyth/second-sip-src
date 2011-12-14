@@ -1,0 +1,20 @@
+<%= render :partial => 'common/global/content_header', :locals => { :title => 'Friend Invitation'} %>
+
+<div class="invitation prose_container">
+  <p><%= link_to(@friendship.inviter.username, @friendship.inviter) %>
+    says:</p>
+  <%= simple_format @friendship.invitation %>
+</div>
+
+<%= form_for(@friendship) do |f| %>
+  <%= render :partial => 'common/edit/errors', :locals => { :entity => @friendship } %>
+  <div class="form_separator form_right_column">
+    <%= f.submit 'Accept' %>
+    <%= f.submit 'Decline' %>
+  </div>
+<% end %>
+
+<% content_for :right do %>
+  <div class="right_directions">
+  </div>
+<% end %>

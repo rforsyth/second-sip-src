@@ -1,0 +1,16 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "#{metadata_model.name.titleize.pluralize}",
+                        :new_item_path => defined?(new_item_path) ? new_item_path : nil } %>
+
+<% if metadata && !metadata.empty? %>
+  <div class="main_list">
+    <%= render :partial => metadata_partial, :collection => metadata %>
+  </div>
+<% else %>
+  <div class="intro simple_intro">
+  <p>Click the &quot;Add&quot; link above to create a new <%= metadata_model.name.titleize.downcase %>.</p>
+  </div>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>

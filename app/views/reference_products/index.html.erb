@@ -1,0 +1,22 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "#{@reference_product_class.name.pluralize.titleize}",
+                        :new_item_path => new_polymorphic_path(@reference_product_class) } %>
+
+<% if @products && !@products.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'reference_products/reference_product', :collection => @products %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no reference products." %>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>
+
+<% content_for :right do %>
+  <%= render :partial => 'common/global/rightpane_search',
+             :locals => { :search_path => "#{polymorphic_path(@reference_product_class)}/search" } %>
+  <%= render :partial => 'common/lists/admin_tag_filter' %>
+<% end %>
+

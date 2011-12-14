@@ -1,8 +1,0 @@
-
-<%= render :partial => 'common/lists/search_results',
-          :locals => { :results => @producers, :result_partial => 'reference_producers/reference_producer' } %>                        
-
-<% content_for :right do %>
-  <%= render :partial => 'common/global/rightpane_search',
-             :locals => { :search_path => "#{polymorphic_path(@reference_producer_class)}/search" } %>
-<% end %>
