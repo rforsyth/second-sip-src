@@ -21,8 +21,6 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
-- add indexes to columns using migrations
-
 - move more fields to metadata search field?
   - run through anti-accent function
 
@@ -55,6 +53,8 @@ Performance
 - load tasters from cache (for showing usernames on lists)
 
 - do some database performance profiling?
+
+- page caching for non-logged-in users
 
 
 _____________________________________________________________

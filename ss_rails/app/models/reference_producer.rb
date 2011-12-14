@@ -19,7 +19,8 @@ class ReferenceProducer < ActiveRecord::Base
 	validates_presence_of :creator, :updater, :name
   validates_uniqueness_of :canonical_name,
                           :message => "is already being used."
-  validates_format_of :website_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
+  validates_format_of :website_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix,
+                      :allow_nil => true, :allow_blank => true
   
   pg_search_scope :search,
     :against => [:name, :description]
