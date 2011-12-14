@@ -64,6 +64,10 @@ class ApplicationController < ActionController::Base
     return model_class.find(id) if id.is_i?
     model_class.find_by_name(id)
   end
+  
+  def remember_visibility(entity)
+	  cookies[:last_visibility] = entity.visibility
+  end
     
   private
   

@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = @product_class.new
-    @product.visibility = Enums::Visibility::PUBLIC
+    @product.visibility = (cookies[:last_visibility] || Enums::Visibility::PUBLIC)
 		render :template => 'products/new'
   end
 
@@ -78,6 +78,7 @@ class ProductsController < ApplicationController
     @product.set_lookup_properties(params, current_taster, @producer_class)
       
     if @product.save
+      remember_visibility(@product)
       redirect_to([@product.owner, @product], :notice => 'Product was successfully created.')
     else
       render :action => "products/new"
@@ -92,6 +93,7 @@ class ProductsController < ApplicationController
     @product.set_lookup_properties(params, displayed_taster, @producer_class)
     
     if @product.update_attributes(params[@product_class.name.underscore])
+      remember_visibility(@product)
       redirect_to([@product.owner, @product], :notice => 'Product was successfully updated.')
     else
       render :action => "products/edit"

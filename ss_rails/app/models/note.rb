@@ -19,6 +19,7 @@ class Note < ActiveRecord::Base
 	
 	validates_presence_of :product, :visibility, :tasted_at
   validates_associated :product, :tagged
+	validate :score_matches_score_type
 
   after_initialize :save_original_auto_tag_values
   before_validation :set_canonical_fields
@@ -94,6 +95,16 @@ class Note < ActiveRecord::Base
   def tagify_vintage(vintage)
     "vintage-#{vintage}"
   end
+  
+  def score_matches_score_type
+	  return if !score.present?
+    if score < 0
+      errors.add(:score, "must be greater than zero.") 
+    end
+    if score > score_type
+      errors.add(:score, "must be less then your chosen score type.") 
+    end
+	end
 	
 end
 

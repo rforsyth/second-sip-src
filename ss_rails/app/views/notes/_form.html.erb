@@ -94,9 +94,9 @@
 
     <div class="form_row">
       <%= f.label :score, "Score: " %>
-      <% selected = @note.kind_of?(BeerNote) ? Enums::ScoreType::POINTS_50 : Enums::ScoreType::POINTS_100 %>
       <%= f.select(:score_type, Enums::ScoreType.sorted_collection, 
-                           :class => 'select_field', :selected => selected) %>
+                           :class => 'select_field',
+                           :selected => selected_score_type(@note)) %>
       <%= f.text_field :score, :class => 'text_field', :size => '8' %>
     </div>
   </div>

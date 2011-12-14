@@ -77,6 +77,9 @@
   <%= render :partial => 'common/edit/edit_admin_tags', :object => @product.admin_tags,
              :locals => { :tag_container => @product,
                           :entity_path => polymorphic_path([@product.owner, @product]) } %>
-  <%= render :partial => 'common/lists/add_beverage_bar' %>
+  <%= render :partial => 'common/lists/add_beverage_bar',
+             :locals => { :product_params => {:producer_name => @product.producer_name},
+                          :note_params => {:producer_name => @product.producer_name,
+                                           :product_name => @product.name } } %>
 <% end %>
 

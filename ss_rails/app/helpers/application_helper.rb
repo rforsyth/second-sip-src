@@ -51,5 +51,16 @@ module ApplicationHelper
 		page_params[:page] = page_num
 		return url_for(page_params)
 	end
+	
+	def selected_score_type(note)
+	  return note.score_type if note.score_type.present?
+	  if note.kind_of?(BeerNote)
+	    return cookies[:beer_note_score_type] if cookies[:beer_note_score_type].present?
+	    return Enums::ScoreType::POINTS_50
+	  else
+	    return cookies[:wine_note_score_type] if cookies[:wine_note_score_type].present?
+	    return Enums::ScoreType::POINTS_100
+	  end
+  end
   
 end

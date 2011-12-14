@@ -74,13 +74,14 @@ class ProducersController < ApplicationController
 
   def new
     @producer = @producer_class.new
-    @producer.visibility = Enums::Visibility::PUBLIC
+    @producer.visibility = (cookies[:last_visibility] || Enums::Visibility::PUBLIC)
 		render :template => 'producers/new'
   end
 
   def create
     @producer = @producer_class.new(params[@producer_class.name.underscore])
     if @producer.save
+      remember_visibility(@producer)
       redirect_to([@producer.owner, @producer], :notice => 'Producer was successfully created.')
     else
       render :action => "producers/new"
@@ -93,6 +94,7 @@ class ProducersController < ApplicationController
 
   def update
     if @producer.update_attributes(params[@producer_class.name.underscore])
+      remember_visibility(@producer)
       redirect_to([@producer.owner, @producer], :notice => 'Producer was successfully updated.')
     else
       render :action => "producers/edit"

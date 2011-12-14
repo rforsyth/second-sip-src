@@ -1,6 +1,4 @@
 
-- default price to "bottle"
-
 
 _____________________________________________________________
 Manual Testing
@@ -23,20 +21,6 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
-- validate score based on score type
-  
-- validate / transform producer website url
-
-- remember the last score type that they chose
-
-- default score type to 50 for beer
-
-- add product or note from producer page
-
-- add note from product page
-
-- remember last visibility level, and default new records to it
-
 - add indexes to columns using migrations
 
 - move more fields to metadata search field?
@@ -45,16 +29,14 @@ Next Up
 - set_searchable_metadata doesn't work in some scenarios
   - on create, with has_one attribs?
 
-- build postgres SQL indexes
-
-- do some database performance profiling?
-
-- use ssl path for login / register
-  - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
+- build full text SQL indexes
 
 - consolidate database migrations prior to Heroku deploy
 
 - deploy to Heroku
+
+- use ssl path for login / register
+  - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
 
 - scripts to populate reference lookups
   - grape varietals
@@ -72,6 +54,7 @@ Performance
 
 - load tasters from cache (for showing usernames on lists)
 
+- do some database performance profiling?
 
 
 _____________________________________________________________

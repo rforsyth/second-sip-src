@@ -51,6 +51,8 @@ class NotesController < ApplicationController
     set_product_from_params(@note)
     
     if @note.save
+      remember_score_type(@note)
+      remember_visibility(@note)
       redirect_to([@note.owner, @note], :notice => 'Note was successfully created.')
     else
       initialize_new_note_form
@@ -67,6 +69,8 @@ class NotesController < ApplicationController
     @note.set_occasion(params[:occasion_name], current_taster)
     set_product_from_params(@note)
     if @note.update_attributes(params[@note_class.name.underscore])
+      remember_score_type(@note)
+      remember_visibility(@note)
       redirect_to([@note.owner, @note], :notice => 'Note was successfully updated.')
     else
       @product = @note.product
@@ -87,7 +91,7 @@ class NotesController < ApplicationController
 	  @product = @note.product
     @product ||= @product_class.new  # required to support the product form fields
     @note.tasted_at ||= Date.today
-    @note.visibility ||= Enums::Visibility::PUBLIC
+    @note.visibility ||= (cookies[:last_visibility] || Enums::Visibility::PUBLIC)
   end
   
   def validate_producer_and_product_name
@@ -133,5 +137,13 @@ class NotesController < ApplicationController
     end
   end
   
+  def remember_score_type(note)
+    return if !note.score_type.present?
+	  if note.kind_of?(BeerNote)
+	    cookies[:beer_note_score_type] = note.score_type
+    else
+	    cookies[:wine_note_score_type] = note.score_type
+    end
+  end
   
 end

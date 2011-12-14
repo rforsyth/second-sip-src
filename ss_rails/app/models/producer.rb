@@ -1,11 +1,13 @@
 require 'data/enums'
 require 'data/taggable'
 require 'data/admin_taggable'
+require 'data/validation_helper'
 
 class Producer < ActiveRecord::Base
   include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
+  include Data::ValidationHelper
   nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
@@ -14,12 +16,14 @@ class Producer < ActiveRecord::Base
 	has_many :products
 	
   before_validation :set_canonical_fields
+  before_validation :add_protocol_to_website_url
   before_create :add_unreviewed_tag
   after_save :update_products_and_notes_producer_name
   
 	validates_presence_of :creator, :updater, :name, :visibility
   validates_uniqueness_of :canonical_name, :scope => :owner_id,
                           :message => "is already being used."
+  validates_format_of :website_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix
   
   pg_search_scope :search,
     :against => [:name, :description]
@@ -65,6 +69,8 @@ class Producer < ActiveRecord::Base
 	    WHERE products.producer_id = #{self.id}
 	      AND notes.product_id = products.id")
   end
+  
+  
   
 end
 
