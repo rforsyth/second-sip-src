@@ -21,6 +21,10 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
+- price type did not default when creating wine note
+
+
+
 - move more fields to metadata search field?
   - run through anti-accent function
 
@@ -28,8 +32,6 @@ Next Up
   - on create, with has_one attribs?
 
 - build full text SQL indexes
-
-- consolidate database migrations prior to Heroku deploy
 
 - deploy to Heroku
 

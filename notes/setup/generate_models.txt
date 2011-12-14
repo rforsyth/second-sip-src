@@ -133,11 +133,13 @@ rails generate migration AddEntityTypeToTag
 
 rails generate migration RemoveOccasionNameFromNote
 
-rails generate migration AddSearchableMetadata
+bundle exec rails generate migration AddSearchableMetadata
 
 bundle exec rails generate migration AddPricePaidToReferenceProduct
 
 bundle exec rails generate migration AddProducerAndProductNamesToProductsAndNotes
+
+bundle exec rails generate migration AddSearchableMetadataToProducer
 
 
 
