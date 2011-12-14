@@ -43,9 +43,9 @@ class Product < ActiveRecord::Base
   end
   
   def set_searchable_metadata
-    metadata = "#{self.owner.username.remove_accents}"
-    self.looked.each {|looked| metadata << " #{looked.lookup.name.remove_accents}"}
-    self.searchable_metadata = metadata
+    metadata = "#{self.owner.username} #{self.producer.name} #{self.name}"
+    self.looked.each {|looked| metadata << " #{looked.lookup.name}"}
+    self.searchable_metadata = metadata.remove_accents[0..499]
   end
   
   def to_param

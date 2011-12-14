@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214171335) do
+ActiveRecord::Schema.define(:version => 20111214210057) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -110,17 +110,18 @@ ActiveRecord::Schema.define(:version => 20111214171335) do
   add_index "notes", ["visibility"], :name => "index_notes_on_visibility"
 
   create_table "producers", :force => true do |t|
-    t.integer  "creator_id",                    :null => false
-    t.integer  "updater_id",                    :null => false
-    t.string   "type",           :limit => 50,  :null => false
-    t.integer  "owner_id",                      :null => false
-    t.integer  "visibility",                    :null => false
-    t.string   "website_url",    :limit => 500
-    t.string   "name",           :limit => 150, :null => false
-    t.string   "canonical_name", :limit => 150, :null => false
+    t.integer  "creator_id",                         :null => false
+    t.integer  "updater_id",                         :null => false
+    t.string   "type",                :limit => 50,  :null => false
+    t.integer  "owner_id",                           :null => false
+    t.integer  "visibility",                         :null => false
+    t.string   "website_url",         :limit => 500
+    t.string   "name",                :limit => 150, :null => false
+    t.string   "canonical_name",      :limit => 150, :null => false
     t.text     "description"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "searchable_metadata", :limit => 500
   end
 
   add_index "producers", ["canonical_name"], :name => "index_producers_on_canonical_name"
@@ -184,15 +185,16 @@ ActiveRecord::Schema.define(:version => 20111214171335) do
   add_index "reference_lookups", ["lookup_type"], :name => "index_reference_lookups_on_lookup_type"
 
   create_table "reference_producers", :force => true do |t|
-    t.integer  "creator_id",                    :null => false
-    t.integer  "updater_id",                    :null => false
-    t.string   "type",           :limit => 100, :null => false
-    t.string   "website_url",    :limit => 500
-    t.string   "name",           :limit => 150
-    t.string   "canonical_name", :limit => 150
+    t.integer  "creator_id",                         :null => false
+    t.integer  "updater_id",                         :null => false
+    t.string   "type",                :limit => 100, :null => false
+    t.string   "website_url",         :limit => 500
+    t.string   "name",                :limit => 150
+    t.string   "canonical_name",      :limit => 150
     t.text     "description"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "searchable_metadata", :limit => 500
   end
 
   add_index "reference_producers", ["canonical_name"], :name => "index_reference_producers_on_canonical_name"

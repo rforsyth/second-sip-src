@@ -38,9 +38,9 @@ class ReferenceProduct < ActiveRecord::Base
   end
   
   def set_searchable_metadata
-    metadata = self.reference_producer.name.remove_accents
-    self.reference_looked.each {|looked| metadata << " #{looked.reference_lookup.name.remove_accents}"}
-    self.searchable_metadata = metadata
+    metadata = "#{self.reference_producer.name} #{self.name}"
+    self.reference_looked.each {|looked| metadata << " #{looked.reference_lookup.name}"}
+    self.searchable_metadata = metadata.remove_accents[0..499]
   end
   
   def set_lookup_properties(params, reference_producer_class)

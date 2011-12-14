@@ -17,6 +17,7 @@ class Producer < ActiveRecord::Base
 	
   before_validation :set_canonical_fields
   before_validation :add_protocol_to_website_url
+  before_save :set_searchable_metadata
   before_create :add_unreviewed_tag
   after_save :update_products_and_notes_producer_name
   
@@ -25,14 +26,18 @@ class Producer < ActiveRecord::Base
                           :message => "is already being used."
   validates_format_of :website_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix,
                       :allow_nil => true, :allow_blank => true
-              
   
   pg_search_scope :search,
-    :against => [:name, :description]
+    :against => [:name, :description, :searchable_metadata]
     #:ignoring => :accents
   
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize if self.name.present?
+  end
+  
+  def set_searchable_metadata
+    metadata = "#{self.owner.username} #{self.name}"
+    self.searchable_metadata = metadata.remove_accents[0..499]
   end
   
   def to_param

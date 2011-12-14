@@ -14,6 +14,7 @@ class ReferenceProducer < ActiveRecord::Base
 	
   before_validation :set_canonical_fields
   before_validation :add_protocol_to_website_url
+  before_save :set_searchable_metadata
   after_save :update_products_producer_name
   
 	validates_presence_of :creator, :updater, :name
@@ -23,11 +24,16 @@ class ReferenceProducer < ActiveRecord::Base
                       :allow_nil => true, :allow_blank => true
   
   pg_search_scope :search,
-    :against => [:name, :description]
+    :against => [:name, :description, :searchable_metadata]
     #:ignoring => :accents
   
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize if self.name.present?
+  end
+  
+  def set_searchable_metadata
+    metadata = "#{self.name}"
+    self.searchable_metadata = metadata.remove_accents[0..499]
   end
   
   def to_param

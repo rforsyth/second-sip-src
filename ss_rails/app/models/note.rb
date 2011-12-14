@@ -59,8 +59,8 @@ class Note < ActiveRecord::Base
   
   def set_searchable_metadata
     metadata = self.product.searchable_metadata.dup
-    self.looked.each {|looked| metadata << " #{looked.lookup.name.remove_accents}"}
-    self.searchable_metadata = metadata
+    self.looked.each {|looked| metadata << " #{looked.lookup.name}"}
+    self.searchable_metadata = metadata.remove_accents[0..499]
   end
   
   def set_occasion(name, owner = nil)
