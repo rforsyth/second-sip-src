@@ -21,13 +21,6 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
-- price type did not default when creating wine note
-
-- set_searchable_metadata doesn't work in some scenarios
-  - on create, with has_one attribs?
-
-- build full text SQL indexes
-
 - deploy to Heroku
 
 - use ssl path for login / register
@@ -96,7 +89,9 @@ V2
 - support blocking users
   - add approved field and set to false
 
-- change password form separate from update profile
+- change greeting separate from update username / real name
+
+- change password form
 
 - copy product / producer to reference product / producer
 
