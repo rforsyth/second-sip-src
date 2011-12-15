@@ -17,7 +17,6 @@ Manual Testing
 	- Oregon = private
 
 
-Brewery.find_by_canonical_name("fullsail", :conditions => { :owner_id => 3 } )
 _____________________________________________________________
 Next Up
 
