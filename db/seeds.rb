@@ -6,11 +6,11 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-require 'spec_helper'
-require 'authlogic/test_case'
-include Authlogic::TestCase
-
-activate_authlogic
+# require 'spec_helper'
+# require 'authlogic/test_case'
+# include Authlogic::TestCase
+# 
+# activate_authlogic
 
 # create administrator user
 taster = Taster.new
