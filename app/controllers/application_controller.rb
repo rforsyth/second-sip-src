@@ -461,7 +461,7 @@ class ApplicationController < ActionController::Base
   
   # returns nil if the beverage is not visible to the viewer
   def test_visibility(beverage, viewer)
-    return true if viewer.is?(:admin)
+    return true if !viewer.nil? && viewer.is?(:admin)
     return true if(viewer == beverage.owner ||
                    beverage.visibility == Enums::Visibility::PUBLIC)
     return true if(beverage.visibility == Enums::Visibility::FRIENDS &&

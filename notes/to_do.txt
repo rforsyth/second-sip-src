@@ -17,11 +17,17 @@ Manual Testing
 	- Oregon = private
 
 
-
+Brewery.find_by_canonical_name("fullsail", :conditions => { :owner_id => 3 } )
 _____________________________________________________________
 Next Up
 
-- deploy to Heroku
+- test email generation page
+
+- make "secondsip.com" redirect to "www.secondsip.com"
+
+- email: set domain correctly in URLs
+
+- download heroku database
 
 - use ssl path for login / register
   - url_for(:only_path => false, :host => 'your-app.heroku.com', :protocol => :https)
@@ -37,7 +43,7 @@ Next Up
 _____________________________________________________________
 Security
 
-- render error pages that don't have a stack trace
+
 
 _____________________________________________________________
 Performance
@@ -79,6 +85,8 @@ Bugs
 
 _____________________________________________________________
 V2
+
+- prettier exception page with contact form
 
 - invitations (enter email address of non-user)
 

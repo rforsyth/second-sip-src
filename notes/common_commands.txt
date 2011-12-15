@@ -59,10 +59,15 @@ $ git push unfuddle master
 __________________________________________________________________
 Rake
 
-
-
 $ rake routes
 $ bundle exec rake db:migrate
+
+__________________________________________________________________
+Heroku
+
+- 100 is default
+$ heroku logs -n 500
+$ heroku logs --tail
 
 
 
