@@ -141,6 +141,8 @@ bundle exec rails generate migration AddProducerAndProductNamesToProductsAndNote
 
 bundle exec rails generate migration AddSearchableMetadataToProducer
 
+bundle exec rails generate migration RenameResourceLookupId
+
 
 
 

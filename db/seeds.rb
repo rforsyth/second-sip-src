@@ -8,17 +8,21 @@
 
 require 'authlogic/test_case'
 include Authlogic::TestCase
-
 activate_authlogic
 
-# create administrator user
-taster = Taster.new
-taster.signup!(:taster => {:username => 'Admin',
-                 :email => 'techsupport@secondsip.com', :greeting => 'Hello!',
-                 :real_name => 'Tech Support'})
-taster.activate!(:taster => {:password => 'TechRefug33',
-                   :password_confirmation => 'TechRefug33'})
-taster.roles_mask = 1
-taster.save
+# create administrator user if it doesn't exist
+if !Taster.find_by_username('Admin')
+  taster = Taster.new
+  taster.signup!(:taster => {:username => 'Admin',
+                   :email => 'techsupport@secondsip.com', :greeting => 'Hello!',
+                   :real_name => 'Tech Support'})
+  taster.activate!(:taster => {:password => 'TechRefug33',
+                     :password_confirmation => 'TechRefug33'})
+  taster.roles_mask = 1
+  taster.save
+  puts 'created Admin taster'
+else
+  puts 'Admin taster already exists'
+end
 
 

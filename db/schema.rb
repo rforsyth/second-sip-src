@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214221955) do
+ActiveRecord::Schema.define(:version => 20111216195155) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -223,16 +223,16 @@ ActiveRecord::Schema.define(:version => 20111214221955) do
   add_index "reference_products", ["type"], :name => "index_reference_products_on_type"
 
   create_table "resources", :force => true do |t|
-    t.integer  "creator_id",                   :null => false
-    t.integer  "updater_id",                   :null => false
-    t.string   "title",         :limit => 150, :null => false
+    t.integer  "creator_id",                         :null => false
+    t.integer  "updater_id",                         :null => false
+    t.string   "title",               :limit => 150, :null => false
     t.text     "body"
     t.text     "wiki_text"
-    t.string   "url",           :limit => 500
-    t.integer  "resource_type",                :null => false
-    t.integer  "lookup_id",                    :null => false
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.string   "url",                 :limit => 500
+    t.integer  "resource_type",                      :null => false
+    t.integer  "reference_lookup_id",                :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "resources", ["resource_type"], :name => "index_resources_on_resource_type"

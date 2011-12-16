@@ -12,6 +12,7 @@ gem 'cancan'
 gem "pg_search"
 gem "silent-postgres"
 gem "nilify_blanks"
+gem "htmlentities"
 
 # Use unicorn as the web server
 # gem 'unicorn'
