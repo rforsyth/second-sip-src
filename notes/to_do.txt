@@ -10,12 +10,16 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
+- bug - price combo is cleared when exiting Wine field
 
-- remove logs from git
+- when entering tag, transform illegal chars to dashes
 
 - markup around varietals lookup lists in note form is broken
 
-- test - write a bunch of notes, and test visibility with Anna
+- allow change product producer
+  - note producer? note product?
+
+- support note delete
 
 - load tasters from cache (for showing usernames on lists)
 
@@ -75,6 +79,8 @@ _____________________________________________________________
 V2
 
 - prettier exception page with contact form
+
+- update casing of lookup if new version is different
 
 - invitations (enter email address of non-user)
 

@@ -274,20 +274,23 @@ span.nobreak {
 .home table.header {
 	width: 90%;
 	margin: 0 auto;
-	/* border-bottom: 2px solid #70ABD3; */
+	border-bottom: 1px solid #70ABD3;
 }
 .home table.header h1 {
 	text-align: center;
-	font-weight: bold;
+	/* font-weight: bold; */
+	font-size: 19px;
 	padding-bottom: 5px;
+	color: #245F89;
 }
 .home table.header p {
-	margin-bottom: 7px;
+	/* margin-bottom: 7px; */
 	line-height: 1.5em;
 	font-size: 14px;
 	text-align: center;
 }
 .home table.header p.tagline {
+  padding-bottom: 7px;
 }
 .home table.header p.directions {
 	display: none;
@@ -710,7 +713,7 @@ div.error_explanation h2 {
 	color: #FF4500;
 }
 div.error_explanation ul {
-	list-style: disc;
+	list-style: none;
 }
 #note_detailed_description {
 	position: relative;

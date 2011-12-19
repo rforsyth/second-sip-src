@@ -36,6 +36,7 @@ def build_lookup(xml_lookup, taster, lookup_type, entity_type, parent_lookup)
     lookup.lookup_type = lookup_type
     lookup.entity_type = entity_type
     lookup.creator = lookup.updater = taster
+    lookup.parent_reference_lookup = parent_lookup
     puts 'creating lookup: ' + lookup.name
     lookup.save
   

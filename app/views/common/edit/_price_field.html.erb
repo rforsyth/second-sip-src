@@ -1,5 +1,6 @@
 
 <%= fields_for(@product) do |product_fields| %>
+
   <div class="form_row">
     <%= product_fields.label :price, 'Retail Price:' %>
     <%= product_fields.select(:price_type, price_type_collection, :class => 'select_field', :selected => selected) %>
@@ -26,12 +27,15 @@
     var price_type = $("#<%= product_name %>_price_type").val();
     var price_equivalent = <%= calculate_function %>(price_paid, price_type)
     var price_string = "";
-    if(price_equivalent != null){
+    
+    if(price_equivalent != null && price_equivalent != ""){
       <% if @product.kind_of?(Beer) %>
         price_string = "($" + price_equivalent.toString() + " per six pack)";
       <% else %>
         price_string = "($" + price_equivalent.toString() + " per 750ml)";
       <% end %>
+    } else {
+      price_string = ""
     }
     $('#<%= product_name %>_price').val(price_equivalent);
     $('#price_equivalent').val(price_string);

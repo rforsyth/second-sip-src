@@ -1,5 +1,5 @@
 class Notifier < ActionMailer::Base
-  default :from => "customersupport@secondsip.com"
+  default :from => "Second Sip Customer Support <customersupport@secondsip.com>"
   
   def password_reset_instructions(taster) 
     @taster = taster

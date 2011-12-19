@@ -83,7 +83,7 @@
     <div class="form_row">
       <%= f.label :tasted_at, "Tasted On: " %>
       <%= f.text_field :tasted_at, :class => 'text_field',
-                       :value => @note.tasted_at.strftime('%m/%d/%Y') %>
+                       :value => (@note.tasted_at.present? ? @note.tasted_at.strftime('%m/%d/%Y') : nil) %>
     </div>
 
     <div class="form_row">
@@ -140,10 +140,16 @@
     }
   
     function update_note_form_producer(producer) {
+      if(producer.name == null){
+        return;
+      }
       $('#<%= @note_class.name.underscore %>_visibility_' + producer.visibility).attr('checked', true);
     }
 
     function update_note_form_product(product) {
+      if(product.name == null){
+        return;
+      }
       $('#region_name').val(product.region_name);
       $('#<%= @product_class.name.underscore %>_price_type').val(product.price_type);
       $('#<%= @product_class.name.underscore %>_price_paid').val(product.price_paid);

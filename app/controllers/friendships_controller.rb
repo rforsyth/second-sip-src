@@ -1,6 +1,7 @@
 class FriendshipsController < ApplicationController
 	before_filter :initialize_friendships_tabs, :only => [:index, :show]
 	before_filter :require_admin, :except => [:new, :edit, :create, :update]
+	before_filter :require_taster, :only => [:edit, :update]
 	before_filter :require_invitee, :only => [:edit, :update]
   
   def index

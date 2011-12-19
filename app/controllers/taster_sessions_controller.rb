@@ -9,7 +9,11 @@ class TasterSessionsController < ApplicationController
     @taster_session = TasterSession.new(params[:taster_session])
     @taster_session.remember_me = true
     if @taster_session.save
-      redirect_to(current_taster, :notice => 'Login Successful')
+      if params[:redir].present?
+        redirect_to params[:redir]
+      else
+        redirect_to(current_taster, :notice => 'Login Successful')
+      end
     else
       render :action => "new"
     end

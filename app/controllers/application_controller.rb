@@ -110,14 +110,14 @@ class ApplicationController < ActionController::Base
   def require_taster 
     unless current_taster
       flash[:notice] = "You must be signed in to access this page" 
-      redirect_to login_path 
+      redirect_to login_path(:redir => request.request_uri)
       return false 
     end 
   end
   
   def require_no_taster
     if current_taster
-      flash[:notice] = "You cannot access this page while signed in." 
+      flash[:notice] = "You cannot access this page while signed in" 
       render :template => 'errors/message', :layout => 'single_column'
       return false 
     end 
@@ -125,7 +125,7 @@ class ApplicationController < ActionController::Base
   
   def require_admin
     if !(current_taster && current_taster.is?(:admin))
-      flash[:notice] = "You do not have permission to access this page." 
+      flash[:notice] = "You do not have permission to access this page" 
       render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
       return false 
     end
@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
     if !(current_taster && 
          (displayed_taster == current_taster ||
          current_taster.is?(:admin)))
-      flash[:notice] = "You do not have permission to access this page." 
+      flash[:notice] = "You do not have permission to access this page" 
       render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
       return false 
     end
@@ -143,8 +143,13 @@ class ApplicationController < ActionController::Base
   
   def require_visibility_helper(entity)
     if !(test_visibility(entity, current_taster))
-      flash[:notice] = "You do not have permission to access this page." 
-      render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
+      if current_taster.nil?
+        flash[:notice] = "You must be signed in to access this page" 
+        redirect_to login_path(:redir => request.request_uri)
+      else
+        flash[:notice] = "You do not have permission to access this page" 
+        render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
+      end
       return false 
     end
   end
@@ -461,6 +466,7 @@ class ApplicationController < ActionController::Base
   
   # returns nil if the beverage is not visible to the viewer
   def test_visibility(beverage, viewer)
+    return false if (beverage.visibility < Enums::Visibility::PUBLIC) && viewer.nil?
     return true if !viewer.nil? && viewer.is?(:admin)
     return true if(viewer == beverage.owner ||
                    beverage.visibility == Enums::Visibility::PUBLIC)

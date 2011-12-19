@@ -51,10 +51,9 @@ class Note < ActiveRecord::Base
   
   def tasted_at=(value)
     if value.kind_of?(String)
-      write_attribute(:tasted_at, Date.strptime(value, '%m/%d/%Y')) 
-    else
-      write_attribute(:tasted_at, value)
+      value = Date.strptime(value, '%m/%d/%Y') rescue nil
     end
+    write_attribute(:tasted_at, value)
   end
   
   def set_searchable_metadata
@@ -64,14 +63,14 @@ class Note < ActiveRecord::Base
   end
   
   def set_occasion(name, owner = nil)
-    return if !name.present?
-    return if self.occasion.try(:canonical_name) == name.canonicalize
+    return if name.present? && self.occasion.try(:canonical_name) == name.canonicalize
     self.looked.each do |looked|
       if looked.lookup.lookup_type == Enums::LookupType::OCCASION
         self.remove_tag(looked.lookup.name.tagify)
         looked.delete
       end
     end
+    return if !name.present?
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::OCCASION)
     looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))

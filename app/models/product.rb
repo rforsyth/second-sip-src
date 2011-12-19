@@ -28,6 +28,7 @@ class Product < ActiveRecord::Base
 	validates_presence_of :producer, :name, :visibility
   validates_associated :producer, :looked, :tagged
 
+  after_initialize :init
   before_validation :set_canonical_fields
   before_save :set_searchable_metadata
   before_create :add_unreviewed_tag
@@ -60,14 +61,18 @@ class Product < ActiveRecord::Base
                         owner, params[:producer_name], self.visibility)
       self.producer_name = self.producer.name
     end
-    set_style(params[:style_name], owner) if params[:style_name].present?
-    set_region(params[:region_name], owner) if params[:region_name].present?
-    set_lookups(params[:varietal_names], Enums::LookupType::VARIETAL, owner) if params[:varietal_names].present?
-    set_lookups(params[:vineyard_names], Enums::LookupType::VINEYARD, owner) if params[:vineyard_names].present?
+    set_style(params[:style_name], owner)
+    set_region(params[:region_name], owner)
+    set_lookups(params[:varietal_names], Enums::LookupType::VARIETAL, owner)
+    set_lookups(params[:vineyard_names], Enums::LookupType::VINEYARD, owner)
   end
   
   def set_lookups(lookup_names, lookup_type, owner = nil)
-    lookup_canonical_names = lookup_names.collect { |lookup_name| lookup_name.canonicalize }
+    if lookup_names.present?
+      lookup_canonical_names = lookup_names.collect { |lookup_name| lookup_name.canonicalize }
+    else
+      lookup_canonical_names = []
+    end
     current_canonical_names = []
     # first, delete any lookups that got removed
     self.looked.each do |looked|
@@ -80,6 +85,7 @@ class Product < ActiveRecord::Base
         end
       end
     end
+    return if !lookup_names.present?
     # now add any new lookups
     lookup_names.each do |lookup_name|
       if !current_canonical_names.include?(lookup_name.canonicalize)
@@ -93,13 +99,14 @@ class Product < ActiveRecord::Base
   end
   
   def set_style(name, owner = nil)
-    return if self.style.try(:canonical_name) == name.canonicalize
+    return if name.present? && (self.style.try(:canonical_name) == name.canonicalize)
     self.looked.each do |looked|
       if looked.lookup.lookup_type == Enums::LookupType::STYLE
         self.remove_tag(looked.lookup.name.tagify)
         looked.delete
       end
     end
+    return if !name.present?
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::STYLE)
     looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
@@ -108,13 +115,14 @@ class Product < ActiveRecord::Base
   end
   
   def set_region(name, owner = nil)
-    return if self.region.try(:canonical_name) == name.canonicalize
+    return if name.present? && (self.region.try(:canonical_name) == name.canonicalize)
     self.looked.each do |looked|
       if looked.lookup.lookup_type == Enums::LookupType::REGION
         self.remove_tag(looked.lookup.name.tagify)
         looked.delete
       end
     end
+    return if !name.present?
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::REGION)
     looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
@@ -156,10 +164,19 @@ class SimpleProduct
 end
 
 class Beer < Product
+  def init
+    self.price_type  ||= Enums::BeerPriceType::SIX_PACK
+  end
 end
 
 class Wine < Product
+  def init
+    self.price_type  ||= Enums::WinePriceType::BOTTLE
+  end
 end
 
 class Spirit < Product
+  def init
+    self.price_type  ||= Enums::SpiritPriceType::FIFTH
+  end
 end

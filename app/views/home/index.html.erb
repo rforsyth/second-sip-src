@@ -1,9 +1,9 @@
 
-<table class="header"><tr>
-<td class="image_container"><%= image_tag 'barley.png', :title => 'Barley', :class => 'homepage_barley' %></td>
+<table class="header" cellpadding=0 cellspacing=0><tr>
 <td>
   <h1>Welcome to Second Sip</h1>
-  <p class="tagline">A free tool for organizing and sharing tasting notes.  What&apos;re you drinking?</p>
+  <p class="tagline">A free tool for organizing and sharing tasting notes.
+    &nbsp;&nbsp;  What&#39;re you drinking?</p>
   <p class="directions">Use the search or browse features to read public notes, <br/>
     <% if current_taster %>
       or visit <%= link_to('your profile page', taster_path(current_taster)) %> to manage your own.
@@ -12,7 +12,6 @@
     <% end %>
   </p>
 </td>
-<td class="image_container"><%= image_tag 'grapes_flipped.png', :title => 'Grapes', :class => 'homepage_grapes' %></td>
 </tr></table>
 
 
