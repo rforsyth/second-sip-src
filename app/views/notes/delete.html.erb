@@ -1,0 +1,12 @@
+
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Delete Note" } %>
+
+<div class="intro simple_intro">
+<p>Click to permanently delete the note:
+  <br/><%= format_note_title(@note) %></p>
+<%= button_to "Delete", polymorphic_path([@note.owner, @note]), :method => 'delete' %>
+</div>
+<br/><br/><br/><br/>
+

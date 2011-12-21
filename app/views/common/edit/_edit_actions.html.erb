@@ -3,7 +3,6 @@
   <%= link_to 'Edit', edit_path %>
   <% if defined?(delete_path) && delete_path.present? %>
     <%= image_tag "icons/delete-16.png" %>
-    <%= link_to 'Delete', delete_path,
-                :confirm => 'Are you sure?', :method => :delete %>
+    <%= link_to 'Delete', delete_path %>
   <% end %>
 </div>

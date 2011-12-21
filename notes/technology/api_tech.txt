@@ -1,0 +1,16 @@
+
+
+______________________________________________________________________
+Setting up api.secondsip.com
+
+Good discussions about architecting api:
+http://stackoverflow.com/questions/3570573/how-should-i-create-a-rest-api-using-rails-3-0
+http://codemonkey.ravelry.com/2009/09/03/building-an-api-into-a-rails-app/
+
+basic answer is:
+- use routing to send subdomain api to api-specific controllers
+
+
+
+______________________________________________________________________
+

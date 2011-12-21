@@ -1,28 +1,5 @@
 
-  1) WineriesController when creating a winery should be able to create a minimal winery
-     Failure/Error: post :create, :producer => {:name => 'Gallo', :visibility => Enums::Visibility::PUBLIC}
-     ActionController::RoutingError:
-       No route matches {:producer=>{:name=>"Gallo", :visibility=>50}, :controller=>"wineries", :action=>"create"}
-     # ./spec/controllers/wineries_controller_spec.rb:17:in `block (3 levels) in <top (required)>'
-
-Finished in 1.27 seconds
 
 
 
-
-Started POST "/tasters/Admin/wineries" for 127.0.0.1 at 2011-09-20 10:19:56 -0700
-  Processing by WineriesController#create as HTML
-  Parameters: {"utf8"=>"✓", "authenticity_token"=>"unP9gDA7oL+m95tJ0R75PWfudVLj070n5R2+pjd2ciA=", "winery"=>{"name"=>"Hogue", "website_url"=>"", "description"=>"", "visibility"=>"50"}, "commit"=>"Create Winery", "taster_id"=>"Admin"}
-  Taster Load (0.4ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."username" = 'Admin' LIMIT 1
-  Taster Load (0.4ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  CACHE (0.0ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  SQL (0.2ms)  BEGIN
-  CACHE (0.0ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  CACHE (0.0ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  CACHE (0.0ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  CACHE (0.0ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  CACHE (0.0ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  CACHE (0.0ms)  SELECT "tasters".* FROM "tasters" WHERE "tasters"."id" = 1 LIMIT 1
-  Producer Load (0.4ms)  SELECT "producers"."id" FROM "producers" WHERE "producers"."creator_id" = 1 AND ("producers"."canonical_name" = 'hogue') LIMIT 1
-  AdminTag Load (0.4ms)  SELECT "admin_tags".* FROM "admin_tags" WHERE "admin_tags"."entity_type" = 'Winery' AND "admin_tags"."name" = 'unreviewed' LIMIT 1
-
+      $('#<%= add_action %> input.tag_name').keyfilter(/[a-z0-9-]/);

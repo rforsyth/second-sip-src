@@ -10,12 +10,6 @@ Manual Testing
 _____________________________________________________________
 Next Up
 
-- bug - price combo is cleared when exiting Wine field
-
-- when entering tag, transform illegal chars to dashes
-
-- markup around varietals lookup lists in note form is broken
-
 - allow change product producer
   - note producer? note product?
 
@@ -23,15 +17,31 @@ Next Up
 
 - load tasters from cache (for showing usernames on lists)
 
+- acquire reference data, format xml datafile
+  - beer regions
+  - spirit types
+  - spirit regions
+
 - scripts to populate reference lookups
-  - grape varietals
-  - wine regions
-  - beer styles
   - beer regions
   - spirit types
   - spirit regions
   
+- populate production references
+
+- include varietals and regions in wine autocomplete
+  
 - prettify blog
+  
+- adsense ads
+
+- refactor lookups javascript to use delegate
+
+- show lookup resource info on edit form
+
+- show lookup resource info on show page
+
+- copy product / producer to reference product / producer
 
 
 _____________________________________________________________
@@ -85,8 +95,6 @@ V2
 - invitations (enter email address of non-user)
 
 - support browsing via iphone
-  
-- adsense ads
 
 - support blocking users
   - add approved field and set to false
@@ -94,8 +102,6 @@ V2
 - change greeting separate from update username / real name
 
 - change password form
-
-- copy product / producer to reference product / producer
 
 - "flag as inappropriate" feature
   - add admin tag and send email
@@ -105,8 +111,6 @@ V2
 
 - change email address
   - need to send a new verification email
-
-- autocomplete username in friend form
 
 - review sql injection security (search, autocomplete, etc...)
 
@@ -118,6 +122,6 @@ V2
 _____________________________________________________________
 Maintainability
 
-- refactor lookups javascript to use delegate
-
 - remove any unused partials
+
+

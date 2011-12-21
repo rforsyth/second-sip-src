@@ -6,11 +6,11 @@ class NotesController < ApplicationController
   include UI::AdminTaggableController
   
 	before_filter :initialize_notes_tabs
-  before_filter :find_note, :only => [ :show, :edit, :update,
+  before_filter :find_note, :only => [ :show, :edit, :update, :delete, :destroy,
                   :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
-  before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update]
+  before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update, :delete, :destroy]
   before_filter :require_visibility, :only => [:show]
   
   def search
@@ -76,6 +76,15 @@ class NotesController < ApplicationController
       @product = @note.product
       render :action => "notes/edit"
     end
+  end
+  
+  def delete
+    render :template => 'notes/delete'
+  end
+  
+  def destroy
+    @note.delete
+    redirect_to polymorphic_path([displayed_taster, @note_class])
   end
 	
   ############################################

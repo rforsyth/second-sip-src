@@ -272,7 +272,7 @@ span.nobreak {
   text-align: center;
 }
 .home table.header {
-	width: 90%;
+	width: 95%;
 	margin: 0 auto;
 	border-bottom: 1px solid #70ABD3;
 }
@@ -280,7 +280,7 @@ span.nobreak {
 	text-align: center;
 	/* font-weight: bold; */
 	font-size: 19px;
-	padding-bottom: 5px;
+	padding-bottom: 0;
 	color: #245F89;
 }
 .home table.header p {

@@ -78,6 +78,8 @@ SsRails::Application.routes.draw do
     resources :beer_notes, :wine_notes, :spirit_notes do
                 get 'search', :on => :collection
                 member do
+                  get  'delete'
+                  delete 'destroy'
                   post 'add_tag'
                   post 'remove_tag'
                   post 'add_admin_tag'
