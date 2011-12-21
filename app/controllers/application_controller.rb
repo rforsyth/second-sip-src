@@ -395,7 +395,7 @@ class ApplicationController < ActionController::Base
           AND lookups.lookup_type = ?
           AND looked.owner_id = ?
         LIMIT ?",
-        "#{canonical_query}%", entity_type,
+        "%#{canonical_query}%", entity_type,
         lookup_type.to_i, owner.id, max_results])
   end
   
@@ -407,7 +407,7 @@ class ApplicationController < ActionController::Base
           AND reference_lookups.entity_type = ?
           AND reference_lookups.lookup_type = ?
         LIMIT ?",
-        "#{canonical_query}%", entity_type,
+        "%#{canonical_query}%", entity_type,
         lookup_type.to_i, max_results])
   end
   

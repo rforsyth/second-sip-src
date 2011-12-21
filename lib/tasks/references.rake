@@ -26,7 +26,6 @@ def build_lookup(xml_lookup, taster, lookup_type, entity_type, parent_lookup)
   lookup_name = coder.decode(xml_lookup.attributes["name"])
   lookup = ReferenceLookup.find_by_canonical_name(lookup_name.canonicalize)
   
-  puts lookup.to_s
   if !lookup.present?
 
     lookup = ReferenceLookup.new
@@ -49,7 +48,11 @@ def build_lookup(xml_lookup, taster, lookup_type, entity_type, parent_lookup)
       resource.body = xml_resource.text
       resource.title = lookup.name
       if resource.url.present? || resource.body.present?
-        puts 'creating resource:' + resource.url
+        if resource.url.present?
+          puts 'creating resource:' + resource.url
+        else
+          puts 'creating resource - no URL'
+        end
         resource.save
       end
     end

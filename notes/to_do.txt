@@ -1,21 +1,13 @@
 
 
-_____________________________________________________________
-Manual Testing
+bundle exec rake db:load_reference_varietals
+bundle exec rake db:load_reference_wine_regions
+bundle exec rake db:load_reference_beer_styles
 
-
-
-
+heroku rake db:load_reference_beer_styles
 
 _____________________________________________________________
 Next Up
-
-- allow change product producer
-  - note producer? note product?
-
-- support note delete
-
-- load tasters from cache (for showing usernames on lists)
 
 - acquire reference data, format xml datafile
   - beer regions
@@ -30,16 +22,21 @@ Next Up
 - populate production references
 
 - include varietals and regions in wine autocomplete
-  
-- prettify blog
-  
-- adsense ads
+
+- allow change product producer
+  - note producer? note product?
 
 - refactor lookups javascript to use delegate
 
 - show lookup resource info on edit form
 
 - show lookup resource info on show page
+
+- load tasters from cache (for showing usernames on lists)
+  
+- prettify blog
+  
+- adsense ads
 
 - copy product / producer to reference product / producer
 
