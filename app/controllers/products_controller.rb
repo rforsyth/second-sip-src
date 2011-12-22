@@ -29,10 +29,34 @@ class ProductsController < ApplicationController
                      :producers => { :owner_id => current_taster.id,
                                      :canonical_name => canonical_producer_name }
                      ).where("products.canonical_name LIKE ?", "%#{canonical_query}%"
-                     ).limit(MAX_AUTOCOMPLETE_RESULTS)
+                     ).limit(MAX_AUTOCOMPLETE_RESULTS)                 
     products.each do |product|
 	    autocomplete.add_suggestion(product.name, product.name, product.id)
     end
+    
+    if @product_class == Wine &&
+       autocomplete.suggestions.count < MAX_AUTOCOMPLETE_RESULTS
+
+      reference_lookups = ReferenceLookup.find_by_sql(
+        ["SELECT DISTINCT reference_lookups.* FROM reference_lookups 
+          WHERE reference_lookups.canonical_name LIKE ?
+            AND reference_lookups.entity_type = ?
+            AND (reference_lookups.lookup_type = ?
+                 OR reference_lookups.lookup_type = ?)
+          ORDER BY lookup_type DESC, name ASC
+          LIMIT ?",
+          "%#{canonical_query}%", 'ReferenceWine',
+          Enums::LookupType::REGION, Enums::LookupType::VARIETAL,
+          MAX_AUTOCOMPLETE_RESULTS])
+                
+      reference_lookups.each do |lookup|
+        break if autocomplete.suggestions.count > MAX_AUTOCOMPLETE_RESULTS
+        if !autocomplete.includes_value?(lookup.name)
+  	      autocomplete.add_suggestion(lookup.name, lookup.name, lookup.id)
+  	    end
+      end
+    end
+    
     render :json => autocomplete
   end
   

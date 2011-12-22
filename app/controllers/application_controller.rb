@@ -406,6 +406,7 @@ class ApplicationController < ActionController::Base
         WHERE reference_lookups.canonical_name LIKE ?
           AND reference_lookups.entity_type = ?
           AND reference_lookups.lookup_type = ?
+        ORDER BY name ASC
         LIMIT ?",
         "%#{canonical_query}%", entity_type,
         lookup_type.to_i, max_results])

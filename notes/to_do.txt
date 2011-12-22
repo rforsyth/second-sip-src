@@ -9,7 +9,12 @@ bundle exec rake db:load_reference_spirit_styles
 bundle exec rake db:load_reference_spirit_regions
 
 
+heroku rake db:load_reference_varietals
+heroku rake db:load_reference_wine_regions
 heroku rake db:load_reference_beer_styles
+heroku rake db:load_reference_beer_regions
+heroku rake db:load_reference_spirit_styles
+heroku rake db:load_reference_spirit_regions
 
 
 _____________________________________________________________
