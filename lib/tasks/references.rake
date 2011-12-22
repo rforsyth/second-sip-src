@@ -24,7 +24,8 @@ def build_lookup(xml_lookup, taster, lookup_type, entity_type, parent_lookup)
   
   coder = HTMLEntities.new
   lookup_name = coder.decode(xml_lookup.attributes["name"])
-  lookup = ReferenceLookup.find_by_canonical_name(lookup_name.canonicalize)
+  lookup = ReferenceLookup.find_by_canonical_name(lookup_name.canonicalize,
+    :conditions => { :entity_type => entity_type, :lookup_type => lookup_type })
   
   if !lookup.present?
 
@@ -57,7 +58,8 @@ def build_lookup(xml_lookup, taster, lookup_type, entity_type, parent_lookup)
       end
     end
   else
-    puts "Lookup with name: #{lookup_name} already exists. skipping."
+    #puts "Lookup with name: #{lookup_name} already exists. skipping."
+    print '.'
   end
   
   xml_lookup.elements.each("children") do |children|
@@ -98,6 +100,18 @@ namespace :db do
   
   task :load_reference_beer_styles => :environment do
     load_lookups('beer_styles.xml')
+  end
+  
+  task :load_reference_beer_regions => :environment do
+    load_lookups('beer_regions.xml')
+  end
+  
+  task :load_reference_spirit_styles => :environment do
+    load_lookups('spirit_styles.xml')
+  end
+  
+  task :load_reference_spirit_regions => :environment do
+    load_lookups('spirit_regions.xml')
   end
 end
 
