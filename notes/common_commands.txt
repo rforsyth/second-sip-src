@@ -61,6 +61,7 @@ Rake
 
 $ rake routes
 $ bundle exec rake db:migrate
+$ bundle exec rake db:load_reference_varietals
 
 __________________________________________________________________
 Heroku
@@ -68,6 +69,8 @@ Heroku
 - 100 is default
 $ heroku logs -n 500
 $ heroku logs --tail
+
+$ heroku rake db:load_reference_varietals
 
 
 

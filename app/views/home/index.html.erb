@@ -25,13 +25,13 @@
   <div class="tag_links left_column">
     <h3>Styles</h3>
     <%= render :partial => 'link_to_beverages_filtered_by_lookup',
-               :collection => @beer_style_names, :spacer => ', ',
+               :collection => @beer_style_names, :spacer_template => 'common/lists/home_link_spacer',
                :locals => { :entities_path => Beer.name.tableize } %>
   </div>
   <div class="tag_links right_column">
     <h3>Regions</h3>
     <%= render :partial => 'link_to_beverages_filtered_by_lookup',
-               :collection => @beer_region_names, :spacer => ', ',
+               :collection => @beer_region_names, :spacer_template => 'common/lists/home_link_spacer',
                :locals => { :entities_path => Beer.name.tableize } %>
   </div>
   <div class="footer">
@@ -51,13 +51,13 @@
   <div class="tag_links left_column">
     <h3>Varietals</h3>
     <%= render :partial => 'link_to_beverages_filtered_by_lookup',
-               :collection => @wine_varietal_names, :spacer => ', ',
+               :collection => @wine_varietal_names, :spacer_template => 'common/lists/home_link_spacer',
                :locals => { :entities_path => Wine.name.tableize } %>
   </div>
   <div class="tag_links right_column">
     <h3>Regions</h3>
     <%= render :partial => 'link_to_beverages_filtered_by_lookup',
-               :collection => @wine_region_names, :spacer => ', ',
+               :collection => @wine_region_names, :spacer_template => 'common/lists/home_link_spacer',
                :locals => { :entities_path => Wine.name.tableize } %>
   </div>
   <div class="footer">
@@ -77,13 +77,13 @@
   <div class="tag_links left_column">
     <h3>Liquors / Liqueurs</h3>
     <%= render :partial => 'link_to_beverages_filtered_by_lookup',
-               :collection => @spirit_style_names, :spacer => ', ',
+               :collection => @spirit_style_names, :spacer_template => 'common/lists/home_link_spacer',
                :locals => { :entities_path => Spirit.name.tableize } %>
   </div>
   <div class="tag_links right_column">
     <h3>Regions</h3>
     <%= render :partial => 'link_to_beverages_filtered_by_lookup',
-               :collection => @spirit_region_names, :spacer => ', ',
+               :collection => @spirit_region_names, :spacer_template => 'common/lists/home_link_spacer',
                :locals => { :entities_path => Spirit.name.tableize } %>
   </div>
   <div class="footer">

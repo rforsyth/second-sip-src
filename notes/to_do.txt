@@ -1,48 +1,13 @@
 
 
-bundle exec rake db:load_reference_varietals
-bundle exec rake db:load_reference_wine_regions
-bundle exec rake db:load_reference_beer_styles
-
-bundle exec rake db:load_reference_beer_regions
-bundle exec rake db:load_reference_spirit_styles
-bundle exec rake db:load_reference_spirit_regions
-
-
-heroku rake db:load_reference_varietals
-heroku rake db:load_reference_wine_regions
-heroku rake db:load_reference_beer_styles
-heroku rake db:load_reference_beer_regions
-heroku rake db:load_reference_spirit_styles
-heroku rake db:load_reference_spirit_regions
-
-
 _____________________________________________________________
 Next Up
-
-- acquire reference data, format xml datafile
-  - beer regions
-  - spirit types
-  - spirit regions
-
-- scripts to populate reference lookups
-  - beer regions
-  - spirit types
-  - spirit regions
-  
-- populate production references
-
-- fix homepage links
-
-- cache homepage lists for performance
 
 - refactor lookups javascript to use delegate
 
 - show lookup resource info on edit form
 
 - show lookup resource info on show page
-
-- include varietals and regions in wine autocomplete
 
 - allow change product producer
   - note producer? note product?
@@ -55,6 +20,7 @@ Next Up
 
 - copy product / producer to reference product / producer
 
+- send exception log email on daily basis
 
 _____________________________________________________________
 Security

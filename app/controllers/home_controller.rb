@@ -25,19 +25,23 @@ class HomeController < ApplicationController
   end
   
   def find_homepage_lookup_names(lookup_type, entity_type)
-	  ActiveRecord::Base.connection.select_values("
-      SELECT name FROM
-      	(SELECT looked.id AS looked_id, lookups.name
-      	FROM lookups, reference_lookups, looked
-      	WHERE lookups.id = looked.lookup_id
-      		AND lookups.canonical_name = reference_lookups.canonical_name
-      		AND lookups.lookup_type = #{lookup_type}
-      		AND lookups.entity_type = '#{entity_type}'
-      	ORDER BY looked.id DESC
-      	LIMIT 200) AS lookup_names
-      GROUP BY name
-      ORDER BY COUNT(looked_id) DESC
-      LIMIT 5")
+    Rails.cache.fetch("homepage_links_#{entity_type}_#{lookup_type}", :expires_in => 5.minutes) do
+  	  ActiveRecord::Base.connection.select_values("
+        SELECT name FROM
+        	(SELECT looked.id AS looked_id, lookups.name
+        	FROM lookups, reference_lookups, looked, products
+        	WHERE lookups.id = looked.lookup_id
+        	  AND looked.lookable_id = products.id
+        		AND lookups.canonical_name = reference_lookups.canonical_name
+        		AND lookups.lookup_type = #{lookup_type}
+        		AND lookups.entity_type = '#{entity_type}'
+        		AND products.visibility >= 50
+        	ORDER BY looked.id DESC
+        	LIMIT 200) AS lookup_names
+        GROUP BY name
+        ORDER BY COUNT(looked_id) DESC
+        LIMIT 5")
+    end
   end
   
   
