@@ -7,7 +7,7 @@ class ReferenceLookupsController < ApplicationController
                                                    :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
 	before_filter :initialize_reference_lookups_tabs
-	before_filter :require_admin, :except => [:autocomplete]
+	before_filter :require_admin, :except => [:autocomplete, :resources]
 	
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])
@@ -56,6 +56,18 @@ class ReferenceLookupsController < ApplicationController
     else
       render :action => "edit"
     end
+  end
+  
+  def resources
+    if (params[:name].present? && params[:entity_type].present? && params[:lookup_type].present?)
+      @lookup = ReferenceLookup.find_by_canonical_name(params[:name].canonicalize,
+        :conditions => { :entity_type => "Reference#{params[:entity_type]}",
+                         :lookup_type => params[:lookup_type] })
+      if @lookup.present? && @lookup.resources.present?
+        return render :layout => false
+      end
+    end
+    render :status => 404, :layout => false
   end
 	
   ############################################

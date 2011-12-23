@@ -34,6 +34,8 @@ SsRails::Application.routes.draw do
               post 'remove_admin_tag', :on => :member
             end
   
+  match '/reference_lookup_resources' => 'reference_lookups#resources', :as => :reference_lookup_resources
+  
   resources :reference_breweries, :reference_wineries, :reference_distilleries do
               get 'search', :on => :collection
               get 'autocomplete', :on => :collection

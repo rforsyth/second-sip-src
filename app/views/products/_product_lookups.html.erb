@@ -23,6 +23,8 @@
   <%= render :partial => 'common/scripts/autocomplete_script',
              :locals => { :field_id => "style_name",
                           :entities_path => autocomplete_lookups_path,
+                          :on_select_function => "show_lookup_references",
+                          :on_click_function => "show_lookup_references",
                           :params => {'lookup_type' => Enums::LookupType::STYLE,
                                       'entity_type' => @product.class.name} } %>
 <% end %>
@@ -37,6 +39,8 @@
 <%= render :partial => 'common/scripts/autocomplete_script',
            :locals => { :field_id => "region_name",
                         :entities_path => autocomplete_lookups_path,
+                        :on_select_function => "show_lookup_references",
+                        :on_click_function => "show_lookup_references",
                         :params => {'lookup_type' => Enums::LookupType::REGION,
                                     'entity_type' => @product.class.name} } %>
 

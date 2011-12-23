@@ -920,14 +920,14 @@ div.rightpane_lookup p.attribution {
 div.rightpane_lookup p.attribution a {
   color: grey;
 }
-#references_container {
+#resources_container {
 	margin-top: 5px;
 }
-div.reference_body {
+div.resource_body {
 	max-height: 200px;
 	overflow: scroll;
 }
-#reference_name {
+#resource_name {
 	width: 200px;
 }
 

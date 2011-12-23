@@ -63,4 +63,11 @@ module ApplicationHelper
 	  end
   end
   
+  def resource_type_name(resource_type)
+    Enums::ResourceType.collection.each_pair do |name, type|
+      return name if type == resource_type
+    end
+    nil
+  end
+  
 end

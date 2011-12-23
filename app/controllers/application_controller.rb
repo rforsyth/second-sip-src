@@ -475,6 +475,15 @@ class ApplicationController < ActionController::Base
                    viewer.friends.include?(beverage.owner))
     false
   end
+  
+  def display_reference_lookup(canonical_name, entity_type, lookup_type)
+    return if !canonical_name.present?
+    lookup = ReferenceLookup.find_by_canonical_name(canonical_name,
+              :conditions => { :entity_type => "ReferenceBeer",
+                               :lookup_type => Enums::LookupType::STYLE })
+    @reference_lookups ||= []
+    @reference_lookups << lookup
+  end
     
   
 end

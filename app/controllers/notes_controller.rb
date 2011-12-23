@@ -32,6 +32,9 @@ class NotesController < ApplicationController
     @show_product = test_visibility(@product, current_taster)
     @producer = @product.producer
     @show_producer = test_visibility(@producer, current_taster)
+    if @product.kind_of?(Beer)
+      display_reference_lookup(@product.style.try(:canonical_name), "ReferenceBeer", Enums::LookupType::STYLE)
+    end
 		render :template => 'notes/show'
   end
 

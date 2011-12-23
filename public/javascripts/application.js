@@ -44,19 +44,22 @@ function list_to_array(li_selector) {
 }
 
 function show_lookup_references(element) {
+  
+  console.log('inside show_lookup_references');
+  
 	name = '';
 	if($(element).is('input')) {
 		name = $(element).val();
 	} else {
 		name = $(element).text();
 	}
-    $.get('/lookups/references', 
-		{ entity_type: $(element).attr('entity_type'),
-		  lookup_type: $(element).attr('lookup_type'),
-		  name: name },
-        function(lookup_html) {
-          $('.rightpane_lookup').html(lookup_html);
-        });
+  $.get('/reference_lookup_resources', 
+	{ entity_type: $(element).attr('entity_type'),
+	  lookup_type: $(element).attr('lookup_type'),
+	  name: name },
+      function(lookup_html) {
+        $('.rightpane_lookup').html(lookup_html);
+      });
 }	
 
 function get_selected_autocomplete_id(autocomplete_data, selected_label){

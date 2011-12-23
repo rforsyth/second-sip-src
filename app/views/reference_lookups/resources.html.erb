@@ -1,0 +1,5 @@
+
+<%= render :partial => 'common/details/resources',
+           :locals => { :resources => @lookup.try(:resources),
+                        #:search_term => @lookup.try(:name),
+                        :title => @lookup.try(:name) } %>

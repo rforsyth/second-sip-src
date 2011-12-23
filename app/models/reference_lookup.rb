@@ -8,6 +8,7 @@ class ReferenceLookup < ActiveRecord::Base
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :parent_reference_lookup, :class_name => "ReferenceLookup"
 	has_many :child_reference_lookups, :class_name => "ReferenceLookup", :foreign_key => 'parent_reference_lookup_id'
+	has_many :resources
 	before_validation :build_full_name
 	before_validation :canonicalize_names
 	

@@ -1,0 +1,12 @@
+<% return if !@reference_lookups.present? %>
+<% @reference_lookups.each do |reference_lookup| %>
+
+  <% if reference_lookup.present? && reference_lookup.resources.present? %>  
+    <div class="rightpane_lookup rightpane_separator">
+      <%= render :partial => 'common/details/resources',
+                 :locals => { :resources => reference_lookup.try(:resources),
+                              #:search_term => reference_lookup.try(:name),
+                              :title => reference_lookup.try(:name) } %>
+    </div>
+  <% end %> 
+<% end %>             

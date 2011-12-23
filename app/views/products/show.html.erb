@@ -81,5 +81,8 @@
              :locals => { :product_params => {:producer_name => @product.producer_name},
                           :note_params => {:producer_name => @product.producer_name,
                                            :product_name => @product.name } } %>
+  
+  <%= render :partial => 'common/details/details_resources' %>
+                
 <% end %>
 

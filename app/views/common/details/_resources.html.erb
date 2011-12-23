@@ -1,10 +1,12 @@
+
 <%
   include_add = false if !defined?(include_add)
   include_search = defined?(search_term) ? true : false
-  return if (!references.present? && !include_add && !include_search)
+  return if (!resources.present? && !include_add && !include_search)
 %>
+
 <h4><%= title %></h4>
-<div id="references_container">
+<div id="resources_container">
 <% if include_search %>
   <h3<a href="#">Links</a></h3>
   <div>
@@ -24,18 +26,23 @@
     </ul>
   </div>
 <% end %>
-<% if  references.present? %>
-  <% references.each do |reference| %>
-    <h3><a href="#"><%= reference.title %></a></h3>
-    <div class="reference_body"><%= reference.body %></div>
+<% if resources.present? %>
+  <% resources.each do |resource| %>
+    <h3><a href="#"><%= resource_type_name(resource.resource_type) %></a></h3>
+    <div class="resource_body">
+      <% if resource.url.present? %>
+        <a href="<%= resource.url %>" target="_blank"> <%= resource.url %> </a>
+      <% end %>
+      <%=raw resource.body if resource.body.present? %>
+    </div>
   <% end %>
 <% end %>
 <% if include_add %>
   <h3><a href="#">Add:</a></h3>
   <div>    
-    <% form_tag('add_reference', :id => "add_reference") do %>
+    <% form_tag('add_resource', :id => "add_resource") do %>
       <%= hidden_field_tag(:lookup_id, @lookup.id) %> 
-      <%= text_field_tag(:reference_name) %>
+      <%= text_field_tag(:resource_name) %>
       <%= submit_tag("Add") %>
     <% end %>
   </div>
@@ -44,15 +51,15 @@
 
 <script type="text/javascript">
 	$(function() {
-		$( "#references_container" ).accordion();
+		$( "#resources_container" ).accordion();
 	});
 	
   <% if include_add %>
-  $('#add_reference').submit(function() {
-      $.post('add_reference',
-             form_fields('add_reference'),
-             function(reference_html) {
-               $('.references').html(reference_html);
+  $('#add_resource').submit(function() {
+      $.post('add_resource',
+             form_fields('add_resource'),
+             function(resource_html) {
+               $('.resources').html(resource_html);
              });
       return false;
   });
@@ -61,7 +68,7 @@
 
 <% if include_add %>
   <%= render :partial => 'common/scripts/autocomplete_script',
-             :locals => { :field_id => "reference_name",
-                          :entities_path => "references" } %>
+             :locals => { :field_id => "resource_name",
+                          :entities_path => "resources" } %>
 <% end %>
 
