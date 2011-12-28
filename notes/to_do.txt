@@ -17,8 +17,6 @@ Next Up
 - prettify blog
 
 - add link to blog
-  
-- adsense ads
 
 _____________________________________________________________
 Security

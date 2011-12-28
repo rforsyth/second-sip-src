@@ -1077,6 +1077,7 @@ div.tags_container span.title {
 	border: solid 1px #2DB66D; /* #FF6600; */
 	margin: 3px 4px;
 	padding: 0 3px;
+	cursor:pointer;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1102,6 +1103,13 @@ div.tags_container span.title {
     display:inline-block;
     zoom:1;
     *display:inline;
+}
+/* this enables the click event for iOS */
+.available_tags ul li {
+	cursor: pointer;
+}
+.include_tags ul li {
+	cursor: pointer;
 }
 .tags li.tag a:hover {
 	background: red;
