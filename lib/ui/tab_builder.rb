@@ -81,6 +81,12 @@ module UI::TabBuilder
 	def initialize_register_or_login_tabs
 		@topnav_tabs = build_minimal_topnav_tabs
   end
+	def initialize_monitor_dashboard_tabs
+		initialize_monitor_tabs_helper(:dashboard)
+	end
+	def initialize_monitor_exceptions_tabs
+		initialize_monitor_tabs_helper(:exceptions)
+	end
 	
 	private
 	
@@ -104,6 +110,12 @@ module UI::TabBuilder
 			when :reference_producers then build_reference_producers_subnav_tabs(subnav_tab)
 		end
 	end
+	
+	def initialize_monitor_tabs_helper(selected_tab)
+		@topnav_tabs = [UI::NavigationTab.new(:monitor, 'selected')]
+		@subnav_tabs = [UI::NavigationTab.new(:dashboard, calc_class(:dashboard, selected_tab)),
+		                UI::NavigationTab.new(:exceptions, calc_class(:exceptions, selected_tab))]
+  end
 	
 	def calc_beverage_topnav
 		return :my_notes if displayed_taster == current_taster

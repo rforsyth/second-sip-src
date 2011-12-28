@@ -1,10 +1,12 @@
 require 'ui/tab_builder'
 require 'ajax/autocomplete'
 require 'data/cache_helper'
+require 'exceptions/exception_loggable'
 
 class ApplicationController < ActionController::Base
 	include UI::TabBuilder
   include Data::CacheHelper
+  include ExceptionLogger::ExceptionLoggable
   
   protect_from_forgery
   
@@ -15,6 +17,26 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_taster, :displayed_taster
   helper_method :fetch_taster
+  
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, :with => :render_error
+    rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
+    rescue_from ActionController::RoutingError, :with => :render_not_found
+    rescue_from ActionController::UnknownController, :with => :render_not_found
+    rescue_from ActionController::UnknownAction, :with => :render_not_found
+  end
+  
+  def render_not_found(exception)
+    log_exception(exception)
+    flash[:notice] = 'The resource was not found.  Sorry for any inconvenience'
+    render :template => 'errors/message', :layout => 'single_column', :status => 404
+  end
+
+  def render_error(exception)
+    log_exception(exception)
+    flash[:notice] = 'An unexepected server error occurred.  Sorry for any inconvenience'
+    render :template => 'errors/message', :layout => 'single_column', :status => 500
+  end
 
   protected
   
@@ -110,7 +132,7 @@ class ApplicationController < ActionController::Base
   def require_taster 
     unless current_taster
       flash[:notice] = "You must be signed in to access this page" 
-      redirect_to login_path(:redir => request.request_uri)
+      redirect_to login_path(:redir => request.fullpath)
       return false 
     end 
   end
@@ -145,11 +167,23 @@ class ApplicationController < ActionController::Base
     if !(test_visibility(entity, current_taster))
       if current_taster.nil?
         flash[:notice] = "You must be signed in to access this page" 
-        redirect_to login_path(:redir => request.request_uri)
+        redirect_to login_path(:redir => request.fullpath)
       else
         flash[:notice] = "You do not have permission to access this page" 
         render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
       end
+      return false 
+    end
+  end
+  
+  def require_displayed_taster
+    if displayed_taster.nil?
+      if params[:taster_id].present?
+        flash[:notice] = "The taster: #{params[:taster_id]} could not be found in the database"
+      else 
+        flash[:notice] = "We could not find the page that you are looking for"
+      end
+      render :template => 'errors/message', :layout => 'single_column', :status => 404
       return false 
     end
   end

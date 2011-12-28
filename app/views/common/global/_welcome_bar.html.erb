@@ -23,6 +23,7 @@
     <% end %>
     <% if current_taster && current_taster.is?(:admin) -%>
       &middot; <%= link_to('Admin', tasters_path) -%>
+      &middot; <%= link_to('Monitor', monitor_path) -%>
     <% end -%>
   </span>
   |&nbsp;&nbsp;

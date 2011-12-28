@@ -3,24 +3,24 @@
 _____________________________________________________________
 Next Up
 
-- refactor lookups javascript to use delegate
+- refine resource display
+  - browser testing
+  - better format for URL
+  - no scrollbars on sub-window
 
-- show lookup resource info on edit form
+- copy product / producer to reference product / producer
 
-- show lookup resource info on show page
+- editor role
 
-- allow change product producer
-  - note producer? note product?
+- monitor exceptions (plugin?)
 
 - load tasters from cache (for showing usernames on lists)
   
 - prettify blog
+
+- add link to blog
   
 - adsense ads
-
-- copy product / producer to reference product / producer
-
-- send exception log email on daily basis
 
 _____________________________________________________________
 Security
@@ -65,6 +65,9 @@ Bugs
 
 _____________________________________________________________
 V2
+
+- allow change product producer
+  - note producer? note product?
 
 - prettier exception page with contact form
 

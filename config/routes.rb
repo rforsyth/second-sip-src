@@ -11,6 +11,10 @@ SsRails::Application.routes.draw do
 	match '/about' => "home#about", :as => :about
 	match '/contact' => "home#contact", :as => :contact
 	match '/terms' => "home#terms", :as => :terms
+	
+	match '/monitor' => "monitor#index", :as => :monitor
+	match '/monitor/exceptions/:id' => "monitor#exception", :as => :exception
+	match '/monitor/exceptions' => "monitor#exceptions", :as => :exceptions
 
   resources :taster_sessions, :password_resets
   match 'login' => 'taster_sessions#new', :as => :login

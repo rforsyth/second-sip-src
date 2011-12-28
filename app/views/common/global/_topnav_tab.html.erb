@@ -19,6 +19,8 @@
     link_to('Producers', reference_breweries_path, :class => topnav_tab.css_class)
   when :reference_products then
     link_to('Products', reference_beers_path, :class => topnav_tab.css_class)
+  when :monitor then
+    link_to('Monitor', monitor_path, :class => topnav_tab.css_class)
   else raise 'Unexpected tab: ' + topnav_tab.tab.to_s
   end
 -%>

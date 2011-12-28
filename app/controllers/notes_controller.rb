@@ -12,6 +12,7 @@ class NotesController < ApplicationController
   before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
   before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update, :delete, :destroy]
   before_filter :require_visibility, :only => [:show]
+  before_filter :require_displayed_taster
   
   def search
     @notes = search_beverage_by_owner(@note_class, params[:query],

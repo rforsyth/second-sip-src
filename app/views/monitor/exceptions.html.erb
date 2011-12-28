@@ -1,0 +1,13 @@
+
+<%= render :partial => 'common/global/content_header' %>
+
+<% if @exceptions && !@exceptions.empty? %>
+  <div class="main_list">
+    <%= render :partial => 'exception', :collection => @exceptions %>
+  </div>
+<% else %>
+  <%= render :partial => 'common/global/simple_message',
+             :object => "There are no tags." %>
+<% end %>
+
+<%= render :partial => 'common/lists/paging_bar' %>

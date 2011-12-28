@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216195155) do
+ActiveRecord::Schema.define(:version => 20111228174347) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -47,6 +47,17 @@ ActiveRecord::Schema.define(:version => 20111216195155) do
   add_index "friendships", ["invitee_id"], :name => "index_friendships_on_invitee_id"
   add_index "friendships", ["inviter_id"], :name => "index_friendships_on_inviter_id"
   add_index "friendships", ["status"], :name => "index_friendships_on_status"
+
+  create_table "logged_exceptions", :force => true do |t|
+    t.string   "exception_class"
+    t.string   "controller_name"
+    t.string   "action_name"
+    t.text     "message"
+    t.text     "backtrace"
+    t.text     "environment"
+    t.text     "request"
+    t.datetime "created_at"
+  end
 
   create_table "looked", :force => true do |t|
     t.integer "lookup_id",                    :null => false

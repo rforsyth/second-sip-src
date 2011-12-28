@@ -15,6 +15,10 @@ module ApplicationHelper
 		#title << "(#{format_short_date(note.tasted_at)})"
 	end
 
+	def format_exception_title(exception)
+		"#{exception.exception_class}: #{exception.controller_name}.#{exception.action_name}"
+	end
+
 	def format_short_date(date)
 		if date.year == Time.now.year then
 			#"#{date.month.to_s}/#{date.day.to_s}"

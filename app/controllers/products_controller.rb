@@ -12,10 +12,14 @@ class ProductsController < ApplicationController
   before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
   before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update, :ajax_details]
   before_filter :require_visibility, :only => [:show]
+  before_filter :require_displayed_taster
   
   def search
     @products = search_beverage_by_owner(@product_class, params[:query],
                                          displayed_taster, current_taster)
+  
+  raise 'hi!'                                       
+                                         
 		render :template => 'products/search'
 	end
   

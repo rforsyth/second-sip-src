@@ -143,6 +143,7 @@ bundle exec rails generate migration AddSearchableMetadataToProducer
 
 bundle exec rails generate migration RenameResourceLookupId
 
+bundle exec rails generate migration CreateExceptionsTable
 
 
 

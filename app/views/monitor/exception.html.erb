@@ -1,0 +1,29 @@
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => format_exception_title(@exception) } %>
+
+<div class="details_row">
+  <span class="label">Created:</span>
+  <span class="content"><%= @exception.created_at.to_s -%></span>
+</div>
+
+<div class="details_row">
+  <span class="label">Message:</span>
+  <span class="content"><%= @exception.message -%></span>
+</div>
+
+<div class="details_row">
+  <span class="label">Request:</span>
+  <span class="content"><%=simple_format @exception.request -%></span>
+</div>
+
+<div class="details_row">
+  <span class="label">Backtrace:</span>
+  <span class="content"><%=simple_format @exception.backtrace -%></span>
+</div>
+
+<div class="details_row">
+  <span class="label">Environment:</span>
+  <span class="content"><%=simple_format @exception.environment -%></span>
+</div>
+
+

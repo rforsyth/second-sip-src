@@ -70,6 +70,10 @@
     link_to('Wines', reference_wines_path, :class => subnav_tab.css_class)
   when :reference_spirits then
     link_to('Spirits', reference_spirits_path, :class => subnav_tab.css_class)
+  when :dashboard then
+    link_to('Dashboard', monitor_path, :class => subnav_tab.css_class)
+  when :exceptions then
+    link_to('Exceptions', exceptions_path, :class => subnav_tab.css_class)
   else raise 'Unexpected tab: ' + subnav_tab.tab.to_s
   end
 -%>
