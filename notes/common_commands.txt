@@ -70,6 +70,8 @@ Heroku
 $ heroku logs -n 500
 $ heroku logs --tail
 
+$ heroku rake db:migrate
+  - just runs latest migrations; doesn't destroy tables if it has a record of previously run migrations
 $ heroku rake db:load_reference_varietals
 
 

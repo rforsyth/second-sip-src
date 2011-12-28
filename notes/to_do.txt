@@ -12,8 +12,6 @@ Next Up
 
 - editor role
 
-- monitor exceptions (plugin?)
-
 - load tasters from cache (for showing usernames on lists)
   
 - prettify blog
