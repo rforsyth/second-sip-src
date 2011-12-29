@@ -145,6 +145,14 @@ class ApplicationController < ActionController::Base
     end 
   end
   
+  def require_editor
+    if !(current_taster && current_taster.is?(:editor))
+      flash[:notice] = "You do not have permission to access this page" 
+      render :template => 'errors/message', :layout => 'single_column', :status => :forbidden
+      return false 
+    end
+  end
+  
   def require_admin
     if !(current_taster && current_taster.is?(:admin))
       flash[:notice] = "You do not have permission to access this page" 

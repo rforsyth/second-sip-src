@@ -5,7 +5,8 @@
   <div class="form_row">
     <%= label_tag :reference_producer_name, "Producer: " %>
     <% if @product.new_record? %>
-      <%= text_field_tag :reference_producer_name, nil, :class => 'text_field text_wide', :autocomplete => 'off' %>
+      <%= text_field_tag :reference_producer_name, @product.reference_producer_name,
+                         :class => 'text_field text_wide', :autocomplete => 'off' %>
       <script type="text/javascript">
         $("#reference_producer_name").focus();
       </script>

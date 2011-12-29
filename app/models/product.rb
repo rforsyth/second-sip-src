@@ -38,6 +38,24 @@ class Product < ActiveRecord::Base
     :against => [:name, :producer_name, :searchable_metadata, :description]
     #:ignoring => :accents
   
+  def region_name
+    self.region.try(:name)
+  end
+  
+  def style_name
+    self.style.try(:name)
+  end
+  
+  def vineyard_names
+    return nil if !self.vineyards.present?
+    self.vineyards.collect {|vineyard| vineyard.name}
+  end
+  
+  def varietal_names
+    return nil if !self.varietals.present?
+    self.varietals.collect {|varietal| varietal.name}
+  end
+  
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize if self.name.present?
     self.producer_canonical_name = self.producer_name.canonicalize if self.producer_name.present?

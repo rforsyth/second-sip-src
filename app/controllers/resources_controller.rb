@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
 	before_filter :initialize_resources_tabs
-  before_filter :require_admin
+  before_filter :require_editor
 	
   # GET /resources
   # GET /resources.xml

@@ -7,7 +7,7 @@ class LookupsController < ApplicationController
                                          :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
 	before_filter :initialize_lookups_tabs
-	before_filter :require_admin, :except => [:autocomplete]
+	before_filter :require_editor, :except => [:autocomplete]
 	
   def autocomplete
     autocomplete = Ajax::Autocomplete.new(params[:query])

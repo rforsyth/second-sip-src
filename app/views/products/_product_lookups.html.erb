@@ -16,7 +16,7 @@
   <div class="form_row">
     <%= label_tag :style_name,
           (@product.kind_of?(Spirit) || @product.kind_of?(ReferenceSpirit)) ? 'Type:' : 'Style:' %>
-    <%= text_field_tag :style_name, @product.style.try(:name) || params[:style_name],
+    <%= text_field_tag :style_name, @product.style_name || params[:style_name],
         :class => 'text_field text_wide', 
         :entity_type => @product.type, :lookup_type => Enums::LookupType::STYLE %>
   </div>
@@ -32,7 +32,7 @@
 <div class="form_row">
   <%= label_tag :region_name,
         (@product.kind_of?(Beer) || @product.kind_of?(ReferenceBeer)) ? 'Brewed In:' : 'Region:' %>
-  <%= text_field_tag :region_name, @product.region.try(:name) || params[:region_name],
+  <%= text_field_tag :region_name, @product.region_name || params[:region_name],
       :class => 'text_field text_wide', 
       :entity_type => @product.type, :lookup_type => Enums::LookupType::REGION %>
 </div>
@@ -46,10 +46,10 @@
 
 <% if !is_beer_or_spirit %>
   <%= render :partial => 'common/edit/lookup_collection_row',
-             :locals => { :lookup_name => 'varietal', :lookup_collection => @product.varietals,
+             :locals => { :lookup_type_name => 'varietal', :lookup_names => @product.varietal_names,
                           :entity_type => @product.type, :lookup_type => Enums::LookupType::VARIETAL } %>
   <%= render :partial => 'common/edit/lookup_collection_row',
-             :locals => { :lookup_name => 'vineyard', :lookup_collection => @product.vineyards,
+             :locals => { :lookup_type_name => 'vineyard', :lookup_names => @product.vineyard_names,
                           :entity_type => @product.type, :lookup_type => Enums::LookupType::VINEYARD } %>
   <%= render :partial => 'common/scripts/autocomplete_script',
              :locals => { :field_id => "varietal_name",
@@ -65,6 +65,6 @@
 
 <%= render :partial => 'common/edit/price_field', :locals => {
   :price_type_collection => price_type_collection,
-  :selected => default_price_type } %>
+  :selected => @product.price_type || default_price_type } %>
   
     

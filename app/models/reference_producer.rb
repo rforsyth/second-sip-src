@@ -56,6 +56,12 @@ class ReferenceProducer < ActiveRecord::Base
 	      reference_producer_canonical_name = #{producer_canonical_name}
 	    WHERE reference_products.reference_producer_id = #{self.id}")
   end
+  
+  def copy_from_user_producer(user_producer)
+    self.name = user_producer.name
+    self.website_url = user_producer.website_url
+    self.description = user_producer.description
+  end
 
 end
 

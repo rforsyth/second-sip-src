@@ -6,7 +6,7 @@ class ReferenceProductsController < ApplicationController
   before_filter :find_reference_product, :only => [ :show, :edit, :update,
                                                     :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
-  before_filter :require_admin
+  before_filter :require_editor
   
   def search
     results = @reference_product_class.search(params[:query])
@@ -26,6 +26,10 @@ class ReferenceProductsController < ApplicationController
 
   def new
     @product = @reference_product_class.new
+    if params[:promote].present? && current_taster.is?(:editor)
+      promote_from = @product_class.find(params[:promote])
+      @product.copy_from_user_product(promote_from) if promote_from.present?
+    end
 		render :template => 'reference_products/new'
   end
 

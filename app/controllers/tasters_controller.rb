@@ -76,6 +76,9 @@ class TastersController < ApplicationController
 
   def update
     @taster.update_profile(params)
+    if current_taster.is?(:admin)
+      @taster.roles = params[:taster][:roles]
+    end
     if @taster.save
       redirect_to(@taster, :notice => 'Taster was successfully updated.')
     else

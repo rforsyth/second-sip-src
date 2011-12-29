@@ -6,7 +6,7 @@ class ReferenceProducersController < ApplicationController
   before_filter :find_reference_producer, :only => [ :show, :edit, :update,
                                                      :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
-  before_filter :require_admin
+  before_filter :require_editor
   
   def search
     results = @reference_producer_class.search(params[:query])
@@ -47,6 +47,10 @@ class ReferenceProducersController < ApplicationController
 
   def new
     @producer = @reference_producer_class.new
+    if params[:promote].present? && current_taster.is?(:editor)
+      promote_from = @producer_class.find(params[:promote])
+      @producer.copy_from_user_producer(promote_from) if promote_from.present?
+    end
 		render :template => 'reference_producers/new'
   end
 

@@ -19,10 +19,11 @@
                   :class => (@beverage_type == :wine) ? 'bold underline' : nil ) -%> &middot;
       <%= link_to('Spirits', browse_products_path(:entity_type => Spirit.name.tableize),
                   :class => (@beverage_type == :spirits) ? 'bold underline' : nil ) -%>
-    
     <% end %>
+    <% if current_taster && current_taster.is?(:editor) -%>
+      &middot; <%= link_to('Admin', current_taster.is?(:admin) ? tasters_path : reference_breweries_path) -%>
+    <% end -%>
     <% if current_taster && current_taster.is?(:admin) -%>
-      &middot; <%= link_to('Admin', tasters_path) -%>
       &middot; <%= link_to('Monitor', monitor_path) -%>
     <% end -%>
   </span>

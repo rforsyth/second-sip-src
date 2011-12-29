@@ -53,12 +53,12 @@
 		$(".<%= include_list_class %> ul li").click(function(){
 		  move_filter_tag($(this), "<%= available_list_class %>", "<%= include_list_class %>");
 		});
-		$(".<%= available_list_class %> ul li").tappable(function(){
-		  move_filter_tag($(this), "<%= available_list_class %>", "<%= include_list_class %>");
-		});
-		$(".<%= include_list_class %> ul li").tappable(function(){
-		  move_filter_tag($(this), "<%= available_list_class %>", "<%= include_list_class %>");
-		});
+		//$(".<%= available_list_class %> ul li").tappable(function(){
+		//  move_filter_tag($(this), "<%= available_list_class %>", "<%= include_list_class %>");
+		//});
+		//$(".<%= include_list_class %> ul li").tappable(function(){
+		//  move_filter_tag($(this), "<%= available_list_class %>", "<%= include_list_class %>");
+		//});
 	});
 	
 	function move_filter_tag(tag_element, available_container_class, include_container_class){

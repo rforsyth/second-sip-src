@@ -1,34 +1,34 @@
 
-<div id="<%= lookup_name %>_row" class="form_row">
-  <label><%= lookup_name.titleize %>(s):</label>
+<div id="<%= lookup_type_name %>_row" class="form_row">
+  <label><%= lookup_type_name.titleize %>(s):</label>
   <div class="lookup_collection">
     <ul class="form_list">
       <%= render :partial => 'common/edit/lookup_collection',
-                 :locals => { :lookup_name => lookup_name, :lookup_collection => lookup_collection,
+                 :locals => { :lookup_type_name => lookup_type_name, :lookup_names => lookup_names,
                               :entity_type => entity_type, :lookup_type => lookup_type } %>
     </ul>
     <nobr>
-    <%= text_field_tag(lookup_name + '_name', nil, :class => 'text_field text_add') %>
-    <button id="add_<%= lookup_name %>" type="button" tabindex="-1">Add</button>
+    <%= text_field_tag(lookup_type_name + '_name', nil, :class => 'text_field text_add') %>
+    <button id="add_<%= lookup_type_name %>" type="button" tabindex="-1">Add</button>
     </nobr>
   </div>
 </div>
 
 <script type="text/javascript">
-  $('#<%= lookup_name %>_name').keypress(function(e){
+  $('#<%= lookup_type_name %>_name').keypress(function(e){
     var code = (e.keyCode ? e.keyCode : e.which);
     if(code == 13){
-      add_lookup_collection_item("<%= lookup_name %>", "<%= entity_type %>", <%= lookup_type %>);
+      add_lookup_collection_item("<%= lookup_type_name %>", "<%= entity_type %>", <%= lookup_type %>);
       return false;
     }
   });
-  $('#add_<%= lookup_name %>').click(function(){
-    add_<%= lookup_name %>();
-    $('#<%= lookup_name %>_name').focus();
+  $('#add_<%= lookup_type_name %>').click(function(){
+    add_<%= lookup_type_name %>();
+    $('#<%= lookup_type_name %>_name').focus();
     return false;
   });
-  $('#<%= lookup_name %>_name').blur(function(){
-    add_lookup_collection_item("<%= lookup_name %>", "<%= entity_type %>", <%= lookup_type %>);
+  $('#<%= lookup_type_name %>_name').blur(function(){
+    add_lookup_collection_item("<%= lookup_type_name %>", "<%= entity_type %>", <%= lookup_type %>);
     return false;
   });
 </script>

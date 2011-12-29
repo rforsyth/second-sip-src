@@ -142,11 +142,13 @@ module UI::TabBuilder
 	end
 	
 	def build_admin_topnav_tabs(selected_tab)
-		tabs = [UI::NavigationTab.new(:tasters, calc_class(:tasters, selected_tab)),
-		        UI::NavigationTab.new(:reference_producers, calc_class(:reference_producers, selected_tab)),
+		tabs = [UI::NavigationTab.new(:reference_producers, calc_class(:reference_producers, selected_tab)),
 		        UI::NavigationTab.new(:reference_products, calc_class(:reference_products, selected_tab)),
 		        UI::NavigationTab.new(:lookups, calc_class(:lookups, selected_tab)),
 		        UI::NavigationTab.new(:tags, calc_class(:tags, selected_tab))]
+	  if current_taster.is?(:admin)
+	    tabs.unshift(UI::NavigationTab.new(:tasters, calc_class(:tasters, selected_tab)))
+	  end
 		return tabs
 	end
 

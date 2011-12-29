@@ -10,8 +10,6 @@ Next Up
 
 - copy product / producer to reference product / producer
 
-- editor role
-
 - load tasters from cache (for showing usernames on lists)
   
 - prettify blog

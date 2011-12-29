@@ -5,4 +5,8 @@
     <%= image_tag "icons/delete-16.png" %>
     <%= link_to 'Delete', delete_path %>
   <% end %>
+  <% if defined?(promote_path) && promote_path.present? %>
+    <%= image_tag "icons/up_arrow-16.png" %>
+    <%= link_to 'Promote', promote_path %>
+  <% end %>
 </div>

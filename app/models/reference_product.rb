@@ -27,6 +27,28 @@ class ReferenceProduct < ActiveRecord::Base
   pg_search_scope :search,
     :against => [:name, :reference_producer_name, :searchable_metadata, :description]
     #:ignoring => :accents
+    
+  def region_name
+    return @temp_region_name if @temp_region_name.present?
+    self.region.try(:name)
+  end
+  
+  def style_name
+    return @temp_style_name if @temp_style_name.present?
+    self.style.try(:name)
+  end
+  
+  def vineyard_names
+    return @temp_vineyard_names if @temp_vineyard_names.present?
+    return nil if !self.vineyards.present?
+    self.vineyards.collect {|vineyard| vineyard.name}
+  end
+  
+  def varietal_names
+    return @temp_varietal_names if @temp_varietal_names.present?
+    return nil if !self.varietals.present?
+    self.varietals.collect {|varietal| varietal.name}
+  end
   
   def set_canonical_fields
     self.canonical_name = self.name.canonicalize if self.name.present?
@@ -96,6 +118,23 @@ class ReferenceProduct < ActiveRecord::Base
     lookup = ReferenceLookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::REGION)
     self.reference_looked << ReferenceLooked.new(:reference_lookup => lookup)
+  end
+  
+  def copy_from_user_product(user_product)
+    self.reference_producer_name = user_product.producer_name
+    self.name = user_product.name
+    
+    @temp_region_name = user_product.region.try(:name)
+    @temp_style_name = user_product.style.try(:name)
+    @temp_vineyard_names = user_product.vineyards.collect {|vineyard| vineyard.name} if user_product.vineyards.present?
+    @temp_varietal_names = user_product.varietals.collect {|varietal| varietal.name} if user_product.varietals.present?
+    
+    
+    #self.set_region(user_product.region.try(:name))
+    #self.set_style(user_product.style.try(:name))
+    self.description = user_product.description
+    self.price_type = user_product.price_type
+    self.price_paid = user_product.price_paid
   end
 
 end
