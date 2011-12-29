@@ -123,15 +123,10 @@ class ReferenceProduct < ActiveRecord::Base
   def copy_from_user_product(user_product)
     self.reference_producer_name = user_product.producer_name
     self.name = user_product.name
-    
     @temp_region_name = user_product.region.try(:name)
     @temp_style_name = user_product.style.try(:name)
     @temp_vineyard_names = user_product.vineyards.collect {|vineyard| vineyard.name} if user_product.vineyards.present?
     @temp_varietal_names = user_product.varietals.collect {|varietal| varietal.name} if user_product.varietals.present?
-    
-    
-    #self.set_region(user_product.region.try(:name))
-    #self.set_style(user_product.style.try(:name))
     self.description = user_product.description
     self.price_type = user_product.price_type
     self.price_paid = user_product.price_paid

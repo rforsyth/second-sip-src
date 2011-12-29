@@ -8,13 +8,7 @@ Next Up
   - better format for URL
   - no scrollbars on sub-window
 
-- copy product / producer to reference product / producer
-
 - load tasters from cache (for showing usernames on lists)
-  
-- prettify blog
-
-- add link to blog
 
 _____________________________________________________________
 Security
@@ -60,8 +54,8 @@ Bugs
 _____________________________________________________________
 V2
 
-- allow change product producer
-  - note producer? note product?
+- assign note / product to different product / producer
+  - put x next to product / producer name
 
 - prettier exception page with contact form
 
@@ -80,9 +74,6 @@ V2
 
 - "flag as inappropriate" feature
   - add admin tag and send email
-
-- assign note / product to different product / producer
-  - put x next to product / producer name
 
 - change email address
   - need to send a new verification email

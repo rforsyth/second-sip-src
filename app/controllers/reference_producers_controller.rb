@@ -49,7 +49,13 @@ class ReferenceProducersController < ApplicationController
     @producer = @reference_producer_class.new
     if params[:promote].present? && current_taster.is?(:editor)
       promote_from = @producer_class.find(params[:promote])
-      @producer.copy_from_user_producer(promote_from) if promote_from.present?
+      if promote_from.present?
+        @existing_producer = @reference_producer_class.find_by_canonical_name(promote_from.canonical_name)
+        if @existing_producer.present?
+          return render :template => 'reference_producers/already_exists'
+        end
+        @producer.copy_from_user_producer(promote_from)
+      end
     end
 		render :template => 'reference_producers/new'
   end

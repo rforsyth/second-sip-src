@@ -1,0 +1,10 @@
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Reference #{@producer_class.name} Already Exists" } %>
+
+<div class="intro simple_intro">
+<p>The <%= "#{@producer_class.name.downcase} #{@existing_producer.name}"%>
+  is already in the database.</p>
+<p>Click <%= link_to 'here', @existing_producer %> to edit the current record.</p>
+</div>
+<br/><br/><br/><br/>

@@ -28,7 +28,15 @@ class ReferenceProductsController < ApplicationController
     @product = @reference_product_class.new
     if params[:promote].present? && current_taster.is?(:editor)
       promote_from = @product_class.find(params[:promote])
-      @product.copy_from_user_product(promote_from) if promote_from.present?
+      if promote_from.present?
+        @existing_product = @reference_product_class.find_by_canonical_name(
+          promote_from.canonical_name,
+          :conditions => {:reference_producer_canonical_name => promote_from.producer_canonical_name})
+        if @existing_product.present?
+          return render :template => 'reference_products/already_exists'
+        end
+        @product.copy_from_user_product(promote_from) 
+      end
     end
 		render :template => 'reference_products/new'
   end
