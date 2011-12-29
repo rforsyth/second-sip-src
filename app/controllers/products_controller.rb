@@ -17,9 +17,6 @@ class ProductsController < ApplicationController
   def search
     @products = search_beverage_by_owner(@product_class, params[:query],
                                          displayed_taster, current_taster)
-  
-  raise 'hi!'                                       
-                                         
 		render :template => 'products/search'
 	end
   
@@ -93,10 +90,7 @@ class ProductsController < ApplicationController
         @product.id, MAX_BEVERAGE_RESULTS])
     @notes = page_beverage_results(results)
     
-    if @product.kind_of?(Beer)
-      display_reference_lookup(@product.style.try(:canonical_name), "ReferenceBeer", Enums::LookupType::STYLE)
-    end
-    
+    retrieve_reference_lookups(@product)
 		render :template => 'products/show'
   end
 

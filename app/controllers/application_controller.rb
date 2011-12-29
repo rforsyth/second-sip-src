@@ -518,11 +518,18 @@ class ApplicationController < ActionController::Base
     false
   end
   
+  def retrieve_reference_lookups(product)
+    if product.kind_of?(Beer)
+      display_reference_lookup(product.style.try(:canonical_name),
+        "ReferenceBeer", Enums::LookupType::STYLE)
+    end
+  end
+  
   def display_reference_lookup(canonical_name, entity_type, lookup_type)
     return if !canonical_name.present?
     lookup = ReferenceLookup.find_by_canonical_name(canonical_name,
-              :conditions => { :entity_type => "ReferenceBeer",
-                               :lookup_type => Enums::LookupType::STYLE })
+              :conditions => { :entity_type => entity_type,
+                               :lookup_type => lookup_type })
     @reference_lookups ||= []
     @reference_lookups << lookup
   end

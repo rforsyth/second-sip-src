@@ -8,7 +8,7 @@ Next Up
   - better format for URL
   - no scrollbars on sub-window
 
-- load tasters from cache (for showing usernames on lists)
+- track down styles that are not showing resources
 
 _____________________________________________________________
 Security

@@ -30,9 +30,7 @@
   <% resources.each do |resource| %>
     <h3><a href="#"><%= resource_type_name(resource.resource_type) %></a></h3>
     <div class="resource_body">
-      <% if resource.url.present? %>
-        <a href="<%= resource.url %>" target="_blank"> <%= resource.url %> </a>
-      <% end %>
+      <%= link_to_external_resource(resource) %>
       <%=raw resource.body if resource.body.present? %>
     </div>
   <% end %>

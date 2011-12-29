@@ -74,4 +74,16 @@ module ApplicationHelper
     nil
   end
   
+  def link_to_external_resource(resource)
+    return if !resource.url.present?
+    case(resource.resource_type)
+    when Enums::ResourceType::BJCP then
+      link_to "BJCP: #{resource.title}", resource.url, :target => '_blank'
+    end
+      # <% if resource.url.present? %>
+      #   <a href="<%= resource.url %>" target="_blank"> <%= resource.url %> </a>
+      # <% end %>
+    
+  end
+  
 end
