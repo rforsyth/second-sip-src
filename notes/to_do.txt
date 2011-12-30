@@ -53,6 +53,9 @@ Bugs
 _____________________________________________________________
 V2
 
+- in note form, when choose existing producer or product, change to link with x (to undo selection)
+  and display text with region, varietals, etc...
+
 - assign note / product to different product / producer
   - put x next to product / producer name
 

@@ -100,7 +100,12 @@ class NotesController < ApplicationController
 	
 	def initialize_new_note_form
 	  @product = @note.product
-    @product ||= @product_class.new  # required to support the product form fields
+	  if params[:producer_name].present? && params[:product_name].present?
+	    @product = find_product_by_canonical_names(displayed_taster,
+	      params[:producer_name].canonicalize, params[:product_name].canonicalize)
+	  else
+      @product ||= @product_class.new  # required to support the product form fields
+    end
     @note.tasted_at ||= Date.today
     @note.visibility ||= (cookies[:last_visibility] || Enums::Visibility::PUBLIC)
   end
@@ -133,15 +138,18 @@ class NotesController < ApplicationController
       note.product = find_product_by_canonical_names(displayed_taster,
                        params[:producer_name].canonicalize, params[:product_name].canonicalize)
     end
-    if note.product.present?
-      note.product.attributes = params[@product_class.name.underscore]
-    else
+    if note.product.nil?
       note.product = @product_class.new(params[@product_class.name.underscore])
       note.product.name = params[:product_name]
       note.product.visibility = note.visibility
+      note.product.set_lookup_properties(params, displayed_taster, @producer_class)
+      note.product.save
+    else
+      # disabling the update-product-from-note feature; don't trust the Javascript
+      # note.product.attributes = params[@product_class.name.underscore]
+      # note.product.set_lookup_properties(params, displayed_taster, @producer_class)
+      # note.product.save
     end
-    note.product.set_lookup_properties(params, displayed_taster, @producer_class)
-    note.product.save
     if note.product.present?
       note.product_name = note.product.name 
       note.producer_name = note.product.producer.name if note.product.producer.present?

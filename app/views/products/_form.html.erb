@@ -52,7 +52,7 @@
     }
   
     producer_name_changed = false;
-    $("#producer_name").change(function(){
+    $("#producer_name").keypress(function(){
       producer_name_changed = true;
     });
     $("#producer_name").blur(function(){
@@ -71,8 +71,8 @@
     <%= render :partial => 'common/scripts/autocomplete_script',
                :locals => { :field_id => "#{@product_class.name.underscore}_style_name",
                             :entities_path => 'lookups',
-                            :on_select_function => "show_lookup_references",
-                            :on_click_function => "show_lookup_references",
+                            #:on_select_function => "show_lookup_references",
+                            #:on_click_function => "show_lookup_references",
                             :params => {'lookup_type' => Enums::LookupType::STYLE,
                                         'entity_type' => @product_class.name} } %>
   <% end %>

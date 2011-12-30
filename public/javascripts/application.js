@@ -44,9 +44,6 @@ function list_to_array(li_selector) {
 }
 
 function show_lookup_references(element) {
-  
-  console.log('inside show_lookup_references');
-  
 	name = '';
 	if($(element).is('input')) {
 		name = $(element).val();

@@ -167,7 +167,7 @@
     $('#<%= @note_class.name.underscore %>_score').keyfilter(/[0-9.]/);
 
     producer_name_changed = false;
-    $("#producer_name").change(function(){
+    $("#producer_name").keypress(function(){
       producer_name_changed = true;
     });
     $("#producer_name").blur(function(){
@@ -182,7 +182,7 @@
     });
 
     product_name_changed = false;
-    $("#product_name").change(function(){
+    $("#product_name").keypress(function(){
       product_name_changed = true;
     });
     $("#product_name").blur(function(){
