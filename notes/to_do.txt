@@ -5,7 +5,6 @@ Next Up
 
 - refine resource display
   - browser testing
-  - better format for URL
   - no scrollbars on sub-window
 
 - track down styles that are not showing resources
