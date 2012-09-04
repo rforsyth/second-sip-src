@@ -80,16 +80,8 @@ class ProductsController < ApplicationController
   def show
     @producer = @product.producer
     @show_producer = test_visibility(@producer, current_taster)
-    results = @note_class.find_by_sql(
-      ["SELECT DISTINCT notes.* FROM notes 
-        INNER JOIN products ON notes.product_id = products.id
-        WHERE products.id = ?
-          AND #{known_owner_visibility_clause(@note_class, displayed_taster, current_taster)}
-        ORDER BY created_at DESC
-        LIMIT ?",
-        @product.id, MAX_BEVERAGE_RESULTS])
+    results = find_product_notes(@product,MAX_BEVERAGE_RESULTS)
     @notes = page_beverage_results(results)
-    
     retrieve_reference_lookups(@product)
 		render :template => 'products/show'
   end

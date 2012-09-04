@@ -1,11 +1,13 @@
 require 'data/float'
 require 'data/taggable'
 require 'data/admin_taggable'
+require 'data/cache_helper'
 
 class Product < ActiveRecord::Base
   include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
+  include Data::CacheHelper
   nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
@@ -153,7 +155,7 @@ class Product < ActiveRecord::Base
 		copy.id = self.id
 		copy.name = self.name
 		copy.visibility = self.visibility
-		copy.producer_name = self.producer.name if self.producer.present?
+		copy.producer_name = self.producer_name
 		copy.price_paid = self.price_paid
 		copy.price_type = self.price_type
 		copy.region_name = self.region.try(:name)
@@ -162,6 +164,32 @@ class Product < ActiveRecord::Base
 		copy.vineyard_names = self.vineyards.collect{|vineyard| vineyard.name} if self.vineyards.present?
 		return copy
 	end
+	
+	def api_copy(include_children = false)
+		copy = ApiProduct.new
+		
+	  copy.id = self.id
+	  copy.owner_id = self.owner_id
+	  copy.producer_id = self.producer_id
+	  copy.type = self.type
+	  copy.visibility = self.visibility
+	  copy.name = self.name
+	  copy.canonical_name = self.canonical_name
+	  copy.description = self.description
+	  copy.created_at = self.created_at
+		copy.producer_name = self.producer_name
+		copy.price_paid = self.price_paid
+		copy.price_type = self.price_type
+	  
+    owner = fetch_taster(self.owner_id)
+    copy.owner_username = owner.username
+		
+		#copy.region_name = self.region.try(:name)
+		#copy.style_name = self.style.try(:name)
+		#copy.varietal_names = self.varietals.collect{|varietal| varietal.name} if self.varietals.present?
+		#copy.vineyard_names = self.vineyards.collect{|vineyard| vineyard.name} if self.vineyards.present?
+		return copy
+  end
 	
 	def update_notes_product_name
 	  product_name = ActiveRecord::Base.sanitize(self.name)
@@ -179,6 +207,14 @@ end
 class SimpleProduct
 	attr_accessor :id, :name, :producer_name, :visibility, :price_paid, :price_type,
 	 							:region_name, :style_name, :varietal_names, :vineyard_names
+end
+	
+class ApiProduct
+	attr_accessor :id, :owner_id, :producer_id, :type, :visibility, :producer_name,
+	              :price_paid, :price_type, :name, :canonical_name, :description, :created_at
+	# these are related properties that must be filled in
+	attr_accessor :owner_username, :tags, :notes,
+	              :region_name, :style_name, :varietal_names, :vineyard_names
 end
 
 class Beer < Product

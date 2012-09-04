@@ -2,12 +2,14 @@ require 'data/enums'
 require 'data/taggable'
 require 'data/admin_taggable'
 require 'data/validation_helper'
+require 'data/cache_helper'
 
 class Producer < ActiveRecord::Base
   include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
   include Data::ValidationHelper
+  include Data::CacheHelper
   nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
@@ -58,6 +60,24 @@ class Producer < ActiveRecord::Base
 		return copy
 	end
 	
+	def api_copy(include_children = false)
+	  copy = ApiProducer.new
+	  copy.id = self.id
+	  copy.owner_id = self.owner_id
+	  copy.type = self.type
+	  copy.visibility = self.visibility
+	  copy.website_url = self.website_url
+	  copy.name = self.name
+	  copy.canonical_name = self.canonical_name
+	  copy.description = self.description
+	  copy.created_at = self.created_at
+	  
+    owner = fetch_taster(self.owner_id)
+    copy.owner_username = owner.username
+    
+	  return copy
+  end
+	
 	def update_products_and_notes_producer_name
 	  producer_name = ActiveRecord::Base.sanitize(self.name)
 	  producer_canonical_name = ActiveRecord::Base.sanitize(self.name.canonicalize)
@@ -83,6 +103,14 @@ end
 
 class SimpleProducer
 	attr_accessor :id, :name, :visibility
+end
+
+class ApiProducer
+  # these are native database properties
+	attr_accessor :id, :owner_id, :type, :visibility, :website_url,
+	              :name, :canonical_name, :description, :created_at
+	# these are related properties that must be filled in
+	attr_accessor :owner_username, :tags, :products, :notes
 end
 
 class Brewery < Producer

@@ -1,9 +1,19 @@
 
+__________________________________________________________________
+API:
+
+http://api.hexxie.com:3000/login
+http://api.hexxie.com:3000/wineries
+http://api.hexxie.com:3000/wineries/11
+http://api.hexxie.com:3000/wines
+http://api.hexxie.com:3000/wineries/autocomplete?query=foo
+
 
 __________________________________________________________________
 Running the app
 
-- cd to ~/personal/projects/secondsip/ss_rails
+$ pg_start
+$ cd ~/projects/second-sip-src
 $ rails server
 - browse to http://0.0.0.0:3000
 $ rails console
@@ -59,12 +69,15 @@ $ git push unfuddle master
 __________________________________________________________________
 Rake
 
-$ rake routes
+$ bundle exec rake routes
 $ bundle exec rake db:migrate
 $ bundle exec rake db:load_reference_varietals
 
 __________________________________________________________________
 Heroku
+
+- command line to database:
+$ heroku pg:psql HEROKU_POSTGRESQL_BLUE
 
 - 100 is default
 $ heroku logs -n 500
@@ -74,7 +87,6 @@ $ heroku rake db:migrate
   - just runs latest migrations; doesn't destroy tables if it has a record of previously run migrations
 $ heroku rake db:load_reference_varietals
 
-
-
+$ heroku pg:info
 
 

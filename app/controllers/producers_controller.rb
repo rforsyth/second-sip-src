@@ -49,25 +49,10 @@ class ProducersController < ApplicationController
 
   def show
     if params[:tab] == 'notes'
-      results = @note_class.find_by_sql(
-        ["SELECT DISTINCT notes.* FROM notes 
-          INNER JOIN products ON notes.product_id = products.id
-          INNER JOIN producers ON products.producer_id = producers.id
-          WHERE producers.id = ?
-            AND #{known_owner_visibility_clause(@note_class, displayed_taster, current_taster)}
-          ORDER BY created_at DESC
-          LIMIT ?",
-          @producer.id, MAX_BEVERAGE_RESULTS])
+      results = find_producer_notes(@producer, MAX_BEVERAGE_RESULTS)
       @notes = page_beverage_results(results)
     else
-      results = @product_class.find_by_sql(
-        ["SELECT DISTINCT products.* FROM products
-          INNER JOIN producers ON products.producer_id = producers.id
-          WHERE producers.id = ?
-            AND #{known_owner_visibility_clause(@product_class, displayed_taster, current_taster)}
-          ORDER BY created_at DESC
-          LIMIT ?",
-          @producer.id, MAX_BEVERAGE_RESULTS])
+      results = find_producer_products(@producer, MAX_BEVERAGE_RESULTS)
       @products = page_beverage_results(results)
     end
 		render :template => 'producers/show'

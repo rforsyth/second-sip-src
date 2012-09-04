@@ -1,11 +1,13 @@
 require 'data/enums'
 require 'data/taggable'
 require 'data/admin_taggable'
+require 'data/cache_helper'
 
 class Note < ActiveRecord::Base
   include PgSearch
   include Data::Taggable
   include Data::AdminTaggable
+  include Data::CacheHelper
   nilify_blanks
   
 	belongs_to :creator, :class_name => "Taster"
@@ -77,6 +79,31 @@ class Note < ActiveRecord::Base
     self.add_tag(name.tagify, owner || self.owner)
     self.looked << looked
   end
+	
+	def api_copy
+		copy = ApiNote.new
+	  copy.id = self.id
+	  copy.owner_id = self.owner_id
+	  copy.product_id = self.product_id
+	  copy.type = self.type
+	  copy.visibility = self.visibility
+	  copy.created_at = self.created_at
+	  copy.tasted_at = self.tasted_at
+		copy.product_name = self.product_name
+		copy.product_canonical_name = self.product_canonical_name
+		copy.producer_name = self.producer_name
+		copy.producer_canonical_name = self.producer_canonical_name
+		copy.description_overall = self.description_overall
+		copy.description_appearance = self.description_appearance
+		copy.description_aroma = self.description_aroma
+		copy.description_flavor = self.description_flavor
+		copy.description_mouthfeel = self.description_mouthfeel
+		copy.score_type = self.score_type
+		copy.score = self.score
+		copy.buy_when = self.buy_when
+		copy.vintage = self.vintage
+		return copy
+  end
   
   private
   
@@ -105,6 +132,16 @@ class Note < ActiveRecord::Base
     end
 	end
 	
+end
+
+class ApiNote
+	attr_accessor :id, :owner_id, :product_id, :type, :visibility, :created_at, :tasted_at, 
+	              :product_name, :product_canonical_name, :producer_name, :producer_canonical_name,
+	              :description_overall, :description_appearance, :description_aroma,
+	              :description_flavor, :description_mouthfeel, :score_type, :score,
+	              :buy_when, :vintage
+	# these are related properties that must be filled in
+	attr_accessor :owner_username, :tags
 end
 
 class BeerNote < Note

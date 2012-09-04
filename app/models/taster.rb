@@ -113,6 +113,23 @@ class Taster < ActiveRecord::Base
 	  end
 	end
 	
+
+  ############################################
+  ## API
+	
+	def api_copy
+	  copy = ApiTaster.new
+	  copy.id = self.id
+	  copy.username = self.username
+	  copy.real_name = self.real_name
+	  return copy
+  end
 	
 
 end
+
+class ApiTaster
+	attr_accessor :id, :username, :real_name
+end
+
+

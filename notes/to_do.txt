@@ -3,6 +3,8 @@
 _____________________________________________________________
 Next Up
 
+- bug: anonymous user accessing /tasters gets error
+
 - refine resource display
   - browser testing
   - no scrollbars on sub-window

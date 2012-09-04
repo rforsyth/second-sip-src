@@ -454,6 +454,39 @@ class ApplicationController < ActionController::Base
         lookup_type.to_i, max_results])
   end
   
+  def find_producer_notes(producer, max_results)
+    @note_class.find_by_sql(
+      ["SELECT DISTINCT notes.* FROM notes 
+        INNER JOIN products ON notes.product_id = products.id
+        INNER JOIN producers ON products.producer_id = producers.id
+        WHERE producers.id = ?
+          AND #{known_owner_visibility_clause(@note_class, producer.owner, current_taster)}
+        ORDER BY created_at DESC
+        LIMIT ?",
+        producer.id, max_results])
+  end
+  
+  def find_producer_products(producer, max_results)
+    @product_class.find_by_sql(
+      ["SELECT DISTINCT products.* FROM products
+        INNER JOIN producers ON products.producer_id = producers.id
+        WHERE producers.id = ?
+          AND #{known_owner_visibility_clause(@product_class, producer.owner, current_taster)}
+        ORDER BY created_at DESC
+        LIMIT ?",
+        producer.id, max_results])
+  end
+  
+  def find_product_notes(product, max_results)
+    @note_class.find_by_sql(
+      ["SELECT DISTINCT notes.* FROM notes 
+        INNER JOIN products ON notes.product_id = products.id
+        WHERE products.id = ?
+          AND #{known_owner_visibility_clause(@note_class, product.owner, current_taster)}
+        ORDER BY created_at DESC
+        LIMIT ?",
+        product.id, max_results])
+  end
   
   def calculate_page_num
     page_num = params[:page].try(:to_i) || 1
