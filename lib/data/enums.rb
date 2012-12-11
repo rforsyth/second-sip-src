@@ -179,22 +179,21 @@ module Enums
 		
 		def self.collection
 			return {
-				"Anytime it's available" => ANYTIME,
-				"For the right season" => RIGHT_SETTING,
-				"For a special occasion" => SPECIAL_OCCASION,
-				"For the right price" => RIGHT_PRICE,
-				"If it's free" => FREE,
-				"Not even for free" => NOT_EVEN_FREE }
+				"Anytime" => ANYTIME,
+				"Seasonally" => RIGHT_SETTING,
+				"Occasionally" => SPECIAL_OCCASION,
+				"On sale" => RIGHT_PRICE,
+				"No thanks" => FREE }
 		end
 		
 		def self.to_tag(value)
 			case value
 			when ANYTIME then 'buy-anytime'
-			when RIGHT_SETTING then 'buy-right-season'
-			when SPECIAL_OCCASION then 'buy-special-occasion'
-			when RIGHT_PRICE then 'buy-right-price'
-			when FREE then 'buy-free'
-			when NOT_EVEN_FREE then 'buy-not-even-free'
+			when RIGHT_SETTING then 'buy-seasonally' #'buy-right-season'
+			when SPECIAL_OCCASION then 'buy-occasionally' #'buy-special-occasion'
+			when RIGHT_PRICE then 'buy-on-sale' #'buy-right-price'
+			when FREE then 'buy-no-thanks'
+			when NOT_EVEN_FREE then 'buy-no-thanks' #'buy-not-even-free'
 			else nil
 			end
 		end
@@ -202,25 +201,31 @@ module Enums
 	
 	
   class BeerPriceType < EnumBase
+		CASE = 90
 		SIX_PACK = 80
 		GROWLER_64_OZ = 70
 		BOTTLE_750_ML = 60
 		BOTTLE_22_OZ = 50
 		BOTTLE_500_ML = 40
+		BOTTLE_16_OZ = 35
 		BOTTLE_12_OZ = 30
 		BOTTLE_330_ML = 20
 		BOTTLE_7_OZ = 10
+		BOTTLE_5_OZ = 5
 		
     def self.collection
       return {
+        'Case' => CASE,
         'Six Pack' => SIX_PACK,
         '64 oz Growler' => GROWLER_64_OZ,
-        '750 ml Bottle' => BOTTLE_750_ML,
-        '22 oz Bottle' => BOTTLE_22_OZ,
-        '500 ml Bottle' => BOTTLE_500_ML,
-        '12 oz Bottle' => BOTTLE_12_OZ,
-        '330 ml Bottle' => BOTTLE_330_ML,
-        '7 oz Bottle' => BOTTLE_7_OZ
+        '750 ml' => BOTTLE_750_ML,
+        '22 oz Bomber' => BOTTLE_22_OZ,
+        '500 ml' => BOTTLE_500_ML,
+        '16 oz Pint' => BOTTLE_16_OZ,
+        '12 oz' => BOTTLE_12_OZ,
+        '330 ml' => BOTTLE_330_ML,
+        '7 oz' => BOTTLE_7_OZ,
+        '5 oz' => BOTTLE_5_OZ
         }
     end
 	end
@@ -234,17 +239,19 @@ module Enums
 		BOTTLE = 30
 		HALF = 20
 		SPLIT = 10
+		GLASS = 5
 		
     def self.collection
       return {
-        'Case (12)' => CASE,
-        'Methuselah (8)' => METHUSELAH,
-        'Jeroboam (4)' => JEROBOAM,
-        'Magnum (2)' => MAGNUM,
-        'Liter (1.3)' => LITER,
+        'Case' => CASE,
+        #'Methuselah (8)' => METHUSELAH,
+        #'Jeroboam (4)' => JEROBOAM,
+        'Magnum' => MAGNUM,
+        'Liter' => LITER,
         'Bottle' => BOTTLE,
-        'Half (1/2)' => HALF,
-        'Split (1/4)' => SPLIT
+        #'Half (1/2)' => HALF,
+        #'Split (1/4)' => SPLIT,
+        'Glass' => GLASS
         }
     end
 	end
@@ -259,10 +266,11 @@ module Enums
 		PINT = 30
 		HALF_PINT = 20
 		MINIATURE = 10
+		SHOT = 5
 		
     def self.collection
       return {
-        'Case (9L)' => CASE,
+        'Case' => CASE,
         '1.75 Liter' => HALF_GALLON,
         '1.5 Liter' => BOTTLE_1500_ML,
         '1 Liter' => LITER,
@@ -270,7 +278,8 @@ module Enums
         '500 mL' => BOTTLE_500_ML,
         '375 mL' => PINT,
         '200 mL' => HALF_PINT,
-        '50 mL' => MINIATURE
+        '50 mL' => MINIATURE,
+        'Shot' => SHOT
         }
     end
 	end

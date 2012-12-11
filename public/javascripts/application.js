@@ -3,14 +3,17 @@
 
 function Enums() {
 }
+Enums.SPE_CASE = 90;
 Enums.SPE_SIX_PACK = 80;
 Enums.SPE_GROWLER_64_OZ = 70;
 Enums.SPE_BOTTLE_750_ML = 60;
 Enums.SPE_BOTTLE_22_OZ = 50;
 Enums.SPE_BOTTLE_500_ML = 40;
+Enums.SPE_BOTTLE_16_OZ = 35;
 Enums.SPE_BOTTLE_12_OZ = 30;
 Enums.SPE_BOTTLE_330_ML = 20;
 Enums.SPE_BOTTLE_7_OZ = 10;
+Enums.SPE_BOTTLE_5_OZ = 5;
 
 Enums.WBE_CASE = 80;
 Enums.WBE_METHUSELAH = 70;
@@ -20,6 +23,7 @@ Enums.WBE_LITER = 40;
 Enums.WBE_BOTTLE = 30;
 Enums.WBE_HALF = 20;
 Enums.WBE_SPLIT = 10;
+Enums.WBE_GLASS = 5;
 
 Enums.FE_CASE = 90
 Enums.FE_HALF_GALLON = 80
@@ -30,6 +34,7 @@ Enums.FE_BOTTLE_500_ML = 40
 Enums.FE_PINT = 30
 Enums.FE_HALF_PINT = 20
 Enums.FE_MINIATURE = 10
+Enums.FE_SHOT = 5
 
 function list_to_string(li_selector, separator_char) {
 	return list_to_array(li_selector).join(separator_char);
@@ -82,14 +87,17 @@ function calculate_spe(price_paid, price_type){
   var type = parseInt(price_type);
   var ounces = 72;
   switch(type){
+	case Enums.SPE_CASE: ounces = 144; return null;
 	case Enums.SPE_SIX_PACK: ounces = 72; return null;
 	case Enums.SPE_GROWLER_64_OZ: ounces = 64; break;
 	case Enums.SPE_BOTTLE_750_ML: ounces = 25.36; break;
 	case Enums.SPE_BOTTLE_22_OZ: ounces = 22; break;
 	case Enums.SPE_BOTTLE_500_ML: ounces = 16.91; break;
+	case Enums.SPE_BOTTLE_16_OZ: ounces = 16; break;
 	case Enums.SPE_BOTTLE_12_OZ: ounces = 12; break;
 	case Enums.SPE_BOTTLE_330_ML: ounces = 11.16; break;
 	case Enums.SPE_BOTTLE_7_OZ: ounces = 7; break;
+	case Enums.SPE_BOTTLE_5_OZ: ounces = 5; break;
 	default: return "";
   }
   var result = ((72 * price) / ounces);
@@ -112,6 +120,7 @@ function calculate_wbe(price_paid, price_type){
 	case Enums.WBE_BOTTLE: milliliters = 750; return null;
 	case Enums.WBE_HALF: milliliters = 375; break;
 	case Enums.WBE_SPLIT: milliliters = 187; break;
+	case Enums.WBE_GLASS: milliliters = 148; break;
 	default: return null;
   }
   var result = ((750 * price) / milliliters);
@@ -135,6 +144,7 @@ function calculate_fe(price_paid, price_type){
 	case Enums.FE_PINT: milliliters = 375; break;
 	case Enums.FE_HALF_PINT: milliliters = 200; break;
 	case Enums.FE_MINIATURE: milliliters = 50; break;
+	case Enums.FE_SHOT: milliliters = 44; break;
 	default: return "";
   }
   var result = ((750 * price) / milliliters);

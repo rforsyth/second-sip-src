@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111228174347) do
+ActiveRecord::Schema.define(:version => 20120913174000) do
 
   create_table "admin_tagged", :force => true do |t|
     t.integer "admin_tag_id",                       :null => false
@@ -112,6 +112,9 @@ ActiveRecord::Schema.define(:version => 20111228174347) do
     t.string   "producer_canonical_name", :limit => 150, :null => false
     t.string   "product_name",            :limit => 150, :null => false
     t.string   "product_canonical_name",  :limit => 150, :null => false
+    t.float    "price"
+    t.float    "price_paid"
+    t.integer  "price_type"
   end
 
   add_index "notes", ["owner_id"], :name => "index_notes_on_owner_id"

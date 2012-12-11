@@ -65,6 +65,7 @@ Heroku:
 - repository: git@heroku.com:falling-river-1814.git
 
 $ git push unfuddle master
+- RSA pwd: very happy
 
 __________________________________________________________________
 Rake

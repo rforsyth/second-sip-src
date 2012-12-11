@@ -133,28 +133,28 @@ class NotesController < ApplicationController
     @tag_container = @note
   end
   
-  def set_product_from_params(note)
-    if params[:product_name].present?
-      note.product = find_product_by_canonical_names(displayed_taster,
-                       params[:producer_name].canonicalize, params[:product_name].canonicalize)
-    end
-    if note.product.nil?
-      note.product = @product_class.new(params[@product_class.name.underscore])
-      note.product.name = params[:product_name]
-      note.product.visibility = note.visibility
-      note.product.set_lookup_properties(params, displayed_taster, @producer_class)
-      note.product.save
-    else
-      # disabling the update-product-from-note feature; don't trust the Javascript
-      # note.product.attributes = params[@product_class.name.underscore]
-      # note.product.set_lookup_properties(params, displayed_taster, @producer_class)
-      # note.product.save
-    end
-    if note.product.present?
-      note.product_name = note.product.name 
-      note.producer_name = note.product.producer.name if note.product.producer.present?
-    end
-  end
+  # def set_product_from_params(note)
+  #   if params[:product_name].present?
+  #     note.product = find_product_by_canonical_names(displayed_taster,
+  #                      params[:producer_name].canonicalize, params[:product_name].canonicalize)
+  #   end
+  #   if note.product.nil?
+  #     note.product = @product_class.new(params[@product_class.name.underscore])
+  #     note.product.name = params[:product_name]
+  #     note.product.visibility = note.visibility
+  #     note.product.set_lookup_properties(params, displayed_taster, @producer_class)
+  #     note.product.save
+  #   else
+  #     # disabling the update-product-from-note feature; don't trust the Javascript
+  #     # note.product.attributes = params[@product_class.name.underscore]
+  #     # note.product.set_lookup_properties(params, displayed_taster, @producer_class)
+  #     # note.product.save
+  #   end
+  #   if note.product.present?
+  #     note.product_name = note.product.name 
+  #     note.producer_name = note.product.producer.name if note.product.producer.present?
+  #   end
+  # end
   
   def remember_score_type(note)
     return if !note.score_type.present?

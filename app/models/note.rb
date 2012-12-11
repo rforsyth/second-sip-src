@@ -75,11 +75,14 @@ class Note < ActiveRecord::Base
     return if !name.present?
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::OCCASION)
-    looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    new_looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
     self.add_tag(name.tagify, owner || self.owner)
-    self.looked << looked
+    self.looked << new_looked
+    
+    puts self.tags.inspect
+    puts self.looked.inspect
   end
-	
+
 	def api_copy
 		copy = ApiNote.new
 	  copy.id = self.id
@@ -100,8 +103,15 @@ class Note < ActiveRecord::Base
 		copy.description_mouthfeel = self.description_mouthfeel
 		copy.score_type = self.score_type
 		copy.score = self.score
+		copy.price_paid = self.price_paid
+		copy.price_type = self.price_type
+		copy.price = self.price
 		copy.buy_when = self.buy_when
 		copy.vintage = self.vintage
+		
+    owner = fetch_taster(self.owner_id)
+    copy.owner_username = owner.username
+    
 		return copy
   end
   
@@ -135,13 +145,14 @@ class Note < ActiveRecord::Base
 end
 
 class ApiNote
-	attr_accessor :id, :owner_id, :product_id, :type, :visibility, :created_at, :tasted_at, 
+	attr_accessor :id, :owner_id, :producer_id, :product_id, :type, :visibility, :created_at, :tasted_at, 
 	              :product_name, :product_canonical_name, :producer_name, :producer_canonical_name,
 	              :description_overall, :description_appearance, :description_aroma,
 	              :description_flavor, :description_mouthfeel, :score_type, :score,
-	              :buy_when, :vintage
+	              :buy_when, :vintage, :price_paid, :price_type, :price,
+	              :region_name, :style_name, :varietal_names, :vineyard_names
 	# these are related properties that must be filled in
-	attr_accessor :owner_username, :tags
+	attr_accessor :owner_username, :tags, :occasion, :product_description, :producer_description
 end
 
 class BeerNote < Note

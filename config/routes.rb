@@ -14,40 +14,61 @@ SsRails::Application.routes.draw do
     resources :wineries, :controller => 'api_wineries' do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
+                get 'show_simple', :on => :collection
               end
     resources :wines, :controller => 'api_wines' do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
+                get 'show_simple', :on => :collection
               end
     resources :wine_notes, :controller => 'api_wine_notes' do
                 get 'search', :on => :collection
-                get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
               end
               
     resources :breweries, :controller => 'api_breweries' do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
+                get 'show_simple', :on => :collection
               end
     resources :beers, :controller => 'api_beers' do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
+                get 'show_simple', :on => :collection
               end
     resources :beer_notes, :controller => 'api_beer_notes' do
                 get 'search', :on => :collection
-                get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
               end
               
     resources :distilleries, :controller => 'api_distilleries' do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
+                get 'show_simple', :on => :collection
               end
     resources :spirits, :controller => 'api_spirits' do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
+                get 'show_simple', :on => :collection
               end
     resources :spirit_notes, :controller => 'api_spirit_notes' do
                 get 'search', :on => :collection
-                get 'autocomplete', :on => :collection
+                get 'tag_autocomplete', :on => :collection
+                get 'lookup_autocomplete', :on => :collection
               end
   end
 

@@ -178,16 +178,11 @@ class Product < ActiveRecord::Base
 	  copy.description = self.description
 	  copy.created_at = self.created_at
 		copy.producer_name = self.producer_name
-		copy.price_paid = self.price_paid
-		copy.price_type = self.price_type
+		copy.producer_canonical_name = self.producer_canonical_name
 	  
     owner = fetch_taster(self.owner_id)
     copy.owner_username = owner.username
-		
-		#copy.region_name = self.region.try(:name)
-		#copy.style_name = self.style.try(:name)
-		#copy.varietal_names = self.varietals.collect{|varietal| varietal.name} if self.varietals.present?
-		#copy.vineyard_names = self.vineyards.collect{|vineyard| vineyard.name} if self.vineyards.present?
+
 		return copy
   end
 	
@@ -210,11 +205,12 @@ class SimpleProduct
 end
 	
 class ApiProduct
-	attr_accessor :id, :owner_id, :producer_id, :type, :visibility, :producer_name,
-	              :price_paid, :price_type, :name, :canonical_name, :description, :created_at
+	attr_accessor :id, :owner_id, :producer_id, :type, :visibility, :producer_name, :producer_canonical_name,
+	              :name, :canonical_name, :description, :created_at
 	# these are related properties that must be filled in
 	attr_accessor :owner_username, :tags, :notes,
-	              :region_name, :style_name, :varietal_names, :vineyard_names
+	              :region_name, :style_name, :varietal_names, 
+	              :vineyard_names, :producer_description
 end
 
 class Beer < Product

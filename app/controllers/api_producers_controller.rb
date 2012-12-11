@@ -1,29 +1,53 @@
 
 require 'api/query_results'
 
-class ApiProducersController < ApiController
+class ApiProducersController < ApiEntitiesController
   
-  def index
-    producers = find_beverage_by_owner_and_tags(@producer_class,
-                   current_taster, current_taster, params[:in], params[:ain])
-                   
-                   
-    beverage_list = serialize_beverage_list(producers)
-    
-    puts beverage_list.to_json
-    
-    render :json => beverage_list
+  def show
+    producer = find_producer_by_canonical_name_or_id(current_taster, params[:id])
+    render :json => build_full_api_producer(producer)
   end
   
-  def search
-    producers = search_beverage_by_owner(@producer_class, params[:query],
-                                          current_taster, current_taster)
-    render :json => serialize_beverage_list(producers)
+  def show_simple
+    producer = find_producer_by_canonical_name_or_id(current_taster, params[:name].try(:canonicalize))
+    if producer.present?
+      render :json => producer.api_copy
+    else
+      results = Api::QueryResults.new(:simple_producer)
+      render :json => results, :status => 404
+    end
   end
   
+  def create
+    producer_name = params['producer'][:name]
+    existing_producer = find_producer_by_canonical_name_or_id(current_taster, 
+                          producer_name.try(:canonicalize))
+    if existing_producer.present?
+      render_duplicate_entity_json_error(:create, existing_producer, producer_name)
+      return
+    end
+    
+    producer = @producer_class.new(params['producer'])
+    if producer.save
+      producer.update_tags params[:tags]
+      render :json => build_full_api_producer(producer)
+    else
+      render_data_validation_json_error(:create, producer)
+    end
+  end
+
+  def update
+    producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
+    if producer.update_attributes(params['producer'])
+      producer.update_tags params[:tags]
+      render :json => build_full_api_producer(producer)
+    else
+      render_data_validation_json_error(:update, producer)
+    end
+  end
   
   def autocomplete
-    max_results = params[:max_results] || API_MAX_BEVERAGE_RESULTS;
+    max_results = params[:max_results] || API_MAX_ENTITY_RESULTS;
     canonical_query = params[:query].try(:canonicalize)
 
     reference_producers = @reference_producer_class.where(
@@ -42,33 +66,6 @@ class ApiProducersController < ApiController
     render :json => results
   end
   
-  def show
-    producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
-    render :json => build_full_api_producer(producer)
-  end
-  
-  def create
-    producer = @producer_class.new(params['producer'])
-    if @producer.save
-      # remove tags that aren't in producer.tags, and add ones that are there but not added yet
-      render :json => build_full_api_producer(producer)
-    else
-      # send error message back
-    end
-  end
-
-  def update
-    puts 'inside update'
-    producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
-    if producer.update_attributes(params['producer'])
-      puts 'updated'
-      # remove tags that aren't in producer.tags, and add ones that are there but not added yet
-      render :json => build_full_api_producer(producer)
-    else
-      # render :action => "producers/edit"
-    end
-  end
-  
   def build_full_api_producer(producer)
     tags = producer.tags
     notes = find_producer_notes(producer, MAX_BEVERAGE_RESULTS)
@@ -78,6 +75,9 @@ class ApiProducersController < ApiController
     api_producer.tags = tags.collect{|tag| tag.name} if tags.present?
     api_producer.products = products.collect{|product| product.api_copy} if products.present?
     api_producer.notes = notes.collect{|note| note.api_copy} if notes.present?
+    
+    puts api_producer.inspect
+    
     return api_producer
   end
   

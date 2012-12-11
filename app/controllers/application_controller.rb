@@ -2,6 +2,7 @@ require 'ui/tab_builder'
 require 'ajax/autocomplete'
 require 'data/cache_helper'
 require 'exceptions/exception_loggable'
+require 'api/error_results'
 
 class ApplicationController < ActionController::Base
 	include UI::TabBuilder
@@ -29,13 +30,31 @@ class ApplicationController < ActionController::Base
   def render_not_found(exception)
     log_exception(exception)
     flash[:notice] = 'The resource was not found.  Sorry for any inconvenience'
-    render :template => 'errors/message', :layout => 'single_column', :status => 404
+    respond_to do |format|
+      format.html do 
+        render :template => 'errors/message', :layout => 'single_column', :status => 404
+      end
+      format.json do
+        response = Api::ErrorResults.new(:fatal_exception, 'Data Not Found', 
+          'We were unable to find data that matched your request.  Sorry for any inconvenience.')
+        render :json => response, :status => 500
+      end
+    end
   end
 
   def render_error(exception)
     log_exception(exception)
     flash[:notice] = 'An unexepected server error occurred.  Sorry for any inconvenience'
-    render :template => 'errors/message', :layout => 'single_column', :status => 500
+    respond_to do |format|
+      format.html do 
+        render :template => 'errors/message', :layout => 'single_column', :status => 500
+      end
+      format.json do
+        response = Api::ErrorResults.new(:fatal_exception, 'Unexpected Error', 
+          'We were unable to complete the operation due to an unexpected server error. Sorry for any inconvenience.')
+        render :json => response, :status => 500
+      end
+    end
   end
 
   protected
@@ -245,15 +264,35 @@ class ApplicationController < ActionController::Base
   
   
   def search_beverage_by_owner(model, query, owner, viewer)
-    conditions = {:owner_id => owner.id}
     if owner == viewer
-      # no more conditions required
+      results = model.search(query).where({:owner_id => owner.id}).limit(MAX_BEVERAGE_RESULTS)
     elsif viewer.present? && viewer.friends.include?(owner)
-      conditions[:visibility] = Enums::Visibility::FRIENDS
+      results = model.search(query).where(
+                  "visibility >= ? AND owner_id = ?",
+                  Enums::Visibility::FRIENDS, owner.id
+                  ).limit(MAX_BEVERAGE_RESULTS)
     else
-      conditions[:visibility] = Enums::Visibility::PUBLIC
+      results = model.search(query).where(
+                  "visibility >= ? AND owner_id = ?",
+                  Enums::Visibility::PUBLIC, owner.id
+                  ).limit(MAX_BEVERAGE_RESULTS)
     end
-    results = model.search(query).where(conditions).limit(MAX_BEVERAGE_RESULTS)
+    page_beverage_results(results)
+  end
+  
+  def search_friends_beverage(model, query, viewer)
+    friend_ids = collect_friend_ids(viewer)
+    if friend_ids.present?
+      results = model.search(query).where(
+                  "(visibility >= ? AND owner_id = ?) OR (visibility >= ? AND owner_id IN (?))",
+                  Enums::Visibility::PRIVATE, viewer.id, Enums::Visibility::FRIENDS, friend_ids
+                  ).limit(MAX_BEVERAGE_RESULTS)
+    else
+      results = model.search(query).where(
+                  "visibility >= ? AND owner_id = ?",
+                  Enums::Visibility::PRIVATE, viewer.id
+                  ).limit(MAX_BEVERAGE_RESULTS)
+    end
     page_beverage_results(results)
   end
   
@@ -261,12 +300,14 @@ class ApplicationController < ActionController::Base
     friend_ids = collect_friend_ids(viewer)
     if friend_ids.present?
       results = model.search(query).where(
-                  "visibility = ? OR (visibility = ? AND owner_id IN (?))",
-                  Enums::Visibility::PUBLIC, Enums::Visibility::FRIENDS, friend_ids
+                  "visibility >= ? OR (visibility >= ? AND owner_id IN (?)) OR (visibility >= ? AND owner_id = ?)",
+                  Enums::Visibility::PUBLIC, Enums::Visibility::FRIENDS, friend_ids,
+                  Enums::Visibility::PRIVATE, viewer.id
                   ).limit(MAX_BEVERAGE_RESULTS)
     else
       results = model.search(query).where(
-                  :visibility => Enums::Visibility::PUBLIC
+                  "visibility >= ? OR (visibility >= ? AND owner_id = ?)",
+                  Enums::Visibility::PUBLIC, Enums::Visibility::PRIVATE, viewer.id
                   ).limit(MAX_BEVERAGE_RESULTS)
     end
     page_beverage_results(results)
@@ -322,24 +363,24 @@ class ApplicationController < ActionController::Base
     page_beverage_results(results)
   end
   
-  def find_global_beverage_by_tags(model, viewer, user_tags, admin_tags)
+  def find_global_beverage_by_tags(model, viewer, user_tags, admin_tags, include_public = true)
     if user_tags.present?
       query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
         INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
         INNER JOIN tags ON tagged.tag_id = tags.id
         WHERE #{model.table_name}.type = '#{model.name}'
           AND tags.name = ?
-          AND #{global_visibility_clause(model, viewer)}"
+          AND #{global_visibility_clause(model, viewer, include_public)}"
       summary = "ORDER BY created_at DESC
         LIMIT #{MAX_BEVERAGE_RESULTS}"
       query = format_tag_intersection_query(query, summary, user_tags)
       results = model.find_by_sql([query, user_tags].flatten)
       return page_beverage_results(results)
     end
-    find_global_beverage_by_admin_tags(model, viewer, admin_tags)
+    find_global_beverage_by_admin_tags(model, viewer, admin_tags, include_public)
   end
   
-  def find_global_beverage_by_admin_tags(model, viewer, admin_tags)
+  def find_global_beverage_by_admin_tags(model, viewer, admin_tags, include_public = true)
     if admin_tags.present?
       query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
         INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
@@ -347,7 +388,7 @@ class ApplicationController < ActionController::Base
         WHERE #{model.table_name}.type = '#{model.name}'
           AND admin_tags.name = ?
           AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
-          AND #{global_visibility_clause(model, viewer)}"
+          AND #{global_visibility_clause(model, viewer, include_public)}"
       summary = "ORDER BY created_at DESC
         LIMIT #{MAX_BEVERAGE_RESULTS}"
       query = format_tag_intersection_query(query, summary, admin_tags)
@@ -356,7 +397,7 @@ class ApplicationController < ActionController::Base
       results = model.find_by_sql(
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name}
           WHERE #{model.table_name}.type = ?
-            AND #{global_visibility_clause(model, viewer)}
+            AND #{global_visibility_clause(model, viewer, include_public)}
           ORDER BY created_at DESC
           LIMIT ?",
           model.name, MAX_BEVERAGE_RESULTS])
@@ -488,6 +529,30 @@ class ApplicationController < ActionController::Base
         product.id, max_results])
   end
   
+  def set_product_from_params(note)
+    params_product = nil
+    if params[:producer_name].present? && params[:product_name].present?
+      params_product = find_product_by_canonical_names(current_taster,
+                       params[:producer_name].canonicalize, params[:product_name].canonicalize)
+    end
+    if params_product.present?
+      if !(note.product.present? && params_product.id == note.product.id)
+        note.product = params_product
+      end
+    elsif !note.product.present?
+      note.product = @product_class.new(params[@product_class.name.underscore])
+      note.product.name = params[:product_name]
+      note.product.visibility = note.visibility
+      note.product.set_lookup_properties(params, current_taster, @producer_class)
+      note.product.save
+    end
+    if note.product.present?
+      note.product_name = note.product.name 
+      note.producer_name = note.product.producer.name if note.product.producer.present?
+    end
+  end
+  
+  
   def calculate_page_num
     page_num = params[:page].try(:to_i) || 1
     page_num = 1 if page_num < 1
@@ -512,8 +577,13 @@ class ApplicationController < ActionController::Base
     " #{model.table_name}.visibility = #{Enums::Visibility::PUBLIC} "
   end
   
-  def global_visibility_clause(model, viewer)
-    clause = " (#{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
+  def global_visibility_clause(model, viewer, include_public = true)
+    if include_public
+      clause = " (#{model.table_name}.visibility = #{Enums::Visibility::PUBLIC}"
+    else
+      clause = " (FALSE "
+    end
+    
     if viewer.present?
       clause << " OR #{model.table_name}.owner_id = #{viewer.id} "
       friend_ids = collect_friend_ids(viewer)
