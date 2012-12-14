@@ -313,7 +313,8 @@ class ApplicationController < ActionController::Base
     page_beverage_results(results)
   end
   
-  def find_beverage_by_owner_and_tags(model, owner, viewer, user_tags, admin_tags)
+  def find_beverage_by_owner_and_tags(model, owner, viewer, user_tags, admin_tags, 
+                                      max_results = MAX_BEVERAGE_RESULTS, page = true)
     if user_tags.present?
       query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
         INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
@@ -323,18 +324,19 @@ class ApplicationController < ActionController::Base
           AND tags.name = ?
           AND #{known_owner_visibility_clause(model, owner, viewer)}"
       summary = "ORDER BY created_at DESC
-        LIMIT #{MAX_BEVERAGE_RESULTS}"
+        LIMIT #{max_results}"
         
       query = format_tag_intersection_query(query, summary, user_tags)
       
       results = model.find_by_sql([query, user_tags].flatten)
-      return page_beverage_results(results)
+      return (page) ? page_beverage_results(results) : results
     end
-    find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags)
+    find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags, max_results, page)
   end
   
   
-  def find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags)
+  def find_beverage_by_owner_and_admin_tags(model, owner, viewer, admin_tags, 
+                                      max_results = MAX_BEVERAGE_RESULTS, page = true)
     if admin_tags.present?
       query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
         INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
@@ -345,7 +347,7 @@ class ApplicationController < ActionController::Base
           AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
           AND #{known_owner_visibility_clause(model, owner, viewer)}"
       summary = "ORDER BY created_at DESC
-        LIMIT #{MAX_BEVERAGE_RESULTS}"
+        LIMIT #{max_results}"
         
       query = format_tag_intersection_query(query, summary, admin_tags)
       
@@ -358,12 +360,13 @@ class ApplicationController < ActionController::Base
             AND #{known_owner_visibility_clause(model, owner, viewer)}
           ORDER BY created_at DESC
           LIMIT ?",
-          owner.id, model.name, MAX_BEVERAGE_RESULTS])
+          owner.id, model.name, max_results])
     end
-    page_beverage_results(results)
+    return (page) ? page_beverage_results(results) : results
   end
   
-  def find_global_beverage_by_tags(model, viewer, user_tags, admin_tags, include_public = true)
+  def find_global_beverage_by_tags(model, viewer, user_tags, admin_tags,
+                                   include_public = true, max_results = MAX_BEVERAGE_RESULTS, page = true)
     if user_tags.present?
       query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
         INNER JOIN tagged ON #{model.table_name}.id = tagged.taggable_id
@@ -372,15 +375,16 @@ class ApplicationController < ActionController::Base
           AND tags.name = ?
           AND #{global_visibility_clause(model, viewer, include_public)}"
       summary = "ORDER BY created_at DESC
-        LIMIT #{MAX_BEVERAGE_RESULTS}"
+        LIMIT #{max_results}"
       query = format_tag_intersection_query(query, summary, user_tags)
       results = model.find_by_sql([query, user_tags].flatten)
-      return page_beverage_results(results)
+      return (page) ? page_beverage_results(results) : results
     end
-    find_global_beverage_by_admin_tags(model, viewer, admin_tags, include_public)
+    find_global_beverage_by_admin_tags(model, viewer, admin_tags, include_public, max_results, page)
   end
   
-  def find_global_beverage_by_admin_tags(model, viewer, admin_tags, include_public = true)
+  def find_global_beverage_by_admin_tags(model, viewer, admin_tags,
+                                   include_public = true, max_results = MAX_BEVERAGE_RESULTS, page = true)
     if admin_tags.present?
       query = "SELECT #{model.table_name}.* FROM #{model.table_name} 
         INNER JOIN admin_tagged ON #{model.table_name}.id = admin_tagged.admin_taggable_id
@@ -390,7 +394,7 @@ class ApplicationController < ActionController::Base
           AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
           AND #{global_visibility_clause(model, viewer, include_public)}"
       summary = "ORDER BY created_at DESC
-        LIMIT #{MAX_BEVERAGE_RESULTS}"
+        LIMIT #{max_results}"
       query = format_tag_intersection_query(query, summary, admin_tags)
       results = model.find_by_sql([query, admin_tags].flatten)
     else
@@ -400,9 +404,9 @@ class ApplicationController < ActionController::Base
             AND #{global_visibility_clause(model, viewer, include_public)}
           ORDER BY created_at DESC
           LIMIT ?",
-          model.name, MAX_BEVERAGE_RESULTS])
+          model.name, max_results])
     end
-    page_beverage_results(results)
+    return (page) ? page_beverage_results(results) : results
   end
   
   def find_reference_beverage_by_admin_tags(model, viewer, admin_tags)

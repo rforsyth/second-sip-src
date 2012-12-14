@@ -4,23 +4,23 @@ require 'api/error_results'
 
 class ApiEntitiesController < ApiController
   
-  API_MAX_ENTITY_RESULTS = 50
+  API_MAX_ENTITY_RESULTS = 100
   
   def index
-    
-    puts 'CURRENT_TASTER: ' + current_taster.inspect
-    
+    max_results = params[:max_results] || API_MAX_ENTITY_RESULTS;
     visibility = (params[:visibility].present?) ? params[:visibility].to_i : 10
     case visibility
     when Enums::Visibility::PRIVATE then
       entities = find_beverage_by_owner_and_tags(@current_entity_class,
-                     current_taster, current_taster, params[:in], params[:ain])
+                     current_taster, current_taster, params[:in], params[:ain], 
+                     false, max_results)
     when Enums::Visibility::FRIENDS then
       entities = find_global_beverage_by_tags(@current_entity_class, 
-                    current_taster, params[:in], params[:ain], false)
+                    current_taster, params[:in], params[:ain], false, 
+                    max_results, false)
     when Enums::Visibility::PUBLIC then
       entities = find_global_beverage_by_tags(@current_entity_class, 
-                    current_taster, params[:in], params[:ain], true)
+                    current_taster, params[:in], params[:ain], true, max_results, false)
     end            
     beverage_list = serialize_beverage_list(entities)
     render :json => beverage_list
@@ -62,7 +62,7 @@ class ApiEntitiesController < ApiController
     render :json => results
   end
   
-  #http://api.hexxie.com:3000/wines/lookup_autocomplete?query=Hell&lookup_type=20&max_results=50
+  #http://api.ssdev.com:3000/wines/lookup_autocomplete?query=Hell&lookup_type=20&max_results=50
 
   
   def lookup_autocomplete
