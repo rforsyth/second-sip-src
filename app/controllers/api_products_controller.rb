@@ -5,8 +5,12 @@ class ApiProductsController < ApiEntitiesController
 
   def show
     product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
-    api_product = build_full_api_product(product)
-    render :json => api_product
+    if (test_visibility(product, current_taster))
+      render :json => build_full_api_product(product)
+    else
+      # just return the name without any scandalous details
+      render :json => product.api_copy(false)
+    end
   end
   
   def show_simple

@@ -69,7 +69,7 @@ class Taster < ActiveRecord::Base
   def friends
     friendships = Friendship.find_all_by_taster(self)
     friendships.collect do |friendship|
-      (friendship.invitee = self) ? friendship.inviter : friendship.invitee
+      (friendship.invitee.id == self.id) ? friendship.inviter : friendship.invitee
     end 
   end
   

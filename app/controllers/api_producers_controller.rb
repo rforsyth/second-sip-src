@@ -5,7 +5,12 @@ class ApiProducersController < ApiEntitiesController
   
   def show
     producer = find_producer_by_canonical_name_or_id(current_taster, params[:id])
-    render :json => build_full_api_producer(producer)
+    if (test_visibility(producer, current_taster))
+      render :json => build_full_api_producer(producer)
+    else
+      # just return the name without any scandalous details
+      render :json => producer.api_copy(false)
+    end
   end
   
   def show_simple
@@ -75,9 +80,6 @@ class ApiProducersController < ApiEntitiesController
     api_producer.tags = tags.collect{|tag| tag.name} if tags.present?
     api_producer.products = products.collect{|product| product.api_copy} if products.present?
     api_producer.notes = notes.collect{|note| note.api_copy} if notes.present?
-    
-    puts api_producer.inspect
-    
     return api_producer
   end
   

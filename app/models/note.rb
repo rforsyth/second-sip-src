@@ -83,7 +83,7 @@ class Note < ActiveRecord::Base
     puts self.looked.inspect
   end
 
-	def api_copy
+	def api_copy(include_description = true)
 		copy = ApiNote.new
 	  copy.id = self.id
 	  copy.owner_id = self.owner_id
@@ -96,22 +96,23 @@ class Note < ActiveRecord::Base
 		copy.product_canonical_name = self.product_canonical_name
 		copy.producer_name = self.producer_name
 		copy.producer_canonical_name = self.producer_canonical_name
-		copy.description_overall = self.description_overall
-		copy.description_appearance = self.description_appearance
-		copy.description_aroma = self.description_aroma
-		copy.description_flavor = self.description_flavor
-		copy.description_mouthfeel = self.description_mouthfeel
-		copy.score_type = self.score_type
-		copy.score = self.score
-		copy.price_paid = self.price_paid
-		copy.price_type = self.price_type
-		copy.price = self.price
-		copy.buy_when = self.buy_when
-		copy.vintage = self.vintage
+		if include_description
+  		copy.description_overall = self.description_overall
+  		copy.description_appearance = self.description_appearance
+  		copy.description_aroma = self.description_aroma
+  		copy.description_flavor = self.description_flavor
+  		copy.description_mouthfeel = self.description_mouthfeel
+  		copy.score_type = self.score_type
+  		copy.score = self.score
+  		copy.price_paid = self.price_paid
+  		copy.price_type = self.price_type
+  		copy.price = self.price
+  		copy.buy_when = self.buy_when
+  		copy.vintage = self.vintage
+  	end
 		
     owner = fetch_taster(self.owner_id)
     copy.owner_username = owner.username
-    
 		return copy
   end
   

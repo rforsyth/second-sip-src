@@ -60,21 +60,22 @@ class Producer < ActiveRecord::Base
 		return copy
 	end
 	
-	def api_copy(include_children = false)
+	def api_copy(include_description = true)
 	  copy = ApiProducer.new
 	  copy.id = self.id
 	  copy.owner_id = self.owner_id
 	  copy.type = self.type
 	  copy.visibility = self.visibility
-	  copy.website_url = self.website_url
 	  copy.name = self.name
 	  copy.canonical_name = self.canonical_name
-	  copy.description = self.description
 	  copy.created_at = self.created_at
+	  if include_description
+	    copy.website_url = self.website_url
+	    copy.description = self.description
+	  end
 	  
     owner = fetch_taster(self.owner_id)
     copy.owner_username = owner.username
-    
 	  return copy
   end
 	

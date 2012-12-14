@@ -7,6 +7,9 @@ class ApiEntitiesController < ApiController
   API_MAX_ENTITY_RESULTS = 50
   
   def index
+    
+    puts 'CURRENT_TASTER: ' + current_taster.inspect
+    
     visibility = (params[:visibility].present?) ? params[:visibility].to_i : 10
     case visibility
     when Enums::Visibility::PRIVATE then

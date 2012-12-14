@@ -6,8 +6,12 @@ class ApiNotesController < ApiEntitiesController
 
   def show
     note = @note_class.find(params[:id])
-    api_note = build_full_api_note(note)
-    render :json => api_note
+    if (test_visibility(note, current_taster))
+      render :json => build_full_api_note(note)
+    else
+      # just return the name without any scandalous details
+      render :json => note.api_copy(false)
+    end
   end
   
   def create

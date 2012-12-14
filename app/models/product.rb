@@ -165,7 +165,7 @@ class Product < ActiveRecord::Base
 		return copy
 	end
 	
-	def api_copy(include_children = false)
+	def api_copy(include_description = true)
 		copy = ApiProduct.new
 		
 	  copy.id = self.id
@@ -175,10 +175,12 @@ class Product < ActiveRecord::Base
 	  copy.visibility = self.visibility
 	  copy.name = self.name
 	  copy.canonical_name = self.canonical_name
-	  copy.description = self.description
 	  copy.created_at = self.created_at
 		copy.producer_name = self.producer_name
 		copy.producer_canonical_name = self.producer_canonical_name
+	  if include_description
+	    copy.description = self.description
+	  end
 	  
     owner = fetch_taster(self.owner_id)
     copy.owner_username = owner.username
