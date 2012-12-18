@@ -564,26 +564,22 @@ class ApplicationController < ActionController::Base
   end
   
   def set_product_from_params(note)
-    params_product = nil
+    product = nil
     if params[:producer_name].present? && params[:product_name].present?
       params_product = find_product_by_canonical_names(current_taster,
                        params[:producer_name].canonicalize, params[:product_name].canonicalize)
     end
-    if params_product.present?
-      if !(note.product.present? && params_product.id == note.product.id)
-        note.product = params_product
-      end
-    elsif !note.product.present?
-      note.product = @product_class.new(params[@product_class.name.underscore])
-      note.product.name = params[:product_name]
-      note.product.visibility = note.visibility
-      note.product.set_lookup_properties(params, current_taster, @producer_class)
-      note.product.save
+    if !product.present?
+      product = @product_class.new
+      product.name = params[:product_name]
+      product.visibility = note.visibility
     end
-    if note.product.present?
-      note.product_name = note.product.name 
-      note.producer_name = note.product.producer.name if note.product.producer.present?
-    end
+    product.set_lookup_properties(params, current_taster, @producer_class)
+    product.save
+    
+    note.product = product
+    note.product_name = note.product.name 
+    note.producer_name = note.product.producer.name if note.product.producer.present?
   end
   
   

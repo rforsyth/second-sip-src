@@ -49,8 +49,8 @@ class NotesController < ApplicationController
       initialize_new_note_form
       return render :action => "notes/edit"
     end
-    @note.set_occasion(params[:occasion_name], current_taster)
     set_product_from_params(@note)
+    @note.set_occasion(params[:occasion_name], current_taster)
     
     if @note.save
       remember_score_type(@note)

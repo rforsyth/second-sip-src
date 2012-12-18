@@ -41,6 +41,7 @@ class ApiNotesController < ApiEntitiesController
       # but not removed from the model that is in memory
       note = @note_class.find(params[:id])
       api_note = build_full_api_note(note)
+      
       render :json => api_note
     else
       render_data_validation_json_error(:update, note)
