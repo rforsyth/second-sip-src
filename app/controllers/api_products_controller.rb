@@ -26,7 +26,17 @@ class ApiProductsController < ApiEntitiesController
   end
   
   def create
-    product = @product_class.new(params['product'])
+    producer_name = params[:product][:producer_name]
+    product_name = params[:product][:name]
+    existing_product = find_product_by_canonical_names(current_taster, 
+                producer_name.try(:canonicalize), 
+                product_name.try(:canonicalize))
+    if existing_product.present?
+      render_duplicate_entity_json_error(:create, existing_product, producer_name + " " + product_name)
+      return
+    end
+    
+    product = @product_class.new(params[:product])
     product.set_lookup_properties(params, current_taster, @producer_class)
     if product.save
       product.update_tags params[:tags]
@@ -52,23 +62,28 @@ class ApiProductsController < ApiEntitiesController
   end
   
   def autocomplete
-    max_results = params[:max_results] || API_MAX_ENTITY_RESULTS;
+    max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
+    canonical_producer_name = params[:producer_name].try(:canonicalize)
     canonical_query = params[:query].try(:canonicalize)
 
-    reference_products = @reference_product_class.where(
-                  ["reference_products.canonical_name LIKE ?", "%#{canonical_query}%"]
-                  ).limit(max_results)
+    products = match_products_by_canonical_name(canonical_producer_name, canonical_query, max_results)
     
-    #products = @product_class.where(:owner_id => current_taster.id,
-    #                 ).where("products.canonical_name LIKE ?", "%#{canonical_query}%"
-    #                 ).limit(max_results)
-    
-    results = Api::QueryResults.new(:autocomplete_product_name)
-                     
-    reference_products.each do |reference_product|
-      results.add(reference_product.name)
+    reference_products = []
+    lookups = []
+    if products.count < max_results
+      reference_products = match_reference_products_by_canonical_name(canonical_producer_name, canonical_query, max_results)
+      if (products.count + reference_products.count) < max_results
+        lookups = match_reference_regions_and_varietals(canonical_query, max_results)
+      end
     end
-    render :json => results
+    
+    query_results = Api::QueryResults.new(:autocomplete_product_name)
+    
+    append_autocomplete_names(query_results, products, max_results)
+    append_autocomplete_names(query_results, reference_products, max_results, true)
+    append_autocomplete_names(query_results, lookups, max_results, true)
+      
+    render :json => query_results
   end
   
   def build_full_api_product(product)

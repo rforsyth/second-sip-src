@@ -15,6 +15,7 @@ SsRails::Application.routes.draw do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
                 get 'show_simple', :on => :collection
               end
@@ -22,12 +23,14 @@ SsRails::Application.routes.draw do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
                 get 'show_simple', :on => :collection
               end
     resources :wine_notes, :controller => 'api_wine_notes' do
                 get 'search', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
               end
               
@@ -35,6 +38,7 @@ SsRails::Application.routes.draw do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
                 get 'show_simple', :on => :collection
               end
@@ -42,12 +46,14 @@ SsRails::Application.routes.draw do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
                 get 'show_simple', :on => :collection
               end
     resources :beer_notes, :controller => 'api_beer_notes' do
                 get 'search', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
               end
               
@@ -55,6 +61,7 @@ SsRails::Application.routes.draw do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
                 get 'show_simple', :on => :collection
               end
@@ -62,12 +69,14 @@ SsRails::Application.routes.draw do
                 get 'search', :on => :collection
                 get 'autocomplete', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
                 get 'show_simple', :on => :collection
               end
     resources :spirit_notes, :controller => 'api_spirit_notes' do
                 get 'search', :on => :collection
                 get 'tag_autocomplete', :on => :collection
+                get 'common_tags', :on => :collection
                 get 'lookup_autocomplete', :on => :collection
               end
   end

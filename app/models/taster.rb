@@ -78,7 +78,9 @@ class Taster < ActiveRecord::Base
   
   # supports logging in via either username or email address
   def self.find_by_username_or_email(login)
-    find_by_username(login) || find_by_email(login)
+    taster = Taster.find(:first, :conditions => [ "lower(username) = ?", login.downcase ])
+    taster || find_by_email(login)
+    #find_by_username(login) || find_by_email(login)
   end
   
   def deliver_password_reset_instructions!  

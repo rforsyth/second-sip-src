@@ -52,23 +52,36 @@ class ApiProducersController < ApiEntitiesController
   end
   
   def autocomplete
-    max_results = params[:max_results] || API_MAX_ENTITY_RESULTS;
+    max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
     canonical_query = params[:query].try(:canonicalize)
 
-    reference_producers = @reference_producer_class.where(
-                  ["reference_producers.canonical_name LIKE ?", "%#{canonical_query}%"]
-                  ).limit(max_results)
-    
-    #producers = @producer_class.where(:owner_id => current_taster.id,
-    #                 ).where("producers.canonical_name LIKE ?", "%#{canonical_query}%"
-    #                 ).limit(max_results)
-    
-    results = Api::QueryResults.new(:autocomplete_producer_name)
-                     
-    reference_producers.each do |reference_producer|
-      results.add(reference_producer.name)
+    producers = @producer_class.where(:owner_id => current_taster.id,
+                     ).where("producers.canonical_name LIKE ?", "%#{canonical_query}%"
+                     ).limit(max_results)
+
+    if producers.count < max_results
+      reference_producers = @reference_producer_class.where(
+                    ["reference_producers.canonical_name LIKE ?", "%#{canonical_query}%"]
+                    ).limit(max_results)
+    else
+      reference_producers = []
     end
-    render :json => results
+    
+    query_results = Api::QueryResults.new(:autocomplete_producer_name)
+    append_autocomplete_names(query_results, producers, max_results)
+    append_autocomplete_names(query_results, reference_producers, max_results, true)
+            
+    # producers.each do |producer|
+    #   query_results.add(producer.name)
+    # end
+    # reference_producers.each do |reference_producer|
+    #   break if query_results.results.count > max_results
+    #   if !query_results.results.include?(reference_producer.name)
+    #         query_results.add(reference_producer.name)
+    #       end
+    # end
+    
+    render :json => query_results
   end
   
   def build_full_api_producer(producer)

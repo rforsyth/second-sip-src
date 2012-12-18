@@ -24,7 +24,7 @@ class Producer < ActiveRecord::Base
   after_save :update_products_and_notes_producer_name
   
 	validates_presence_of :creator, :updater, :name, :visibility
-  validates_uniqueness_of :canonical_name, :scope => :owner_id,
+  validates_uniqueness_of :canonical_name, :scope => [:type, :owner_id],
                           :message => "is already being used."
   validates_format_of :website_url, :with => /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$/ix,
                       :allow_nil => true, :allow_blank => true

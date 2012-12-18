@@ -7,13 +7,13 @@ class ApiEntitiesController < ApiController
   API_MAX_ENTITY_RESULTS = 100
   
   def index
-    max_results = params[:max_results] || API_MAX_ENTITY_RESULTS;
+    max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
     visibility = (params[:visibility].present?) ? params[:visibility].to_i : 10
     case visibility
     when Enums::Visibility::PRIVATE then
       entities = find_beverage_by_owner_and_tags(@current_entity_class,
                      current_taster, current_taster, params[:in], params[:ain], 
-                     false, max_results)
+                     max_results, false)
     when Enums::Visibility::FRIENDS then
       entities = find_global_beverage_by_tags(@current_entity_class, 
                     current_taster, params[:in], params[:ain], false, 
@@ -42,8 +42,32 @@ class ApiEntitiesController < ApiController
     render :json => serialize_beverage_list(entities)
   end
   
+  def common_tags
+    max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
+    tagified_query = params[:query].try(:tagify)
+    owner_id = current_taster.id
+    entity_name = @current_entity_class.name
+    
+	  tag_names = ActiveRecord::Base.connection.select_values(
+	    "SELECT name FROM tags 
+      INNER JOIN tagged ON tags.id = tagged.tag_id
+        AND tags.entity_type = '#{entity_name}'
+        AND tagged.owner_id = #{owner_id}
+      GROUP BY name
+      ORDER BY COUNT(name) DESC
+      LIMIT #{max_results}")
+  	
+    results = Api::QueryResults.new(:autocomplete_tag)
+        
+    tag_names.each do |tag_name|
+      results.add(tag_name)
+    end
+    render :json => results
+  end
+
+  
   def tag_autocomplete
-    max_results = params[:max_results] || API_MAX_ENTITY_RESULTS;
+    max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
     tagified_query = params[:query].try(:tagify)
     tags = Tag.find_by_sql(
       ["SELECT DISTINCT tags.* FROM tags 
@@ -66,16 +90,9 @@ class ApiEntitiesController < ApiController
 
   
   def lookup_autocomplete
-    
     max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
-    
-    puts max_results.inspect
-    
     lookups = find_lookups(params[:query], @current_entity_class.name,
                 params[:lookup_type], current_taster, max_results)
-                
-    puts lookups.inspect
-                
     if lookups.count < max_results
       reference_lookups = find_reference_lookups(params[:query],
                 "Reference#{@current_entity_class.name}",
@@ -106,6 +123,21 @@ class ApiEntitiesController < ApiController
 	    results.add(beverage.api_copy)
     end
     results
+  end
+  
+  protected
+  
+  def append_autocomplete_names(query_results, entities, max_results, avoid_duplicates = false)
+    entities.each do |entity|
+      break if query_results.results.count > max_results
+      if avoid_duplicates
+        if !query_results.results.include?(entity.name)
+  	      query_results.add(entity.name)
+  	    end
+      else
+  	    query_results.add(entity.name)
+      end
+    end
   end
   
 end

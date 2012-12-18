@@ -533,6 +533,36 @@ class ApplicationController < ActionController::Base
         product.id, max_results])
   end
   
+  def match_products_by_canonical_name(canonical_producer_name, canonical_query, max_results)
+    @product_class.joins(:producer).where(
+                     :owner_id => current_taster.id,
+                     :producers => { :owner_id => current_taster.id,
+                                     :canonical_name => canonical_producer_name }
+                     ).where("products.canonical_name LIKE ?", "%#{canonical_query}%"
+                     ).limit(max_results)
+  end
+  
+  def match_reference_products_by_canonical_name(canonical_producer_name, canonical_query, max_results)
+    @reference_product_class.joins(:reference_producer).where(
+                     :reference_producers => { :canonical_name => canonical_producer_name }
+                     ).where("reference_products.canonical_name LIKE ?", "%#{canonical_query}%"
+                     ).limit(max_results)
+  end
+  
+  def match_reference_regions_and_varietals(canonical_query, max_results)
+     ReferenceLookup.find_by_sql(
+        ["SELECT DISTINCT reference_lookups.* FROM reference_lookups 
+          WHERE reference_lookups.canonical_name LIKE ?
+            AND reference_lookups.entity_type = ?
+            AND (reference_lookups.lookup_type = ?
+                 OR reference_lookups.lookup_type = ?)
+          ORDER BY lookup_type DESC, name ASC
+          LIMIT ?",
+          "%#{canonical_query}%", 'ReferenceWine',
+          Enums::LookupType::REGION, Enums::LookupType::VARIETAL,
+          max_results])
+  end
+  
   def set_product_from_params(note)
     params_product = nil
     if params[:producer_name].present? && params[:product_name].present?
