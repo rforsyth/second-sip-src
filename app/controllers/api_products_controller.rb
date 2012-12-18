@@ -48,9 +48,9 @@ class ApiProductsController < ApiEntitiesController
 
   def update
     product = find_product_by_canonical_name_or_id(current_taster, params[:id])
+    product.set_lookup_properties(params, current_taster, @producer_class)
+    product.update_tags params[:tags]
     if product.update_attributes(params['product'])
-      product.set_lookup_properties(params, current_taster, @producer_class)
-      product.update_tags params[:tags]
       
       # this reloads associations like lookups that may have been deleted in DB,
       # but not removed from the model that is in memory
