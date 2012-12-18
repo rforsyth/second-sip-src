@@ -17,14 +17,14 @@ class ApiController < ApplicationController
   
   def render_data_validation_json_error(operation, entity)
     response = build_validation_error_response(operation, 'Unable to Save', 
-      'Please fix this issue before continuing:' , entity)
+      'These fields cannot be saved:' , entity)
     render :json => response, :status => 500
   end
   
   
   def render_login_json_error(operation, entity)
     response = build_validation_error_response(operation, 'Unable to Log In', 
-      'Perhaps you mis-spelled something?' , entity)
+      'Credentials were not recognized.  Please try again.' , entity)
     render :json => response, :status => 500
   end
   

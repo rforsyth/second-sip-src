@@ -33,7 +33,7 @@ class Product < ActiveRecord::Base
   after_initialize :init
   before_validation :set_canonical_fields
   before_save :set_searchable_metadata
-  before_create :add_unreviewed_tag
+  #before_create :add_unreviewed_tag
   after_save :update_notes_product_name
   
   pg_search_scope :search,

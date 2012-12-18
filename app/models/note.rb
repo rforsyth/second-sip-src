@@ -26,7 +26,7 @@ class Note < ActiveRecord::Base
   after_initialize :save_original_auto_tag_values
   before_validation :set_canonical_fields
   before_save :set_searchable_metadata, :add_auto_tags
-  before_create :add_unreviewed_tag
+  #before_create :add_unreviewed_tag
   
   # include in metadata: vintage, owner username,
   #                      style, region, occasion, vineyards, varietals

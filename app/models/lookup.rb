@@ -11,7 +11,7 @@ class Lookup < ActiveRecord::Base
 	has_many :lookeds
 	
 	before_validation :canonicalize_names
-  before_create :add_unreviewed_tag
+  #before_create :add_unreviewed_tag
 	validates_presence_of :name, :lookup_type, :entity_type, :creator, :updater
   validates_uniqueness_of :canonical_name, :scope => [:lookup_type, :entity_type],
                           :message => "is already being used."

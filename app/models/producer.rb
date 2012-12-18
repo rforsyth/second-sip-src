@@ -20,7 +20,7 @@ class Producer < ActiveRecord::Base
   before_validation :set_canonical_fields
   before_validation :add_protocol_to_website_url
   before_save :set_searchable_metadata
-  before_create :add_unreviewed_tag
+  #before_create :add_unreviewed_tag
   after_save :update_products_and_notes_producer_name
   
 	validates_presence_of :creator, :updater, :name, :visibility
