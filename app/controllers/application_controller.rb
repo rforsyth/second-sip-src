@@ -60,12 +60,18 @@ class ApplicationController < ActionController::Base
   protected
   
   def find_producer_by_canonical_name_or_id(owner, id)
-    return @producer_class.find(id) if id.is_i?
+    if id.is_i?
+      producer = @producer_class.find(:first, :conditions => { :id => id })
+      return producer if producer.present?
+    end
     @producer_class.find_by_canonical_name(id, :conditions => { :owner_id => owner.id } )
   end
   
   def find_reference_producer_by_canonical_name_or_id(id)
-    return @reference_producer_class.find(id) if id.is_i?
+    if id.is_i?
+      producer = @reference_producer_class.find(:first, :conditions => { :id => id })
+      return producer if producer.present?
+    end
     @reference_producer_class.find_by_canonical_name(id)
   end
   

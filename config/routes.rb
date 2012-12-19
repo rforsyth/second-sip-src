@@ -9,6 +9,10 @@ SsRails::Application.routes.draw do
 
   constraints :subdomain => 'api' do
     
+	  match '/startup/configuration' => "api_startup#configuration", :as => :api_startup_configuration
+	  
+    resources :api_initialize, :controller => 'api_initialize'
+    
     resources :api_sessions, :controller => 'api_sessions'
     
     resources :wineries, :controller => 'api_wineries' do
