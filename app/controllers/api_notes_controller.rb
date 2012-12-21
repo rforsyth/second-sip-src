@@ -18,10 +18,12 @@ class ApiNotesController < ApiEntitiesController
     note = @note_class.new(params['note'])
     set_product_from_params(note)
     note.tasted_at = Time.now if !note.tasted_at.present?
+    # have to update tags before setting occasion, because the function
+    # would remove the auto-tag
+    note.update_tags(params[:tags], current_taster)
     note.set_occasion(params[:occasion_name], current_taster)
     
     if note.save
-      note.update_tags params[:tags]
       # need to run a query to pull new lookups
       full_note = @note_class.find(note.id)
       render :json => build_full_api_note(full_note)

@@ -14,7 +14,7 @@ module Data::Taggable
     tags_to_remove.each {|tag_to_remove| self.remove_tag(tag_to_remove)}
     
     # now add any new tags - depending on add_tag to detect existing tags
-    tagified_tag_names.each {|tag_to_add| self.add_tag(tag_to_add)}
+    tagified_tag_names.each {|tag_to_add| self.add_tag(tag_to_add, owner)}
   end
   
   def add_tag(tag_name, owner = nil)

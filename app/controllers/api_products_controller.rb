@@ -37,9 +37,11 @@ class ApiProductsController < ApiEntitiesController
     end
     
     product = @product_class.new(params[:product])
+    product.update_tags(params[:tags], current_taster)
     product.set_lookup_properties(params, current_taster, @producer_class)
     if product.save
-      product.update_tags params[:tags]
+      # need to do this to pull in tags
+      product = @product_class.find(product.id)
       render :json => build_full_api_product(product)
     else
       render_data_validation_json_error(:create, product)
@@ -48,10 +50,11 @@ class ApiProductsController < ApiEntitiesController
 
   def update
     product = find_product_by_canonical_name_or_id(current_taster, params[:id])
+    # have to update tags before setting lookups, because the function
+    # would remove the auto-tag
+    product.update_tags(params[:tags], current_taster)
     product.set_lookup_properties(params, current_taster, @producer_class)
-    product.update_tags params[:tags]
     if product.update_attributes(params['product'])
-      
       # this reloads associations like lookups that may have been deleted in DB,
       # but not removed from the model that is in memory
       product = find_product_by_canonical_name_or_id(current_taster, params[:id])

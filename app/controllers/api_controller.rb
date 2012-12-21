@@ -21,7 +21,6 @@ class ApiController < ApplicationController
     render :json => response, :status => 500
   end
   
-  
   def render_login_json_error(operation, entity)
     response = build_validation_error_response(operation, 'Unable to Log In', 
       'Credentials were not recognized.  Please try again.' , entity)
@@ -32,7 +31,6 @@ class ApiController < ApplicationController
     log_exception(exception)
     response = Api::ErrorResults.new(:fatal_exception, 'Unexpected Error', 
       'We were unable to complete the operation due to an unexpected server error. Sorry for any inconvenience')
-    puts response.inspect
     render :json => response, :status => 500
   end
   
