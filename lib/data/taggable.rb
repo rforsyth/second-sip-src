@@ -43,7 +43,7 @@ module Data::Taggable
   
   def self.included(base)
     base.class_eval do
-    	has_many :tagged, :as => :taggable
+    	has_many :tagged, :as => :taggable, :dependent => :delete_all
     	has_many :tags, :as => :taggable, :through => :tagged
     end
   end

@@ -1,0 +1,13 @@
+
+
+<%= render :partial => 'common/global/content_header',
+           :locals => { :title => "Delete #{@product_class.name.titleize}" } %>
+
+<div class="intro simple_intro">
+<p>Click to permanently delete this <%= "#{@product_class.name.titleize.downcase}" %>
+   and all of its associated notes:
+  <br/><br/><b><%= "#{@product.producer.name} #{@product.name}" %></b></p>
+<%= button_to "Delete", polymorphic_path([@product.owner, @product]), :method => 'delete' %>
+</div>
+<br/><br/><br/><br/>
+

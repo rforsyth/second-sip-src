@@ -24,7 +24,7 @@ module Data::AdminTaggable
   
   def self.included(base)
     base.class_eval do
-    	has_many :admin_tagged, :as => :admin_taggable
+    	has_many :admin_tagged, :as => :admin_taggable, :dependent => :delete_all
     	has_many :admin_tags, :as => :admin_taggable, :through => :admin_tagged
     end
   end

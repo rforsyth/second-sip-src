@@ -15,9 +15,9 @@ class Product < ActiveRecord::Base
 	belongs_to :owner, :class_name => "Taster"
 	
 	belongs_to :producer
-	has_many :notes
+	has_many :notes, :dependent => :destroy
 	
-	has_many :looked, :as => :lookable
+	has_many :looked, :as => :lookable, :dependent => :delete_all
 	has_one :region, :source => :lookup, :as => :lookable, :through => :looked,
 	                 :conditions => {:lookup_type => Enums::LookupType::REGION}
 	has_one :style, :source => :lookup, :as => :lookable, :through => :looked,
@@ -29,6 +29,7 @@ class Product < ActiveRecord::Base
 	
 	validates_presence_of :producer, :name, :visibility
   validates_associated :producer, :looked, :tagged
+	validate :product_name_is_unique, :on => :create
 
   after_initialize :init
   before_validation :set_canonical_fields
@@ -196,6 +197,14 @@ class Product < ActiveRecord::Base
 	    UPDATE notes 
 	    SET product_name = #{product_name}, product_canonical_name = #{product_canonical_name}
 	    WHERE notes.product_id = #{self.id}")
+  end
+  
+  def product_name_is_unique
+    products = self.class.where("owner_id = ? AND producer_canonical_name = ? AND canonical_name = ?",
+                               self.owner_id, self.producer_canonical_name, self.canonical_name)
+    if products.count > 0
+      errors.add(:name, "already exists.") 
+    end
   end
   
 

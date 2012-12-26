@@ -41,6 +41,7 @@
 <% if allow_edit?(@producer) %>
   <%= render :partial => 'common/edit/edit_actions',
              :locals => { :edit_path => edit_polymorphic_path([@producer.owner, @producer]),
+                          :delete_path => "#{polymorphic_path([@producer.owner, @producer])}/delete",
                           :promote_path => new_polymorphic_path(@reference_producer_class,
                                             :promote => @producer.id) } %>
 <% end %>

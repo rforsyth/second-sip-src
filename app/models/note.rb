@@ -15,7 +15,7 @@ class Note < ActiveRecord::Base
 	belongs_to :owner, :class_name => "Taster"
 	belongs_to :product
 	
-	has_many :looked, :as => :lookable
+	has_many :looked, :as => :lookable, :dependent => :delete_all
 	has_one :occasion, :source => :lookup, :as => :lookable, :through => :looked,
 	                   :conditions => {:lookup_type => Enums::LookupType::OCCASION}
 	
@@ -78,9 +78,6 @@ class Note < ActiveRecord::Base
     new_looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
     self.add_tag(name.tagify, owner || self.owner)
     self.looked << new_looked
-    
-    puts self.tags.inspect
-    puts self.looked.inspect
   end
 
 	def api_copy(include_description = true)

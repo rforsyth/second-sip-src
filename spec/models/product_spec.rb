@@ -60,7 +60,7 @@ describe Product do
     first_beer.creator.should eql(tasters(:grumpy))
     
     second_beer = Beer.new(:name => 'St ell a', :visibility => Enums::Visibility::PUBLIC)
-    first_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
+    second_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
     second_beer.save.should be_false
   end
   

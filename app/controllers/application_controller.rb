@@ -572,7 +572,7 @@ class ApplicationController < ActionController::Base
   def set_product_from_params(note)
     product = nil
     if params[:producer_name].present? && params[:product_name].present?
-      params_product = find_product_by_canonical_names(current_taster,
+      product = find_product_by_canonical_names(current_taster,
                        params[:producer_name].canonicalize, params[:product_name].canonicalize)
     end
     if !product.present?
@@ -581,11 +581,14 @@ class ApplicationController < ActionController::Base
       product.visibility = note.visibility
     end
     product.set_lookup_properties(params, current_taster, @producer_class)
-    product.save
-    
     note.product = product
+    
+    if !product.save
+      return false
+    end
     note.product_name = note.product.name 
     note.producer_name = note.product.producer.name if note.product.producer.present?
+    return true
   end
   
   

@@ -16,7 +16,9 @@ class ApiNotesController < ApiEntitiesController
   
   def create
     note = @note_class.new(params['note'])
-    set_product_from_params(note)
+    if !set_product_from_params(note)
+      return render_data_validation_json_error(:create, note.product)
+    end
     note.tasted_at = Time.now if !note.tasted_at.present?
     # have to update tags before setting occasion, because the function
     # would remove the auto-tag
@@ -34,7 +36,9 @@ class ApiNotesController < ApiEntitiesController
 
   def update
     note = @note_class.find(params[:id])
-    set_product_from_params(note)
+    if !set_product_from_params(note)
+      return render_data_validation_json_error(:update, note.product)
+    end
     note.update_tags params[:tags]
     note.set_occasion(params[:occasion_name], current_taster)
   

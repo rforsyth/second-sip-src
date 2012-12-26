@@ -49,7 +49,9 @@ class NotesController < ApplicationController
       initialize_new_note_form
       return render :action => "notes/edit"
     end
-    set_product_from_params(@note)
+    if !set_product_from_params(@note)
+      return render :action => "notes/new"
+    end
     @note.set_occasion(params[:occasion_name], current_taster)
     
     if @note.save
@@ -69,7 +71,9 @@ class NotesController < ApplicationController
 
   def update
     @note.set_occasion(params[:occasion_name], current_taster)
-    set_product_from_params(@note)
+    if !set_product_from_params(@note)
+      return render :action => "notes/edit"
+    end
     if @note.update_attributes(params[@note_class.name.underscore])
       remember_score_type(@note)
       remember_visibility(@note)
@@ -85,7 +89,7 @@ class NotesController < ApplicationController
   end
   
   def destroy
-    @note.delete
+    @note.destroy
     redirect_to polymorphic_path([displayed_taster, @note_class])
   end
 	

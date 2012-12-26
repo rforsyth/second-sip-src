@@ -154,6 +154,8 @@ SsRails::Application.routes.draw do
                 get 'autocomplete', :on => :collection
                 get 'ajax_details', :on => :collection
                 member do
+                  get  'delete'
+                  delete 'destroy'
                   post 'add_tag'
                   post 'remove_tag'
                   post 'add_admin_tag'

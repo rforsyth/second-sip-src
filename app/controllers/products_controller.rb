@@ -6,11 +6,11 @@ class ProductsController < ApplicationController
   include UI::AdminTaggableController
   
 	before_filter :initialize_products_tabs
-  before_filter :find_product, :only => [ :show, :edit, :update,
+  before_filter :find_product, :only => [ :show, :edit, :update, :delete, :destroy,
                   :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_tag, :remove_tag, :add_admin_tag, :remove_admin_tag ]
   before_filter :require_admin, :only => [:add_admin_tag, :remove_admin_tag]
-  before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update, :ajax_details]
+  before_filter :require_viewing_own_data, :only => [:new, :create, :edit, :update, :ajax_details, :delete, :destroy]
   before_filter :require_visibility, :only => [:show]
   before_filter :require_displayed_taster
   
@@ -117,6 +117,15 @@ class ProductsController < ApplicationController
     else
       render :action => "products/edit"
     end
+  end
+  
+  def delete
+    render :template => 'products/delete'
+  end
+  
+  def destroy
+    @product.destroy
+    redirect_to polymorphic_path([displayed_taster, @product_class])
   end
 	
   ############################################

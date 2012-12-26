@@ -68,6 +68,7 @@
 <% if allow_edit?(@product) %>
   <%= render :partial => 'common/edit/edit_actions',
              :locals => { :edit_path => edit_polymorphic_path([@product.owner, @product]),
+                          :delete_path => "#{polymorphic_path([@product.owner, @product])}/delete",
                           :promote_path => new_polymorphic_path(@reference_product_class,
                                             :promote => @product.id) } %>
 <% end %>

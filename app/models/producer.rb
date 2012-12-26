@@ -15,7 +15,7 @@ class Producer < ActiveRecord::Base
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
 	belongs_to :owner, :class_name => "Taster"
-	has_many :products
+	has_many :products, :dependent => :destroy
 	
   before_validation :set_canonical_fields
   before_validation :add_protocol_to_website_url
