@@ -3,3 +3,4 @@
 .redcar
 log/*.log
 tmp/**/*
+eventmachine/*
