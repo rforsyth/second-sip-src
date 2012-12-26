@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.5'
+#gem 'rails', '3.0.5'
+gem 'rails', '3.2.7'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,6 +14,8 @@ gem "pg_search"
 gem "silent-postgres"
 gem "nilify_blanks"
 gem "htmlentities"
+gem 'thin'
+gem 'newrelic_rpm'
 
 # Use unicorn as the web server
 # gem 'unicorn'
