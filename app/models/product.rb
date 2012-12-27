@@ -29,7 +29,7 @@ class Product < ActiveRecord::Base
 	
 	validates_presence_of :producer, :name, :visibility
   validates_associated :producer, :looked, :tagged
-	validate :product_name_is_unique, :on => :create
+	validate :product_name_is_unique
 
   after_initialize :init
   before_validation :set_canonical_fields
@@ -203,7 +203,16 @@ class Product < ActiveRecord::Base
     products = self.class.where("owner_id = ? AND producer_canonical_name = ? AND canonical_name = ?",
                                self.owner_id, self.producer_canonical_name, self.canonical_name)
     if products.count > 0
-      errors.add(:name, "already exists.") 
+      if self.new_record?
+        errors.add(:name, "already exists.")
+      else
+        products.each do |product|
+          if product.id != self.id
+            errors.add(:name, "is already being used.")
+            return
+          end
+        end
+      end
     end
   end
   
