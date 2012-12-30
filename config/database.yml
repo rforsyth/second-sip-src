@@ -15,6 +15,7 @@ common: &common
   pool: 5
   username: ss_rails
   password: eu4ric # from psql setup, see Postgresql
+  host: localhost
 
 development:
   <<: *common

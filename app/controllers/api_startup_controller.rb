@@ -28,7 +28,8 @@ class ApiStartupController < ApiController
     end
 
     if new_taster.signup!(params)
-      api_taster = current_taster.api_copy
+      new_taster.deliver_activation_instructions!
+      api_taster = new_taster.api_copy
       render :json => api_taster
     else
       response = build_validation_error_response(:register, 'Unable to Register', 
