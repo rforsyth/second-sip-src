@@ -53,7 +53,7 @@ describe Product do
     happys_beer.creator.should eql(tasters(:happy))
   end
 
-  it "should not allow products with the same name and same creators" do
+  it "should not allow new products with the same name and same creators" do
     first_beer = Beer.new(:name => 'Stella', :visibility => Enums::Visibility::PUBLIC)
     first_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
     first_beer.save.should be_true
@@ -61,6 +61,20 @@ describe Product do
     
     second_beer = Beer.new(:name => 'St ell a', :visibility => Enums::Visibility::PUBLIC)
     second_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
+    second_beer.save.should be_false
+  end
+
+  it "should not allow update of product to same name as another product" do
+    first_beer = Beer.new(:name => 'Stella', :visibility => Enums::Visibility::PUBLIC)
+    first_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
+    first_beer.save.should be_true
+    first_beer.creator.should eql(tasters(:grumpy))
+    
+    second_beer = Beer.new(:name => 'Not Stella', :visibility => Enums::Visibility::PUBLIC)
+    second_beer.set_lookup_properties({:producer_name => 'Budweiser'}, current_taster, Brewery)
+    second_beer.save.should be_true
+    
+    second_beer.name = 'Stella'
     second_beer.save.should be_false
   end
   
