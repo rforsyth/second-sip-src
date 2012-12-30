@@ -1,5 +1,12 @@
 
 
+- deleted symlink to gcc-4.2 (sp?)
+
+http://stackoverflow.com/questions/6935146/bundle-update-install-fail-after-os-x-lion-upgrade-rails-3
+sudo ln -s llvm-gcc-4.2 gcc-4.2
+
+
+
 _____________________________________________________________
 Next Up
 
