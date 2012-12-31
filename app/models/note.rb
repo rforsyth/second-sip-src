@@ -16,8 +16,8 @@ class Note < ActiveRecord::Base
 	belongs_to :product
 	
 	has_many :looked, :as => :lookable, :dependent => :delete_all
-	has_one :occasion, :source => :lookup, :as => :lookable, :through => :looked,
-	                   :conditions => {:lookup_type => Enums::LookupType::OCCASION}
+  # has_one :occasion, :source => :lookup, :as => :lookable, :through => :looked,
+  #                    :conditions => {:lookup_type => Enums::LookupType::OCCASION}
 	
 	validates_presence_of :product, :visibility, :tasted_at
   validates_associated :product, :tagged
@@ -36,6 +36,13 @@ class Note < ActiveRecord::Base
                  :description_aroma, :description_flavor, :description_mouthfeel]
     #:using => [:tsearch, :dmetaphone, :trigrams],
     #:ignoring => :accents
+    
+  def occasion  
+    self.looked.each do |looked|
+      return looked.lookup if looked.lookup.lookup_type == Enums::LookupType::OCCASION
+    end
+    return nil
+  end
   
   def set_canonical_fields
     self.product_canonical_name = self.product_name.canonicalize if self.product_name.present?

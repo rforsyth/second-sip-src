@@ -35,11 +35,12 @@ module ExceptionLogger
       end
 
       def local_addresses
-        addresses = read_inheritable_attribute(:local_addresses)
+        # addresses = read_inheritable_attribute(:local_addresses)
+        addresses = @class_local_addresses
         unless local_addresses
           addresses = [IPAddr.new("127.0.0.1")]
-          write_inheritable_attribute(:local_addresses, addresses)
-          # local_addresses = addresses
+          # write_inheritable_attribute(:local_addresses, addresses)
+          @class_local_addresses = addresses
         end
         addresses
       end
@@ -47,11 +48,11 @@ module ExceptionLogger
       def exception_data(deliverer = self, &block)
         deliverer = block if block
         if deliverer == self
-          read_inheritable_attribute(:exception_data)
-          # exception_data
+          # read_inheritable_attribute(:exception_data)
+          @class_exception_data
         else
-          write_inheritable_attribute(:exception_data, deliverer)
-          # exception_data = deliverer
+          # write_inheritable_attribute(:exception_data, deliverer)
+          @class_exception_data = deliverer
         end
       end
     end

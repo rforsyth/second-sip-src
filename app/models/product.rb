@@ -18,10 +18,10 @@ class Product < ActiveRecord::Base
 	has_many :notes, :dependent => :destroy
 	
 	has_many :looked, :as => :lookable, :dependent => :delete_all
-	has_one :region, :source => :lookup, :as => :lookable, :through => :looked,
-	                 :conditions => {:lookup_type => Enums::LookupType::REGION}
-	has_one :style, :source => :lookup, :as => :lookable, :through => :looked,
-	                :conditions => {:lookup_type => Enums::LookupType::STYLE}
+  # has_one :region, :source => :lookup, :as => :lookable, :through => :looked,
+  #                  :conditions => {:lookup_type => Enums::LookupType::REGION}
+  # has_one :style, :source => :lookup, :as => :lookable, :through => :looked,
+  #                 :conditions => {:lookup_type => Enums::LookupType::STYLE}
 	has_many :vineyards, :source => :lookup, :as => :lookable, :through => :looked,
 	                     :conditions => {:lookup_type => Enums::LookupType::VINEYARD}
 	has_many :varietals, :source => :lookup, :as => :lookable, :through => :looked,
@@ -40,6 +40,20 @@ class Product < ActiveRecord::Base
   pg_search_scope :search,
     :against => [:name, :producer_name, :searchable_metadata, :description]
     #:ignoring => :accents
+  
+  def style  
+    self.looked.each do |looked|
+      return looked.lookup if looked.lookup.lookup_type == Enums::LookupType::STYLE
+    end
+    return nil
+  end  
+  
+  def region  
+    self.looked.each do |looked|
+      return looked.lookup if looked.lookup.lookup_type == Enums::LookupType::REGION
+    end
+    return nil
+  end
   
   def region_name
     self.region.try(:name)
