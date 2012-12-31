@@ -5,3 +5,4 @@ log/*.log
 tmp/**/*
 eventmachine/*
 railties/*
+.env
