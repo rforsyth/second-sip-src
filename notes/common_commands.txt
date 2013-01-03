@@ -29,6 +29,11 @@ Testing
 
 $ bundle exec rake spec
 
+__________________________________________________________________
+Troubleshooting
+
+- search xib files
+$ grep -i -r --include=*.xib "spirit_bottle_bw_30x30" .
 
 __________________________________________________________________
 Running Postgres
