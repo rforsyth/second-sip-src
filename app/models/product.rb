@@ -134,6 +134,7 @@ class Product < ActiveRecord::Base
   end
   
   def set_style(name, owner = nil)
+    
     return if name.present? && (self.style.try(:canonical_name) == name.canonicalize)
     self.looked.each do |looked|
       if looked.lookup.lookup_type == Enums::LookupType::STYLE
@@ -141,10 +142,12 @@ class Product < ActiveRecord::Base
         looked.delete
       end
     end
+    
     return if !name.present?
     lookup = Lookup.find_or_create_by_name_and_type(name,
                     self.class.name, Enums::LookupType::STYLE)
     looked = Looked.new(:lookup => lookup, :owner => (owner || self.owner))
+    
     self.add_tag(name.tagify, owner || self.owner)
     self.looked << looked
   end

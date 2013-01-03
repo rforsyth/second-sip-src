@@ -19,6 +19,8 @@ $ rails server
 $ rails console
 - brings up an IRB prompt with the rails includes set up
 
+$ tail -f log/development.log
+
 $ rvm use 1.9.2 --default
 
 
@@ -52,6 +54,7 @@ $ sudo su postgres -c '/opt/local/lib/postgresql83/bin/pg_ctl -D /opt/local/var/
 - to access db via Navicat, double-click connection; password is your user (rforsyth) pwd
 
 
+
 __________________________________________________________________
 Git
 
@@ -77,12 +80,17 @@ $ bundle exec rake db:load_reference_varietals
 __________________________________________________________________
 Heroku
 
+$ git push heroku-cedar cedar:master
+
+$ heroku maintenance:on --app second-sip-cedar
+
 - command line to database:
 $ heroku pg:psql HEROKU_POSTGRESQL_BLUE
 
 - 100 is default
 $ heroku logs -n 500
 $ heroku logs --tail
+$ heroku logs --tail --app second-sip-cedar
 
 $ heroku rake db:migrate
   - just runs latest migrations; doesn't destroy tables if it has a record of previously run migrations

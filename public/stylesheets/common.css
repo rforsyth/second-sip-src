@@ -153,14 +153,14 @@ span.nobreak {
 #logo img
 {
   position:absolute;
-  left:-90px;
+  left:-20px;
   top:-8px;
   z-index:0;
 }
 #logo h1 {
     position: absolute;
     top: 0px;
-    left: 60px;
+    left: 107px;
     color: white;
     text-align: left;
     margin: 0;
@@ -170,7 +170,8 @@ span.nobreak {
     letter-spacing: 3px;
 }
 #logo h1 span.logo_bold {
-    font-weight: bold;
+	margin-left: 5px;
+    /*font-weight: bold;*/
 }
 #tophat {
   background: #245F89;

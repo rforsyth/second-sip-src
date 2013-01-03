@@ -24,6 +24,7 @@ class ApiNotesController < ApiEntitiesController
     # would remove the auto-tag
     note.update_tags(params[:tags], current_taster)
     note.set_occasion(params[:occasion_name], current_taster)
+    note.create_lookup_auto_tags(params, current_taster)
     
     if note.save
       # need to run a query to pull new lookups
@@ -41,6 +42,7 @@ class ApiNotesController < ApiEntitiesController
     end
     note.update_tags params[:tags]
     note.set_occasion(params[:occasion_name], current_taster)
+    note.create_lookup_auto_tags(params, current_taster)
   
     if note.update_attributes(params['note'])
       # this reloads associations like lookups that may have been deleted in DB,

@@ -53,6 +53,7 @@ class NotesController < ApplicationController
       return render :action => "notes/new"
     end
     @note.set_occasion(params[:occasion_name], current_taster)
+    @note.create_lookup_auto_tags(params, current_taster)
     
     if @note.save
       remember_score_type(@note)
@@ -70,10 +71,13 @@ class NotesController < ApplicationController
   end
 
   def update
-    @note.set_occasion(params[:occasion_name], current_taster)
     if !set_product_from_params(@note)
       return render :action => "notes/edit"
     end
+    
+    @note.set_occasion(params[:occasion_name], current_taster)
+    @note.create_lookup_auto_tags(params, current_taster)
+    
     if @note.update_attributes(params[@note_class.name.underscore])
       remember_score_type(@note)
       remember_visibility(@note)

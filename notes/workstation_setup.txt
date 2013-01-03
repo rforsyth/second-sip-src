@@ -1,0 +1,136 @@
+
+
+______________________________________________________________
+To Do
+
+
+______________________________________________________________
+Resources
+
+http://blog.teamtreehouse.com/installing-ruby-rails-and-mysql-on-os-x-lion
+
+
+______________________________________________________________
+Useful commands
+
+- run postgres command line client
+$ psql   (works by itself if Postgres.app is installed & bin dir set up)
+
+______________________________________________________________
+Xcode
+
+- install Xcode (via App Store)
+- install Xcode command line tools (Preferences -> Downloads -> Components)
+
+
+______________________________________________________________
+Tips
+
+- to find out where an app is installed "which foo"
+
+______________________________________________________________
+Ruby / Rails / Git
+
+note: need to install Xcode command line tools first
+
+- install homebrew: http://mxcl.github.com/homebrew/
+$ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+
+- install git: $ brew install git
+
+- configure git:
+$ git config --global user.name "Ryan Forsyth"
+$ git config --global user.email ryanforsyth@gmail.com
+
+- install RVM: https://rvm.io/rvm/install/
+$ \curl https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+
+* these commands were recommended by help text that popped up when running rvm install:
+$ brew install libksba
+$ brew update
+$ brew tap homebrew/dupes
+$ rvm pkg install openssl
+
+- install ruby (change version below to latest / or whatever you want)
+$ rvm install 1.9.3
+$ rvm use 1.9.3
+$ rvm use 1.9.3 --default
+
+$ gem install bundler --no-ri --no-rdoc
+$ gem install rails --no-ri --no-rdoc
+
+- install Heroku Toolbelt: https://toolbelt.heroku.com/osx
+
+- will also need to set up the key.  If already created an RSA key for Unfuddle, then just run:
+  - more info: https://devcenter.heroku.com/articles/keys
+$ heroku keys:add
+
+______________________________________________________________
+Postgres
+
+- postgres is already installed on Mountain Lion
+  - "psql --version" says "(PostgreSQL) 9.1.4"
+
+- install Postgres.app: http://postgresapp.com
+  - add bin dir to ~/.bash_profile
+    - PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+- automatically sets up user with your username ($ echo $USER)
+- also creates a database with the same name
+
+- set up databases
+$ psql
+# create role ss_rails with createdb login password 'eu4ric';
+# create database ss_rails_development owner ss_rails;
+# create database ss_rails_test owner ss_rails; 
+# create database ss_rails_production owner ss_rails;
+
+- set up schema (run from ~/projects/second-sip-src)
+$ bundle exec rake db:migrate
+
+- add seed data (Admin user)
+$ rake db:seed
+
+- create lookup data
+$ bundle exec rake db:load_reference_varietals
+$ bundle exec rake db:load_reference_wine_regions
+$ bundle exec rake db:load_reference_beer_styles
+$ bundle exec rake db:load_reference_beer_regions
+$ bundle exec rake db:load_reference_spirit_styles
+$ bundle exec rake db:load_reference_spirit_regions
+
+- verify that tests run
+$ bundle exec rake spec
+
+
+
+
+
+
+______________________________________________________________
+Environment
+
+- copy .profile and .bash_profile to home directory
+  - depends on git-completion.bash which is in ~/projects/tools/scripts
+
+- put alias in /etc/hosts file
+  127.0.0.1	www.ssdev.com
+  127.0.0.1	api.ssdev.com
+
+______________________________________________________________
+Source
+
+- generate key
+$ ssh-keygen -t rsa
+  - hit enter at first prompt
+  - passphase: very happy
+$ cat ~/.ssh/id_rsa.pub
+
+- OK, get the code
+$ git clone git@secondsip.unfuddle.com:secondsip/second-sip-src.git
+$ git clone git@secondsip.unfuddle.com:secondsip/second-sip-assets.git
+$ git clone git@secondsip.unfuddle.com:secondsip/second-sip-ios.git
+$ git clone git@secondsip.unfuddle.com:secondsip/second-sip-reference-data.git
+
+- install the gems for the Rails app (in the second-sip-src project)
+$ bundle install
+

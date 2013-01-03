@@ -568,6 +568,26 @@ class ApplicationController < ActionController::Base
           Enums::LookupType::REGION, Enums::LookupType::VARIETAL,
           max_results])
   end
+
+  def match_reference_beer_styles(canonical_query, max_results)
+    match_reference_styles(canonical_query, max_results, 'ReferenceBeer')
+  end
+
+  def match_reference_spirit_styles(canonical_query, max_results)
+    match_reference_styles(canonical_query, max_results, 'ReferenceSpirit')
+  end
+
+  def match_reference_styles(canonical_query, max_results, reference_class_name)
+     ReferenceLookup.find_by_sql(
+        ["SELECT DISTINCT reference_lookups.* FROM reference_lookups 
+          WHERE reference_lookups.canonical_name LIKE ?
+            AND reference_lookups.entity_type = ?
+            AND (reference_lookups.lookup_type = ?)
+          ORDER BY lookup_type DESC, name ASC
+          LIMIT ?",
+          "%#{canonical_query}%", reference_class_name,
+          Enums::LookupType::STYLE, max_results])
+  end
   
   def set_product_from_params(note)
     product = nil

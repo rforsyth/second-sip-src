@@ -76,7 +76,14 @@ class ApiProductsController < ApiEntitiesController
     if products.count < max_results
       reference_products = match_reference_products_by_canonical_name(canonical_producer_name, canonical_query, max_results)
       if (products.count + reference_products.count) < max_results
-        lookups = match_reference_regions_and_varietals(canonical_query, max_results)
+        case @beverage_type
+        when :wine then
+          lookups = match_reference_regions_and_varietals(canonical_query, max_results)
+        when :beer then
+          lookups = match_reference_beer_styles(canonical_query, max_results)
+        when :spirits then
+          lookups = match_reference_spirit_styles(canonical_query, max_results)
+        end
       end
     end
     

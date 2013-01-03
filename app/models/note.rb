@@ -86,6 +86,17 @@ class Note < ActiveRecord::Base
     self.add_tag(name.tagify, owner || self.owner)
     self.looked << new_looked
   end
+  
+  def create_lookup_auto_tags(params, owner)
+    lookup_names = []
+    lookup_names << params[:style_name] if params[:style_name].present?
+    lookup_names << params[:region_name] if params[:region_name].present?
+    params[:varietal_names].each {|n| lookup_names << n} if params[:varietal_names].present?
+    params[:vineyard_names].each {|n| lookup_names << n} if params[:vineyard_names].present?
+    lookup_names.each do |lookup_name|
+      self.add_tag(lookup_name.tagify, owner || self.owner)
+    end
+  end
 
 	def api_copy(include_description = true)
 		copy = ApiNote.new

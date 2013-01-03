@@ -11,7 +11,7 @@ gem 'authlogic'
 # gem 'authlogic', :git => 'git://github.com/odorcicd/authlogic.git', :branch => 'rails3'
 gem 'cancan'
 gem "pg_search"
-gem "silent-postgres"
+# gem "silent-postgres"
 gem "nilify_blanks"
 gem "htmlentities"
 gem 'thin'
