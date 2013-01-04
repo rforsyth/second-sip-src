@@ -69,14 +69,26 @@ class ApiEntitiesController < ApiController
   def tag_autocomplete
     max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
     tagified_query = params[:query].try(:tagify)
-    tags = Tag.find_by_sql(
-      ["SELECT DISTINCT tags.* FROM tags 
-        INNER JOIN tagged ON tags.id = tagged.tag_id
-        WHERE tags.name LIKE ?
-          AND tags.entity_type = ?
-          AND tagged.owner_id = ?
-        LIMIT ?",
-        "%#{tagified_query}%", @current_entity_class.name, current_taster.id, max_results])
+    visibility = (params[:visibility].present?) ? params[:visibility].to_i : 10
+    if visibility == Enums::Visibility::PRIVATE
+      tags = Tag.find_by_sql(
+        ["SELECT DISTINCT tags.* FROM tags 
+          INNER JOIN tagged ON tags.id = tagged.tag_id
+          WHERE tags.name LIKE ?
+            AND tags.entity_type = ?
+            AND tagged.owner_id = ?
+          LIMIT ?",
+          "%#{tagified_query}%", @current_entity_class.name, current_taster.id, max_results])
+    else
+      # just remove the owner clause
+      tags = Tag.find_by_sql(
+        ["SELECT DISTINCT tags.* FROM tags 
+          INNER JOIN tagged ON tags.id = tagged.tag_id
+          WHERE tags.name LIKE ?
+            AND tags.entity_type = ?
+          LIMIT ?",
+          "%#{tagified_query}%", @current_entity_class.name, max_results])
+    end
         
     results = Api::QueryResults.new(:autocomplete_tag)
         

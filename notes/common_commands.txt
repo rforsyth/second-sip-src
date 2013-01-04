@@ -74,6 +74,9 @@ Heroku:
 
 $ git push unfuddle master
 - RSA pwd: very happy
+- seems to be the same as: $ git push origin master
+
+$ git tag -a 20130104_v1.00_before_app_store -m 'Before App Store submission'
 
 __________________________________________________________________
 Rake
