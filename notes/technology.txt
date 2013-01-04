@@ -8,6 +8,17 @@ Open Questions
 ** use polymorphic association for lookups or tags?
 
 
+
+__________________________________________________________________
+SSL
+
+passphrase for my self-signed cert: eu4ric
+- also the "challenge password"
+
+
+- description of how to set up self-signed cert:
+https://devcenter.heroku.com/articles/ssl-certificate-self
+
 __________________________________________________________________
 Authlogic
 

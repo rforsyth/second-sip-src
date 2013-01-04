@@ -86,6 +86,7 @@ __________________________________________________________________
 Heroku
 
 $ git push heroku-cedar cedar:master
+$ git push heroku-cedar master
 
 $ heroku maintenance:on --app second-sip-cedar
 
