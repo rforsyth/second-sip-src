@@ -88,6 +88,7 @@ SsRails::Application.routes.draw do
 
 	root :to => "home#index"
 	match '/about' => "home#about", :as => :about
+	match '/features' => "home#features", :as => :features
 	match '/contact' => "home#contact", :as => :contact
 	match '/terms' => "home#terms", :as => :terms
 	

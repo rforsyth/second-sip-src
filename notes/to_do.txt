@@ -1,9 +1,11 @@
 
 
-- deleted symlink to gcc-4.2 (sp?)
+<p>
+	Second Sip is currently a one-person operation.  That means that all of your emails
+	go directly to the person who can answer your question.  However, since one person cannot
+	monitor an inbox 24/7 it may take a little while for me to get back to you.
+</p>
 
-http://stackoverflow.com/questions/6935146/bundle-update-install-fail-after-os-x-lion-upgrade-rails-3
-sudo ln -s llvm-gcc-4.2 gcc-4.2
 
 
 
