@@ -18,6 +18,9 @@ Next Up
 
 - track down styles that are not showing resources
 
+- in ApiEntitiesController > tag_autocomplete
+  - support autocomplete for only friends' tags (avoid cruft of all users' tags)
+
 _____________________________________________________________
 Security
 
