@@ -47,10 +47,10 @@ class NotesController < ApplicationController
     @note = @note_class.new(params[@note_class.name.underscore])
     if !validate_producer_and_product_name
       initialize_new_note_form
-      return render :action => "notes/edit"
+      return render :template => "notes/edit"
     end
     if !set_product_from_params(@note)
-      return render :action => "notes/new"
+      return render :template => "notes/new"
     end
     @note.set_occasion(params[:occasion_name], current_taster)
     @note.create_lookup_auto_tags(params, current_taster)
@@ -61,7 +61,7 @@ class NotesController < ApplicationController
       redirect_to([@note.owner, @note], :notice => 'Note was successfully created.')
     else
       initialize_new_note_form
-      render :action => "notes/new"
+      render :template => "notes/new"
     end
   end
 
@@ -72,7 +72,8 @@ class NotesController < ApplicationController
 
   def update
     if !set_product_from_params(@note)
-      return render :action => "notes/edit"
+      @product = @note.product
+      return render :template => "notes/edit"
     end
     
     @note.set_occasion(params[:occasion_name], current_taster)
@@ -84,7 +85,7 @@ class NotesController < ApplicationController
       redirect_to([@note.owner, @note], :notice => 'Note was successfully updated.')
     else
       @product = @note.product
-      render :action => "notes/edit"
+      render :template => "notes/edit"
     end
   end
   

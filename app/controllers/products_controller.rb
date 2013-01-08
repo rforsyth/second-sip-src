@@ -100,7 +100,7 @@ class ProductsController < ApplicationController
       remember_visibility(@product)
       redirect_to([@product.owner, @product], :notice => 'Product was successfully created.')
     else
-      render :action => "products/new"
+      render :template => "products/new"
     end
   end
 
@@ -115,7 +115,7 @@ class ProductsController < ApplicationController
       remember_visibility(@product)
       redirect_to([@product.owner, @product], :notice => 'Product was successfully updated.')
     else
-      render :action => "products/edit"
+      render :template => "products/edit"
     end
   end
   

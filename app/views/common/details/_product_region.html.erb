@@ -1,5 +1,6 @@
 <%
   return if !product.region.present?
+  return if product.kind_of?(Beer)
 %>
 <div class="details_row">
   <span class="label"><%= (product.kind_of?(Beer) || product.kind_of?(ReferenceBeer)) ? 'Brewed In' : 'Region' %>:</span>

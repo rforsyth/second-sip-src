@@ -47,7 +47,7 @@ class ReferenceProductsController < ApplicationController
     if @product.save
       redirect_to(@product)
     else
-      render :action => "reference_products/new"
+      render :template => "reference_products/new"
     end
   end
 
@@ -60,7 +60,7 @@ class ReferenceProductsController < ApplicationController
     if @product.update_attributes(params[@reference_product_class.name.underscore])
       redirect_to(@product)
     else
-      render :action => "reference_products/edit"
+      render :template => "reference_products/edit"
     end
   end
 	

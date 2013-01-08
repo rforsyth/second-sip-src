@@ -70,7 +70,7 @@ class ProducersController < ApplicationController
       remember_visibility(@producer)
       redirect_to([@producer.owner, @producer], :notice => 'Producer was successfully created.')
     else
-      render :action => "producers/new"
+      render :template => "producers/new"
     end
   end
 
@@ -83,7 +83,7 @@ class ProducersController < ApplicationController
       remember_visibility(@producer)
       redirect_to([@producer.owner, @producer], :notice => 'Producer was successfully updated.')
     else
-      render :action => "producers/edit"
+      render :template => "producers/edit"
     end
   end
   

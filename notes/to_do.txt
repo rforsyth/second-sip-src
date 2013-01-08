@@ -1,35 +1,42 @@
 
-
-<p>
-	Second Sip is currently a one-person operation.  That means that all of your emails
-	go directly to the person who can answer your question.  However, since one person cannot
-	monitor an inbox 24/7 it may take a little while for me to get back to you.
-</p>
-
-
-
-
 _____________________________________________________________
 Next Up
 
-- bug: anonymous user accessing /tasters gets error
+- upgrade images (especially wine bottle)
 
-- refine resource display
-  - browser testing
-  - no scrollbars on sub-window
+- remove teeth from "Terms" page
 
-- track down styles that are not showing resources
+- review database calls for lack of scalability
+	- ex: call per element in a list (username)
 
-- in ApiEntitiesController > tag_autocomplete
-  - support autocomplete for only friends' tags (avoid cruft of all users' tags)
+
+- use SSL for login / register
+
+- add "About Us" page that includes fabulous self portrait
+
+- change names of deprecated "buy" tags
+  - and lookup names
+  - do this manually?
+    http://www.secondsip.com/tasters/Ryan/wine_notes?in%5B%5D=buy-special-occasion
+     - to: occasionally
+    http://www.secondsip.com/tasters/Ryan/wine_notes?in%5B%5D=buy-right-price
+     - to: on-sale
+	http://www.secondsip.com/tasters/Ryan/wine_notes?in%5B%5D=buy-right-season
+	 - to: seasonally
+
+
+- browser test the new homepage
 
 _____________________________________________________________
-Security
+Bugs
 
+- anonymous user accessing /tasters gets error
 
 
 _____________________________________________________________
 Performance
+
+- investigate taster username caching
 
 - do some database performance profiling?
 
@@ -64,8 +71,24 @@ Bugs
   
 - in IE8:
 
+
+_____________________________________________________________
+Someday / Maybe
+
+
+- track down styles that are not showing resources
+
+- refine resource display
+  - browser testing
+  - no scrollbars on sub-window
+
+
 _____________________________________________________________
 V2
+
+- autocomplete the usernames for friendship invitations
+
+- send invitation to non-user
 
 - in note form, when choose existing producer or product, change to link with x (to undo selection)
   and display text with region, varietals, etc...
@@ -78,8 +101,6 @@ V2
 - update casing of lookup if new version is different
 
 - invitations (enter email address of non-user)
-
-- support browsing via iphone
 
 - support blocking users
   - add approved field and set to false
@@ -97,9 +118,6 @@ V2
 - review sql injection security (search, autocomplete, etc...)
 
 - limit to 100 friendships
-
-- autocomplete the usernames for friendship invitations
-
 
 _____________________________________________________________
 Maintainability

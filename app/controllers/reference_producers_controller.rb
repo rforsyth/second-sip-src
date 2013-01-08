@@ -65,7 +65,7 @@ class ReferenceProducersController < ApplicationController
     if @producer.save
       redirect_to(@producer)
     else
-      render :action => "reference_producers/new"
+      render :template => "reference_producers/new"
     end
   end
 
@@ -78,7 +78,7 @@ class ReferenceProducersController < ApplicationController
     if @producer.update_attributes(params[@reference_producer_class.name.underscore])
       redirect_to(@producer) 
     else
-      render :action => "reference_producers/edit"
+      render :template => "reference_producers/edit"
     end
   end
 	

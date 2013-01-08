@@ -1,3 +1,14 @@
+<%
+  price_type_collection, default_price_type = case
+  when @note.kind_of?(BeerNote)
+    then [Enums::BeerPriceType.sorted_collection, Enums::BeerPriceType::SIX_PACK]
+  when @note.kind_of?(WineNote)
+    then [Enums::WinePriceType.sorted_collection, Enums::WinePriceType::BOTTLE]
+  when @note.kind_of?(SpiritNote)
+    then [Enums::SpiritPriceType.sorted_collection, Enums::SpiritPriceType::FIFTH]
+  end
+%>
+
 <%= form_for([@note.owner || current_taster, @note]) do |f| %>
 
   <%= render :partial => 'common/edit/errors', :locals => { :entity => @note,
@@ -10,6 +21,7 @@
                          :class => 'text_field text_wide', :autocomplete => 'off' %>
     <% else %>
       <%= link_to @product.producer.name, [@product.producer.owner, @product.producer] %>
+      <input type="hidden" name="producer_name" value="<%= @product.producer.name %>"/>
     <% end %>
   </div>
 
@@ -22,8 +34,16 @@
                          :class => 'text_field text_wide', :autocomplete => 'off' %>
     <% else %>
       <%= link_to @product.name, [@product.owner, @product] %>
+      <input type="hidden" name="product_name" value="<%= @product.name %>"/>
     <% end %>
   </div>
+	
+  <% if @note.kind_of?(WineNote) %>
+  <div class="form_row">
+    <%= f.label :vintage %>
+    <%= f.text_field :vintage, :class => 'text_field' %>
+  </div>
+  <% end %>
 
   <div id="product_details" style="display:none;">
     <%= render :partial => "products/product_lookups" %>
@@ -73,12 +93,10 @@
                                       'entity_type' => @note_class.name} } %>
 
   <div id="note_details" style="display:none;">
-    <% if @note.kind_of?(WineNote) %>
-    <div class="form_row">
-      <%= f.label :vintage %>
-      <%= f.text_field :vintage, :class => 'text_field' %>
-    </div>
-    <% end %>
+	
+    <%= render :partial => 'common/edit/price_field', :locals => {
+      :price_type_collection => price_type_collection,
+      :selected => @note.price_type || default_price_type } %>
 
     <div class="form_row">
       <%= f.label :tasted_at, "Tasted On: " %>
@@ -94,10 +112,10 @@
 
     <div class="form_row">
       <%= f.label :score, "Score: " %>
-      <%= f.select(:score_type, Enums::ScoreType.sorted_collection, 
-                           :class => 'select_field',
-                           :selected => selected_score_type(@note)) %>
-      <%= f.text_field :score, :class => 'text_field', :size => '8' %>
+      <%= f.hidden_field :score_type, :value => default_score_type(@note) %>
+      <%= f.select(:score, score_collection(@note),  
+                           :selected => @note.try(:score).try(:to_i), 
+                           :class => 'select_field') %>
     </div>
   </div>
 

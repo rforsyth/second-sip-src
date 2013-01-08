@@ -56,15 +56,23 @@ module ApplicationHelper
 		return url_for(page_params)
 	end
 	
-	def selected_score_type(note)
-	  return note.score_type if note.score_type.present?
+	def default_score_type(note)
+	  #return note.score_type if note.score_type.present?
 	  if note.kind_of?(BeerNote)
-	    return cookies[:beer_note_score_type] if cookies[:beer_note_score_type].present?
 	    return Enums::ScoreType::POINTS_50
 	  else
-	    return cookies[:wine_note_score_type] if cookies[:wine_note_score_type].present?
 	    return Enums::ScoreType::POINTS_100
 	  end
+  end
+  
+  def score_collection(note)
+    collection = { nil => nil }
+    score = note.kind_of?(BeerNote) ? 50 : 100
+    while score > 0
+      collection[score] = score
+      score = score - 1
+    end
+    collection
   end
   
   def resource_type_name(resource_type)

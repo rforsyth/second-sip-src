@@ -21,10 +21,10 @@ $(function() {
   				url: "<%= "#{entities_path}/autocomplete" %>",
   				data: {
   				  <% params.each_pair do |key, value| -%>
-  				    <%= "#{key}: '#{value}'," %>
+  				    <%= key -%>: '<%= value -%>',
   				  <% end -%>
   				  <% field_params.each_pair do |key, value| -%>
-  				    <%= "#{key}: $('##{value}').val()," %>
+  				    <%= key -%>: $('#<%= value -%>').val(),
   				  <% end -%>
   				  max_results: MAX_RESULTS,
   					query: request.term

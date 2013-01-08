@@ -1,0 +1,94 @@
+
+<table class="header" cellpadding=0 cellspacing=0><tr>
+<td>
+  <h1>Welcome to Second Sip</h1>
+  <p class="tagline">A free tool for organizing and sharing tasting notes.
+    &nbsp;&nbsp;  What&#39;re you drinking?</p>
+  <p class="directions">Use the search or browse features to read public notes, <br/>
+    <% if current_taster %>
+      or visit <%= link_to('your profile page', taster_path(current_taster)) %> to manage your own.
+    <% else %>
+      <%= link_to('sign in', :login) %>, or <%= link_to('create a profile', new_taster_path) %> to start writing.
+    <% end %>
+  </p>
+</td>
+</tr></table>
+
+
+<div class="home_pane">
+  <div class="header clearfix">
+    <%= image_tag 'beer_note_24px.png', :title => 'Beer', :class => 'beverage' %>
+    <h2>Beer</h2>
+    <%= render :partial => 'common/global/search',
+               :locals => { :search_path => search_products_path(:beers) } %>
+  </div>
+  <div class="tag_links left_column">
+    <h3>Styles</h3>
+    <%= render :partial => 'link_to_beverages_filtered_by_lookup',
+               :collection => @beer_style_names, :spacer_template => 'common/lists/home_link_spacer',
+               :locals => { :entities_path => Beer.name.tableize } %>
+  </div>
+  <div class="tag_links right_column">
+    <h3>Regions</h3>
+    <%= render :partial => 'link_to_beverages_filtered_by_lookup',
+               :collection => @beer_region_names, :spacer_template => 'common/lists/home_link_spacer',
+               :locals => { :entities_path => Beer.name.tableize } %>
+  </div>
+  <div class="footer">
+    Browse latest <%= link_to 'Beer Notes', browse_notes_path(:beer_notes) %>,
+                  <%= link_to 'Beers', browse_products_path(:beers) %>, or
+                  <%= link_to 'Breweries', browse_producers_path(:breweries) %>
+  </div>
+</div>
+
+<div class="home_pane">
+  <div class="header clearfix">
+    <%= image_tag 'wine_note_24px.png', :title => 'Wine', :class => 'beverage' %>
+    <h2>Wine</h2>
+    <%= render :partial => 'common/global/search',
+               :locals => { :search_path => search_products_path(:wines) } %>
+  </div>
+  <div class="tag_links left_column">
+    <h3>Varietals</h3>
+    <%= render :partial => 'link_to_beverages_filtered_by_lookup',
+               :collection => @wine_varietal_names, :spacer_template => 'common/lists/home_link_spacer',
+               :locals => { :entities_path => Wine.name.tableize } %>
+  </div>
+  <div class="tag_links right_column">
+    <h3>Regions</h3>
+    <%= render :partial => 'link_to_beverages_filtered_by_lookup',
+               :collection => @wine_region_names, :spacer_template => 'common/lists/home_link_spacer',
+               :locals => { :entities_path => Wine.name.tableize } %>
+  </div>
+  <div class="footer">
+    Browse latest <%= link_to 'Wine Notes', browse_notes_path(:wine_notes) %>,
+                  <%= link_to 'Wines', browse_products_path(:wines) %>, or
+                  <%= link_to 'Wineries', browse_producers_path(:wineries) %>
+  </div>
+</div>
+
+<div class="home_pane">
+  <div class="header clearfix">
+    <%= image_tag 'spirit_note_24px.png', :title => 'Spirits', :class => 'beverage' %>
+    <h2>Spirits</h2>
+    <%= render :partial => 'common/global/search',
+               :locals => { :search_path => search_products_path(:spirits) } %>
+  </div>
+  <div class="tag_links left_column">
+    <h3>Liquors / Liqueurs</h3>
+    <%= render :partial => 'link_to_beverages_filtered_by_lookup',
+               :collection => @spirit_style_names, :spacer_template => 'common/lists/home_link_spacer',
+               :locals => { :entities_path => Spirit.name.tableize } %>
+  </div>
+  <div class="tag_links right_column">
+    <h3>Regions</h3>
+    <%= render :partial => 'link_to_beverages_filtered_by_lookup',
+               :collection => @spirit_region_names, :spacer_template => 'common/lists/home_link_spacer',
+               :locals => { :entities_path => Spirit.name.tableize } %>
+  </div>
+  <div class="footer">
+    Browse latest <%= link_to 'Spirit Notes', browse_notes_path(:spirit_notes) %>,
+                  <%= link_to 'Spirits', browse_products_path(:spirits) %>, or
+                  <%= link_to 'Distilleries', browse_producers_path(:distilleries) %>
+  </div>
+</div>

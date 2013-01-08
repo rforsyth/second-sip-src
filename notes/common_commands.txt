@@ -78,6 +78,8 @@ $ git push unfuddle master
 
 $ git tag -a 20130104_v1.00_before_app_store -m 'Before App Store submission'
 
+git tag -a 20130104_v1.00_before_app_store_2 -m 'Before App Store submission (#2)'
+
 __________________________________________________________________
 Rake
 

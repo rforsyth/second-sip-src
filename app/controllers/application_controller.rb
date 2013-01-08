@@ -602,7 +602,6 @@ class ApplicationController < ActionController::Base
     end
     product.set_lookup_properties(params, current_taster, @producer_class)
     note.product = product
-    
     if !product.save
       return false
     end

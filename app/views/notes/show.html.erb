@@ -45,6 +45,16 @@
       <span class="content"><%= @note.occasion.name %></span>
     </div>
   <% end %>
+
+  <div class="details_right">
+    <% if @note.price_paid.present? %>
+      <div class="details_row">
+        <span class="label">Price:</span>
+        <span class="content"><%=number_to_currency @note.price_paid.pretty_print %></span>
+      </div>
+    <% end %>
+  </div>
+
 </div>
 
 <div class="details_right">
