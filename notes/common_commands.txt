@@ -90,8 +90,10 @@ $ bundle exec rake db:load_reference_varietals
 __________________________________________________________________
 Heroku
 
-$ git push heroku-cedar cedar:master
 $ git push heroku-cedar master
+
+- can use this to push a topic branch
+$ git push heroku-cedar cedar:master  
 
 $ heroku maintenance:on --app second-sip-cedar
 

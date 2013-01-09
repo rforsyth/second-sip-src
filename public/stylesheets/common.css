@@ -525,36 +525,36 @@ div.beverage_header {
 }
 body.breweries div.beverage_header,
 body.reference_breweries div.beverage_header {
-	background:transparent url(/images/brewery_24px.png) no-repeat 4px top;
+	background:transparent url(/images/brewery_keg_24px.png) no-repeat 4px top;
 }
 body.beers div.beverage_header,
 body.reference_beers div.beverage_header {
-	background:transparent url(/images/beer_24px.png) no-repeat 4px top;
+	background:transparent url(/images/beer_bottle_24px.png) no-repeat 4px top;
 }
 body.beer_notes div.beverage_header {
-	background:transparent url(/images/beer_note_24px.png) no-repeat 4px top;
+	background:transparent url(/images/beer_note_glass_24px.png) no-repeat 4px top;
 }
 body.wineries div.beverage_header,
 body.reference_wineries div.beverage_header {
-	background:transparent url(/images/winery_24px.png) no-repeat 4px top;
+	background:transparent url(/images/winery_barrel_24px.png) no-repeat 4px top;
 }
 body.wines div.beverage_header,
 body.reference_wines div.beverage_header {
-	background:transparent url(/images/wine_24px.png) no-repeat 4px top;
+	background:transparent url(/images/wine_bottle_24px.png) no-repeat 4px top;
 }
 body.wine_notes div.beverage_header {
-	background:transparent url(/images/wine_note_24px.png) no-repeat 4px top;
+	background:transparent url(/images/wine_note_glass_24px.png) no-repeat 4px top;
 }
 body.distilleries div.beverage_header,
 body.reference_distilleries div.beverage_header {
-	background:transparent url(/images/distillery_24px.png) no-repeat 4px top;
+	background:transparent url(/images/distillery_barrel_24px.png) no-repeat 4px top;
 }
 body.spirits div.beverage_header,
 body.reference_spirits div.beverage_header {
-	background:transparent url(/images/spirit_24px.png) no-repeat 4px top;
+	background:transparent url(/images/spirit_bottle_24px.png) no-repeat 4px top;
 }
 body.spirit_notes div.beverage_header {
-	background:transparent url(/images/spirit_note_24px.png) no-repeat 4px top;
+	background:transparent url(/images/spirit_note_glass_24px.png) no-repeat 4px top;
 }
 .rightpane_header h2,
 .content_header h1 {
