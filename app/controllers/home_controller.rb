@@ -2,12 +2,13 @@ class HomeController < ApplicationController
 	before_filter :initialize_home_tabs
   
   def index
-    @beer_style_names = find_homepage_lookup_names(Enums::LookupType::STYLE, Beer.name)
-    @beer_region_names = find_homepage_lookup_names(Enums::LookupType::REGION, Beer.name)
-    @wine_varietal_names = find_homepage_lookup_names(Enums::LookupType::VARIETAL, Wine.name)
-    @wine_region_names = find_homepage_lookup_names(Enums::LookupType::REGION, Wine.name)
-    @spirit_style_names = find_homepage_lookup_names(Enums::LookupType::STYLE, Spirit.name)
-    @spirit_region_names = find_homepage_lookup_names(Enums::LookupType::REGION, Spirit.name)
+    
+    # @beer_style_names = find_homepage_lookup_names(Enums::LookupType::STYLE, Beer.name)
+    # @beer_region_names = find_homepage_lookup_names(Enums::LookupType::REGION, Beer.name)
+    # @wine_varietal_names = find_homepage_lookup_names(Enums::LookupType::VARIETAL, Wine.name)
+    # @wine_region_names = find_homepage_lookup_names(Enums::LookupType::REGION, Wine.name)
+    # @spirit_style_names = find_homepage_lookup_names(Enums::LookupType::STYLE, Spirit.name)
+    # @spirit_region_names = find_homepage_lookup_names(Enums::LookupType::REGION, Spirit.name)
     
 		render :layout => 'single_column'
   end
