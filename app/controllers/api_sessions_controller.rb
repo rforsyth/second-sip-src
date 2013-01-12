@@ -5,10 +5,6 @@ class ApiSessionsController < ApiController
   end
 
   def create
-    
-    
-    puts "http://#{request.host}:#{request.port}#{request.fullpath}"
-    
     @taster_session = TasterSession.new(params[:taster_session])
     @taster_session.remember_me = true
     if @taster_session.save
