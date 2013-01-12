@@ -16,6 +16,8 @@ gem "nilify_blanks"
 gem "htmlentities"
 gem 'thin'
 gem 'newrelic_rpm'
+gem 'memcachier'
+gem 'dalli'
 
 # Use unicorn as the web server
 # gem 'unicorn'

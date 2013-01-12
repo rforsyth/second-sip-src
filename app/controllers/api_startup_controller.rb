@@ -4,10 +4,11 @@ require 'api/api_configuration'
 class ApiStartupController < ApiController
   
   def configuration
-    configuration = Api::ApiConfiguration.new('http', 0)
+    configuration = Api::ApiConfiguration.new('http', 1)
     #configuration.message_title = 'Got Yer Message'
     #configuration.message_detail = 'Hello Startup!'
     configuration.allow_access = 1
+    configuration.use_www_subdomain_for_ssl = 1
     render :json => configuration
   end
   

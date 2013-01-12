@@ -1,13 +1,15 @@
 
 
-
-
 __________________________________________________________________
 Open Questions
 
 ** use polymorphic association for lookups or tags?
 
 
+Caching
+
+- using "Rails.cache":
+	  Rails.cache.fetch(format_cache_key(model, object_id)) do
 
 __________________________________________________________________
 SSL
@@ -18,6 +20,10 @@ passphrase for my self-signed cert: eu4ric
 
 - description of how to set up self-signed cert:
 https://devcenter.heroku.com/articles/ssl-certificate-self
+
+- description of how to install godaddy cert on heroku:
+https://gist.github.com/552554
+http://jmtame.posterous.com/ssl-certificates-with-godaddy-and-heroku
 
 __________________________________________________________________
 Authlogic

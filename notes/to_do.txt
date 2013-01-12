@@ -3,7 +3,11 @@
 _____________________________________________________________
 Next Up
 
+- make homepage images smaller (80px?)
+
 - use SSL for login / register
+
+- from taster homepage, a click on beer / wine / spirits goes to the notes tab
 
 - add "About Us" page that includes fabulous self portrait
 

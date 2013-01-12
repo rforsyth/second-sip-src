@@ -7,13 +7,13 @@ SsRails::Application.routes.draw do
 	products_pattern = /beers|wines|spirits/
 	notes_pattern = /beer_notes|wine_notes|spirit_notes/
 
+  resources :api_sessions, :controller => 'api_sessions'
+
   constraints :subdomain => 'api' do
     
 	  match '/startup/configuration' => "api_startup#configuration", :as => :api_startup_configuration
 	  match '/startup/register' => "api_startup#register", :as => :api_register
 	  match '/startup/forgot_password' => "api_startup#forgot_password", :as => :api_forgot_password
-    
-    resources :api_sessions, :controller => 'api_sessions'
     
     resources :wineries, :controller => 'api_wineries' do
                 get 'search', :on => :collection
