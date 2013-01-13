@@ -1,5 +1,6 @@
 class TasterSessionsController < ApplicationController
 	before_filter :initialize_register_or_login_tabs, :only => [:new]
+	force_ssl :only => [:new, :create]
   
   def new
     @taster_session = TasterSession.new

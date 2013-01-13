@@ -9,12 +9,12 @@
   when :tasters then
     link_to('Tasters', tasters_path, :class => topnav_tab.css_class)
   when :beverage then
-    link_to("Community #{@product_class.name.titleize.pluralize}",
-            browse_products_path(@product_class.name.tableize), :class => topnav_tab.css_class)
+    link_to("Community Notes",
+            browse_notes_path(@note_class.name.tableize), :class => topnav_tab.css_class)
   when :taster then
     link_to(displayed_taster.username, taster_path(displayed_taster), :class => topnav_tab.css_class)
   when :my_notes then
-    link_to("My #{@product_class.name.titleize.pluralize}", polymorphic_path([current_taster, @product_class]), :class => topnav_tab.css_class)
+    link_to("My #{@note_class.name.titleize.pluralize}", polymorphic_path([current_taster, @note_class]), :class => topnav_tab.css_class)
   when :reference_producers then
     link_to('Producers', reference_breweries_path, :class => topnav_tab.css_class)
   when :reference_products then

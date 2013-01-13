@@ -3,21 +3,7 @@
 _____________________________________________________________
 Next Up
 
-- make homepage images smaller (80px?)
-
 - use SSL for login / register
-
-- from taster homepage, a click on beer / wine / spirits goes to the notes tab
-
-- add "About Us" page that includes fabulous self portrait
-
-- change names of deprecated "buy" tags
-  - do this manually?
-    http://www.secondsip.com/tasters/Ryan/wine_notes?in%5B%5D=buy-right-price
-     - to: on-sale
-	http://www.secondsip.com/tasters/Ryan/wine_notes?in%5B%5D=buy-right-season
-	 - to: seasonally
-	
 
 
 _____________________________________________________________

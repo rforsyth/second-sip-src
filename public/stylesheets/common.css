@@ -308,7 +308,7 @@ img.homepage_grapes {
 }
 
 .home table.beverages {
-	width: 85%;
+	width: 65%;
 	margin: 10px auto 0;
 }
 .home div.beverage {
@@ -333,7 +333,7 @@ img.homepage_grapes {
   background: #E1F3FF;
 }
 .home p.directions {
-	font-size: 18px;
+	font-size: 16px;
 	text-align: center;
 	margin: 15px 0 50px;
 }
@@ -484,10 +484,10 @@ div.narrative h1 {
     text-decoration: underline;
 }
 div.narrative h2 {
-    margin-top: 15px;
+    margin: 15px 0 0 15px;
 }
 div.narrative p {
-    margin: 10px;
+    margin: 10px 20px;
 }
 div.narrative p.top_intro {
   line-height: 1.4em;
@@ -496,8 +496,7 @@ div.narrative p.top_intro {
 }
 div.narrative ul {
   list-style:disc; 
-  margin-top: 10px;
-  margin-left: 0;
+  margin: 10px 20px;
   padding-left: 15px;
 }
 div.narrative ul li p {
@@ -508,6 +507,10 @@ div.narrative ul li span {
 }
 div.contact_body {
     margin: 0 50px;
+}
+div.contact_body p {
+	font-size: 14px;
+	line-height: 150%;
 }
 
 /********************************************************

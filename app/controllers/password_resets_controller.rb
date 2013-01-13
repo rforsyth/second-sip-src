@@ -2,6 +2,7 @@ class PasswordResetsController < ApplicationController
   before_filter :load_taster_using_perishable_token, :only => [:edit, :update]
   before_filter :require_no_taster
 	before_filter :initialize_register_or_login_tabs
+	force_ssl :only => [:update]
 
   def new   
   end  
