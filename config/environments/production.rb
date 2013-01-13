@@ -1,13 +1,6 @@
 SsRails::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # this allows users to log in via the "www" subdomain, then be logged in on "api" subdomain
-  if config.action_controller.session
-    config.action_controller.session[:domain] = '.secondsip.com'
-  else
-    config.action_controller.session = { :domain => '.secondsip.com' }
-  end
-
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true

@@ -1,8 +1,19 @@
 
+in application.rb:
+
+  # this allows users to log in via the "www" subdomain, then be logged in on "api" subdomain
+  if config.action_controller.session
+    config.action_controller.session[:domain] = '.secondsip.com'
+  else
+    config.action_controller.session = {:session_domain => 'example.com'}
+    config.action_controller.session = { :domain => '.secondsip.com' }
+  end
+
 
 _____________________________________________________________
 Next Up
 
+DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/1/4/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
 
 _____________________________________________________________
 Bugs
