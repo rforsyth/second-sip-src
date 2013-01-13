@@ -7,6 +7,31 @@ class ApiEntitiesController < ApiController
   API_MAX_ENTITY_RESULTS = 100
   
   def index
+    entities = browse_helper
+    render :json => serialize_beverage_list(entities)
+  end
+  
+  def search
+    if params[:query] == nil || !params[:query].present?
+      entities = browse_helper
+    else
+      visibility = (params[:visibility].present?) ? params[:visibility].to_i : 10
+      case visibility
+      when Enums::Visibility::PRIVATE then
+        entities = search_beverage_by_owner(@current_entity_class, params[:query],
+                                              current_taster, current_taster)
+      when Enums::Visibility::FRIENDS then
+        entities = search_friends_beverage(@current_entity_class, params[:query],
+                                              current_taster)
+      when Enums::Visibility::PUBLIC then
+        entities = search_global_beverage(@current_entity_class, params[:query],
+                                              current_taster)
+      end
+    end
+    render :json => serialize_beverage_list(entities)
+  end
+  
+  def browse_helper
     max_results = params[:max_results].try(:to_i) || API_MAX_ENTITY_RESULTS;
     visibility = (params[:visibility].present?) ? params[:visibility].to_i : 10
     case visibility
@@ -22,24 +47,7 @@ class ApiEntitiesController < ApiController
       entities = find_global_beverage_by_tags(@current_entity_class, 
                     current_taster, params[:in], params[:ain], true, max_results, false)
     end            
-    beverage_list = serialize_beverage_list(entities)
-    render :json => beverage_list
-  end
-  
-  def search
-    visibility = (params[:visibility].present?) ? params[:visibility].to_i : 10
-    case visibility
-    when Enums::Visibility::PRIVATE then
-      entities = search_beverage_by_owner(@current_entity_class, params[:query],
-                                            current_taster, current_taster)
-    when Enums::Visibility::FRIENDS then
-      entities = search_friends_beverage(@current_entity_class, params[:query],
-                                            current_taster)
-    when Enums::Visibility::PUBLIC then
-      entities = search_global_beverage(@current_entity_class, params[:query],
-                                            current_taster)
-    end
-    render :json => serialize_beverage_list(entities)
+    entities
   end
   
   def common_tags
