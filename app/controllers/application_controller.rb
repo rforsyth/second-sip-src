@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   include Data::CacheHelper
   include ExceptionLogger::ExceptionLoggable
   
+  before_filter :print_full_url
+  
   protect_from_forgery
   
   BEVERAGE_PAGE_SIZE = 20
@@ -25,6 +27,10 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError, :with => :render_not_found
     rescue_from ActionController::UnknownController, :with => :render_not_found
     rescue_from ActionController::UnknownAction, :with => :render_not_found
+  end
+  
+  def print_full_url
+    puts "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
   end
   
   def render_not_found(exception)
