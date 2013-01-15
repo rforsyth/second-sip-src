@@ -8,7 +8,7 @@ module Api
     def initialize(supports_ssl)
       @supports_ssl = supports_ssl
       @allow_access = 1
-      @use_api_subdomain = 1
+      @use_api_subdomain = 0
     end
   end
 	

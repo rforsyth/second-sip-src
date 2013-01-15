@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   include Data::CacheHelper
   include ExceptionLogger::ExceptionLoggable
   
-  before_filter :print_full_url
+  # turn this on if you want to troubleshoot the URL being requested
+  #before_filter :print_full_url
   
   protect_from_forgery
   
