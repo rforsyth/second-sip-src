@@ -317,11 +317,17 @@ class ApplicationController < ActionController::Base
                   Enums::Visibility::PUBLIC, Enums::Visibility::FRIENDS, friend_ids,
                   Enums::Visibility::PRIVATE, viewer.id
                   ).limit(MAX_BEVERAGE_RESULTS)
-    else
+    elsif viewer.present?
       results = model.search(query).where(
                   "visibility >= ? OR (visibility >= ? AND owner_id = ?)",
                   Enums::Visibility::PUBLIC, Enums::Visibility::PRIVATE, viewer.id
                   ).limit(MAX_BEVERAGE_RESULTS)
+    else
+      results = model.search(query).where(
+                  "visibility >= ?",
+                  Enums::Visibility::PUBLIC
+                  ).limit(MAX_BEVERAGE_RESULTS)
+      
     end
     page_beverage_results(results)
   end

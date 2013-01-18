@@ -1,14 +1,31 @@
 
-in application.rb:
+- search failed when not logged in:
 
-  # this allows users to log in via the "www" subdomain, then be logged in on "api" subdomain
-  if config.action_controller.session
-    config.action_controller.session[:domain] = '.secondsip.com'
-  else
-    config.action_controller.session = {:session_domain => 'example.com'}
-    config.action_controller.session = { :domain => '.secondsip.com' }
-  end
 
+Created: 2013-01-18 15:11:09 UTC
+Message: "undefined method `id' for nil:NilClass"
+Request:
+* URL: http://www.secondsip.com/wine_notes/search?query=torre 
+* Format: text/html 
+* Parameters: {"query"=>"torre", "controller"=>"global_notes", "action"=>"search", "entity_type"=>"wine_notes"} 
+* Rails Root: /app
+Backtrace:
+[Rails.root.to_s]/app/controllers/application_controller.rb:323:in `search_global_beverage' 
+[Rails.root.to_s]/app/controllers/global_notes_controller.rb:12:in `search' 
+
+
+
+_____________________________________________________________
+Autoscaling
+
+- article about autoscaling script:
+  http://engineering.viki.com/2011/08/10/autoscaling-heroku-dynos/
+
+- use scheduler to run script?
+   https://devcenter.heroku.com/articles/scheduler
+
+- newrelic link:
+  https://heroku.newrelic.com/accounts/237714/applications/1193232
 
 _____________________________________________________________
 Next Up
