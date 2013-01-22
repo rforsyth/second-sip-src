@@ -14,9 +14,11 @@ Backtrace:
 [Rails.root.to_s]/app/controllers/global_notes_controller.rb:12:in `search' 
 
 
-- old procfile entry:
+- to switch web servers:
 
 web: bundle exec thin start -p $PORT -e $RACK_ENV
+
+web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
 
 _____________________________________________________________
 Autoscaling
