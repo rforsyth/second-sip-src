@@ -14,6 +14,9 @@ Backtrace:
 [Rails.root.to_s]/app/controllers/global_notes_controller.rb:12:in `search' 
 
 
+- old procfile entry:
+
+web: bundle exec thin start -p $PORT -e $RACK_ENV
 
 _____________________________________________________________
 Autoscaling
@@ -26,6 +29,10 @@ Autoscaling
 
 - newrelic link:
   https://heroku.newrelic.com/accounts/237714/applications/1193232
+
+- upgrade to unicorn?
+  http://neilmiddleton.com/getting-more-from-your-heroku-dynos/
+  http://stackoverflow.com/questions/9792290/on-heroku-cedar-should-i-use-thin-or-unicorn
 
 _____________________________________________________________
 Next Up
