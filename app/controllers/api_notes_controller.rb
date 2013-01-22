@@ -5,6 +5,8 @@ class ApiNotesController < ApiEntitiesController
   
 
   def show
+    # used this to test timeouts
+    # sleep(60)
     note = @note_class.find(params[:id])
     if (test_visibility(note, current_taster))
       render :json => build_full_api_note(note)
