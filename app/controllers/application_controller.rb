@@ -659,7 +659,8 @@ class ApplicationController < ActionController::Base
       clause << " OR #{model.table_name}.owner_id = #{viewer.id} "
       friend_ids = collect_friend_ids(viewer)
       if friend_ids.present?
-        clause << " OR (#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}
+        clause << " OR ((#{model.table_name}.visibility = #{Enums::Visibility::FRIENDS}
+                        OR #{model.table_name}.visibility = #{Enums::Visibility::PUBLIC})
                    AND #{model.table_name}.owner_id IN (#{friend_ids.join(',')})) "
       end
     end

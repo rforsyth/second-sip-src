@@ -115,5 +115,7 @@ $ heroku pg:info
 $ heroku pgbackups:capture
 $ curl -o latest.dump `heroku pgbackups:url`
 $ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U ss_rails -d ss_rails_production latest.dump
-  - needed to log in via Navigate before this worked?
+
+
+
 

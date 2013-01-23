@@ -44,6 +44,9 @@ DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support
 _____________________________________________________________
 Bugs
 
+* home tab is covered up when viewing other tasters' page:
+  http://www.secondsip.com/tasters/YeastWhisperer/beers/iciclebrewingcompany-lokallager
+
 - anonymous user accessing /tasters gets error
 
 
