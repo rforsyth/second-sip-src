@@ -1,4 +1,32 @@
 
+** edit profile fails - asks for password
+
+
+
+- can I edit my own profile?
+- edit other users' profile as admin
+- escape any html (why didn't this work??)
+- implement banned feature - send any banned user to an error page
+  - make sure when set banned flag the cached user is flushed
+- implement blacklist of email address domains
+
+- verify that no other records were created by the hacker
+
+- put link back to homepage in email registration page (and created password page?)
+
+
+JSgbRO  <a href="http://someurl.com/">hacked link</a>, [url=http://someurl.com/]someurl[/url], [link=http://someurl.com/]someurl[/link], http://someurl.com/
+
+
+_____________________________________________________________
+
+JSgbRO  <a href="http://ctkapckwnmit.com/">ctkapckwnmit</a>, [url=http://ppybrshzgqtd.com/]ppybrshzgqtd[/url], [link=http://bpflxvjijxky.com/]bpflxvjijxky[/link], http://mdpbmccoztsd.com/
+
+
+
+_____________________________________________________________
+
+
 - search failed when not logged in:
 
 

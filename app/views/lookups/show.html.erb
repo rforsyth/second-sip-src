@@ -2,7 +2,7 @@
 
 <% if @lookup.description -%>
   <div class="details_row details_separator"><span class="details_label"> Description: </span>
-  <div class="details_field"><%= simple_format(h(@lookup.description)) %> </div></div>
+  <div class="details_field"><%= format_ugc(@lookup.description) %> </div></div>
 <% end %>
 
 <%= link_to 'Edit', edit_lookup_path(@lookup) %>

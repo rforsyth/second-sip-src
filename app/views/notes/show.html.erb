@@ -96,24 +96,24 @@
   <div class="details_notes">
     <% if @note.description_aroma.present? -%>
       <div class="details_row"><span class="label">Aroma:</span>
-        <span class="content"><%= simple_format(@note.description_aroma) %> </span></div>
+        <span class="content"><%= format_ugc(@note.description_aroma) %> </span></div>
     <% end %>
     <% if @note.description_appearance.present? -%>
       <div class="details_row"><span class="label">Appearance:</span>
-        <span class="content"><%= simple_format(@note.description_appearance) %> </span></div>
+        <span class="content"><%= format_ugc(@note.description_appearance) %> </span></div>
     <% end %>
     <% if @note.description_flavor.present? -%>
       <div class="details_row"><span class="label">Flavor:</span>
-        <span class="content"><%= simple_format(@note.description_flavor) %> </span></div>
+        <span class="content"><%= format_ugc(@note.description_flavor) %> </span></div>
     <% end %>
     <% if @note.description_mouthfeel.present? -%>
       <div class="details_row"><span class="label">Mouthfeel:</span>
-        <span class="content"><%= simple_format(@note.description_mouthfeel) %> </span></div>
+        <span class="content"><%= format_ugc(@note.description_mouthfeel) %> </span></div>
     <% end %>
     <% if @note.description_overall.present? -%>
       <div class="details_row">
         <span class="label"><%= have_itemized_notes ? 'Summary' : 'Notes' %>:</span>
-        <span class="content"><%= simple_format(@note.description_overall) %> </span></div>
+        <span class="content"><%= format_ugc(@note.description_overall) %> </span></div>
     <% end %>
   </div>
 <% end %>

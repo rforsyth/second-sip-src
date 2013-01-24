@@ -21,7 +21,7 @@
 <% content_for :right do %>
 
   <div class="right_directions profile_header clearfix">
-    <div class="prose_container"><%= simple_format displayed_taster.greeting %></div>
+    <div class="prose_container"><%= format_ugc displayed_taster.greeting %></div>
     <% if viewing_own_data? %>
       <%= render :partial => 'common/lists/list_actions',
                  :locals => { :edit_path => edit_taster_path(current_taster) } %>

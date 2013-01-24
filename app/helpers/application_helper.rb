@@ -3,6 +3,10 @@ module ApplicationHelper
 	def viewing_own_data?
 		return displayed_taster.present? && (displayed_taster == current_taster)
 	end
+	
+	def format_ugc(content)
+	  simple_format(h(content))
+  end
   
 	def allow_edit?(object)
 		return object.owner == current_taster

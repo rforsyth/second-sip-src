@@ -3,7 +3,7 @@
 <div class="invitation prose_container">
   <p><%= link_to(@friendship.inviter.username, @friendship.inviter) %>
     says:</p>
-  <%= simple_format @friendship.invitation %>
+  <%= format_ugc @friendship.invitation %>
 </div>
 
 <%= form_for(@friendship) do |f| %>
