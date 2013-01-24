@@ -3,19 +3,15 @@
 
 
 
-- can I edit my own profile?
-- edit other users' profile as admin
-- escape any html (why didn't this work??)
+- edit profile that does not have a valid password (does authlogic let me do this?)
+
 - implement banned feature - send any banned user to an error page
   - make sure when set banned flag the cached user is flushed
-- implement blacklist of email address domains
 
 - verify that no other records were created by the hacker
 
 - put link back to homepage in email registration page (and created password page?)
 
-
-JSgbRO  <a href="http://someurl.com/">hacked link</a>, [url=http://someurl.com/]someurl[/url], [link=http://someurl.com/]someurl[/link], http://someurl.com/
 
 
 _____________________________________________________________

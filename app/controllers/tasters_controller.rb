@@ -79,10 +79,18 @@ class TastersController < ApplicationController
     if current_taster.is?(:admin)
       @taster.roles = params[:taster][:roles]
     end
-    if @taster.save
-      redirect_to(@taster, :notice => 'Taster was successfully updated.')
+    if current_taster.is?(:admin) && (current_taster.id != @taster.id)
+      if @taster.save_without_validating_password
+        redirect_to(@taster, :notice => 'Taster was successfully updated.')
+      else
+        render :action => "edit"
+      end
     else
-      render :action => "edit"
+      if @taster.save
+        redirect_to(@taster, :notice => 'Taster was successfully updated.')
+      else
+        render :action => "edit"
+      end
     end
   end
   

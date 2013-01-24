@@ -34,6 +34,7 @@ class Taster < ActiveRecord::Base
   
   # we need to make sure a password gets set when the user activates their account
   def has_no_credentials?
+    return false if @disable_password_validation
     self.crypted_password.blank?
   end
   
@@ -75,6 +76,12 @@ class Taster < ActiveRecord::Base
   
   ############################################
   ## Account Management
+  
+  # supports logging in via either username or email address
+  def save_without_validating_password
+    @disable_password_validation = true
+    save
+  end
   
   # supports logging in via either username or email address
   def self.find_by_username_or_email(login)
