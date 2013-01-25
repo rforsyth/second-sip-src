@@ -49,10 +49,6 @@ class ApiProductsController < ApiEntitiesController
   end
 
   def update
-    
-    # still troubleshooting the timeout error
-    sleep(65)
-    
     product = find_product_by_canonical_name_or_id(current_taster, params[:id])
     # have to update tags before setting lookups, because the function
     # would remove the auto-tag
