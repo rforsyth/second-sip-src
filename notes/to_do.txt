@@ -1,9 +1,5 @@
 
-** edit profile fails - asks for password
 
-
-
-- edit profile that does not have a valid password (does authlogic let me do this?)
 
 - implement banned feature - send any banned user to an error page
   - make sure when set banned flag the cached user is flushed

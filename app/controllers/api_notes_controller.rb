@@ -17,6 +17,9 @@ class ApiNotesController < ApiEntitiesController
   end
   
   def create
+    # used this to test timeouts
+    sleep(10)
+    
     note = @note_class.new(params['note'])
     if !set_product_from_params(note)
       return render_data_validation_json_error(:create, note.product)
