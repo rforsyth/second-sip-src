@@ -1,43 +1,17 @@
 
 
-
-- implement banned feature - send any banned user to an error page
-  - make sure when set banned flag the cached user is flushed
-
-- verify that no other records were created by the hacker
-
-- put link back to homepage in email registration page (and created password page?)
-
-
-
-_____________________________________________________________
-
-JSgbRO  <a href="http://ctkapckwnmit.com/">ctkapckwnmit</a>, [url=http://ppybrshzgqtd.com/]ppybrshzgqtd[/url], [link=http://bpflxvjijxky.com/]bpflxvjijxky[/link], http://mdpbmccoztsd.com/
-
-
-
 _____________________________________________________________
 
 
-- search failed when not logged in:
+- spec tests are broken - the registration / password ones
+  - verified that features work, so it's the tests
+  - maybe because of new version of Authlogic?
 
 
-Created: 2013-01-18 15:11:09 UTC
-Message: "undefined method `id' for nil:NilClass"
-Request:
-* URL: http://www.secondsip.com/wine_notes/search?query=torre 
-* Format: text/html 
-* Parameters: {"query"=>"torre", "controller"=>"global_notes", "action"=>"search", "entity_type"=>"wine_notes"} 
-* Rails Root: /app
-Backtrace:
-[Rails.root.to_s]/app/controllers/application_controller.rb:323:in `search_global_beverage' 
-[Rails.root.to_s]/app/controllers/global_notes_controller.rb:12:in `search' 
-
-
+_____________________________________________________________
 - to switch web servers:
 
 web: bundle exec thin start -p $PORT -e $RACK_ENV
-
 web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
 
 _____________________________________________________________
@@ -159,4 +133,10 @@ Maintainability
 
 - remove any unused partials
 
+
+_____________________________________________________________
+Archive
+
+
+JSgbRO  <a href="http://ctkapckwnmit.com/">ctkapckwnmit</a>, [url=http://ppybrshzgqtd.com/]ppybrshzgqtd[/url], [link=http://bpflxvjijxky.com/]bpflxvjijxky[/link], http://mdpbmccoztsd.com/
 

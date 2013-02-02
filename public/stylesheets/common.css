@@ -512,6 +512,10 @@ div.contact_body p {
 	font-size: 14px;
 	line-height: 150%;
 }
+div.ios_badge_container img {
+	display: block;
+	margin: 30px auto 0;
+}
 
 /********************************************************
 ********** Lists

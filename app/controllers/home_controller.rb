@@ -16,6 +16,10 @@ class HomeController < ApplicationController
   def about
 		render :layout => 'single_column'
   end
+  
+  def ios_app
+		render :layout => 'single_column'
+  end
 
   def features
 		render :layout => 'single_column'

@@ -38,7 +38,7 @@ class ReferenceProducersController < ApplicationController
       ["SELECT DISTINCT reference_products.* FROM reference_products
         INNER JOIN reference_producers ON reference_products.reference_producer_id = reference_producers.id
         WHERE reference_producers.id = ?
-        ORDER BY created_at DESC
+        ORDER BY updated_at DESC
         LIMIT ?",
         @producer.id, MAX_BEVERAGE_RESULTS])
     @products = page_beverage_results(results)

@@ -28,7 +28,7 @@ class TastersController < ApplicationController
         ["SELECT * FROM notes
           WHERE notes.owner_id = ?
             AND #{known_owner_visibility_clause(Note, @taster, current_taster)}
-          ORDER BY created_at DESC
+          ORDER BY updated_at DESC
           LIMIT ?",
           @taster.id, MAX_BEVERAGE_RESULTS])
     @notes = page_beverage_results(results)

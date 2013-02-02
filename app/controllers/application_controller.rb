@@ -342,7 +342,7 @@ class ApplicationController < ActionController::Base
           AND #{model.table_name}.type = '#{model.name}'
           AND tags.name = ?
           AND #{known_owner_visibility_clause(model, owner, viewer)}"
-      summary = "ORDER BY created_at DESC
+      summary = "ORDER BY updated_at DESC
         LIMIT #{max_results}"
         
       query = format_tag_intersection_query(query, summary, user_tags)
@@ -365,7 +365,7 @@ class ApplicationController < ActionController::Base
           AND admin_tags.name = ?
           AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
           AND #{known_owner_visibility_clause(model, owner, viewer)}"
-      summary = "ORDER BY created_at DESC
+      summary = "ORDER BY updated_at DESC
         LIMIT #{max_results}"
         
       query = format_tag_intersection_query(query, summary, admin_tags)
@@ -377,7 +377,7 @@ class ApplicationController < ActionController::Base
           WHERE #{model.table_name}.owner_id = ?
             AND #{model.table_name}.type = ?
             AND #{known_owner_visibility_clause(model, owner, viewer)}
-          ORDER BY created_at DESC
+          ORDER BY updated_at DESC
           LIMIT ?",
           owner.id, model.name, max_results])
     end
@@ -393,7 +393,7 @@ class ApplicationController < ActionController::Base
         WHERE #{model.table_name}.type = '#{model.name}'
           AND tags.name = ?
           AND #{global_visibility_clause(model, viewer, include_public)}"
-      summary = "ORDER BY created_at DESC
+      summary = "ORDER BY updated_at DESC
         LIMIT #{max_results}"
       query = format_tag_intersection_query(query, summary, user_tags)
       results = model.find_by_sql([query, user_tags].flatten)
@@ -412,7 +412,7 @@ class ApplicationController < ActionController::Base
           AND admin_tags.name = ?
           AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
           AND #{global_visibility_clause(model, viewer, include_public)}"
-      summary = "ORDER BY created_at DESC
+      summary = "ORDER BY updated_at DESC
         LIMIT #{max_results}"
       query = format_tag_intersection_query(query, summary, admin_tags)
       results = model.find_by_sql([query, admin_tags].flatten)
@@ -421,7 +421,7 @@ class ApplicationController < ActionController::Base
         ["SELECT DISTINCT #{model.table_name}.* FROM #{model.table_name}
           WHERE #{model.table_name}.type = ?
             AND #{global_visibility_clause(model, viewer, include_public)}
-          ORDER BY created_at DESC
+          ORDER BY updated_at DESC
           LIMIT ?",
           model.name, max_results])
     end
@@ -436,7 +436,7 @@ class ApplicationController < ActionController::Base
         WHERE #{model.table_name}.type = '#{model.name}'
           AND admin_tagged.admin_taggable_type = '#{model.superclass.name}'
           AND admin_tags.name = ?"
-      summary = "ORDER BY created_at DESC
+      summary = "ORDER BY updated_at DESC
         LIMIT #{MAX_BEVERAGE_RESULTS}"
       query = format_tag_intersection_query(query, summary, admin_tags)
       results = model.find_by_sql([query, admin_tags].flatten)
@@ -453,12 +453,12 @@ class ApplicationController < ActionController::Base
         INNER JOIN admin_tags ON admin_tagged.admin_tag_id = admin_tags.id
         WHERE admin_tags.name = ?
           AND admin_tagged.admin_taggable_type = '#{model.name}'"
-      summary = "ORDER BY created_at DESC
+      summary = "ORDER BY updated_at DESC
         LIMIT #{MAX_BEVERAGE_RESULTS}"
       query = format_tag_intersection_query(query, summary, admin_tags)
       results = model.find_by_sql([query, admin_tags].flatten)
     else
-      results = model.limit(MAX_BEVERAGE_RESULTS)
+      results = model.limit(MAX_BEVERAGE_RESULTS).order('updated_at')
     end
     page_beverage_results(results)
   end
@@ -525,7 +525,7 @@ class ApplicationController < ActionController::Base
         INNER JOIN producers ON products.producer_id = producers.id
         WHERE producers.id = ?
           AND #{known_owner_visibility_clause(@note_class, producer.owner, current_taster)}
-        ORDER BY created_at DESC
+        ORDER BY updated_at DESC
         LIMIT ?",
         producer.id, max_results])
   end
@@ -536,7 +536,7 @@ class ApplicationController < ActionController::Base
         INNER JOIN producers ON products.producer_id = producers.id
         WHERE producers.id = ?
           AND #{known_owner_visibility_clause(@product_class, producer.owner, current_taster)}
-        ORDER BY created_at DESC
+        ORDER BY updated_at DESC
         LIMIT ?",
         producer.id, max_results])
   end
@@ -547,7 +547,7 @@ class ApplicationController < ActionController::Base
         INNER JOIN products ON notes.product_id = products.id
         WHERE products.id = ?
           AND #{known_owner_visibility_clause(@note_class, product.owner, current_taster)}
-        ORDER BY created_at DESC
+        ORDER BY updated_at DESC
         LIMIT ?",
         product.id, max_results])
   end

@@ -91,6 +91,7 @@ SsRails::Application.routes.draw do
 	match '/features' => "home#features", :as => :features
 	match '/contact' => "home#contact", :as => :contact
 	match '/terms' => "home#terms", :as => :terms
+	match '/ios_app' => "home#ios_app", :as => :ios_app
 	
 	match '/monitor' => "monitor#index", :as => :monitor
 	match '/monitor/exceptions/:id' => "monitor#exception", :as => :exception
