@@ -107,6 +107,11 @@ class ProducersController < ApplicationController
 	
 	def find_producer
     @producer = find_producer_by_canonical_name_or_id(displayed_taster, params[:id])
+    if !@producer.present?
+      flash[:notice] = "Unable to find that #{@producer_class.name} in our database" 
+      render :template => 'errors/message', :layout => 'single_column', :status => 404
+      return false
+    end
   end
   
   def set_tag_container

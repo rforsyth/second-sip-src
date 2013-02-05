@@ -139,6 +139,11 @@ class ProductsController < ApplicationController
   
   def find_product
     @product = find_product_by_canonical_name_or_id(displayed_taster, params[:id])
+    if !@product.present?
+      flash[:notice] = "Unable to find that #{@product_class.name} in our database" 
+      render :template => 'errors/message', :layout => 'single_column', :status => 404
+      return false
+    end
   end
   
   def set_tag_container

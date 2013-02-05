@@ -11,6 +11,11 @@ module ApplicationHelper
 	def allow_edit?(object)
 		return object.owner == current_taster
 	end
+	
+	def user_agent_is_iphone
+	  return false if !request.user_agent.present?
+	  request.user_agent.include?("iPhone")
+  end
 
 	def format_note_title(note)
 		title = "#{note.producer_name} #{note.product_name}"
