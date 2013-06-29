@@ -458,7 +458,7 @@ class ApplicationController < ActionController::Base
       query = format_tag_intersection_query(query, summary, admin_tags)
       results = model.find_by_sql([query, admin_tags].flatten)
     else
-      results = model.limit(MAX_BEVERAGE_RESULTS).order('updated_at')
+      results = model.limit(MAX_BEVERAGE_RESULTS).order('updated_at desc')
     end
     page_beverage_results(results)
   end

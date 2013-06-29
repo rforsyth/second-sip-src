@@ -1,7 +1,7 @@
 class Tag < ActiveRecord::Base
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
-	has_many :taggeds
+	has_many :taggeds, :dependent => :destroy
   nilify_blanks
 	
   before_validation :tagify_name

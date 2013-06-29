@@ -1,4 +1,3 @@
-
 <%= render :partial => 'common/global/content_header',
            :locals => { :title => @taster.username } %>
 
@@ -19,12 +18,20 @@
   </div>
 </div>
 
-<%= render :partial => 'common/edit/edit_actions',
-           :locals => { :edit_path => edit_taster_path(@taster),
-                        :delete_path => delete_taster_path(@taster) } %>
+<table class="associations">
+  <tr><th>Association</th><th>Count</th></tr>
+  <% @associated_records.each do |key, value| %>
+  	<tr><td><%= key %></td><td><%= value %></td></tr>
+  <% end %>
+</table>
 
-<% content_for :right do %>
-  <%= render :partial => 'common/edit/edit_admin_tags', :object => @taster.admin_tags,
-             :locals => { :tag_container => @taster,
-                          :entity_path => taster_path(@taster) } %>
-<% end %>
+
+<div class="intro simple_intro">
+<p>Click to permanently delete this Taster and all of their associated data:
+  <br/><br/><b><%= @taster.username %></b></p>
+<%= button_to "Delete", taster_path(@taster), :method => 'delete' %>
+</div>
+<br/><br/><br/><br/>
+
+
+

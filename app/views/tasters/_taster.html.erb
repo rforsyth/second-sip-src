@@ -1,7 +1,7 @@
 <div class="list_item">
   <span class="item_name">
     <%= link_to taster.username, admin_profile_taster_path(taster) %>
-    <%= "(#{taster.real_name})" %>
+    (<%= link_to taster.real_name, taster_path(taster) %>)
   </span>
   <span class="username">
     <%= taster.email %>

@@ -863,6 +863,21 @@ div.details_row span.content {
 a.lookup_link {
 	color: navy;
 }
+table.associations {
+	border: 2px solid grey;
+	margin: 10px;
+}
+table.associations th {
+	border: 2px solid grey;
+	font-weight: bold;
+	margin: 10px;
+	padding: 5px;
+}
+table.associations td {
+	border: 2px solid grey;
+	margin: 10px;
+	padding: 5px;
+}
 
 /********************************************************
 ********** Rightpane

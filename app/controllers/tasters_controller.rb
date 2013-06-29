@@ -3,11 +3,11 @@ require 'ui/admin_taggable_controller'
 class TastersController < ApplicationController
   include UI::AdminTaggableController
   
-  before_filter :find_taster, :only => [ :admin_profile, :show, :edit, :update,
+  before_filter :find_taster, :only => [ :admin_profile, :delete, :destroy, :show, :edit, :update,
                                          :add_admin_tag, :remove_admin_tag ]
   before_filter :set_tag_container, :only => [ :add_admin_tag, :remove_admin_tag ]
 	before_filter :initialize_tasters_tabs, :only => [:show, :edit]
-	before_filter :initialize_tasters_admin_tabs, :only => [:index, :admin_profile]
+	before_filter :initialize_tasters_admin_tabs, :only => [:index, :admin_profile, :delete]
 	before_filter :initialize_register_or_login_tabs, :only => [:new]
   before_filter :require_no_taster, :only => [:new, :create]
   before_filter :require_admin, :except => [:show, :new, :create, :edit, :update]
@@ -42,6 +42,16 @@ class TastersController < ApplicationController
   end
   
   def admin_profile
+  end
+  
+  def delete
+    @associated_records = @taster.association_counts
+  end
+  
+  def destroy
+    @taster.delete_all_associated_records
+    @taster.destroy
+    redirect_to tasters_path
   end
   
   def new

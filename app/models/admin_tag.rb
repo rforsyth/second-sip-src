@@ -2,7 +2,7 @@ class AdminTag < ActiveRecord::Base
   nilify_blanks
 	belongs_to :creator, :class_name => "Taster"
 	belongs_to :updater, :class_name => "Taster"
-	has_many :admin_taggeds
+	has_many :admin_taggeds, :dependent => :destroy
 	
   before_validation :tagify_name
   

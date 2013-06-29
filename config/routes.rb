@@ -147,6 +147,7 @@ SsRails::Application.routes.draw do
     get 'search', :on => :collection
     member do
       get 'admin_profile'
+      get 'delete'
       post 'add_admin_tag'
       post 'remove_admin_tag'
     end

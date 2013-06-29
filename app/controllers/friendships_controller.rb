@@ -15,7 +15,7 @@ class FriendshipsController < ApplicationController
   def new
     @friendship = Friendship.new
 		@friendship.invitation = <<-eos
-I'd like to add you as a friend on Second Sip so that we can share tasting notes.
+I would like to add you as a friend on Second Sip so that we can share tasting notes.
 
 - #{current_taster.real_name} (#{current_taster.username})
 eos

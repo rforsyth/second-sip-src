@@ -74,6 +74,65 @@ class Taster < ActiveRecord::Base
     end 
   end
   
+  def association_counts
+    associated_records = {}
+    associated_records['Notes'] = Note.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+                                         self.id, self.id, self.id).count
+    associated_records['Products'] = Product.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+                                         self.id, self.id, self.id).count
+    associated_records['Producers'] = Producer.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+                                         self.id, self.id, self.id).count
+    associated_records['Lookeds'] = Looked.where("owner_id = ?",
+                                         self.id).count
+    associated_records['Lookups'] = Lookup.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+                                         self.id, self.id, self.id).count
+    associated_records['Admin Tags'] = AdminTag.where("creator_id = ? OR updater_id = ?",
+                                         self.id, self.id).count
+    associated_records['Taggeds'] = Tagged.where("owner_id = ?",
+                                         self.id).count
+    associated_records['Tags'] = Tag.where("creator_id = ? OR updater_id = ?",
+                                         self.id, self.id).count
+    associated_records['Friendships'] = Friendship.where("invitee_id = ? OR inviter_id = ? OR creator_id = ? OR updater_id = ?",
+                                         self.id, self.id, self.id, self.id).count
+    associated_records['Resources'] = Resource.where("creator_id = ? OR updater_id = ?",
+                                         self.id, self.id).count
+    associated_records
+  end
+  
+  def delete_all_associated_records
+    Note.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+               self.id, self.id, self.id).destroy_all
+    puts 'deleted notes'
+    Product.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+               self.id, self.id, self.id).destroy_all
+    puts 'deleted products'
+    Producer.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+               self.id, self.id, self.id).destroy_all
+    puts 'deleted producers'
+    Looked.where("owner_id = ?",
+               self.id).destroy_all
+    puts 'deleted lookeds'
+    Lookup.where("owner_id = ? OR creator_id = ? OR updater_id = ?",
+               self.id, self.id, self.id).destroy_all
+    puts 'deleted lookups'
+    AdminTag.where("creator_id = ? OR updater_id = ?",
+               self.id, self.id).destroy_all
+    puts 'deleted admin tags'
+    Tagged.where("owner_id = ?",
+               self.id).destroy_all
+    puts 'deleted taggeds'
+    Tag.where("creator_id = ? OR updater_id = ?",
+               self.id, self.id).destroy_all
+    puts 'deleted tags'
+    Friendship.where("invitee_id = ? OR inviter_id = ? OR creator_id = ? OR updater_id = ?",
+               self.id, self.id, self.id, self.id).destroy_all
+    puts 'deleted friendships'
+    Resource.where("creator_id = ? OR updater_id = ?",
+               self.id, self.id).destroy_all
+    puts 'deleted resources'
+  end
+  
+  
   ############################################
   ## Account Management
   
