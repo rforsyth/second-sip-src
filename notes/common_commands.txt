@@ -12,7 +12,8 @@ http://api.hexxie.com:3000/wineries/autocomplete?query=foo
 __________________________________________________________________
 Running the app
 
-$ pg_start
+- start PG using elephant app
+  - old: $ pg_start
 $ cd ~/projects/second-sip-src
 $ rails server
 - browse to http://0.0.0.0:3000

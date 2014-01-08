@@ -31,7 +31,9 @@
     <h3><a href="#"><%= resource_type_name(resource.resource_type) %></a></h3>
     <div class="resource_body">
       <%= link_to_external_resource(resource) %>
-      <%=raw resource.body if resource.body.present? %>
+      <% if resource.resource_type !=  Enums::ResourceType::BJCP then
+        <%=raw resource.body if resource.body.present? %>
+      <% end %>
     </div>
   <% end %>
 <% end %>
