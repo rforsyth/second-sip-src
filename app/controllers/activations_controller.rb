@@ -1,7 +1,7 @@
 
 class ActivationsController < ApplicationController
   before_filter :require_no_taster
-	force_ssl :only => [:new, :create]
+	#force_ssl :only => [:new, :create]
 
   def re_send
     @taster = Taster.find_by_email(params[:email])
