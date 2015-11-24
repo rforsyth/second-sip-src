@@ -1,0 +1,14 @@
+<%- content_for(:angular_includes) do -%>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
+<script src="/angular/app.js"></script>
+<%- end -%>
+
+
+<div ng-app="app">
+  
+<p ng-controller="LocaleController">
+  Your locale is <strong ng-bind="locale"></strong>
+</p>
+  
+  
+</body>

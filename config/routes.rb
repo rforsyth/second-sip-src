@@ -6,6 +6,9 @@ SsRails::Application.routes.draw do
 	producers_pattern = /breweries|wineries|distilleries/
 	products_pattern = /beers|wines|spirits/
 	notes_pattern = /beer_notes|wine_notes|spirit_notes/
+	
+	
+	resources :ng, :controller => 'angular'
 
   resources :api_sessions, :controller => 'api_sessions'
 

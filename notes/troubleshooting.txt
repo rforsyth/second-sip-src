@@ -1,7 +1,0 @@
-
-
-__________________________________________________________________
-Database
-
-- if you get "no such file to load -- pg" when running a migration
-http://www.petermac.com/rubyrails-3-and-postgresql/

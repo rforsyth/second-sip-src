@@ -1,5 +1,0 @@
-
-
-
-
-      $('#<%= add_action %> input.tag_name').keyfilter(/[a-z0-9-]/);

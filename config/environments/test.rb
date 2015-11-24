@@ -35,4 +35,6 @@ SsRails::Application.configure do
 
 	# Initialize ActiveRecord observers
 	config.active_record.observers = :editor_observer
+	
+	config.eager_load = false
 end
